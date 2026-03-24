@@ -23,10 +23,12 @@
   --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
   --shadow-md:   0 4px 12px rgba(0,0,0,0.10);
   --shadow-lg:   0 8px 24px rgba(0,0,0,0.13);
-  --blue:        #2563EB; --blue-pale:   #EFF6FF; --blue-mid:   #BFDBFE;
-  --green:       #16A34A; --green-pale:  #F0FDF4; --green-mid:  #BBF7D0;
-  --violet:      #7C3AED; --violet-pale: #F5F3FF; --violet-mid: #DDD6FE;
-  --orange:      #EA580C; --orange-pale: #FFF7ED; --orange-mid: #FED7AA;
+
+  /* Secciones: escala de grises con acento amarillo */
+  --s1-bg:      #FFFFFF;   --s1-border: #E5E7EB; --s1-head: #1C1F26;
+  --s2-bg:      #F3F4F6;   --s2-border: #D1D5DB; --s2-head: #2E3340;
+  --s3-bg:      #E5E7EB;   --s3-border: #C4C9D4; --s3-head: #3D4451;
+  --s4-bg:      #D1D5DB;   --s4-border: #B0B7C3; --s4-head: #111318;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Figtree', sans-serif; background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
@@ -35,7 +37,7 @@ body { font-family: 'Figtree', sans-serif; background: var(--gray-100); color: v
 header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
 .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .header-brand { display: flex; align-items: center; gap: 12px; }
-.header-logo-text { width: 52px; height: 52px; border-radius: 50%; background: var(--gray-900); color: var(--yellow); display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; line-height: 1.2; text-align: center; }
+.header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
 .header-title { font-size: 1.05rem; font-weight: 800; color: var(--gray-900); letter-spacing: -0.5px; line-height: 1.1; }
 .header-subtitle { font-size: 0.65rem; font-weight: 600; color: var(--gray-700); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
 .badge { background: var(--gray-900); color: var(--yellow); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
@@ -44,10 +46,10 @@ header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep);
 .hero { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); padding: 40px 36px 36px; }
 .hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: flex-start; gap: 40px; }
 .hero-text { flex: 1; min-width: 0; }
-.hero-video-wrap { flex-shrink: 0; }
-.hero-video { width: 320px; height: 180px; border-radius: 12px; box-shadow: var(--shadow-lg); border: 3px solid rgba(0,0,0,0.12); }
 .hero-headline { font-size: 1.7rem; font-weight: 800; color: var(--gray-900); line-height: 1.15; letter-spacing: -0.5px; margin-bottom: 10px; }
 .hero-sub { font-size: 0.9rem; color: var(--gray-700); font-weight: 500; margin-bottom: 20px; max-width: 640px; line-height: 1.65; }
+.hero-img-wrap { margin-bottom: 20px; }
+.hero-img { max-height: 80px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 8px rgba(0,0,0,0.15)); }
 .hero-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .stat-pill { background: var(--gray-900); color: var(--yellow); font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 100px; letter-spacing: 0.03em; }
 .hero-grados { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: var(--gray-700); line-height: 1.6; }
@@ -57,79 +59,45 @@ header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep);
 main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
 /* SECTION BLOCK */
-.section-block { margin-bottom: 40px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
-.section-header { display: flex; align-items: center; gap: 14px; padding: 18px 24px; }
-.section-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; background: rgba(255,255,255,0.25); }
-.section-title { font-size: 1.05rem; font-weight: 800; line-height: 1.15; }
-.section-desc { font-size: 0.75rem; margin-top: 2px; opacity: 0.8; }
+.section-block { margin-bottom: 28px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.section-header { display: flex; align-items: center; gap: 14px; padding: 16px 24px; color: var(--yellow); }
+.section-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; background: rgba(255,255,255,0.12); }
+.section-title { font-size: 1.0rem; font-weight: 800; line-height: 1.15; }
+.section-desc { font-size: 0.73rem; margin-top: 2px; opacity: 0.75; }
+.section-body { padding: 20px; }
 
-.sec-blue .section-header   { background: var(--blue);   color: white; border-bottom: 2px solid #1D4ED8; }
-.sec-green .section-header  { background: var(--green);  color: white; border-bottom: 2px solid #15803D; }
-.sec-violet .section-header { background: var(--violet); color: white; border-bottom: 2px solid #6D28D9; }
-.sec-orange .section-header { background: var(--orange); color: white; border-bottom: 2px solid #C2410C; }
+/* per-section grays */
+.sec-1 .section-header { background: var(--s1-head); border-bottom: 2px solid #000; }
+.sec-2 .section-header { background: var(--s2-head); border-bottom: 2px solid #1a1e27; }
+.sec-3 .section-header { background: var(--s3-head); border-bottom: 2px solid #2a2f3a; }
+.sec-4 .section-header { background: var(--s4-head); border-bottom: 2px solid #000; }
 
-.sec-blue .section-body   { background: var(--blue-pale);   border: 1.5px solid var(--blue-mid);   border-top: none; padding: 20px; }
-.sec-green .section-body  { background: var(--green-pale);  border: 1.5px solid var(--green-mid);  border-top: none; padding: 20px; }
-.sec-violet .section-body { background: var(--violet-pale); border: 1.5px solid var(--violet-mid); border-top: none; padding: 20px; }
-.sec-orange .section-body { background: var(--orange-pale); border: 1.5px solid var(--orange-mid); border-top: none; padding: 20px; }
+.sec-1 .section-body { background: var(--s1-bg); border: 1.5px solid var(--s1-border); border-top: none; }
+.sec-2 .section-body { background: var(--s2-bg); border: 1.5px solid var(--s2-border); border-top: none; }
+.sec-3 .section-body { background: var(--s3-bg); border: 1.5px solid var(--s3-border); border-top: none; }
+.sec-4 .section-body { background: var(--s4-bg); border: 1.5px solid var(--s4-border); border-top: none; }
 
-.sec-blue   .rc-tag { background: var(--blue-mid);   color: var(--blue);   border-color: #93C5FD; }
-.sec-green  .rc-tag { background: var(--green-mid);  color: var(--green);  border-color: #6EE7B7; }
-.sec-violet .rc-tag { background: var(--violet-mid); color: var(--violet); border-color: #C4B5FD; }
-.sec-orange .rc-tag { background: var(--orange-mid); color: var(--orange); border-color: #FDBA74; }
+/* card top stripe — always yellow */
+.resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+.resource-card:hover::before { background: var(--yellow-deep); }
 
-.sec-blue   .resource-card::before { background: var(--blue); }
-.sec-green  .resource-card::before { background: var(--green); }
-.sec-violet .resource-card::before { background: var(--violet); }
-.sec-orange .resource-card::before { background: var(--orange); }
-.sec-blue   .resource-card:hover::before { background: #1D4ED8; }
-.sec-green  .resource-card:hover::before { background: #15803D; }
-.sec-violet .resource-card:hover::before { background: #6D28D9; }
-.sec-orange .resource-card:hover::before { background: #C2410C; }
+/* rc-tag — always yellow */
+.rc-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: var(--yellow-pale); color: var(--yellow-deep); border: 1px solid var(--yellow-mid); }
 
-/* RESPONSIVE GRID */
-.cards-grid {
-  display: grid;
-  gap: 14px;
-  grid-template-columns: repeat(3, 1fr);
-}
-/* hidden extra cards */
-.cards-grid .resource-card.hidden { display: none; }
-
-/* "Ver todos" button */
-.see-more-wrap { margin-top: 14px; text-align: center; }
-.see-more-btn {
-  font-family: 'Figtree', sans-serif;
-  font-size: 0.82rem; font-weight: 700;
-  padding: 9px 22px; border-radius: 100px; border: 2px solid currentColor;
-  cursor: pointer; background: transparent;
-  transition: background 0.15s, color 0.15s;
-  display: inline-flex; align-items: center; gap: 6px;
-}
-.sec-blue   .see-more-btn { color: var(--blue); }
-.sec-green  .see-more-btn { color: var(--green); }
-.sec-violet .see-more-btn { color: var(--violet); }
-.sec-orange .see-more-btn { color: var(--orange); }
-.sec-blue   .see-more-btn:hover { background: var(--blue);   color: white; }
-.sec-green  .see-more-btn:hover { background: var(--green);  color: white; }
-.sec-violet .see-more-btn:hover { background: var(--violet); color: white; }
-.sec-orange .see-more-btn:hover { background: var(--orange); color: white; }
+/* see-more button — always yellow-toned */
+.see-more-btn { color: var(--gray-700); border-color: var(--gray-400); }
+.see-more-btn:hover { background: var(--gray-900); color: var(--yellow); border-color: var(--gray-900); }
 
 /* RESOURCE CARDS */
-.resource-card {
-  background: var(--white); border: 1.5px solid var(--gray-200);
-  border-radius: var(--radius); padding: 22px 24px;
-  box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
-  transition: box-shadow 0.18s, transform 0.18s;
-  text-decoration: none; color: inherit; position: relative; overflow: hidden;
-}
-.resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; }
-.resource-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-.resource-card.horizontal { flex-direction: row; align-items: flex-start; gap: 20px; }
-.resource-card.horizontal .rc-main { flex: 1; }
+.cards-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
+.cards-grid .resource-card.hidden { display: none; }
+.see-more-wrap { margin-top: 14px; text-align: center; }
+.see-more-btn { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 9px 22px; border-radius: 100px; border: 2px solid var(--gray-500); cursor: pointer; background: transparent; color: var(--gray-700); transition: background 0.15s, color 0.15s, border-color 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+.see-more-btn:hover { background: var(--gray-900); color: var(--yellow); border-color: var(--gray-900); }
 
+.resource-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: box-shadow 0.18s, transform 0.18s; text-decoration: none; color: inherit; position: relative; overflow: hidden; }
+.resource-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
 .rc-icon { font-size: 1.8rem; margin-bottom: 10px; }
-.rc-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; border: 1px solid transparent; }
 .rc-title { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 6px; }
 .rc-desc { font-size: 0.82rem; color: var(--gray-500); line-height: 1.6; flex: 1; }
 .rc-cta { margin-top: 14px; font-size: 0.78rem; font-weight: 700; color: var(--gray-900); display: flex; align-items: center; gap: 4px; }
@@ -172,13 +140,10 @@ footer a:hover { text-decoration: underline; }
   .badge { display: none; }
   .hero { padding: 24px 16px; }
   .hero-inner { flex-direction: column; gap: 20px; }
-  .hero-video-wrap { width: 100%; }
-  .hero-video { width: 100%; height: auto; aspect-ratio: 16/9; }
   .hero-headline { font-size: 1.25rem; }
   main { padding: 24px 16px 60px; }
   .cards-grid { grid-template-columns: 1fr; }
   .valid-grid { grid-template-columns: 1fr; }
-  .resource-card.horizontal { flex-direction: column; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
 }
@@ -189,7 +154,8 @@ footer a:hover { text-decoration: underline; }
 <header>
   <div class="header-inner">
     <div class="header-brand">
-      <div class="header-logo-text">Edu<br>Med</div>
+      <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
+           alt="Logo Facultad de Medicina UVa" class="header-logo">
       <div>
         <div class="header-title">EduMed · UVa</div>
         <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
@@ -204,6 +170,10 @@ footer a:hover { text-decoration: underline; }
     <div class="hero-text">
       <div class="hero-headline">Unidad de Educación Médica<br>de la Facultad de Medicina · UVa</div>
       <p class="hero-sub">Bienvenido a la Web App de EduMed.UVa. Un espacio diseñado para potenciar tu docencia con acceso directo a cuadernos, materiales docentes y un repositorio colaborativo donde compartir actividades innovadoras con otros profesionales. Explora la plataforma y descubre cómo estas herramientas pueden ayudar a mejorar tu día a día educativo. ¡Entra y comienza a compartir!</p>
+      <div class="hero-img-wrap">
+        <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
+             alt="Medicina Innova 2026" class="hero-img">
+      </div>
       <div class="hero-stats">
         <span class="stat-pill">📓 Cuadernos Docentes</span>
         <span class="stat-pill">📋 Evaluación</span>
@@ -214,20 +184,13 @@ footer a:hover { text-decoration: underline; }
         <strong>Grados:</strong> Medicina · Logopedia · Nutrición Humana y Dietética · Ingeniería Biomédica · Biomedicina y Terapias Avanzadas · Farmacia
       </div>
     </div>
-    <div class="hero-video-wrap">
-      <iframe class="hero-video"
-        src="https://www.youtube.com/embed/_iSWIG7S6SI"
-        title="Presentación EduMed.UVa" frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div>
   </div>
 </div>
 
 <main>
 
-  <!-- 1. CUADERNOS · azul -->
-  <div class="section-block sec-blue">
+  <!-- 1. CUADERNOS · gris más oscuro -->
+  <div class="section-block sec-1">
     <div class="section-header">
       <div class="section-icon">📓</div>
       <div>
@@ -251,13 +214,12 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</div>
           <div class="rc-cta">Acceder al cuaderno <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <!-- futuros cuadernos aquí — se ocultarán automáticamente si hay más de 3 -->
       </div>
     </div>
   </div>
 
-  <!-- 2. EVALUACIÓN · verde -->
-  <div class="section-block sec-green">
+  <!-- 2. EVALUACIÓN · gris claro -->
+  <div class="section-block sec-2">
     <div class="section-header">
       <div class="section-icon">📋</div>
       <div>
@@ -271,16 +233,15 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-icon">📋</div>
           <span class="rc-tag">Evaluación</span>
           <div class="rc-title">Rúbricas. Cómo construirlas, adaptarlas o mejorarlas</div>
-          <div class="rc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud. Incluye ejemplos, plantillas y criterios para distintas situaciones docentes.</div>
+          <div class="rc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud.</div>
           <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <!-- futuros recursos de evaluación aquí -->
       </div>
     </div>
   </div>
 
-  <!-- 3. IAGEN · violeta -->
-  <div class="section-block sec-violet">
+  <!-- 3. IAGEN · gris medio -->
+  <div class="section-block sec-3">
     <div class="section-header">
       <div class="section-icon">🤖</div>
       <div>
@@ -294,16 +255,15 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-icon">🤖</div>
           <span class="rc-tag">IA en el aula</span>
           <div class="rc-title">Small TeAIching e IA lenta o fluente</div>
-          <div class="rc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para comenzar con la creación de contenidos y el uso de la IA en el aula.</div>
+          <div class="rc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</div>
           <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <!-- futuros recursos de IA aquí -->
       </div>
     </div>
   </div>
 
-  <!-- 4. INNOVACIÓN · naranja -->
-  <div class="section-block sec-orange">
+  <!-- 4. INNOVACIÓN · casi negro -->
+  <div class="section-block sec-4">
     <div class="section-header">
       <div class="section-icon">🔬</div>
       <div>
@@ -317,31 +277,30 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-icon">🏫</div>
           <span class="rc-tag">Innovación · UVa</span>
           <div class="rc-title">Innovación en EduMed.UVa</div>
-          <div class="rc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender de las iniciativas de mejora docente de la UVa.</div>
+          <div class="rc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender.</div>
           <div class="rc-cta">Ver repositorio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
         <a class="resource-card" href="https://tutorcyllo.github.io/Innovacion.EduMed.CNDFM/" target="_blank" rel="noopener">
           <div class="rc-icon">🏛️</div>
           <span class="rc-tag">Innovación · Nacional</span>
           <div class="rc-title">Innovación en las Facultades de Medicina españolas</div>
-          <div class="rc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España. Una visión compartida del cambio en la educación médica nacional.</div>
+          <div class="rc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España.</div>
           <div class="rc-cta">Ver repositorio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <!-- futuros repositorios aquí -->
       </div>
     </div>
   </div>
 
   <!-- PARA QUIÉN -->
-  <div class="section-block" style="background:var(--white); border:1.5px solid var(--gray-200);">
-    <div class="section-header" style="background:var(--gray-900); border-bottom:2px solid #000; color:white;">
+  <div class="section-block sec-1">
+    <div class="section-header">
       <div class="section-icon">👩‍🏫</div>
       <div>
         <div class="section-title">¿Para quién es EduMed.UVa?</div>
-        <div class="section-desc">Dirigido al profesorado de todos los grados de la Facultad de Medicina de la UVa y a la comunidad docente médica nacional</div>
+        <div class="section-desc">Dirigido al profesorado de todos los grados de la Facultad y a la comunidad docente médica nacional</div>
       </div>
     </div>
-    <div class="section-body" style="background:var(--gray-50); border:1.5px solid var(--gray-200); border-top:none; padding:20px;">
+    <div class="section-body" style="background:var(--gray-50);">
       <div class="valid-grid">
         <div class="valid-item">
           <div class="valid-icon">🏫</div>
@@ -351,12 +310,12 @@ footer a:hover { text-decoration: underline; }
         <div class="valid-item">
           <div class="valid-icon">🤝</div>
           <div class="valid-title">Un espacio compartido</div>
-          <div class="valid-desc">Los materiales, recursos y repositorios están pensados para ser útiles a cualquier docente de ciencias de la salud, independientemente de su grado o especialidad.</div>
+          <div class="valid-desc">Los materiales y recursos están pensados para ser útiles a cualquier docente de ciencias de la salud, independientemente de su grado o especialidad.</div>
         </div>
         <div class="valid-item">
           <div class="valid-icon">🌍</div>
           <div class="valid-title">Comunidad nacional</div>
-          <div class="valid-desc">Docentes de otras facultades de medicina y ciencias de la salud españolas interesados en compartir y aprender de experiencias innovadoras.</div>
+          <div class="valid-desc">Docentes de otras facultades de medicina y ciencias de la salud españolas interesados en compartir experiencias innovadoras.</div>
         </div>
       </div>
     </div>
@@ -376,54 +335,49 @@ footer a:hover { text-decoration: underline; }
 </main>
 
 <footer>
-  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026<br>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span id="fecha-footer"></span><br>
   <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a>
 </footer>
 
-<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+<button class="back-top" id="backTop">↑</button>
 
 <script>
+// Fecha dinámica
+const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+const hoy = new Date();
+document.getElementById('fecha-footer').textContent = 'actualizada a ' + meses[hoy.getMonth()] + ' ' + hoy.getFullYear();
+
 // Back to top
 document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 window.addEventListener('scroll', () => {
   document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
 });
 
-// Grid "Ver más" logic
-// Shows max N cards, hides the rest, adds a button if needed
-function initGrids() {
-  document.querySelectorAll('.cards-grid[data-max]').forEach(grid => {
-    const max = parseInt(grid.dataset.max, 10);
-    const cards = Array.from(grid.querySelectorAll('.resource-card'));
-    if (cards.length <= max) return; // nothing to hide
-
-    // hide extras
-    cards.slice(max).forEach(c => c.classList.add('hidden'));
-
-    // find section color class
-    const sec = grid.closest('[class*="sec-"]');
-    const secClass = sec ? [...sec.classList].find(c => c.startsWith('sec-')) : '';
-
-    // create button
-    const wrap = document.createElement('div');
-    wrap.className = 'see-more-wrap';
-    const btn = document.createElement('button');
-    btn.className = 'see-more-btn';
-    btn.innerHTML = `Ver todos (${cards.length}) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
-    let expanded = false;
-    btn.addEventListener('click', () => {
-      expanded = !expanded;
-      cards.slice(max).forEach(c => c.classList.toggle('hidden', !expanded));
-      btn.innerHTML = expanded
-        ? `Ver menos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>`
-        : `Ver todos (${cards.length}) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
-    });
-    wrap.appendChild(btn);
-    grid.parentNode.insertBefore(wrap, grid.nextSibling);
+// Grid "Ver más"
+document.querySelectorAll('.cards-grid[data-max]').forEach(grid => {
+  const max = parseInt(grid.dataset.max, 10);
+  const cards = Array.from(grid.querySelectorAll('.resource-card'));
+  if (cards.length <= max) return;
+  cards.slice(max).forEach(c => c.classList.add('hidden'));
+  const wrap = document.createElement('div');
+  wrap.className = 'see-more-wrap';
+  const btn = document.createElement('button');
+  btn.className = 'see-more-btn';
+  let expanded = false;
+  const update = () => {
+    btn.innerHTML = expanded
+      ? `Ver menos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>`
+      : `Ver todos (${cards.length}) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
+  };
+  update();
+  btn.addEventListener('click', () => {
+    expanded = !expanded;
+    cards.slice(max).forEach(c => c.classList.toggle('hidden', !expanded));
+    update();
   });
-}
-
-initGrids();
+  wrap.appendChild(btn);
+  grid.parentNode.insertBefore(wrap, grid.nextSibling);
+});
 </script>
 </body>
 </html>
