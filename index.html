@@ -161,7 +161,7 @@ footer a:hover { text-decoration: underline; }
         <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
       </div>
     </div>
-    <div class="badge" id="fecha-badge"></div>
+    <div class="badge">Actualizado en marzo de 2026</div>
   </div>
 </header>
 
@@ -344,11 +344,8 @@ footer a:hover { text-decoration: underline; }
 
 <script>
 // Fecha dinámica
-const meses = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
-const hoy = new Date();
-const fechaTxt = 'Actualizado en ' + meses[hoy.getMonth()] + ' de ' + hoy.getFullYear();
+const fechaTxt = 'Actualizado en marzo de 2026';
 document.getElementById('fecha-footer').textContent = fechaTxt;
-document.getElementById('fecha-badge').textContent = fechaTxt;
 
 // Back to top
 document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
