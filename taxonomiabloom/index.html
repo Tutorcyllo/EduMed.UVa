@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Taxonomía de Bloom · EduMed.UVa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --yellow:#F5C518; --yellow-mid:#FEF0A0; --yellow-pale:#FFFDE7;
+  --yellow-deep:#D4A000; --gray-900:#111318; --gray-700:#3D4451;
+  --gray-500:#6B7280; --gray-300:#D1D5DB; --gray-200:#E5E7EB;
+  --gray-100:#F3F4F6; --gray-50:#F9FAFB; --white:#FFFFFF;
+  --radius:10px; --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.10); --shadow-lg:0 8px 24px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Figtree',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh}
+
+/* HEADER */
+header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 36px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-logo{width:52px;height:52px;border-radius:50%;object-fit:contain;border:2px solid rgba(0,0,0,.12);background:white;flex-shrink:0}
+.header-title{font-size:1.05rem;font-weight:800;color:var(--gray-900);letter-spacing:-.5px;line-height:1.1}
+.header-subtitle{font-size:.65rem;font-weight:600;color:var(--gray-700);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.badge{background:var(--gray-900);color:var(--yellow);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;white-space:nowrap}
+
+/* HERO */
+.hero{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);padding:28px 36px}
+.hero-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:28px}
+.hero-text{flex:1;min-width:0}
+.hero-img-wrap{flex-shrink:0}
+.hero-img{width:260px;height:auto;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.18))}
+.hero-headline{font-size:1.6rem;font-weight:800;color:var(--gray-900);line-height:1.15;letter-spacing:-.5px;margin-bottom:6px}
+.hero-sub{font-size:.875rem;color:var(--gray-700);font-weight:500;margin-bottom:16px;max-width:640px}
+.hero-stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat-pill{background:var(--gray-900);color:var(--yellow);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:.03em}
+
+/* TABS */
+.tabs-wrap{max-width:1280px;margin:0 auto;padding:24px 36px 0}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:5px;width:fit-content;margin-bottom:24px;box-shadow:var(--shadow-sm);flex-wrap:wrap}
+.tab{font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:700;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--gray-900);background:var(--gray-100)}
+.tab.active{background:var(--yellow);color:var(--gray-900);box-shadow:var(--shadow-sm)}
+
+/* MAIN */
+main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
+.panel{display:none}.panel.active{display:block}
+
+/* CARDS */
+.card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.card-title{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-body{font-size:.875rem;color:var(--gray-700);line-height:1.65}
+.card-body p{margin-bottom:10px}.card-body p:last-child{margin-bottom:0}
+
+/* QUOTE SIMPLE */
+.quote-simple{background:var(--gray-900);color:var(--yellow);border-radius:var(--radius);padding:16px 20px 16px 24px;margin-bottom:14px;font-size:.9rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid var(--yellow-deep)}
+
+/* TWO-COL */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+
+/* VALID GRID */
+.valid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.valid-item{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px}
+.valid-icon{font-size:1.3rem;margin-bottom:6px}
+.valid-title{font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.valid-desc{font-size:.78rem;color:var(--gray-700);line-height:1.55}
+
+/* EX TABLE */
+.ex-table{width:100%;border-collapse:collapse;font-size:.845rem}
+.ex-table tr{border-bottom:1px solid var(--yellow-mid)}
+.ex-table tr:last-child{border-bottom:none}
+.ex-table td{padding:10px 12px;vertical-align:top;background:var(--yellow-pale)}
+.ex-table tr:nth-child(even) td{background:var(--white);border-top:1px solid var(--yellow-mid)}
+.ex-label{width:38%;font-weight:700;color:var(--gray-900);white-space:nowrap;padding-right:8px}
+.ex-desc{color:var(--gray-700);line-height:1.55}
+
+/* ACCORDION */
+.accordion{margin-bottom:10px;border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--gray-200);box-shadow:var(--shadow-sm)}
+.acc-btn{width:100%;background:var(--white);border:none;padding:16px 20px;text-align:left;cursor:pointer;font-family:'Figtree',sans-serif;font-size:.9rem;font-weight:700;color:var(--gray-900);display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .15s}
+.acc-btn:hover{background:var(--gray-50)}
+.acc-btn.open{background:var(--yellow)}
+.acc-left{display:flex;align-items:center;gap:10px}
+.acc-level{background:var(--gray-900);color:var(--yellow);font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:.05em;white-space:nowrap}
+.acc-btn.open .acc-level{background:var(--white);color:var(--gray-900)}
+.acc-arrow{font-size:.75rem;transition:transform .2s;color:var(--gray-500)}
+.acc-btn.open .acc-arrow{transform:rotate(180deg);color:var(--gray-700)}
+.acc-body{display:none;padding:0 20px 20px;background:var(--white)}
+.acc-body.open{display:block}
+.acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.acc-sub{font-size:.78rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;margin-top:14px}
+.acc-desc{font-size:.875rem;color:var(--gray-700);line-height:1.65;margin-top:10px}
+
+/* BLOOM PYRAMID */
+.pyramid-wrap{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.pyramid{display:flex;flex-direction:column;gap:4px;max-width:580px;margin:0 auto}
+.pyr-row{border-radius:6px;padding:10px 16px;display:flex;align-items:center;gap:10px;cursor:default;transition:filter .15s}
+.pyr-row:hover{filter:brightness(.95)}
+.pyr-n{font-size:.68rem;font-weight:800;color:rgba(0,0,0,.45);width:18px;text-align:center;flex-shrink:0}
+.pyr-label{font-weight:700;font-size:.82rem;flex:1}
+.pyr-verb{font-size:.75rem;opacity:.75;font-style:italic}
+.pyr-1{background:#F5F5DC;align-self:stretch}
+.pyr-2{background:#FEF3C7;align-self:stretch;margin:0 5%}
+.pyr-3{background:#FDE68A;align-self:stretch;margin:0 10%}
+.pyr-4{background:#FCD34D;align-self:stretch;margin:0 15%}
+.pyr-5{background:#FBBF24;align-self:stretch;margin:0 20%}
+.pyr-6{background:#F59E0B;align-self:stretch;margin:0 25%}
+.pyr-note{font-size:.75rem;color:var(--gray-500);text-align:center;margin-top:10px;font-style:italic}
+
+/* DIMENSION TABLE */
+.dim-table{width:100%;border-collapse:collapse;font-size:.82rem}
+.dim-table th{background:var(--gray-900);color:var(--yellow);padding:10px 14px;font-weight:700;text-align:left;font-size:.78rem}
+.dim-table td{padding:9px 14px;border-bottom:1px solid var(--gray-200);vertical-align:top;line-height:1.5}
+.dim-table tr:nth-child(even) td{background:var(--yellow-pale)}
+.dim-table tr:last-child td{border-bottom:none}
+.dim-badge{display:inline-block;background:var(--yellow);color:var(--gray-900);font-size:.68rem;font-weight:800;padding:2px 8px;border-radius:100px;margin-bottom:3px}
+
+/* WARNING BOX */
+.warn-box{background:#FFF8E1;border:1.5px solid #FFD54F;border-left:4px solid #F59E0B;border-radius:var(--radius);padding:16px 20px;margin-bottom:14px}
+.warn-box .warn-title{font-size:.875rem;font-weight:700;color:var(--gray-900);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.warn-box p{font-size:.845rem;color:var(--gray-700);line-height:1.65}
+
+/* MATRIX TABLE */
+.matrix-wrap{overflow-x:auto;margin-bottom:14px}
+.matrix{border-collapse:collapse;width:100%;min-width:520px;font-size:.78rem}
+.matrix th,.matrix td{border:1px solid var(--gray-200);padding:8px 10px;text-align:center;vertical-align:middle}
+.matrix th{background:var(--gray-900);color:var(--yellow);font-weight:700;font-size:.72rem}
+.matrix .row-hd{background:var(--yellow);color:var(--gray-900);font-weight:700;text-align:left}
+.matrix .cell-full{background:#A7F3D0;color:#065F46;font-weight:700}
+.matrix .cell-part{background:#FDE68A;color:#92400E}
+.matrix .cell-no{background:var(--gray-100);color:var(--gray-300)}
+
+/* BACK TOP */
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--gray-900);color:var(--yellow);border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{background:var(--gray-700);transform:translateY(-2px)}
+
+/* FOOTER */
+footer{text-align:center;padding:20px 16px;font-size:.75rem;color:var(--gray-500);border-top:1px solid var(--gray-200);background:var(--white)}
+footer strong{color:var(--yellow-deep)}
+footer a{color:var(--gray-700);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+/* RESPONSIVE */
+@media(max-width:1024px){
+  .valid-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-img{width:200px}
+  .hero-headline{font-size:1.4rem}
+  .acc-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;height:60px}
+  .header-logo{width:40px;height:40px}
+  .header-title{font-size:.95rem}
+  .badge{display:none}
+  .hero{padding:20px 16px}
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:16px}
+  .hero-img-wrap{align-self:center}
+  .hero-img{width:60%}
+  .hero-headline{font-size:1.2rem}
+  .tabs-wrap{padding:16px 16px 0}
+  .tabs{width:100%}
+  .tab{font-size:.75rem;padding:8px 10px;flex:1;text-align:center}
+  main{padding:0 16px 60px}
+  .two-col{grid-template-columns:1fr}
+  .valid-grid{grid-template-columns:1fr}
+  .ex-label{white-space:normal}
+  .acc-grid{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-headline{font-size:1.05rem}
+  .hero-sub{font-size:.8rem}
+  .stat-pill{font-size:.68rem;padding:4px 10px}
+  .tab{font-size:.7rem;padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="header-inner">
+    <div class="header-brand">
+      <img class="header-logo"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
+        alt="Logo Facultad de Medicina UVa">
+      <div>
+        <div class="header-title">EduMed · UVa</div>
+        <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
+      </div>
+    </div>
+    <span class="badge">Conceptos Básicos · 2026</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-headline">La taxonomía de Bloom en educación médica<br>¿La taxo qué?</div>
+      <div class="hero-sub">Un lenguaje común para diseñar objetivos, evaluar el aprendizaje y estructurar la progresión del estudiante desde el conocimiento básico hasta la maestría clínica.</div>
+      <div class="hero-stats">
+        <span class="stat-pill">🧠 Conceptos básicos</span>
+        <span class="stat-pill">6 niveles cognitivos</span>
+        <span class="stat-pill">4 tipos de conocimiento</span>
+        <span class="stat-pill">Luis Corral Gudino · 2026</span>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img class="hero-img"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
+        alt="Innovando en educación médica">
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('intro',this)">📖 ¿Qué es?</button>
+    <button class="tab" onclick="showTab('niveles',this)">🪜 Los 6 niveles</button>
+    <button class="tab" onclick="showTab('dimensiones',this)">🔲 Las 2 dimensiones</button>
+    <button class="tab" onclick="showTab('ejemplo',this)">🔬 Ejemplo: vasculitis</button>
+    <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════════════════ PANEL 1: INTRO ══════════════════ -->
+<div id="intro" class="panel active">
+
+  <div class="quote-simple">
+    Todos intuimos que el aprendizaje tiene distintos niveles de profundidad. Pero en educación superior necesitamos algo más que intuiciones.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 ¿Qué es una taxonomía del aprendizaje?</div>
+    <div class="card-body">
+      <p>No es lo mismo memorizar la lista de síntomas de una enfermedad que comprender por qué se producen, aplicar ese conocimiento ante un paciente real o, más aún, generar nuevas hipótesis sobre su fisiopatología.</p>
+      <p>En educación superior necesitamos un <strong>lenguaje común</strong> que nos permita diseñar objetivos educativos precisos, evaluar el aprendizaje de forma coherente y estructurar la progresión del estudiante desde el conocimiento básico hasta la maestría clínica.</p>
+      <p>La taxonomía es un <strong>sistema de clasificación</strong> que nos ayuda a definir con claridad qué esperamos que los estudiantes aprendan y a qué nivel de complejidad cognitiva.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">📅 Bloom original (1956)</div>
+      <div class="card-body">
+        <p>Benjamin Bloom desarrolló la primera taxonomía centrada en los <strong>procesos cognitivos</strong>: cómo aprendemos y cómo procesamos el conocimiento. Estableció 6 niveles jerárquicos que van de lo más simple a lo más complejo.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 Revisión de Anderson y Krathwohl (2001)</div>
+      <div class="card-body">
+        <p>Un alumno de Bloom (Anderson) y un coautor original (Krathwohl) la revisaron 45 años después. El cambio clave: añadir una <strong>segunda dimensión</strong> sobre los tipos de conocimiento, reconociendo que no todo lo que aprendemos es igual.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 ¿Por qué necesitamos esto en educación médica?</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🎯</div>
+          <div class="valid-title">Objetivos precisos</div>
+          <div class="valid-desc">Nos permite redactar objetivos educativos claros y medibles, más allá de "que entiendan la patología".</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📋</div>
+          <div class="valid-title">Evaluación coherente</div>
+          <div class="valid-desc">Alinea lo que enseñamos con cómo evaluamos. Si solo evaluamos nivel 1 (recordar), no sabemos si saben aplicar.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📈</div>
+          <div class="valid-title">Progresión estructurada</div>
+          <div class="valid-desc">Guía la trayectoria del estudiante desde el conocimiento básico hasta el razonamiento clínico experto.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ PANEL 2: DIMENSIONES ══════════════════ -->
+<div id="dimensiones" class="panel">
+
+  <div class="quote-simple">
+    La revisión de 2001 se dio cuenta de que no solo importa CÓMO aprendemos, sino también QUÉ es lo que aprendemos.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔲 La segunda dimensión: tipos de conocimiento</div>
+    <div class="card-body">
+      <p>La taxonomía original se había centrado en el <strong>proceso cognitivo</strong> — cómo procesamos el conocimiento. La revisión añadió que en aquello que llamamos conocimiento no hay solo un tipo de saber.</p>
+      <p>De ahí que se mantuvieran los 6 escalones del proceso cognitivo y se añadieran <strong>4 tipos de conocimiento</strong>. Así nació la taxonomía bidimensional.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📚 Los 4 tipos de conocimiento · Ejemplo en vasculitis</div>
+    <div class="card-body">
+      <table class="dim-table">
+        <thead>
+          <tr>
+            <th>Tipo</th>
+            <th>Descripción</th>
+            <th>Ejemplo · Vasculitis</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="dim-badge">A</span><br><strong>Factual</strong></td>
+            <td>Datos básicos, terminología, elementos específicos</td>
+            <td>Qué significa "vasculitis", qué es un ANCA, los nombres de las principales entidades</td>
+          </tr>
+          <tr>
+            <td><span class="dim-badge">B</span><br><strong>Conceptual</strong></td>
+            <td>Clasificaciones, relaciones, principios y teorías</td>
+            <td>Cómo se agrupan las vasculitis según el tamaño del vaso, los principios inmunológicos subyacentes</td>
+          </tr>
+          <tr>
+            <td><span class="dim-badge">C</span><br><strong>Procedimental</strong></td>
+            <td>El "cómo hacer". Algoritmos, técnicas diagnósticas, secuencias de actuación</td>
+            <td>El algoritmo diagnóstico ante sospecha de vasculitis, la interpretación de los ANCA, el abordaje terapéutico escalonado</td>
+          </tr>
+          <tr>
+            <td><span class="dim-badge">D</span><br><strong>Metacognitivo</strong></td>
+            <td>Capacidad de reflexionar sobre el propio aprendizaje y razonamiento</td>
+            <td>Reconocer qué aspectos resultan más complejos, cuándo es necesario profundizar más o identificar errores frecuentes en el razonamiento clínico</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🗺️ La matriz bidimensional</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">La combinación de las dos dimensiones genera una <strong>matriz de posibilidades educativas</strong>. Cada celda representa un tipo de aprendizaje distinto. Un programa formativo completo debería cubrir múltiples celdas.</p>
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>Proceso cognitivo ↓ / Conocimiento →</th>
+              <th>A · Factual</th>
+              <th>B · Conceptual</th>
+              <th>C · Procedimental</th>
+              <th>D · Metacognitivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td class="row-hd">1 · Recordar</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-part">parcial</td><td class="cell-no">—</td></tr>
+            <tr><td class="row-hd">2 · Comprender</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-part">parcial</td><td class="cell-part">parcial</td></tr>
+            <tr><td class="row-hd">3 · Aplicar</td><td class="cell-part">parcial</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-part">parcial</td></tr>
+            <tr><td class="row-hd">4 · Analizar</td><td class="cell-no">—</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-full">✓</td></tr>
+            <tr><td class="row-hd">5 · Evaluar</td><td class="cell-no">—</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-full">✓</td></tr>
+            <tr><td class="row-hd">6 · Crear</td><td class="cell-no">—</td><td class="cell-full">✓</td><td class="cell-full">✓</td><td class="cell-full">✓</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:10px;font-size:.75rem;color:var(--gray-500)">
+        <span><span style="background:#A7F3D0;padding:2px 8px;border-radius:4px;font-weight:700">✓</span> Combinación habitual</span>
+        <span><span style="background:#FDE68A;padding:2px 8px;border-radius:4px;font-weight:700">parcial</span> Posible con diseño cuidadoso</span>
+        <span><span style="background:var(--gray-100);padding:2px 8px;border-radius:4px;font-weight:700">—</span> Poco frecuente</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ PANEL 3: NIVELES ══════════════════ -->
+<div id="niveles" class="panel">
+
+  <div class="quote-simple">
+    Los dos primeros niveles se pueden alcanzar en una clase magistral pasiva. A partir del tercero, el estudiante debe ser protagonista.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪜 La jerarquía de los 6 niveles</div>
+    <div class="card-body">
+      <p style="margin-bottom:16px">Aunque se trata de una jerarquía clara —y muchas veces se representa como una pirámide— no debemos despreciar los escalones inferiores. <strong>Si no construimos la base, no llegamos a la cúspide.</strong></p>
+      <div class="pyramid-wrap" style="border:none;padding:0;box-shadow:none;margin-bottom:0">
+        <div class="pyramid">
+          <div class="pyr-row pyr-6"><span class="pyr-n">6</span><span class="pyr-label">CREAR</span><span class="pyr-verb">diseñar, formular, proponer, construir</span></div>
+          <div class="pyr-row pyr-5"><span class="pyr-n">5</span><span class="pyr-label">EVALUAR</span><span class="pyr-verb">valorar, criticar, juzgar, comparar</span></div>
+          <div class="pyr-row pyr-4"><span class="pyr-n">4</span><span class="pyr-label">ANALIZAR</span><span class="pyr-verb">descomponer, relacionar, examinar</span></div>
+          <div class="pyr-row pyr-3"><span class="pyr-n">3</span><span class="pyr-label">APLICAR</span><span class="pyr-verb">usar, ejecutar, implementar, resolver</span></div>
+          <div class="pyr-row pyr-2"><span class="pyr-n">2</span><span class="pyr-label">COMPRENDER</span><span class="pyr-verb">explicar, clasificar, comparar, resumir</span></div>
+          <div class="pyr-row pyr-1"><span class="pyr-n">1</span><span class="pyr-label">RECORDAR</span><span class="pyr-verb">listar, identificar, reconocer, evocar</span></div>
+        </div>
+        <p class="pyr-note">⚠️ Nota: en la taxonomía original (1956), EVALUAR ocupaba el nivel más alto. La revisión de 2001 situó CREAR en la cúspide, al reconocer que integra todos los niveles previos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Acordeones -->
+  <div style="margin-bottom:14px">
+    <p style="font-size:.82rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Despliega cada nivel para ver descripción y ejemplo clínico</p>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 1</span> 📂 RECORDAR</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Recuperar información de la memoria: <strong>reconocer o evocar</strong> hechos y conceptos básicos. En la clasificación original este primer escalón se llamaba «Conocimiento».</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> listar, identificar, nombrar, reconocer, evocar, definir.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Listar los síntomas típicos de una vasculitis de pequeño vaso: púrpura palpable, mononeuritis múltiple, glomerulonefritis rápidamente progresiva, hemorragia alveolar.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:var(--yellow-pale);border-radius:8px;padding:10px 14px;font-size:.8rem;color:var(--gray-700)">
+          🏫 <strong>En el aula:</strong> alcanzable con clase magistral pasiva. Preguntas tipo test de elección múltiple, cuestionarios de hechos.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 2</span> 💡 COMPRENDER</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Construir significado: <strong>explicar, clasificar, comparar, resumir</strong>. El estudiante no solo recuerda, sino que entiende el «por qué».</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> explicar, describir, clasificar, comparar, interpretar, parafrasear.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Explicar por qué las vasculitis de pequeño vaso producen glomerulonefritis y púrpura, mientras que las de grandes vasos se manifiestan con claudicación o soplos vasculares.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:var(--yellow-pale);border-radius:8px;padding:10px 14px;font-size:.8rem;color:var(--gray-700)">
+          🏫 <strong>En el aula:</strong> alcanzable con clase magistral bien diseñada. Preguntas abiertas breves, esquemas conceptuales, mapas mentales.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 3</span> ⚙️ APLICAR</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Usar procedimientos en <strong>situaciones concretas</strong>. El conocimiento deja de ser abstracto y se convierte en acción clínica.</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> aplicar, ejecutar, usar, resolver, implementar, demostrar.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Ante un paciente con fiebre, púrpura, insuficiencia renal y ANCA-MPO positivo: establecer un diagnóstico razonado, solicitar las pruebas adecuadas e iniciar el tratamiento.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;font-size:.8rem;color:#166534">
+          🎓 <strong>Requiere activar al estudiante:</strong> resolución de casos clínicos, simulación, role-play, talleres prácticos. Escuchar ya no es suficiente.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 4</span> 🔍 ANALIZAR</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Descomponer la información y <strong>comprender sus relaciones</strong>. El estudiante identifica por qué las cosas funcionan como funcionan.</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> analizar, descomponer, diferenciar, relacionar, examinar, organizar.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Entender por qué la clasificación por tamaño del vaso es clínicamente útil y cómo distintos mecanismos patogénicos (ANCA, inmunocomplejos) se asocian a patrones clínicos concretos.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;font-size:.8rem;color:#166534">
+          🎓 <strong>Requiere activar al estudiante:</strong> seminarios de discusión, análisis de artículos, pensamiento clínico en voz alta.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 5</span> ⚖️ EVALUAR</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Emitir <strong>juicios basados en criterios y evidencia</strong>. El estudiante valora, compara opciones y toma decisiones justificadas.</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> valorar, juzgar, criticar, comparar, argumentar, defender, recomendar.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Valorar críticamente un artículo sobre un nuevo biomarcador de recaída. Comparar estrategias de mantenimiento terapéutico en función de la evidencia disponible y del contexto del paciente.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;font-size:.8rem;color:#166534">
+          🎓 <strong>Requiere activar al estudiante:</strong> lectura crítica de artículos, debate clínico, sesiones de toma de decisiones complejas.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left"><span class="acc-level">Nivel 6</span> ✨ CREAR</div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">Integrar conocimientos para <strong>generar algo nuevo</strong>. El máximo nivel cognitivo: el estudiante produce, diseña o formula de forma original.</div>
+            <div class="acc-desc" style="margin-top:8px">📌 <em>Verbos clave:</em> diseñar, formular, proponer, construir, planificar, producir, inventar.</div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo en vasculitis</div>
+            <div class="acc-desc">Identificar lagunas de conocimiento, formular hipótesis clínicas, diseñar un protocolo de investigación o proponer algoritmos diagnósticos adaptados a un contexto concreto.</div>
+          </div>
+        </div>
+        <div style="margin-top:12px;background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:10px 14px;font-size:.8rem;color:#166534">
+          🎓 <strong>Requiere activar al estudiante:</strong> proyectos de investigación, trabajo final de grado, diseño de protocolos, innovación clínica.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="warn-box">
+    <div class="warn-title">⚠️ El peligro de la IA sin raíces</div>
+    <p>La necesidad de dominar los escalones básicos para ascender por la pirámide está ahora amenazada por el uso acrítico de la IA generativa. Esta puede hacerte creer que por saber escribir un prompt para «crear algo nuevo» has entendido la base del problema — dando lugar a peligrosos engendros estocásticos sin fundamento real.</p>
+  </div>
+
+</div>
+
+<!-- ══════════════════ PANEL 4: EJEMPLO ══════════════════ -->
+<div id="ejemplo" class="panel">
+
+  <div class="quote-simple">
+    El mismo tema clínico — las vasculitis — puede abordarse en los 6 niveles cognitivos. La profundidad depende del diseño docente.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔬 Los 6 niveles aplicados al estudio de las vasculitis</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">📂 1 · RECORDAR<br><small style="font-weight:400;color:var(--gray-500)">(Conocimiento factual)</small></td>
+            <td class="ex-desc">Listar los síntomas típicos: púrpura palpable, mononeuritis múltiple, glomerulonefritis rápidamente progresiva, hemorragia alveolar.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">💡 2 · COMPRENDER<br><small style="font-weight:400;color:var(--gray-500)">(Conocimiento conceptual)</small></td>
+            <td class="ex-desc">Explicar por qué las vasculitis de pequeño vaso afectan riñón y pulmón (capilares glomerulares y alveolares). Clasificar una vasculitis según tamaño vascular y presentación clínica.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">⚙️ 3 · APLICAR<br><small style="font-weight:400;color:var(--gray-500)">(Conocimiento procedimental)</small></td>
+            <td class="ex-desc">Paciente de 65 años con fiebre, púrpura, insuficiencia renal aguda y ANCA-MPO+: diagnosticar poliangeítis microscópica, solicitar biopsia renal y TC tórax, iniciar inmunosupresión.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔍 4 · ANALIZAR<br><small style="font-weight:400;color:var(--gray-500)">(Conocimiento conceptual)</small></td>
+            <td class="ex-desc">Comprender por qué la clasificación por tamaño vascular es relevante: pequeño vaso → afectación glomerular/alveolar; mediano → neuropatía; grande → isquemia. Relacionar mecanismos patogénicos con patrones clínicos.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">⚖️ 5 · EVALUAR<br><small style="font-weight:400;color:var(--gray-500)">(Conceptual y procedimental)</small></td>
+            <td class="ex-desc">Analizar críticamente un artículo sobre biomarcadores de recaída. Comparar estrategias de mantenimiento (metotrexato vs azatioprina vs rituximab) según evidencia, efectos adversos y contexto del paciente.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">✨ 6 · CREAR<br><small style="font-weight:400;color:var(--gray-500)">(Conceptual, procedimental y metacognitivo)</small></td>
+            <td class="ex-desc">Identificar lagunas: ¿por qué algunos ANCA+ no desarrollan enfermedad y otros sí? ¿Qué perfiles tienen más riesgo de recidivar? Formular hipótesis, diseñar protocolo de investigación, proponer algoritmos diagnóstico-terapéuticos innovadores.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════════════════ PANEL 5: IMPLICACIONES ══════════════════ -->
+<div id="implicaciones" class="panel">
+
+  <div class="quote-simple">
+    ¿Diseñamos nuestros programas docentes teniendo en cuenta toda la matriz? ¿O seguimos moviéndonos, quizá por inercia, en las primeras filas?
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 Implicaciones para la educación médica</div>
+    <div class="card-body">
+      <p>La taxonomía bidimensional nos ofrece una <strong>matriz de posibilidades educativas</strong>. Nos permite combinar tipos de conocimiento con procesos cognitivos y preguntarnos, de forma honesta, qué estamos haciendo realmente en nuestras asignaturas.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪞 Preguntas para la autoevaluación docente</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">❓</div>
+          <div class="valid-title">¿Pedimos solo recordar datos?</div>
+          <div class="valid-desc">El nivel 1 es necesario pero insuficiente. ¿Cuánto peso tiene en nuestra evaluación?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">💡</div>
+          <div class="valid-title">¿Facilitamos la comprensión?</div>
+          <div class="valid-desc">¿Explicamos el «por qué» de los conceptos clave o solo transmitimos hechos?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🩺</div>
+          <div class="valid-title">¿Creamos espacios para aplicar?</div>
+          <div class="valid-desc">¿Hay casos reales, situaciones clínicas donde el estudiante deba actuar?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📑</div>
+          <div class="valid-title">¿Entrenamos la lectura crítica?</div>
+          <div class="valid-desc">¿Evaluamos la capacidad de valorar evidencia o solo de reproducirla?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔬</div>
+          <div class="valid-title">¿Damos margen para preguntar?</div>
+          <div class="valid-desc">¿Los estudiantes formulan sus propias preguntas o solo responden las nuestras?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📊</div>
+          <div class="valid-title">¿Alineamos enseñanza y evaluación?</div>
+          <div class="valid-desc">¿El examen evalúa el mismo nivel cognitivo que trabajamos en el aula?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🚀 El reto del diseño formativo</div>
+    <div class="card-body">
+      <p>El objetivo de un programa formativo completo no es quedarse en los dos primeros niveles, aunque sean imprescindibles como base. El reto es diseñar experiencias que empujen progresivamente hacia niveles superiores, donde el <strong>razonamiento clínico, la reflexión crítica y la generación de conocimiento</strong> cobran protagonismo.</p>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:16px">
+        <div style="flex:1;min-width:200px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px">
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:6px">🏫 Niveles 1–2</div>
+          <div style="font-size:.78rem;color:var(--gray-700)">Clase magistral bien diseñada. Imprescindibles. Son la base sin la cual no se puede avanzar.</div>
+        </div>
+        <div style="flex:1;min-width:200px;background:#DCFCE7;border:1px solid #86EFAC;border-radius:8px;padding:14px">
+          <div style="font-size:.82rem;font-weight:700;margin-bottom:6px">🎓 Niveles 3–6</div>
+          <div style="font-size:.78rem;color:var(--gray-700)">Requieren activar al estudiante. Resolución de problemas, trabajo en grupo, clases activas. El estudiante debe ser protagonista.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Conexión con otros recursos EduMed.UVa</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">📓 Cuaderno 2</td>
+            <td class="ex-desc">La clase magistral cubre bien los niveles 1 y 2. Las 5 Aes ayudan a llegar al nivel 3 desde el propio formato expositivo. <a href="https://tutorcyllo.github.io/clasemagistral2026/" style="color:var(--yellow-deep);font-weight:600">Ver cuaderno →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">🤖 Small TeAIching</td>
+            <td class="ex-desc">La IA puede apoyar los niveles superiores si el docente la usa de forma crítica — o generar una falsa sensación de dominio si se usa sin fundamento. <a href="https://tutorcyllo.github.io/smallteaiching/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">📋 Rúbricas</td>
+            <td class="ex-desc">El diseño de rúbricas es mucho más preciso cuando se alinea con los niveles de la taxonomía. <a href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026 ·
+  Contacto: <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a> ·
+  <a href="https://tutorcyllo.wixsite.com/educacionmedicauva">TutorCyLlo</a><br>
+  <span style="margin-top:4px;display:inline-block">Desarrollada con Claude Sonnet 4.6 a partir de un documento original de EduMed UVa</span>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
