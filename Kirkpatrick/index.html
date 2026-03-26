@@ -226,36 +226,47 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">🪜 La escalera de Kirkpatrick · Lectura rápida</div>
     <div class="card-body">
-      <div class="ladder">
-        <div class="ladder-row">
-          <div class="ladder-num">4</div>
-          <div>
-            <div class="ladder-label">Resultados</div>
-            <div class="ladder-desc">Mejora el paciente</div>
+      <div style="display:flex;align-items:stretch;gap:10px">
+        <div style="display:flex;flex-direction:column;justify-content:space-between;align-items:center;padding:6px 0">
+          <div style="background:var(--gray-900);color:var(--yellow);font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:100px;white-space:nowrap;writing-mode:horizontal-tb;text-align:center">⬆ más difícil de demostrar</div>
+          <div style="flex:1;display:flex;align-items:center;justify-content:center;margin:4px auto">
+            <svg width="16" height="100%" viewBox="0 0 16 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" style="height:100%;min-height:40px">
+              <defs><marker id="ah" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D1D5DB"/></marker>
+              <marker id="ah2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse"><path d="M0,0 L6,3 L0,6 Z" fill="#D1D5DB"/></marker></defs>
+              <line x1="8" y1="6" x2="8" y2="74" stroke="#D1D5DB" stroke-width="2" marker-start="url(#ah2)" marker-end="url(#ah)"/>
+            </svg>
           </div>
-          <div class="ladder-arrow">↑ más difícil de demostrar</div>
+          <div style="background:var(--yellow);color:var(--gray-900);font-size:.68rem;font-weight:700;padding:4px 10px;border-radius:100px;white-space:nowrap;text-align:center">⬇ más fácil de medir</div>
         </div>
-        <div class="ladder-row">
-          <div class="ladder-num">3</div>
-          <div>
-            <div class="ladder-label">Conducta</div>
-            <div class="ladder-desc">Lo hago en la práctica</div>
+        <div class="ladder" style="flex:1;margin:0">
+          <div class="ladder-row">
+            <div class="ladder-num">4</div>
+            <div>
+              <div class="ladder-label">Resultados</div>
+              <div class="ladder-desc">Mejoría de resultados en el paciente</div>
+            </div>
           </div>
-        </div>
-        <div class="ladder-row">
-          <div class="ladder-num">2</div>
-          <div>
-            <div class="ladder-label">Aprendizaje</div>
-            <div class="ladder-desc">He aprendido algo</div>
+          <div class="ladder-row">
+            <div class="ladder-num">3</div>
+            <div>
+              <div class="ladder-label">Conducta</div>
+              <div class="ladder-desc">Lo hago en la práctica</div>
+            </div>
           </div>
-        </div>
-        <div class="ladder-row">
-          <div class="ladder-num">1</div>
-          <div>
-            <div class="ladder-label">Reacción</div>
-            <div class="ladder-desc">Me gusta</div>
+          <div class="ladder-row">
+            <div class="ladder-num">2</div>
+            <div>
+              <div class="ladder-label">Aprendizaje</div>
+              <div class="ladder-desc">He aprendido algo</div>
+            </div>
           </div>
-          <div class="ladder-arrow">↓ más fácil de medir</div>
+          <div class="ladder-row">
+            <div class="ladder-num">1</div>
+            <div>
+              <div class="ladder-label">Reacción</div>
+              <div class="ladder-desc">Me gusta</div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
