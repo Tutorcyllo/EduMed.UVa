@@ -1,1 +1,735 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MCQ · KFQ · SCT — EduMed EvalUVa</title>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --yellow:#F5C518;--yellow-mid:#FEF0A0;--yellow-pale:#FFFDE7;--yellow-deep:#D4A000;
+  --gray-900:#111318;--gray-700:#3D4451;--gray-500:#6B7280;--gray-300:#D1D5DB;
+  --gray-200:#E5E7EB;--gray-100:#F3F4F6;--gray-50:#F9FAFB;--white:#FFFFFF;
+  --radius:10px;--shadow-sm:0 1px 3px rgba(0,0,0,0.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,0.10);--shadow-lg:0 8px 24px rgba(0,0,0,0.13);
+  --lvl1-bg:#fff0f4;--lvl2-bg:#fffbec;--lvl3-bg:#f0f4ff;--lvl4-bg:#e8edf7;
+  --b1-bg:#fce4ec;--b1-c:#880e4f;--b2-bg:#fff8e1;--b2-c:#c27000;
+  --b3-bg:#e3eaf8;--b3-c:#0d2d6b;--b4-bg:#dce3f5;--b4-c:#061a45;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Figtree',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh;-webkit-font-smoothing:antialiased}
 
+header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 36px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-brand{display:flex;align-items:center;gap:12px}
+.header-logo{width:52px;height:52px;border-radius:50%;object-fit:contain;border:2px solid rgba(0,0,0,0.12);background:white;flex-shrink:0}
+.header-title{font-size:1.05rem;font-weight:800;color:var(--gray-900);letter-spacing:-0.5px;line-height:1.1}
+.header-subtitle{font-size:0.65rem;font-weight:600;color:var(--gray-700);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px}
+.badge{background:var(--gray-900);color:var(--yellow);font-size:0.7rem;font-weight:700;padding:4px 12px;border-radius:100px;white-space:nowrap}
+
+.hero{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);padding:28px 36px}
+.hero-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:28px}
+.hero-text{flex:1;min-width:0}
+.hero-headline{font-size:1.6rem;font-weight:800;color:var(--gray-900);line-height:1.15;letter-spacing:-0.5px;margin-bottom:6px}
+.hero-sub{font-size:0.875rem;color:var(--gray-700);font-weight:500;margin-bottom:16px;max-width:640px}
+.hero-stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat-pill{background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:0.03em}
+.hero-meta{font-size:0.75rem;color:var(--gray-700);margin-top:12px;font-weight:500}
+.hero-img-wrap{flex-shrink:0}
+.hero-img{width:260px;height:auto;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,0.18))}
+
+.tabs-wrap{max-width:1280px;margin:0 auto;padding:24px 36px 0}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:5px;width:fit-content;margin-bottom:24px;box-shadow:var(--shadow-sm);flex-wrap:wrap}
+.tab{font-family:'Figtree',sans-serif;font-size:0.82rem;font-weight:700;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;background:transparent;color:var(--gray-500);transition:all 0.15s;white-space:nowrap}
+.tab:hover{color:var(--gray-900);background:var(--gray-100)}
+.tab.active{background:var(--yellow);color:var(--gray-900);box-shadow:var(--shadow-sm)}
+
+main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
+.panel{display:none}.panel.active{display:block}
+
+.card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.card-title{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-body{font-size:0.875rem;color:var(--gray-700);line-height:1.65}
+.card-body p{margin-bottom:10px}.card-body p:last-child{margin-bottom:0}
+.card-body h3{font-size:0.95rem;font-weight:700;color:var(--gray-900);margin:20px 0 8px}
+
+.callout{border-left:4px solid var(--gray-300);background:var(--gray-50);padding:14px 18px;margin:14px 0;border-radius:0 8px 8px 0;font-size:0.85rem;color:var(--gray-700);line-height:1.65}
+.callout.yellow{border-left-color:var(--yellow-deep);background:var(--yellow-pale)}
+.callout.dark{border-left-color:var(--gray-900);background:var(--gray-100)}
+.callout-title{font-size:0.75rem;text-transform:uppercase;letter-spacing:1.5px;font-weight:700;margin-bottom:8px;color:var(--gray-500)}
+.callout.yellow .callout-title{color:var(--yellow-deep)}
+.callout.dark .callout-title{color:var(--gray-900)}
+.callout ul{list-style:none;padding:0}
+.callout ul li{padding:4px 0 4px 18px;position:relative}
+.callout ul li::before{content:"▸";position:absolute;left:0;font-size:10px;top:6px;color:var(--gray-500)}
+.callout.yellow ul li::before{color:var(--yellow-deep)}
+.callout.dark ul li::before{color:var(--gray-900)}
+
+.quote-simple{background:var(--gray-900);color:var(--yellow);border-radius:var(--radius);padding:16px 20px 16px 24px;margin-bottom:14px;font-size:0.9rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid var(--yellow-deep)}
+
+.valid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0}
+.valid-item{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px}
+.valid-icon{font-size:1.3rem;margin-bottom:6px}
+.valid-title{font-size:0.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.valid-desc{font-size:0.78rem;color:var(--gray-700);line-height:1.55}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
+
+.keypoints{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px;margin:14px 0}
+.keypoint{background:var(--white);border:1.5px solid var(--gray-200);border-left:4px solid var(--yellow-deep);padding:14px 16px;border-radius:0 8px 8px 0;font-size:0.845rem;color:var(--gray-700);line-height:1.6}
+.keypoint::before{content:"✦ ";color:var(--yellow-deep);font-weight:700}
+
+.table-wrap{overflow-x:auto;margin:14px 0;border-radius:var(--radius);box-shadow:var(--shadow-sm);border:1px solid var(--gray-200)}
+table{width:100%;border-collapse:collapse;font-size:0.82rem;min-width:480px}
+thead tr{background:var(--gray-900);color:var(--yellow)}
+thead th{padding:11px 13px;text-align:left;font-size:0.75rem;font-weight:700}
+tbody tr:nth-child(even){background:var(--gray-50)}
+tbody tr:hover{background:var(--yellow-pale);transition:background 0.15s}
+tbody td{padding:11px 13px;vertical-align:top;border-bottom:1px solid var(--gray-200);color:var(--gray-700);line-height:1.5}
+tbody td:first-child{font-weight:600;color:var(--gray-900)}
+.level-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:0.7rem;font-weight:700;white-space:nowrap}
+.b1{background:var(--b1-bg);color:var(--b1-c)}.b2{background:var(--b2-bg);color:var(--b2-c)}
+.b3{background:var(--b3-bg);color:var(--b3-c)}.b4{background:var(--b4-bg);color:var(--b4-c)}
+
+.likert-wrap{overflow-x:auto;margin:14px 0}
+.likert-table{width:100%;border-collapse:collapse;font-size:0.8rem;min-width:700px}
+.likert-table thead tr{background:var(--gray-900);color:var(--yellow)}
+.likert-table thead th{padding:10px 12px;text-align:center;font-size:0.72rem;font-weight:700}
+.likert-table thead th:first-child,.likert-table thead th:nth-child(2){text-align:left}
+.likert-table tbody td{padding:12px 13px;vertical-align:middle;border-bottom:1px solid var(--gray-200);color:var(--gray-700);line-height:1.5}
+.likert-table tbody td:first-child{font-weight:600;color:var(--gray-900);width:28%}
+.likert-table tbody td:nth-child(2){width:28%}
+.likert-table tbody tr:nth-child(even){background:var(--gray-50)}
+.likert-cell{text-align:center}
+.likert-opt{display:inline-flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;border:2px solid var(--gray-300);font-size:0.75rem;font-weight:700;user-select:none}
+.likert-neg{border-color:#f48fb1;color:#880e4f;background:#fce4ec}
+.likert-neu{border-color:#b0bec5;color:#546e7a;background:#eceff1}
+.likert-pos{border-color:#90caf9;color:#0d47a1;background:#e3f2fd}
+
+/* ref-list con links */
+.ref-list{list-style:none;padding:0}
+.ref-list li{padding:10px 0 10px 18px;border-bottom:1px solid var(--gray-200);font-size:0.82rem;color:var(--gray-700);position:relative;line-height:1.6}
+.ref-list li:last-child{border-bottom:none}
+.ref-list li::before{content:"—";position:absolute;left:0;color:var(--gray-300)}
+.ref-link{display:inline-block;margin-top:4px;color:var(--yellow-deep);font-weight:700;font-size:0.78rem;text-decoration:underline;text-underline-offset:3px}
+.ref-link:hover{color:var(--gray-900)}
+
+.tipo-card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:20px 22px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.tipo-header{display:flex;align-items:flex-start;gap:14px;margin-bottom:12px}
+.tipo-badge-big{background:var(--gray-900);color:var(--yellow);font-size:0.7rem;font-weight:800;padding:6px 14px;border-radius:100px;white-space:nowrap;letter-spacing:0.04em;flex-shrink:0;margin-top:2px}
+.tipo-title{font-size:1rem;font-weight:800;color:var(--gray-900);line-height:1.2}
+.tipo-subtitle{font-size:0.78rem;color:var(--gray-500);font-weight:600;text-transform:uppercase;letter-spacing:0.08em;margin-top:2px}
+.tipo-body{font-size:0.875rem;color:var(--gray-700);line-height:1.65}
+.tipo-body p{margin-bottom:8px}
+
+.ai-disclaimer{background:var(--white);border:1.5px solid var(--gray-200);border-left:4px solid var(--gray-300);border-radius:0 var(--radius) var(--radius) 0;padding:16px 20px;margin:24px 0;font-size:0.8rem;color:var(--gray-500)}
+.ai-disclaimer strong{color:var(--gray-700)}
+
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--gray-900);color:var(--yellow);border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity 0.2s,transform 0.2s;z-index:200}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{background:var(--gray-700);transform:translateY(-2px)}
+
+footer{text-align:center;padding:20px 16px;font-size:0.75rem;color:var(--gray-500);border-top:1px solid var(--gray-200);background:var(--white)}
+footer strong{color:var(--yellow-deep)}
+
+@media(max-width:1024px) and (min-width:769px){
+  .hero-img{width:200px}
+}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;height:60px}
+  .header-logo{width:40px;height:40px}
+  .header-title{font-size:0.95rem}
+  .badge{display:none}
+  .hero{padding:20px 16px}
+  .hero-inner{flex-direction:column}
+  .hero-img{width:60%;display:block;margin:0 auto}
+  .hero-headline{font-size:1.2rem}
+  .tabs-wrap{padding:16px 16px 0}
+  .tabs{width:100%}
+  .tab{font-size:0.75rem;padding:8px 10px;flex:1;text-align:center}
+  main{padding:0 16px 60px}
+  .two-col,.three-col,.valid-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-brand">
+      <img class="header-logo" src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png" alt="Logo UVa" onerror="this.style.display='none'">
+      <div>
+        <div class="header-title">EduMed EvalUVa 4.0</div>
+        <div class="header-subtitle">Facultad de Medicina · Universidad de Valladolid</div>
+      </div>
+    </div>
+    <span class="badge">Evaluación formativa · Nov 2025</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <h1 class="hero-headline">MCQ · KFQ · SCT<br>Tres tipos de preguntas para evaluar el conocimiento, la decisión y el razonamiento clínico</h1>
+      <p class="hero-sub">Guía práctica sobre preguntas de respuesta múltiple, sobre puntos clave y de concordancia de guiones: qué son, cómo se construyen y para qué sirven en educación médica.</p>
+      <div class="hero-stats">
+        <span class="stat-pill">Evaluación formativa</span>
+        <span class="stat-pill">Examen escrito</span>
+        <span class="stat-pill">Razonamiento clínico</span>
+        <span class="stat-pill">Incertidumbre diagnóstica</span>
+      </div>
+
+    </div>
+    <div class="hero-img-wrap">
+      <img class="hero-img"
+           src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
+           alt="EduMed Innova 2026"
+           onerror="this.style.display='none'">
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs" id="tabBar">
+    <button class="tab active" data-tab="intro">Intro</button>
+    <button class="tab" data-tab="mcq">MCQ</button>
+    <button class="tab" data-tab="kfq">KFQ</button>
+    <button class="tab" data-tab="sct">SCT</button>
+    <button class="tab" data-tab="comparativa">Comparativa</button>
+    <button class="tab" data-tab="ia">IA y preguntas</button>
+    <button class="tab" data-tab="refs">Referencias</button>
+  </div>
+</div>
+
+<main>
+
+<!-- INTRO -->
+<div class="panel active" id="panel-intro">
+  <div class="card">
+    <div class="card-title">📌 ¿Por qué importa el tipo de pregunta?</div>
+    <div class="card-body">
+      <p>No todas las preguntas de examen miden lo mismo. Una pregunta bien construida puede evaluar si el alumno <strong>sabe</strong> un dato, si es capaz de <strong>decidir correctamente</strong> en un paso crítico de un caso clínico, o si sabe <strong>razonar ante la incertidumbre</strong> cuando la información disponible es incompleta o contradictoria.</p>
+      <p>Este apartado repasa tres formatos que cubren ese espectro: las archiconocidas <strong>MCQ</strong> (Multiple Choice Questions), las menos habituales <strong>KFQ</strong> (Key Feature Questions) y las aún menos frecuentes <strong>SCT</strong> (Script Concordance Tests). Los tres son útiles; la clave está en elegir el correcto según lo que queremos evaluar.</p>
+    </div>
+  </div>
+  <div class="quote-simple">"El tipo de pregunta que elegimos no es un detalle técnico: determina qué nivel cognitivo exigimos a nuestros alumnos y qué tipo de médico estamos formando."</div>
+  <div class="valid-grid">
+    <div class="valid-item">
+      <div class="valid-icon">📝</div>
+      <div class="valid-title">MCQ · Opción múltiple</div>
+      <div class="valid-desc">Mide si el alumno <strong>sabe</strong>. Evalúa conocimiento factual y aplicación de información en situaciones con respuesta única y bien definida.</div>
+      <div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">Incertidumbre baja</div>
+    </div>
+    <div class="valid-item">
+      <div class="valid-icon">🎯</div>
+      <div class="valid-title">KFQ · Punto clave</div>
+      <div class="valid-desc">Mide si el alumno <strong>decide</strong> correctamente. Evalúa los pasos críticos de un caso clínico complejo, los potencialmente erróneos.</div>
+      <div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">Incertidumbre media-alta</div>
+    </div>
+    <div class="valid-item">
+      <div class="valid-icon">🧭</div>
+      <div class="valid-title">SCT · Concordancia de guiones</div>
+      <div class="valid-desc">Mide si el alumno <strong>razona</strong> ante la incertidumbre. Evalúa cómo actualiza sus hipótesis cuando llega nueva información.</div>
+      <div style="margin-top:8px;display:inline-block;background:var(--gray-900);color:var(--yellow);font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:100px">Incertidumbre alta</div>
+    </div>
+  </div>
+</div>
+
+<!-- MCQ -->
+<div class="panel" id="panel-mcq">
+  <div class="tipo-card">
+    <div class="tipo-header">
+      <span class="tipo-badge-big">MCQ</span>
+      <div>
+        <div class="tipo-title">Multiple Choice Question · Pregunta de opción múltiple</div>
+        <div class="tipo-subtitle">Medimos si el alumno sabe</div>
+      </div>
+    </div>
+    <div class="tipo-body">
+      <p>Sin duda la más conocida por todos. Se presenta un enunciado o un caso clínico breve seguido de varias opciones de respuesta. La investigación actual muestra que <strong>4 opciones funcionan mejor que las clásicas 5</strong>: una respuesta correcta y tres distractores.</p>
+      <p>La dificultad de construir buenas MCQ suele estar en elegir bien esos distractores: ni demasiado fáciles ni imposibles. Las MCQ evalúan conocimiento factual y razonamiento bien definido. Su corrección es objetiva y automatizable.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">✏️ Ejemplo · Betabloqueantes en insuficiencia cardíaca</div>
+    <div class="card-body">
+      <div class="callout yellow">
+        <div class="callout-title">Caso clínico</div>
+        Varón de 65 años con insuficiencia cardíaca con fracción de eyección reducida (FE 30%), en tratamiento con IECA y diurético de asa. Se plantea iniciar un betabloqueante.
+      </div>
+      <p style="margin-top:14px;font-weight:700;color:var(--gray-900)">¿Cuál de los siguientes betabloqueantes ha demostrado reducir la mortalidad en la insuficiencia cardíaca con fracción de eyección reducida?</p>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Opción</th><th>Fármaco</th><th>Comentario didáctico</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>Atenolol</td><td>Distractor: betabloqueante cardioselectivo, pero sin evidencia en IC-FEr.</td></tr>
+            <tr style="background:var(--yellow-pale)"><td><strong>B ✓</strong></td><td><strong>Bisoprolol</strong></td><td><strong>Respuesta correcta.</strong> Junto con carvedilol y metoprolol succinato, evidencia de reducción de mortalidad en IC-FEr.</td></tr>
+            <tr><td>C</td><td>Pindolol</td><td>Distractor: tiene actividad simpaticomimética intrínseca; contraindicado en IC.</td></tr>
+            <tr><td>D</td><td>Propranolol</td><td>Distractor: no selectivo, sin evidencia en IC-FEr en los ensayos pivotales.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠️ Claves para construir buenas MCQ</div>
+    <div class="card-body">
+      <div class="callout dark">
+        <div class="callout-title">Principios esenciales (Haladyna et al., 2002)</div>
+        <ul>
+          <li>Usar 4 opciones; la 5.ª suele ser un distractor débil que no aporta discriminación.</li>
+          <li>Los distractores deben ser plausibles para quien no domina el tema, pero claramente incorrectos para quien sí lo domina.</li>
+          <li>Evitar opciones como "todas las anteriores" o "ninguna de las anteriores".</li>
+          <li>El enunciado debe ser comprensible sin leer las opciones.</li>
+          <li>Evitar negaciones dobles y palabras como "nunca" o "siempre".</li>
+          <li>Todas las opciones deben tener longitud y estructura gramaticalmente paralelas.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- KFQ -->
+<div class="panel" id="panel-kfq">
+  <div class="tipo-card">
+    <div class="tipo-header">
+      <span class="tipo-badge-big">KFQ</span>
+      <div>
+        <div class="tipo-title">Key Feature Question · Pregunta sobre un punto clave o crítico</div>
+        <div class="tipo-subtitle">Medimos si el alumno decide de forma correcta</div>
+      </div>
+    </div>
+    <div class="tipo-body">
+      <p>Evalúa la toma de decisiones en los <strong>pasos críticos</strong> ("key features") de un problema clínico. Cada caso tiene varias preguntas breves en secuencia, centradas en las decisiones esenciales o <strong>potencialmente erróneas</strong>, no en la totalidad del caso.</p>
+      <p>Las preguntas pueden ser de selección múltiple o de texto abierto. El objetivo es medir <strong>aplicación del conocimiento</strong>, no memorización. A diferencia de la MCQ, no busca la respuesta "correcta teórica" sino la decisión clínica más adecuada en ese momento del caso.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">✏️ Ejemplo · Inicio de bisoprolol en IC compleja</div>
+    <div class="card-body">
+      <div class="callout yellow">
+        <div class="callout-title">Caso clínico</div>
+        Paciente de 80 años con IC-FEr (FEVI 20%), enfermedad renal crónica moderada y fibrilación auricular con respuesta ventricular controlada (FC promedio 60-70 lpm) con digoxina. Se inicia bisoprolol 2,5 mg dos veces al día. Una semana después acude a urgencias con hipotensión sintomática (PA 85/50 mmHg), signos de shock cardiogénico incipiente y FC de 38 lpm.
+      </div>
+      <div class="card" style="margin-top:14px;background:var(--gray-50);box-shadow:none;border-color:var(--gray-200)">
+        <div class="card-title" style="font-size:0.85rem">🔑 Pregunta clave 1 — Manejo inicial inmediato</div>
+        <div class="card-body">
+          <p style="font-weight:600;color:var(--gray-900)">¿Cuál es el paso más crucial e inmediato para prevenir la inminente inestabilidad hemodinámica? <em>(Elija solo una opción)</em></p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Opción</th><th>Acción</th><th>Comentario</th></tr></thead>
+              <tbody>
+                <tr><td>A</td><td>Añadir diurético de asa en perfusión</td><td>Empeoraría la hipotensión; no aborda la causa.</td></tr>
+                <tr><td>B</td><td>Bolo de cristaloides para corregir hipotensión</td><td>Puede ser una medida de soporte, pero no la prioritaria con FC 38.</td></tr>
+                <tr style="background:var(--yellow-pale)"><td><strong>C ✓</strong></td><td><strong>Suspender el bisoprolol de forma inmediata</strong></td><td><strong>Correcta.</strong> La bradicardia severa con shock es una contraindicación absoluta; la causa es iatrogénica.</td></tr>
+                <tr><td>D</td><td>Solicitar Rx tórax y troponinas</td><td>Puede hacerse, pero no es el paso más urgente.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="background:var(--gray-50);box-shadow:none;border-color:var(--gray-200)">
+        <div class="card-title" style="font-size:0.85rem">🔑 Pregunta clave 2 — Reintroducción del tratamiento</div>
+        <div class="card-body">
+          <p style="font-weight:600;color:var(--gray-900)">¿Cuál es la actuación más adecuada para reiniciar el tratamiento?</p>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Opción</th><th>Acción</th><th>Comentario</th></tr></thead>
+              <tbody>
+                <tr style="background:var(--yellow-pale)"><td><strong>A ✓</strong></td><td><strong>Reiniciar con la mitad de la dosis una vez resuelto el cuadro</strong></td><td><strong>Correcta.</strong> Los betabloqueantes deben reintroducirse con titulación cuidadosa; el beneficio en IC-FEr es mayor que el riesgo.</td></tr>
+                <tr><td>B</td><td>Cambiar a un betabloqueante no selectivo</td><td>Los no selectivos tienen peor perfil en IC.</td></tr>
+                <tr><td>C</td><td>Evitar betabloqueantes de forma definitiva</td><td>Incorrecto: la evidencia de beneficio en IC-FEr es sólida.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠️ Claves para construir buenas KFQ</div>
+    <div class="card-body">
+      <div class="callout dark">
+        <div class="callout-title">Principios esenciales (Nayer et al., 2018)</div>
+        <ul>
+          <li>Identificar primero los <em>key features</em>: los pasos donde ocurren los errores clínicos más frecuentes o graves.</li>
+          <li>No preguntar sobre todos los pasos del caso, solo los críticos.</li>
+          <li>El caso debe ser lo suficientemente complejo para que la decisión no sea trivial.</li>
+          <li>Cada pregunta debe poderse responder con la información del caso, sin conocimiento externo al mismo.</li>
+          <li>El formato puede combinar respuesta múltiple y texto libre según el nivel de formación.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SCT -->
+<div class="panel" id="panel-sct">
+  <div class="tipo-card">
+    <div class="tipo-header">
+      <span class="tipo-badge-big">SCT</span>
+      <div>
+        <div class="tipo-title">Script Concordance Test · Concordancia de guiones</div>
+        <div class="tipo-subtitle">Medimos si el alumno razona ante la incertidumbre</div>
+      </div>
+    </div>
+    <div class="tipo-body">
+      <p>El SCT evalúa el <strong>razonamiento clínico en situaciones de incertidumbre</strong>. La metáfora literaria lo explica bien: imagina que comienzas un libro de misterio y en el primer capítulo ya tienes un sospechoso claro. En el segundo capítulo el autor te da nuevas pistas y empiezas a dudar. En medicina ocurre exactamente lo mismo: partimos de una hipótesis y los nuevos hallazgos la refuerzan o la debilitan.</p>
+      <p>Lo que mide el SCT no es si el alumno sabe un dato, sino <strong>cómo utiliza la nueva información para reformular sus hipótesis</strong>. Por eso no hay una única respuesta "verdadera": la corrección se hace por comparación con las respuestas de un panel de expertos.</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔧 Estructura de una pregunta SCT</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">1️⃣</div>
+          <div class="valid-title">Caso clínico inicial</div>
+          <div class="valid-desc">Se plantea un escenario con información parcial suficiente para generar hipótesis diagnósticas o terapéuticas.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">2️⃣</div>
+          <div class="valid-title">Hipótesis + hallazgo nuevo</div>
+          <div class="valid-desc">Para cada hipótesis se aporta un nuevo dato clínico. El alumno valora cómo cambia su confianza en esa hipótesis.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">3️⃣</div>
+          <div class="valid-title">Escala Likert −2 a +2</div>
+          <div class="valid-desc">El alumno puntúa cuánto modifica el nuevo hallazgo su grado de confianza en la hipótesis.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">✏️ Ejemplo completo · Bisoprolol en IC-FEr con bradicardia</div>
+    <div class="card-body">
+      <div class="callout yellow">
+        <div class="callout-title">Caso clínico</div>
+        Varón de 75 años con IC con fracción de eyección reducida (IC-FEr, FEVI 30%). Inició hace dos semanas bisoprolol 5 mg/día. En la última consulta su FC era de 70 lpm. Hoy acude a urgencias por <strong>fatiga extrema y disnea de reposo</strong>.
+      </div>
+      <div class="callout dark" style="margin-top:14px">
+        <div class="callout-title">Cómo responder</div>
+        Para cada fila, se aporta un nuevo hallazgo clínico (<em>"y entonces encuentras…"</em>). Valora en qué medida ese hallazgo cambia tu grado de confianza en la hipótesis de la izquierda (<em>"si estás pensando en…"</em>). Usa la escala:
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--gray-400)">−2 = mucho menos probable &nbsp;·&nbsp; −1 = menos probable &nbsp;·&nbsp; 0 = ni más ni menos &nbsp;·&nbsp; +1 = más probable &nbsp;·&nbsp; +2 = mucho más probable</p>
+      </div>
+      <div class="likert-wrap">
+        <table class="likert-table">
+          <thead>
+            <tr>
+              <th>Si estás pensando en…</th>
+              <th>Y entonces encuentras…</th>
+              <th><span class="level-badge b1">−2</span></th>
+              <th><span class="level-badge b1">−1</span></th>
+              <th><span class="level-badge" style="background:#eceff1;color:#546e7a">0</span></th>
+              <th><span class="level-badge b3">+1</span></th>
+              <th><span class="level-badge b4">+2</span></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>La fatiga se debe a <strong>descompensación de la IC por progresión natural</strong></td>
+              <td>FC actual de <strong>37 lpm</strong>, sin signos de congestión pulmonar significativa</td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−2</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neu">0</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+2</span></td>
+            </tr>
+            <tr>
+              <td>La fatiga se debe a <strong>exceso de ingesta de sal o incumplimiento dietético</strong></td>
+              <td>El paciente refiere <strong>no haber seguido la dieta hiposódica</strong> y haber ganado 1–2 kg</td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−2</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neu">0</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+2</span></td>
+            </tr>
+            <tr>
+              <td>La fatiga se debe a una <strong>dosis baja de diuréticos que habrá que aumentar</strong></td>
+              <td>El paciente presenta <strong>aumento de creatinina y urea</strong> desde la última visita</td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−2</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neg">−1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-neu">0</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+1</span></td>
+              <td class="likert-cell"><span class="likert-opt likert-pos">+2</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout dark" style="margin-top:10px">
+        <div class="callout-title">Razonamiento esperado — fila 1</div>
+        La presencia de bradicardia severa (37 lpm) y la <strong>ausencia</strong> de congestión pulmonar sugieren una causa iatrogénica (el bisoprolol) como más probable que la progresión natural de la IC. El panel de expertos tendería a marcar −2 o −1 para esta hipótesis ante este hallazgo.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠️ Claves para construir buenos SCT</div>
+    <div class="card-body">
+      <div class="callout dark">
+        <div class="callout-title">Principios esenciales (Fournier et al., 2008)</div>
+        <ul>
+          <li>El caso inicial debe tener suficiente información para generar hipótesis, pero no tanto como para resolverlo por completo.</li>
+          <li>Cada nuevo hallazgo debe ser genuinamente informativo: ni confirmar ni descartar la hipótesis de forma obvia.</li>
+          <li>El panel de expertos (mínimo 10–15 personas) determina la puntuación de referencia; no hay una única respuesta correcta.</li>
+          <li>La escala Likert debe presentarse siempre de −2 a +2.</li>
+          <li>El SCT no es adecuado para evaluar conocimiento factual básico; es para niveles avanzados de formación.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- COMPARATIVA -->
+<div class="panel" id="panel-comparativa">
+  <div class="card">
+    <div class="card-title">📊 Resumen comparativo</div>
+    <div class="card-body">
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Aspecto</th><th>MCQ</th><th>KFQ</th><th>SCT</th></tr></thead>
+          <tbody>
+            <tr><td>Tipo de conocimiento</td><td>Factual y aplicado, respuesta única bien definida</td><td>Pasos críticos del caso; la decisión correcta</td><td>Razonamiento en la incertidumbre; actualización del juicio</td></tr>
+            <tr><td>Respuestas válidas</td><td>Una</td><td>Una o más, según contexto</td><td>Varias, dentro de la concordancia con el panel experto</td></tr>
+            <tr><td>Corrección</td><td>Automática, binaria</td><td>Basada en criterios clínicos</td><td>Ponderada según panel experto</td></tr>
+            <tr><td>Grado de incertidumbre</td><td style="background:var(--lvl1-bg)">Bajo</td><td style="background:var(--lvl2-bg)">Medio-alto</td><td style="background:var(--lvl3-bg)">Alto</td></tr>
+            <tr><td>Nivel cognitivo</td><td>Reconocimiento y aplicación</td><td>Priorización y aplicación</td><td>Juicio clínico y ajuste de hipótesis</td></tr>
+            <tr><td>Nivel de formación recomendado</td><td>Cualquier nivel</td><td>Grado avanzado y residencia</td><td>Grado avanzado, residencia y especialistas</td></tr>
+            <tr><td>Complejidad de construcción</td><td>Media</td><td>Alta</td><td>Muy alta</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">🔑 Puntos clave para recordar</div>
+    <div class="card-body">
+      <div class="keypoints">
+        <div class="keypoint">Una MCQ bien construida evalúa mucho más que memorización si el caso es clínicamente rico.</div>
+        <div class="keypoint">Los distractores son el elemento más difícil y más determinante de la calidad de una MCQ.</div>
+        <div class="keypoint">Las KFQ no preguntan por todos los pasos del caso, solo por los críticos: donde ocurren los errores con consecuencias.</div>
+        <div class="keypoint">El SCT no tiene una única respuesta correcta: la clave es la concordancia con el razonamiento experto.</div>
+        <div class="keypoint">A mayor incertidumbre del escenario, mayor nivel cognitivo exigido: MCQ → KFQ → SCT.</div>
+        <div class="keypoint">La IA generativa puede acelerar la construcción de los tres formatos, pero siempre requiere revisión experta y pilotaje.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- IA -->
+<div class="panel" id="panel-ia">
+  <div class="card">
+    <div class="card-title">🤖 Uso de IA generativa para construir MCQ, KFQ y SCT</div>
+    <div class="card-body">
+      <p>La evidencia sobre el uso de IA para generar ítems de evaluación procede principalmente del grupo de <strong>Yavuz Selim Kıyak (MedEdFlamingo)</strong>, que ha publicado estudios específicos para los tres formatos. El hallazgo transversal es consistente: <strong>los prompts son la clave</strong>. Prompts genéricos y bien diseñados permiten a cualquier docente adaptar la generación de preguntas a su propia especialidad.</p>
+      <p>Sin embargo, la IA no sustituye el juicio experto. Las preguntas generadas deben ser <strong>revisadas clínica y pedagógicamente</strong> antes de usarse, y los SCT requieren siempre la construcción de un panel de expertos que no puede delegarse en la IA.</p>
+      <p>Kıyak YS. <em>You Must Read These Articles If You (Will) Create Assessments with AI.</em> MedEdFlamingo Newsletter, nov 2025. <a href="https://medicaleducationflamingo.substack.com/p/ai-in-medical-education-generating-mcq-assessment-item" target="_blank" style="color:var(--yellow-deep);font-weight:600;text-decoration:underline;text-underline-offset:3px">Acceder al artículo →</a></p>
+    </div>
+  </div>
+  <div class="quote-simple">"If you and your medical school aren't using AI to support the creation of assessment materials, you're missing a valuable opportunity for efficiency." — MedEdFlamingo, 2025</div>
+  <div class="three-col">
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title"><span class="level-badge b2" style="margin-right:6px">MCQ</span> IA para preguntas tipo test</div>
+      <div class="card-body">
+        <p>Revisión de ~2000 artículos, con análisis de 23 estudios que usaron ChatGPT para generar MCQ. Algunos encontraron calidad <strong>cercana a la humana</strong>.</p>
+        <div class="callout yellow" style="margin-top:10px">
+          <div class="callout-title">Dato clave</div>
+          Un humano tarda 30–60 min por MCQ. La IA lo hace en segundos. Pero siempre requiere revisión experta.
+        </div>
+        <p style="margin-top:10px;font-size:0.78rem;color:var(--gray-500)">Kıyak &amp; Emekli (2024). <em>Postgraduate Medical Journal.</em></p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title"><span class="level-badge b3" style="margin-right:6px">SCT</span> IA para concordancia de guiones</div>
+      <div class="card-body">
+        <p>Dos estudios (radiología y ginecología) evaluaron si ChatGPT y Claude pueden crear ítems SCT. Obtuvieron <strong>más del 90% de concordancia</strong> con criterios de calidad expertos.</p>
+        <div class="callout yellow" style="margin-top:10px">
+          <div class="callout-title">Novedad adicional</div>
+          Sallam &amp; Abouzeid (2025) exploraron usar la IA como miembro del panel de expertos en la corrección de SCT.
+        </div>
+        <p style="margin-top:10px;font-size:0.78rem;color:var(--gray-500)">Kıyak &amp; Emekli (2025) · Yapıcı Coşkun et al. (2025). <em>Medical Teacher.</em></p>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:0">
+      <div class="card-title"><span class="level-badge b4" style="margin-right:6px">KFQ</span> IA para preguntas de punto clave</div>
+      <div class="card-body">
+        <p>Con el modelo <strong>o3 de OpenAI</strong>, se generaron 20 KFQ de cardiología. Evaluación experta:</p>
+        <div class="callout dark" style="margin-top:10px">
+          <div class="callout-title">Resultados</div>
+          <ul>
+            <li><strong>15%</strong> aceptadas tal cual.</li>
+            <li><strong>85%</strong> aceptadas con cambios menores.</li>
+            <li><strong>0%</strong> rechazadas.</li>
+          </ul>
+        </div>
+        <p style="margin-top:8px;font-size:0.82rem;color:var(--gray-700)">Problema más frecuente: falta de opciones genuinamente peligrosas y algún distractor inverosímil.</p>
+        <p style="margin-top:10px;font-size:0.78rem;color:var(--gray-500)">Kıyak et al. (2025). <em>Medical Education Online.</em></p>
+      </div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:14px">
+    <div class="card-title">💰 Eficiencia y ahorro de recursos</div>
+    <div class="card-body">
+      <div class="callout yellow">
+        <div class="callout-title">Evidencia de impacto económico</div>
+        La asistencia de IA supuso una <strong>reducción media del 57% en el coste laboral</strong> por caso (equivalente a 880 GBP por caso) frente a los métodos tradicionales de redacción de preguntas.
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-title">⚠️ Recomendaciones de uso responsable</div>
+    <div class="card-body">
+      <div class="callout dark">
+        <ul>
+          <li>Usar los prompts publicados en los estudios como punto de partida: son genéricos y adaptables a cualquier especialidad.</li>
+          <li>Revisar siempre la precisión clínica: la IA puede generar información incorrecta sin acceso a internet.</li>
+          <li>Verificar que los distractores sean plausibles y que existan opciones genuinamente peligrosas en las KFQ.</li>
+          <li>Para SCT: la IA puede generar el esquema, pero el panel de expertos es imprescindible para la clave de corrección.</li>
+          <li>Declarar el uso de IA en la elaboración del material de evaluación.</li>
+          <li>Pilotar siempre las preguntas antes de usarlas en evaluación de impacto.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="ai-disclaimer">
+    <strong>Declaración de uso responsable de la IA.</strong> Durante la redacción del material incluido en esta página se utilizó <strong>Claude Sonnet 4.6</strong> para asistir en la estructuración del contenido y la redacción del texto. La página ha sido construida como un Artefacto con Claude Sonnet 4.6. Todo el material fue revisado por los autores.
+  </div>
+</div>
+
+<!-- REFERENCIAS -->
+<div class="panel" id="panel-refs">
+
+  <div class="card">
+    <div class="card-title">📝 ¿Cómo elaborar Multiple Choice Questions?</div>
+    <div class="card-body">
+      <ul class="ref-list">
+        <li>
+          Haladyna TM, Downing SM, Rodriguez MC. A Review of Multiple-Choice Item-Writing Guidelines for Classroom Assessment. <em>Applied Measurement in Education.</em> 2002;15(3):309–333.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/abs/10.1207/S15324818AME1503_5" target="_blank">31 reglas para elaborar MCQ →</a>
+        </li>
+        <li>
+          National Board of Medical Examiners (NBME). Constructing written test questions for the health sciences. 2024.
+          <br><a class="ref-link" href="https://www.nbme.org/sites/default/files/2021-02/NBME_Item%20Writing%20Guide_R_6.pdf" target="_blank">Acceder al documento →</a>
+        </li>
+        <li>
+          European Board of Medical Assessors. Guideline for writing multiple choice questions. 2017.
+          <br><a class="ref-link" href="https://www.ebma.eu/wp-content/uploads/2019/02/EBMA-guidelines-for-item-writing-version-2017_3.pdf" target="_blank">Acceder al documento →</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 ¿Cómo elaborar Key Feature Questions?</div>
+    <div class="card-body">
+      <ul class="ref-list">
+        <li>
+          Nayer M, Glover Takahashi S, Hrynchak P. Twelve tips for developing key-feature questions (KFQ) for effective assessment of clinical reasoning. <em>Med Teach.</em> 2018;40:1116–1122.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/10.1080/0142159X.2018.1481281" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Medical Council of Canada. Guidelines for the development of key feature problems and test cases. Agosto 2012.
+          <br><a class="ref-link" href="https://mcc.ca/wp-content/uploads/CDM-Guidelines.pdf" target="_blank">Acceder al documento →</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 ¿Cómo elaborar SCT Questions?</div>
+    <div class="card-body">
+      <ul class="ref-list">
+        <li>
+          Fournier JP, Demeester A, Charlin B. Script Concordance Tests: Guidelines for Construction. <em>BMC Medical Informatics and Decision Making.</em> 2008;8(1):18.
+          <br><a class="ref-link" href="https://link.springer.com/article/10.1186/1472-6947-8-18" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Lubarsky S, Dory V, Duggan P, Gagnon R, Charlin B. Script concordance testing: From theory to practice. AMEE Guide No. 75. <em>Medical Teacher.</em> 2013;35(3):184–193.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/full/10.3109/0142159X.2013.760036" target="_blank">Acceder al artículo →</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📚 IA y generación de preguntas</div>
+    <div class="card-body">
+      <ul class="ref-list">
+        <li>
+          Kıyak YS, Emekli E. ChatGPT prompts for generating multiple-choice questions in medical education and evidence on their validity: a literature review. <em>Postgraduate Medical Journal.</em> 2024;100(1189):858–865.
+          <br><a class="ref-link" href="https://academic.oup.com/pmj/article/100/1189/858/7688383" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Kıyak YS, Emekli E. Using large language models to generate script concordance test in medical education: ChatGPT and Claude. <em>Revista Española de Educación Médica.</em> 2025;6(1).
+          <br><a class="ref-link" href="https://www.researchgate.net/publication/386460715_Using_Large_Language_Models_to_Generate_Script_Concordance_Test_in_Medical_Education_ChatGPT_and_Claude" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Kıyak YS, Górski S, Tokarek T, Pers M, Kononowicz AA. Large language models for generating key-feature questions in medical education. <em>Medical Education Online.</em> 2025;30(1):2574647.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/full/10.1080/10872981.2025.2574647" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Yapıcı Coşkun Z, Kıyak YS, Coşkun Ö, Budakoğlu Iİ, Özdemir Ö. Large language models for generating script concordance test in obstetrics and gynecology: ChatGPT and Claude. <em>Medical Teacher.</em> 2025;47(11):1767–1771.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/full/10.1080/0142159X.2025.2497888" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Sallam MA, Abouzeid E. Introducing AI as members of script concordance test expert reference panel: A comparative analysis. <em>Medical Teacher.</em> 2025:1–8.
+          <br><a class="ref-link" href="https://www.tandfonline.com/doi/full/10.1080/0142159X.2025.2473620" target="_blank">Acceder al artículo →</a>
+        </li>
+        <li>
+          Kıyak YS. You Must Read These Articles If You (Will) Create Assessments with AI. <em>MedEdFlamingo Newsletter.</em> Nov 2025.
+          <br><a class="ref-link" href="https://medicaleducationflamingo.substack.com/p/ai-in-medical-education-generating-mcq-assessment-item" target="_blank">Acceder al artículo →</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🤖 GPTs para generar preguntas</div>
+    <div class="card-body">
+      <ul class="ref-list">
+        <li>
+          Escenarios clínicos de preguntas tipo test. <em>By Flamingo en ChatGPT.</em>
+          <br><a class="ref-link" href="https://chatgpt.com/g/g-vuyyH0jUp-case-based-mcq-generator" target="_blank">Abrir GPT →</a>
+        </li>
+        <li>
+          Preguntas tipo test en medicina. <em>By Rohil Jain en ChatGPT.</em>
+          <br><a class="ref-link" href="https://chatgpt.com/g/g-swkeoVSY9-medicine-mcqs-generator" target="_blank">Abrir GPT →</a>
+        </li>
+        <li>
+          Script Concordance Test Generator. <em>By Flamingo en ChatGPT.</em>
+          <br><a class="ref-link" href="https://chatgpt.com/g/g-RlzW5xdc1-script-concordance-test-generator" target="_blank">Abrir GPT →</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <strong>Universidad de Valladolid · Facultad de Medicina</strong> · Guía práctica para docentes clínicos y tutores · Evaluación formativa<br>
+  Proyecto de innovación docente <strong>EDUMed EvalUVa 4.0</strong> · Inteligencia artificial para transformar la evaluación docente en educación médica (2025–2026)<br>
+  Material educativo de uso interno · Noviembre 2025
+</footer>
+
+<button class="back-top" id="backTop" title="Volver al inicio">↑</button>
+
+<script>
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t => {
+    t.addEventListener('click', () => {
+      tabs.forEach(x => x.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      t.classList.add('active');
+      document.getElementById('panel-' + t.dataset.tab).classList.add('active');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+  const btn = document.getElementById('backTop');
+  window.addEventListener('scroll', () => btn.classList.toggle('visible', scrollY > 300));
+  btn.addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+</script>
+</body>
+</html>
