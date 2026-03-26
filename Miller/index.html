@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pirámide de Miller · EduMed.UVa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --yellow:#F5C518; --yellow-mid:#FEF0A0; --yellow-pale:#FFFDE7;
+  --yellow-deep:#D4A000; --gray-900:#111318; --gray-700:#3D4451;
+  --gray-500:#6B7280; --gray-300:#D1D5DB; --gray-200:#E5E7EB;
+  --gray-100:#F3F4F6; --gray-50:#F9FAFB; --white:#FFFFFF;
+  --radius:10px; --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.10);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Figtree',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh}
+
+header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 36px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-brand{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
+.header-logo{width:52px;height:52px;border-radius:50%;object-fit:contain;border:2px solid rgba(0,0,0,.12);background:white;flex-shrink:0}
+.header-title{font-size:1.05rem;font-weight:800;color:var(--gray-900);letter-spacing:-.5px;line-height:1.1}
+.header-subtitle{font-size:.65rem;font-weight:600;color:var(--gray-700);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.badge{background:var(--gray-900);color:var(--yellow);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;white-space:nowrap}
+
+.hero{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);padding:28px 36px}
+.hero-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:28px}
+.hero-text{flex:1;min-width:0}
+.hero-img-wrap{flex-shrink:0}
+.hero-img{width:260px;height:auto;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.18))}
+.hero-headline{font-size:1.6rem;font-weight:800;color:var(--gray-900);line-height:1.15;letter-spacing:-.5px;margin-bottom:6px}
+.hero-sub{font-size:.875rem;color:var(--gray-700);font-weight:500;margin-bottom:16px;max-width:640px}
+.hero-stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat-pill{background:var(--gray-900);color:var(--yellow);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:.03em}
+
+.tabs-wrap{max-width:1280px;margin:0 auto;padding:24px 36px 0}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:5px;width:fit-content;margin-bottom:24px;box-shadow:var(--shadow-sm);flex-wrap:wrap}
+.tab{font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:700;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--gray-900);background:var(--gray-100)}
+.tab.active{background:var(--yellow);color:var(--gray-900);box-shadow:var(--shadow-sm)}
+
+main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
+.panel{display:none}.panel.active{display:block}
+
+.card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.card-title{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-body{font-size:.875rem;color:var(--gray-700);line-height:1.65}
+.card-body p{margin-bottom:10px}.card-body p:last-child{margin-bottom:0}
+
+.quote-simple{background:var(--gray-900);color:var(--yellow);border-radius:var(--radius);padding:16px 20px 16px 24px;margin-bottom:14px;font-size:.9rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid var(--yellow-deep)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+
+.valid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.valid-item{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px}
+.valid-icon{font-size:1.3rem;margin-bottom:6px}
+.valid-title{font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.valid-desc{font-size:.78rem;color:var(--gray-700);line-height:1.55}
+
+.ex-table{width:100%;border-collapse:collapse;font-size:.845rem}
+.ex-table tr{border-bottom:1px solid var(--yellow-mid)}
+.ex-table tr:last-child{border-bottom:none}
+.ex-table td{padding:10px 12px;vertical-align:top;background:var(--yellow-pale)}
+.ex-table tr:nth-child(even) td{background:var(--white);border-top:1px solid var(--yellow-mid)}
+.ex-label{width:38%;font-weight:700;color:var(--gray-900);white-space:nowrap;padding-right:8px}
+.ex-desc{color:var(--gray-700);line-height:1.55}
+
+.pyramid-wrap{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.pyramid{display:flex;flex-direction:column;gap:4px;max-width:580px;margin:0 auto}
+.pyr-row{border-radius:6px;padding:12px 16px;display:flex;align-items:center;gap:10px;cursor:default}
+.pyr-n{font-size:.68rem;font-weight:800;color:rgba(0,0,0,.4);width:18px;text-align:center;flex-shrink:0}
+.pyr-label{font-weight:800;font-size:.88rem;flex:1}
+.pyr-sublabel{font-size:.75rem;font-weight:500;opacity:.7;font-style:italic}
+.pyr-1{background:#F5F5DC}
+.pyr-2{background:#FEF3C7;margin:0 5%}
+.pyr-3{background:#FCD34D;margin:0 10%}
+.pyr-4{background:#F5C518;margin:0 15%}
+.pyr-note{font-size:.75rem;color:var(--gray-500);text-align:center;margin-top:10px;font-style:italic}
+
+.accordion{margin-bottom:10px;border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--gray-200);box-shadow:var(--shadow-sm)}
+.acc-btn{width:100%;background:var(--white);border:none;padding:16px 20px;text-align:left;cursor:pointer;font-family:'Figtree',sans-serif;font-size:.9rem;font-weight:700;color:var(--gray-900);display:flex;align-items:center;justify-content:space-between;gap:12px;transition:background .15s}
+.acc-btn:hover{background:var(--gray-50)}
+.acc-btn.open{background:var(--yellow)}
+.acc-left{display:flex;align-items:center;gap:10px}
+.acc-level{background:var(--gray-900);color:var(--yellow);font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:.05em;white-space:nowrap}
+.acc-btn.open .acc-level{background:var(--white);color:var(--gray-900)}
+.acc-en{font-size:.78rem;color:var(--gray-500);font-style:italic;font-weight:400}
+.acc-btn.open .acc-en{color:var(--gray-700)}
+.acc-arrow{font-size:.75rem;transition:transform .2s;color:var(--gray-500)}
+.acc-btn.open .acc-arrow{transform:rotate(180deg);color:var(--gray-700)}
+.acc-body{display:none;padding:0 20px 20px;background:var(--white)}
+.acc-body.open{display:block}
+.acc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.acc-sub{font-size:.78rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;margin-top:14px}
+.acc-desc{font-size:.875rem;color:var(--gray-700);line-height:1.65;margin-top:6px}
+.acc-tag{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--gray-100);color:var(--gray-700);border:1px solid var(--gray-200);margin:3px 3px 0 0}
+.acc-highlight{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:.82rem;line-height:1.55}
+.acc-highlight.dark{background:var(--gray-900);color:var(--yellow)}
+.acc-highlight.yellow{background:var(--yellow);color:var(--gray-900)}
+.acc-highlight.pale{background:var(--yellow-pale);border:1px solid var(--yellow-mid);color:var(--gray-900)}
+
+.pd-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:4px}
+.pd-item{background:var(--white);border:1.5px solid var(--gray-200);border-radius:8px;padding:16px;box-shadow:var(--shadow-sm)}
+.pd-icon{font-size:1.4rem;margin-bottom:8px}
+.pd-title{font-size:.88rem;font-weight:800;color:var(--gray-900);margin-bottom:6px}
+.pd-desc{font-size:.8rem;color:var(--gray-700);line-height:1.6}
+.pd-example{margin-top:8px;font-size:.78rem;color:var(--gray-500);font-style:italic;border-top:1px solid var(--gray-100);padding-top:8px}
+
+.comp-wrap{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.comp-card{border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm)}
+.comp-card.bad{background:var(--gray-100);border:1.5px solid var(--gray-200)}
+.comp-card.good{background:var(--yellow-pale);border:1.5px solid var(--yellow-mid)}
+.comp-title{font-size:.88rem;font-weight:800;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.comp-row{font-size:.82rem;color:var(--gray-700);line-height:1.6;margin-bottom:6px;display:flex;align-items:flex-start;gap:6px}
+.comp-result{margin-top:12px;font-size:.8rem;font-weight:700;padding:8px 12px;border-radius:8px}
+.comp-card.bad .comp-result{background:var(--gray-200);color:var(--gray-700)}
+.comp-card.good .comp-result{background:var(--yellow);color:var(--gray-900)}
+
+.matrix-wrap{overflow-x:auto;margin-bottom:14px}
+.kbmatrix{border-collapse:collapse;width:100%;min-width:580px;font-size:.78rem}
+.kbmatrix th,.kbmatrix td{border:1px solid var(--gray-200);padding:10px 12px;vertical-align:top}
+.kbmatrix th{background:var(--gray-900);color:var(--yellow);font-weight:700;font-size:.72rem;text-align:left}
+.kbmatrix .row-hd{background:var(--yellow);color:var(--gray-900);font-weight:700;white-space:nowrap}
+.kbmatrix .cell-main{font-weight:700;color:var(--gray-900);font-size:.8rem;margin-bottom:3px}
+.kbmatrix .cell-sub{color:var(--gray-600);font-size:.75rem;line-height:1.5}
+.km1{background:#FFFDE7}
+.km2{background:#FEF9C3}
+.km3{background:rgba(245,197,24,.15)}
+.km4{background:rgba(245,197,24,.28)}
+
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--gray-900);color:var(--yellow);border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{background:var(--gray-700);transform:translateY(-2px)}
+
+footer{text-align:center;padding:20px 16px;font-size:.75rem;color:var(--gray-500);border-top:1px solid var(--gray-200);background:var(--white)}
+footer strong{color:var(--yellow-deep)}
+footer a{color:var(--gray-700);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:1024px){
+  .valid-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-img{width:200px}
+  .pd-grid{grid-template-columns:1fr}
+  .comp-wrap{grid-template-columns:1fr}
+  .acc-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;height:60px}
+  .header-logo{width:40px;height:40px}
+  .header-title{font-size:.95rem}
+  .badge{display:none}
+  .hero{padding:20px 16px}
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:16px}
+  .hero-img-wrap{align-self:center}
+  .hero-img{width:60%}
+  .hero-headline{font-size:1.2rem}
+  .tabs-wrap{padding:16px 16px 0}
+  .tabs{width:100%}
+  .tab{font-size:.75rem;padding:8px 10px;flex:1;text-align:center}
+  main{padding:0 16px 60px}
+  .two-col{grid-template-columns:1fr}
+  .valid-grid{grid-template-columns:1fr}
+  .acc-grid{grid-template-columns:1fr}
+  .comp-wrap{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-headline{font-size:1.05rem}
+  .hero-sub{font-size:.8rem}
+  .stat-pill{font-size:.68rem;padding:4px 10px}
+  .tab{font-size:.7rem;padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="header-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <img class="header-logo"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
+        alt="Logo Facultad de Medicina UVa">
+      <div>
+        <div class="header-title">EduMed · UVa</div>
+        <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
+      </div>
+    </a>
+    <span class="badge">Conceptos Básicos · 2026</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-headline">De saber a hacer:<br>Pirámide de Miller y práctica deliberada</div>
+      <div class="hero-sub">¿Estamos formando estudiantes que saben… o que saben hacer? Dos marcos complementarios y muy potentes para responder esta pregunta en educación médica.</div>
+      <div class="hero-stats">
+        <span class="stat-pill">🔺 Pirámide de Miller</span>
+        <span class="stat-pill">🔁 Práctica deliberada</span>
+        <span class="stat-pill">4 niveles de competencia</span>
+        <span class="stat-pill">Conceptos básicos · 2026</span>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img class="hero-img"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
+        alt="Innovando en educación médica">
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('intro',this)">📖 ¿Qué es?</button>
+    <button class="tab" onclick="showTab('miller',this)">🔺 Pirámide de Miller</button>
+    <button class="tab" onclick="showTab('deliberada',this)">🔁 Práctica deliberada</button>
+    <button class="tab" onclick="showTab('epas',this)">📋 EPAs</button>
+    <button class="tab" onclick="showTab('cruce',this)">🔗 Miller × Práctica deliberada</button>
+    <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════ PANEL 1: INTRO ══════ -->
+<div id="intro" class="panel active">
+
+  <div class="quote-simple">
+    Un estudiante puede sacar un 9 en el examen… y no explorar correctamente, no priorizar bien, ni tomar decisiones seguras.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 La pregunta que a veces evitamos</div>
+    <div class="card-body">
+      <p>En educación médica existe una tensión fundamental que muchos programas formativos no resuelven bien: <strong>la distancia entre saber y saber hacer</strong>. Un estudiante puede dominar los contenidos de un tema, explicar perfectamente un caso clínico y aprobar con nota… y sin embargo ser incapaz de actuar con seguridad ante un paciente real.</p>
+      <p>Para entender y resolver esta brecha, dos marcos son especialmente útiles y, combinados, muy potentes:</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">🔺 Pirámide de Miller</div>
+      <div class="card-body">
+        <p>Define los <strong>niveles de competencia clínica</strong>, desde el conocimiento teórico hasta la actuación real con pacientes. Responde a la pregunta: <em>¿hasta dónde ha llegado este estudiante?</em></p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔁 Práctica deliberada · Ericsson</div>
+      <div class="card-body">
+        <p>Explica <strong>cómo se adquieren las competencias clínicas complejas</strong>. Responde a la pregunta: <em>¿cómo diseñamos el camino para que el estudiante llegue?</em></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ El problema que resuelven juntos</div>
+    <div class="card-body">
+      <p>El <strong>salto entre "sabe cómo" y "demuestra / hace"</strong> no ocurre de forma espontánea. No basta con explicar bien ni con evaluar bien. Se necesita un diseño formativo explícito que cree oportunidades repetidas de práctica con retroalimentación — eso es exactamente lo que proporciona la práctica deliberada.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 2: MILLER ══════ -->
+<div id="miller" class="panel">
+
+  <div class="quote-simple">
+    Muchos programas formativos se quedan en los dos primeros niveles. Pero la competencia clínica real empieza en los dos últimos.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔺 La pirámide de Miller</div>
+    <div class="card-body">
+      <p style="margin-bottom:16px">George Miller propuso en 1990 un modelo para evaluar la competencia clínica. Su idea central es que <strong>el conocimiento y la competencia no son lo mismo</strong>, y que la evaluación en medicina debe abarcar todos los niveles — no solo los más fáciles de medir.</p>
+      <div class="pyramid">
+        <div class="pyr-row pyr-4"><span class="pyr-n">4</span><span class="pyr-label">DOES <span class="pyr-sublabel">— Hace</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">práctica real</span></div>
+        <div class="pyr-row pyr-3"><span class="pyr-n">3</span><span class="pyr-label">SHOWS HOW <span class="pyr-sublabel">— Demuestra cómo</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">entorno simulado</span></div>
+        <div class="pyr-row pyr-2"><span class="pyr-n">2</span><span class="pyr-label">KNOWS HOW <span class="pyr-sublabel">— Sabe cómo</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">aplicación conceptual</span></div>
+        <div class="pyr-row pyr-1"><span class="pyr-n">1</span><span class="pyr-label">KNOWS <span class="pyr-sublabel">— Sabe</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">conocimiento teórico</span></div>
+      </div>
+      <p class="pyr-note">La pirámide se lee de abajo arriba: cada nivel es condición necesaria del siguiente, pero no suficiente.</p>
+    </div>
+  </div>
+
+  <div style="margin-bottom:14px">
+    <p style="font-size:.82rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Despliega cada nivel</p>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left">
+          <span class="acc-level">Nivel 1</span>
+          📚 KNOWS <span class="acc-en">— Sabe</span>
+        </div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">El estudiante posee <strong>conocimiento teórico</strong> sobre un tema: hechos, conceptos, principios. Es el nivel de la memoria y la comprensión.</div>
+            <div style="margin-top:8px">
+              <span class="acc-tag">📝 Examen tipo test</span>
+              <span class="acc-tag">📖 Preguntas de desarrollo</span>
+              <span class="acc-tag">🗣️ Oral teórico</span>
+            </div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo clínico</div>
+            <div class="acc-desc">El estudiante conoce los criterios diagnósticos de insuficiencia cardiaca, los mecanismos fisiopatológicos y los fármacos de primera línea.</div>
+          </div>
+        </div>
+        <div class="acc-highlight pale">💡 <strong>Necesario pero insuficiente.</strong> Saber los criterios de Framingham no garantiza reconocer una IC en una guardia de urgencias.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left">
+          <span class="acc-level">Nivel 2</span>
+          🧩 KNOWS HOW <span class="acc-en">— Sabe cómo</span>
+        </div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">El estudiante <strong>aplica el conocimiento a situaciones</strong>: sabe cómo abordaría un problema, qué decisiones tomaría, qué pasos seguiría. Pero todavía en el plano conceptual, no en la acción real.</div>
+            <div style="margin-top:8px">
+              <span class="acc-tag">📋 Casos clínicos escritos</span>
+              <span class="acc-tag">🗣️ Discusión de casos</span>
+              <span class="acc-tag">📊 Razonamiento en papel</span>
+            </div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo clínico</div>
+            <div class="acc-desc">El estudiante explica cómo abordaría a un paciente con disnea en urgencias: qué anamnesis haría, qué exploraría primero, qué pruebas solicitaría.</div>
+          </div>
+        </div>
+        <div class="acc-highlight pale">💡 <strong>El nivel de la mayoría de los exámenes clínicos escritos.</strong> Valioso, pero distinto a demostrar la habilidad en la práctica.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left">
+          <span class="acc-level">Nivel 3</span>
+          🎭 SHOWS HOW <span class="acc-en">— Demuestra cómo</span>
+        </div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">El estudiante <strong>ejecuta la habilidad en un entorno controlado</strong>: simulación, paciente estandarizado, ECOE. Demuestra que sabe hacer, no solo que sabe explicar.</div>
+            <div style="margin-top:8px">
+              <span class="acc-tag">🤖 Simulación clínica</span>
+              <span class="acc-tag">🏥 OSCE / ECOE</span>
+              <span class="acc-tag">👥 Paciente estandarizado</span>
+              <span class="acc-tag">🎥 Videoanálisis</span>
+            </div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo clínico</div>
+            <div class="acc-desc">El estudiante realiza una anamnesis completa y una exploración cardiaca correcta en una estación ECOE, con un paciente simulado que presenta disnea.</div>
+          </div>
+        </div>
+        <div class="acc-highlight yellow">💡 <strong>El gran salto cualitativo.</strong> Aquí empieza la competencia clínica real. Pero sigue siendo un entorno controlado — no es aún la práctica con pacientes reales.</div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <button class="acc-btn" onclick="toggleAcc(this)">
+        <div class="acc-left">
+          <span class="acc-level">Nivel 4</span>
+          🩺 DOES <span class="acc-en">— Hace</span>
+        </div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div class="acc-grid">
+          <div>
+            <div class="acc-sub">Descripción</div>
+            <div class="acc-desc">El estudiante <strong>actúa con competencia en la práctica clínica real</strong>: con pacientes reales, en condiciones reales, con incertidumbre real. Es el nivel de la actuación auténtica.</div>
+            <div style="margin-top:8px">
+              <span class="acc-tag">👁️ Observación directa en planta</span>
+              <span class="acc-tag">🩺 Mini-CEX</span>
+              <span class="acc-tag">📁 Portafolio clínico</span>
+              <span class="acc-tag">👥 Supervisión directa</span>
+            </div>
+          </div>
+          <div>
+            <div class="acc-sub">Ejemplo clínico</div>
+            <div class="acc-desc">El estudiante valora a un paciente en planta: realiza la anamnesis, explora los hallazgos relevantes, prioriza diagnósticos diferenciales y propone un plan de actuación razonado.</div>
+          </div>
+        </div>
+        <div class="acc-highlight dark">💡 <strong>El nivel que realmente importa en la formación médica.</strong> Y el más difícil de evaluar de forma sistemática y rigurosa.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 3: PRÁCTICA DELIBERADA ══════ -->
+<div id="deliberada" class="panel">
+
+  <div class="quote-simple">
+    No es la cantidad de horas lo que genera la excelencia. Es la calidad de la práctica: estructurada, con objetivos claros, con retroalimentación y con dificultad progresiva.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔁 ¿Qué es la práctica deliberada?</div>
+    <div class="card-body">
+      <p>Anders Ericsson, psicólogo cognitivo, dedicó décadas a estudiar cómo las personas desarrollan habilidades complejas — desde músicos y ajedrecistas hasta cirujanos. Su conclusión fue contraintuitiva: <strong>la experiencia acumulada no es suficiente para alcanzar la excelencia</strong>. Lo que marca la diferencia es la <em>calidad</em> de la práctica, no su cantidad.</p>
+      <p>La práctica deliberada no es simplemente repetir. Es un proceso de mejora continua con cuatro elementos esenciales que, en educación médica, tienen implicaciones directas en el diseño de la formación clínica.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧩 Los 4 elementos de la práctica deliberada</div>
+    <div class="card-body">
+      <div class="pd-grid">
+        <div class="pd-item">
+          <div class="pd-icon">🎯</div>
+          <div class="pd-title">Objetivos concretos y específicos</div>
+          <div class="pd-desc">No «practica la exploración», sino «mejora la auscultación de soplos diastólicos en pacientes con FA». Cuanto más específico el objetivo, más efectiva la práctica.</div>
+          <div class="pd-example">En medicina: un objetivo de simulación que define exactamente qué habilidad se trabaja y con qué criterio de éxito.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🔁</div>
+          <div class="pd-title">Repetición estructurada</div>
+          <div class="pd-desc">La habilidad no se consolida con una sola ejecución. Se necesitan múltiples repeticiones, en condiciones variadas, para que el aprendizaje sea robusto y transferible.</div>
+          <div class="pd-example">En medicina: repetir el mismo procedimiento (p.ej. punción lumbar) con variaciones de contexto — posición, paciente ansioso, urgencia.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">💬</div>
+          <div class="pd-title">Retroalimentación inmediata y específica</div>
+          <div class="pd-desc">La retroalimentación genérica («bien hecho») no mejora la habilidad. La retroalimentación eficaz señala exactamente qué fue correcto, qué falló y cómo corregirlo — cuanto más próxima a la acción, más útil.</div>
+          <div class="pd-example">En medicina: el supervisor que detiene la simulación en el momento del error y ofrece una corrección concreta, no al finalizar la sesión.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">📈</div>
+          <div class="pd-title">Dificultad progresiva</div>
+          <div class="pd-desc">La práctica deliberada opera en la «zona de desarrollo próximo»: ni tan fácil que no suponga esfuerzo, ni tan difícil que genere bloqueo. La dificultad debe aumentar a medida que mejora la competencia.</div>
+          <div class="pd-example">En medicina: casos de complejidad creciente — del paciente estable al crítico, del caso típico al atípico, de la decisión única a la gestión de múltiples problemas.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ Lo que NO es práctica deliberada</div>
+    <div class="card-body">
+      <div class="comp-wrap">
+        <div class="comp-card bad">
+          <div class="comp-title">❌ Modelo tradicional</div>
+          <div class="comp-row"><span>📖</span> Clase magistral sobre insuficiencia cardiaca</div>
+          <div class="comp-row"><span>📝</span> Examen tipo test al final del tema</div>
+          <div class="comp-row"><span>🏥</span> Rotación clínica sin objetivos ni retroalimentación</div>
+          <div class="comp-row"><span>🔄</span> «Ya practicará cuando sea residente»</div>
+          <div class="comp-result">👉 Resultado: Knows / Knows how</div>
+        </div>
+        <div class="comp-card good">
+          <div class="comp-title">✅ Modelo con práctica deliberada</div>
+          <div class="comp-row"><span>🎯</span> Objetivo específico: anamnesis cardiológica estructurada</div>
+          <div class="comp-row"><span>🤖</span> Simulación con paciente estandarizado</div>
+          <div class="comp-row"><span>💬</span> Retroalimentación estructurada del docente en el momento</div>
+          <div class="comp-row"><span>🔄</span> Repetición con variaciones del caso</div>
+          <div class="comp-result">👉 Resultado: Shows how → Does</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 4: EPAs ══════ -->
+<div id="epas" class="panel">
+
+  <div class="quote-simple">
+    La pregunta no es «¿sabe este estudiante valorar un dolor torácico?». La pregunta es: «¿le confiaría yo esta tarea de forma autónoma?»
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 ¿Qué son las EPAs?</div>
+    <div class="card-body">
+      <p>Las <strong>Entrustable Professional Activities</strong> (Actividades Profesionales Confiables) son tareas o responsabilidades clínicas concretas que un profesional en formación puede realizar de forma autónoma cuando ha alcanzado la competencia suficiente. El concepto fue propuesto por Olle ten Cate en 2005 y se ha convertido en uno de los marcos más influyentes en educación médica basada en competencias.</p>
+      <p>La idea central es sencilla pero poderosa: <strong>la confianza clínica real</strong> — la decisión de un supervisor de dejar actuar a un estudiante o residente sin supervisión directa — es el indicador más auténtico de que se ha alcanzado el nivel «Does» de Miller.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">🔺 EPAs y pirámide de Miller</div>
+      <div class="card-body">
+        <p>Las EPAs operan en el <strong>nivel 4 de Miller (Does)</strong>, pero van más allá: no solo describen qué hace el estudiante, sino en qué medida se le puede confiar esa tarea. Integran conocimiento, habilidad y actitud profesional en una sola unidad evaluable.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔁 EPAs y práctica deliberada</div>
+      <div class="card-body">
+        <p>Cada EPA define con precisión <strong>qué tarea hay que practicar</strong> y a qué nivel de autonomía se aspira. Son, en ese sentido, los objetivos concretos que necesita la práctica deliberada para ser efectiva.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Los 5 niveles de confianza (supervisión)</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">Cada EPA se evalúa según el nivel de supervisión que requiere el estudiante para ejecutarla. La progresión va de la observación pasiva a la autonomía total:</p>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">Nivel 1<br><small style="font-weight:400;color:var(--gray-500)">Solo observa</small></td>
+            <td class="ex-desc">El estudiante observa cómo el supervisor realiza la tarea. No interviene. Corresponde a los primeros contactos con la actividad clínica.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">Nivel 2<br><small style="font-weight:400;color:var(--gray-500)">Hace con supervisión directa</small></td>
+            <td class="ex-desc">El supervisor está presente y puede intervenir en cualquier momento. El estudiante ejecuta la tarea pero bajo vigilancia activa y continua.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">Nivel 3<br><small style="font-weight:400;color:var(--gray-500)">Hace con supervisión indirecta</small></td>
+            <td class="ex-desc">El estudiante actúa de forma autónoma pero el supervisor está disponible y revisa el trabajo. Puede consultar si lo necesita.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">Nivel 4<br><small style="font-weight:400;color:var(--gray-500)">Hace de forma autónoma</small></td>
+            <td class="ex-desc"><strong>El nivel de confianza plena.</strong> El estudiante o residente puede realizar la tarea de forma completamente independiente. Es el objetivo final de cada EPA.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">Nivel 5<br><small style="font-weight:400;color:var(--gray-500)">Supervisa a otros</small></td>
+            <td class="ex-desc">El profesional ya formado es capaz de supervisar y enseñar la EPA a estudiantes o residentes de menor nivel. Es el nivel experto.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔎 Ejemplos de EPAs en medicina</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🫀</div>
+          <div class="valid-title">Dolor torácico</div>
+          <div class="valid-desc">Valorar de forma autónoma a un paciente con dolor torácico: anamnesis dirigida, ECG, diagnóstico diferencial urgente y plan inicial.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🩸</div>
+          <div class="valid-title">Prescripción segura</div>
+          <div class="valid-desc">Prescribir medicación de forma segura: indicación correcta, dosis, vía, interacciones y comunicación al paciente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📋</div>
+          <div class="valid-title">Informe de alta</div>
+          <div class="valid-desc">Redactar un informe de alta completo y comprensible: diagnóstico, evolución, tratamiento, seguimiento e instrucciones al paciente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🧠</div>
+          <div class="valid-title">Alteración del nivel de conciencia</div>
+          <div class="valid-desc">Evaluar y manejar de forma urgente a un paciente con alteración aguda del nivel de conciencia.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🗣️</div>
+          <div class="valid-title">Comunicación de malas noticias</div>
+          <div class="valid-desc">Comunicar un diagnóstico grave al paciente o su familia de forma empática, clara y estructurada.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔬</div>
+          <div class="valid-title">Interpretación de pruebas</div>
+          <div class="valid-desc">Interpretar de forma autónoma resultados de laboratorio, imagen o función con implicación clínica directa en el manejo del paciente.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 ¿Qué aportan las EPAs que no aporta Miller?</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">🎯 Concreción clínica</td>
+            <td class="ex-desc">Miller describe niveles abstractos; las EPAs definen tareas clínicas reales y específicas. «Valorar autónomamente un paciente con dolor torácico» es mucho más accionable que «nivel Does».</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🤝 La confianza como métrica</td>
+            <td class="ex-desc">Las EPAs capturan algo que Miller no mide: la <strong>decisión clínica del supervisor</strong> de confiar en el estudiante. Esa confianza integra conocimiento, habilidad, actitud y juicio profesional.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔄 Progresión gradual</td>
+            <td class="ex-desc">Los 5 niveles de supervisión permiten una progresión más granular que los 4 niveles de Miller, y facilitan conversaciones concretas entre tutor y estudiante sobre dónde está y adónde va.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">📋 Evaluación auténtica</td>
+            <td class="ex-desc">Evaluar EPAs obliga a observar al estudiante en la práctica real, no solo en simulación o en papel. Esto alinea directamente evaluación y práctica clínica.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 5: CRUCE ══════ -->
+<div id="cruce" class="panel">
+
+  <div class="card">
+    <div class="card-title">🔗 ¿Por qué integrar los dos modelos?</div>
+    <div class="card-body">
+      <p>La pirámide de Miller describe <strong>qué nivel de competencia</strong> queremos alcanzar. La práctica deliberada describe <strong>cómo diseñar las experiencias</strong> para que el estudiante llegue hasta allí. Juntos forman un marco completo para el diseño de la formación clínica.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Tabla integradora: Miller × Práctica deliberada</div>
+    <div class="card-body">
+      <div class="matrix-wrap">
+        <table class="kbmatrix">
+          <thead>
+            <tr>
+              <th>Nivel de Miller</th>
+              <th>¿Qué ocurre?</th>
+              <th>¿Qué necesita la práctica deliberada?</th>
+              <th>Ejemplo en medicina</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="km1">
+              <td class="row-hd">📚 Knows<br><small style="font-weight:400">Sabe</small></td>
+              <td><div class="cell-main">Adquisición de conocimiento teórico</div></td>
+              <td><div class="cell-sub">Exposición clara y estructurada. Objetivos de conocimiento precisos. Autoevaluación frecuente.</div></td>
+              <td><div class="cell-sub">Clase bien diseñada, lectura guiada, cuestionarios de consolidación.</div></td>
+            </tr>
+            <tr class="km2">
+              <td class="row-hd">🧩 Knows how<br><small style="font-weight:400">Sabe cómo</small></td>
+              <td><div class="cell-main">Aplicación conceptual del conocimiento</div></td>
+              <td><div class="cell-sub">Casos clínicos con retroalimentación sobre el razonamiento. Discusión de decisiones. Repetición con variantes.</div></td>
+              <td><div class="cell-sub">Seminario de casos, ABP, razonamiento clínico en voz alta con el tutor.</div></td>
+            </tr>
+            <tr class="km3">
+              <td class="row-hd">🎭 Shows how<br><small style="font-weight:400">Demuestra cómo</small></td>
+              <td><div class="cell-main">Ejecución en entorno simulado</div></td>
+              <td><div class="cell-sub">Simulación repetida con objetivos concretos. Retroalimentación inmediata y específica. Dificultad progresiva. Debriefing estructurado.</div></td>
+              <td><div class="cell-sub">ECOE con debriefing, simulación de alta fidelidad, role-play con paciente estandarizado.</div></td>
+            </tr>
+            <tr class="km4">
+              <td class="row-hd">🩺 Does<br><small style="font-weight:400">Hace</small></td>
+              <td><div class="cell-main">Actuación real con pacientes</div></td>
+              <td><div class="cell-sub">Supervisión con observación directa. Retroalimentación regular sobre actuación real. Reflexión sistemática. Casos de complejidad creciente.</div></td>
+              <td><div class="cell-sub">Mini-CEX, portafolio clínico, supervisión directa en guardia o planta, rotaciones estructuradas.</div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 La idea potente</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">📚➡️🩺</div>
+          <div class="valid-title">El salto no es automático</div>
+          <div class="valid-desc">Pasar de Knows a Does requiere diseño explícito. No ocurre solo con el paso del tiempo ni con la acumulación de horas de rotación.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">💬</div>
+          <div class="valid-title">La retroalimentación es el motor</div>
+          <div class="valid-desc">Sin retroalimentación estructurada y específica, la repetición consolida errores en lugar de corregirlos. La práctica sin retroalimentación puede ser contraproducente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📈</div>
+          <div class="valid-title">La dificultad debe crecer</div>
+          <div class="valid-desc">Un estudiante que siempre trabaja con casos fáciles no desarrolla la competencia para los difíciles. El diseño debe incorporar complejidad progresiva.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 EPAs como objetivos de la práctica deliberada</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">Las EPAs y la práctica deliberada se necesitan mutuamente: las EPAs definen <strong>qué hay que practicar</strong> y a qué nivel de autonomía; la práctica deliberada explica <strong>cómo diseñar esa práctica</strong> para que sea eficaz. Sin EPAs, la práctica deliberada carece de objetivo clínico concreto. Sin práctica deliberada, las EPAs son solo una lista de tareas sin método para alcanzarlas.</p>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">📋 EPA como objetivo</td>
+            <td class="ex-desc">«Valorar autónomamente a un paciente con dolor torácico» define exactamente qué tarea hay que dominar y a qué nivel (supervisión nivel 4). Eso es el objetivo concreto que necesita la práctica deliberada.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔁 Práctica deliberada como método</td>
+            <td class="ex-desc">Para alcanzar esa EPA: simulaciones repetidas con casos de complejidad creciente (SCA típico → presentación atípica en anciana → dolor torácico en paciente anticoagulado), retroalimentación específica tras cada caso, y criterios explícitos de progresión entre niveles de supervisión.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">📊 Nivel de supervisión como métrica de progreso</td>
+            <td class="ex-desc">Los 5 niveles de confianza de las EPAs permiten al tutor y al estudiante tener conversaciones concretas sobre dónde está y cuántas repeticiones con retroalimentación son necesarias para avanzar al siguiente nivel.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 5: IMPLICACIONES ══════ -->
+<div id="implicaciones" class="panel">
+
+  <div class="quote-simple">
+    El objetivo no es que el estudiante sepa medicina, sino que sea capaz de ejercerla con seguridad y criterio.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 Mensaje final para el docente</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">❌ No basta con explicar bien</td>
+            <td class="ex-desc">Una clase magistral excelente puede llevar al estudiante hasta Knows how (nivel 2 de Miller). Pero Shows how y Does requieren práctica real, no solo escucha.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">❌ No basta con evaluar bien</td>
+            <td class="ex-desc">Un buen examen mide el nivel alcanzado, pero no lo genera. La evaluación sin práctica deliberada previa no desarrolla competencia.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">❌ No basta con más horas</td>
+            <td class="ex-desc">La experiencia acumulada no garantiza competencia. Un residente que lleva 3 años haciendo guardias sin retroalimentación puede haber consolidado errores sistemáticos.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">✅ Lo que sí funciona</td>
+            <td class="ex-desc">Diseñar <strong>oportunidades repetidas de práctica con objetivos concretos, retroalimentación específica e inmediata y dificultad progresiva</strong>. Eso es lo que mueve al estudiante por los niveles de Miller.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪞 Preguntas para la autoevaluación docente</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🔺</div>
+          <div class="valid-title">¿En qué nivel evalúo?</div>
+          <div class="valid-desc">¿Mi evaluación llega a Shows how y Does, o se queda en Knows y Knows how?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">💬</div>
+          <div class="valid-title">¿Doy retroalimentación de calidad?</div>
+          <div class="valid-desc">¿La retroalimentación que ofrezco es específica, inmediata y orientada a la mejora concreta?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔁</div>
+          <div class="valid-title">¿Hay repetición estructurada?</div>
+          <div class="valid-desc">¿Los estudiantes tienen oportunidades de repetir la misma habilidad con variaciones y con corrección?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📈</div>
+          <div class="valid-title">¿Aumenta la dificultad?</div>
+          <div class="valid-desc">¿El programa incluye casos de complejidad creciente, o siempre trabajamos con los mismos tipos de situación?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🎯</div>
+          <div class="valid-title">¿Los objetivos son concretos?</div>
+          <div class="valid-desc">¿El estudiante sabe exactamente qué habilidad está trabajando y cuál es el criterio de éxito?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🏥</div>
+          <div class="valid-title">¿Hay práctica real supervisada?</div>
+          <div class="valid-desc">¿El estudiante tiene acceso a práctica clínica real con supervisión directa y retroalimentación sistemática?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">👨‍⚕️ El supervisor: el agente que más importa y menos se forma</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">En toda esta arquitectura — Miller, práctica deliberada, EPAs — hay un agente sin el cual nada funciona: <strong>el supervisor o tutor clínico</strong>. Y es, paradójicamente, el que menos formación pedagógica recibe.</p>
+      <div class="pd-grid">
+        <div class="pd-item">
+          <div class="pd-icon">👁️</div>
+          <div class="pd-title">Observar para poder retroalimentar</div>
+          <div class="pd-desc">El supervisor no puede dar retroalimentación específica si no ha observado directamente al estudiante. Sin observación real, la retroalimentación es genérica e inútil para la práctica deliberada.</div>
+          <div class="pd-example">El tutor que «sabe» que el residente trabaja bien porque no le llegan quejas no está evaluando — está evitando evaluar.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">⚖️</div>
+          <div class="pd-title">Calibrar la confianza</div>
+          <div class="pd-desc">Dar confianza demasiado pronto es un riesgo para el paciente. Darla demasiado tarde frena el desarrollo del estudiante y genera dependencia. Calibrar bien es una habilidad que se aprende.</div>
+          <div class="pd-example">La supervisión calibrada es el núcleo del juicio del tutor clínico: no se trata de intuición, sino de una decisión basada en evidencia observada.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🗣️</div>
+          <div class="pd-title">Dar retroalimentación difícil</div>
+          <div class="pd-desc">Decirle a un estudiante que aún no está listo para una EPA es incómodo. Muchos supervisores evitan esa conversación y otorgan confianza prematura por no generar conflicto.</div>
+          <div class="pd-example">La retroalimentación honesta y específica — «todavía necesitas supervisión directa en este tipo de caso» — es un acto de cuidado profesional, no de dureza.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🎓</div>
+          <div class="pd-title">El tutor también necesita formarse</div>
+          <div class="pd-desc">Observar, retroalimentar, calibrar y tener conversaciones difíciles son habilidades docentes que no se adquieren por el mero hecho de ser un buen clínico. Requieren formación explícita.</div>
+          <div class="pd-example">Un programa de formación de tutores que incluya práctica deliberada del propio acto de dar retroalimentación es tan importante como la formación del estudiante.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ El error y la seguridad del paciente: la tensión que no podemos ignorar</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">Toda la progresión de Miller tiene una tensión subyacente que la educación médica no siempre nombra con claridad: <strong>¿hasta dónde dejamos que el estudiante aprenda equivocándose con pacientes reales?</strong></p>
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🔬</div>
+          <div class="valid-title">El error como fuente de aprendizaje</div>
+          <div class="valid-desc">La práctica deliberada requiere operar en el límite de la competencia — y eso implica cometer errores. En simulación, el error es seguro y valioso. En la práctica real, hay un paciente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🛡️</div>
+          <div class="valid-title">La simulación como espacio seguro</div>
+          <div class="valid-desc">La simulación clínica existe precisamente para resolver esta tensión: permite cometer errores, aprender de ellos y recibir retroalimentación sin riesgo real para el paciente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📐</div>
+          <div class="valid-title">Supervisión calibrada como solución</div>
+          <div class="valid-desc">El nivel de supervisión de las EPAs no es solo una métrica de progreso — es una herramienta de gestión del riesgo. Más supervisión = más seguridad para el paciente mientras el estudiante aprende.</div>
+        </div>
+      </div>
+      <div style="margin-top:14px;background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:14px 18px;font-size:.845rem;line-height:1.65;border-left:4px solid var(--yellow-deep)">
+        💡 <strong>La pregunta que todo programa formativo debería responder:</strong> ¿En qué tareas clínicas permitimos que el estudiante aprenda con pacientes reales, con qué nivel de supervisión, y en base a qué criterios decidimos cuándo reducirla?
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Conexión con otros recursos EduMed.UVa</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">🧠 Taxonomía de Bloom</td>
+            <td class="ex-desc">Knows/Knows how se corresponden con Bloom 1–3; Shows how y Does requieren Bloom 3–6. Los niveles superiores de Miller exigen activar al estudiante. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">📊 Modelo de Kirkpatrick</td>
+            <td class="ex-desc">Shows how equivale a Kirkpatrick 2; Does equivale a Kirkpatrick 3–4. Los niveles altos de ambos modelos coinciden en su exigencia y dificultad. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">📓 Cuaderno 2 · Clase magistral</td>
+            <td class="ex-desc">La clase magistral bien diseñada lleva al estudiante hasta Knows how. Para llegar a Shows how y Does se necesitan las metodologías activas descritas en las 5 Aes. <a href="https://tutorcyllo.github.io/clasemagistral2026/" style="color:var(--yellow-deep);font-weight:600">Ver cuaderno →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026 ·
+  Contacto: <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a> ·
+  <a href="https://tutorcyllo.wixsite.com/educacionmedicauva">TutorCyLlo</a><br>
+  <span style="margin-top:4px;display:inline-block">Desarrollada con Claude Sonnet 4.6 a partir de un documento original de EduMed UVa</span>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
