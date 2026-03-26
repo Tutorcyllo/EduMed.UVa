@@ -90,6 +90,13 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .rc-cta svg { transition: transform 0.15s; }
 .resource-card:hover .rc-cta svg { transform: translateX(4px); }
 
+/* ── PENDING CARDS ── */
+.resource-card.pending { background: var(--gray-100); border-color: var(--gray-200); cursor: default; pointer-events: none; }
+.resource-card.pending::before { background: var(--gray-300); }
+.resource-card.pending .rc-title { color: var(--gray-500); }
+.resource-card.pending .rc-desc { color: var(--gray-300); }
+.pending-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: var(--gray-200); color: var(--gray-500); border: 1px solid var(--gray-300); }
+
 /* ── SEE MORE ── */
 .see-more-wrap { margin-top: 14px; text-align: center; }
 .see-more-btn { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 9px 22px; border-radius: 100px; border: 2px solid var(--gray-500); cursor: pointer; background: transparent; color: var(--gray-700); transition: background 0.15s, color 0.15s, border-color 0.15s; display: inline-flex; align-items: center; gap: 6px; }
@@ -210,6 +217,12 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</div>
           <div class="rc-cta">Acceder al cuaderno <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
+        <div class="resource-card pending">
+          <div class="rc-icon">🚧</div>
+          <span class="pending-badge">🚧 En construcción</span>
+          <div class="rc-title">¿Cómo visualizar el pensamiento en Educación Médica? El caso del razonamiento clínico</div>
+          <div class="rc-desc">Cuaderno 3 · Próximamente disponible.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -237,6 +250,13 @@ footer a:hover { text-decoration: underline; }
           <span class="rc-tag">Evaluación</span>
           <div class="rc-title">Niveles de Kirkpatrick aplicados a la educación médica</div>
           <div class="rc-desc">Cuáles son los niveles del modelo de Kirkpatrick, qué es lo que realmente medimos en cada uno y cómo aplicarlos en la formación médica.</div>
+          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+        </a>
+        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">
+          <div class="rc-icon">🏔️</div>
+          <span class="rc-tag">Habilidades clínicas</span>
+          <div class="rc-title">La pirámide de Miller, la práctica deliberada de Ericsson y las actividades profesionales confiables</div>
+          <div class="rc-desc">Una reflexión sobre cómo se adquieren las habilidades clínicas y qué marcos teóricos nos ayudan a entenderlo.</div>
           <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
       </div>
@@ -297,6 +317,18 @@ footer a:hover { text-decoration: underline; }
           <div class="rc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</div>
           <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
+        <div class="resource-card pending">
+          <div class="rc-icon">🚧</div>
+          <span class="pending-badge">🚧 En construcción</span>
+          <div class="rc-title">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
+          <div class="rc-desc">Próximamente disponible.</div>
+        </div>
+        <div class="resource-card pending">
+          <div class="rc-icon">🚧</div>
+          <span class="pending-badge">🚧 En construcción</span>
+          <div class="rc-title">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? El razonamiento clínico y el diagnóstico en prompts</div>
+          <div class="rc-desc">Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados. Próximamente disponible.</div>
+        </div>
       </div>
     </div>
   </div>
