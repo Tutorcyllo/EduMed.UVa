@@ -1,1 +1,606 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modelo de Kirkpatrick · EduMed.UVa</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap');
+:root {
+  --yellow:#F5C518; --yellow-mid:#FEF0A0; --yellow-pale:#FFFDE7;
+  --yellow-deep:#D4A000; --gray-900:#111318; --gray-700:#3D4451;
+  --gray-500:#6B7280; --gray-300:#D1D5DB; --gray-200:#E5E7EB;
+  --gray-100:#F3F4F6; --gray-50:#F9FAFB; --white:#FFFFFF;
+  --radius:10px; --shadow-sm:0 1px 3px rgba(0,0,0,.08);
+  --shadow-md:0 4px 12px rgba(0,0,0,.10); --shadow-lg:0 8px 24px rgba(0,0,0,.13);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Figtree',sans-serif;background:var(--gray-100);color:var(--gray-900);min-height:100vh}
 
+header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);position:sticky;top:0;z-index:100;box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1280px;margin:0 auto;padding:0 36px;height:68px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.header-brand{display:flex;align-items:center;gap:12px;cursor:pointer;text-decoration:none}
+.header-logo{width:52px;height:52px;border-radius:50%;object-fit:contain;border:2px solid rgba(0,0,0,.12);background:white;flex-shrink:0}
+.header-title{font-size:1.05rem;font-weight:800;color:var(--gray-900);letter-spacing:-.5px;line-height:1.1}
+.header-subtitle{font-size:.65rem;font-weight:600;color:var(--gray-700);letter-spacing:.08em;text-transform:uppercase;margin-top:2px}
+.badge{background:var(--gray-900);color:var(--yellow);font-size:.7rem;font-weight:700;padding:4px 12px;border-radius:100px;white-space:nowrap}
+
+.hero{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);padding:28px 36px}
+.hero-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:28px}
+.hero-text{flex:1;min-width:0}
+.hero-img-wrap{flex-shrink:0}
+.hero-img{width:260px;height:auto;object-fit:contain;border-radius:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.18))}
+.hero-headline{font-size:1.6rem;font-weight:800;color:var(--gray-900);line-height:1.15;letter-spacing:-.5px;margin-bottom:6px}
+.hero-sub{font-size:.875rem;color:var(--gray-700);font-weight:500;margin-bottom:16px;max-width:640px}
+.hero-stats{display:flex;gap:8px;flex-wrap:wrap}
+.stat-pill{background:var(--gray-900);color:var(--yellow);font-size:.72rem;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:.03em}
+
+.tabs-wrap{max-width:1280px;margin:0 auto;padding:24px 36px 0}
+.tabs{display:flex;gap:4px;background:var(--white);border:1.5px solid var(--gray-200);border-radius:12px;padding:5px;width:fit-content;margin-bottom:24px;box-shadow:var(--shadow-sm);flex-wrap:wrap}
+.tab{font-family:'Figtree',sans-serif;font-size:.82rem;font-weight:700;padding:9px 18px;border-radius:8px;border:none;cursor:pointer;background:transparent;color:var(--gray-500);transition:all .15s;white-space:nowrap}
+.tab:hover{color:var(--gray-900);background:var(--gray-100)}
+.tab.active{background:var(--yellow);color:var(--gray-900);box-shadow:var(--shadow-sm)}
+
+main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
+.panel{display:none}.panel.active{display:block}
+
+.card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.card-title{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.card-body{font-size:.875rem;color:var(--gray-700);line-height:1.65}
+.card-body p{margin-bottom:10px}.card-body p:last-child{margin-bottom:0}
+
+.quote-simple{background:var(--gray-900);color:var(--yellow);border-radius:var(--radius);padding:16px 20px 16px 24px;margin-bottom:14px;font-size:.9rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid var(--yellow-deep)}
+
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+
+.valid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
+.valid-item{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px}
+.valid-icon{font-size:1.3rem;margin-bottom:6px}
+.valid-title{font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.valid-desc{font-size:.78rem;color:var(--gray-700);line-height:1.55}
+
+.ex-table{width:100%;border-collapse:collapse;font-size:.845rem}
+.ex-table tr{border-bottom:1px solid var(--yellow-mid)}
+.ex-table tr:last-child{border-bottom:none}
+.ex-table td{padding:10px 12px;vertical-align:top;background:var(--yellow-pale)}
+.ex-table tr:nth-child(even) td{background:var(--white);border-top:1px solid var(--yellow-mid)}
+.ex-label{width:38%;font-weight:700;color:var(--gray-900);white-space:nowrap;padding-right:8px}
+.ex-desc{color:var(--gray-700);line-height:1.55}
+
+/* ESCALERA */
+.ladder{display:flex;flex-direction:column;gap:6px;max-width:520px;margin:16px auto 0}
+.ladder-row{display:flex;align-items:center;gap:14px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 16px;transition:background .15s}
+.ladder-row:hover{background:var(--yellow-mid)}
+.ladder-num{width:32px;height:32px;background:var(--gray-900);color:var(--yellow);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:800;flex-shrink:0}
+.ladder-label{font-size:.875rem;font-weight:700;color:var(--gray-900);flex:1}
+.ladder-arrow{font-size:.8rem;color:var(--gray-500)}
+.ladder-desc{font-size:.8rem;color:var(--gray-700);font-style:italic}
+
+/* NIVEL CARDS */
+.nivel-card{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.nivel-header{padding:18px 24px 14px;display:flex;align-items:flex-start;gap:14px}
+.nivel-badge{font-size:.68rem;font-weight:800;padding:4px 12px;border-radius:100px;white-space:nowrap;flex-shrink:0;margin-top:2px}
+.n1 .nivel-badge{background:var(--gray-900);color:var(--yellow)}
+.n2 .nivel-badge{background:var(--yellow-deep);color:var(--white)}
+.n3 .nivel-badge{background:var(--yellow);color:var(--gray-900)}
+.n4 .nivel-badge{background:var(--yellow-mid);color:var(--gray-900)}
+.nivel-title{font-size:1rem;font-weight:700;color:var(--gray-900);margin-bottom:4px}
+.nivel-subtitle{font-size:.82rem;color:var(--gray-500);font-weight:500}
+.nivel-body{padding:0 24px 20px;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.nivel-sub{font-size:.78rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+.nivel-desc{font-size:.845rem;color:var(--gray-700);line-height:1.65}
+.nivel-key{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:.82rem;line-height:1.55}
+.n1 .nivel-key{background:var(--gray-900);color:var(--yellow)}
+.n2 .nivel-key{background:var(--yellow-pale);color:var(--gray-900);border:1px solid var(--yellow-mid)}
+.n3 .nivel-key{background:var(--yellow-mid);color:var(--gray-900)}
+.n4 .nivel-key{background:var(--yellow);color:var(--gray-900)}
+.nivel-tools{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.nivel-tool{font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:100px;background:var(--gray-100);color:var(--gray-700);border:1px solid var(--gray-200)}
+
+/* MATRIX KIRKPATRICK×BLOOM */
+.matrix-wrap{overflow-x:auto;margin-bottom:14px}
+.kbmatrix{border-collapse:collapse;width:100%;min-width:600px;font-size:.78rem}
+.kbmatrix th,.kbmatrix td{border:1px solid var(--gray-200);padding:10px 12px;vertical-align:top}
+.kbmatrix th{background:var(--gray-900);color:var(--yellow);font-weight:700;font-size:.72rem;text-align:left}
+.kbmatrix .row-hd{background:var(--yellow);color:var(--gray-900);font-weight:700;white-space:nowrap}
+.kbmatrix .cell-bloom{font-weight:700;color:var(--gray-900);margin-bottom:4px;font-size:.8rem}
+.kbmatrix .cell-ex{color:var(--gray-600);font-size:.75rem;line-height:1.5}
+.kbmatrix .cell-tip{margin-top:6px;font-size:.72rem;font-style:italic;color:var(--gray-500)}
+.kb1{background:#EFF6FF}
+.kb2{background:#F0FDF4}
+.kb3{background:#FFFBEB}
+.kb4{background:#FDF2F8}
+
+.key-box{border-radius:var(--radius);padding:16px 20px;margin-bottom:14px;border-left:4px solid var(--yellow-deep)}
+.key-box.yellow{background:var(--yellow-pale);border-color:var(--yellow-deep)}
+.key-box.dark{background:var(--gray-900);color:var(--yellow);border-color:var(--yellow-deep)}
+.key-box .key-title{font-size:.875rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.key-box p{font-size:.845rem;line-height:1.65}
+.key-box.dark p{color:var(--yellow-mid)}
+
+.back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--gray-900);color:var(--yellow);border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200}
+.back-top.visible{opacity:1;pointer-events:auto}
+.back-top:hover{background:var(--gray-700);transform:translateY(-2px)}
+
+footer{text-align:center;padding:20px 16px;font-size:.75rem;color:var(--gray-500);border-top:1px solid var(--gray-200);background:var(--white)}
+footer strong{color:var(--yellow-deep)}
+footer a{color:var(--gray-700);text-decoration:none}
+footer a:hover{text-decoration:underline}
+
+@media(max-width:1024px){
+  .valid-grid{grid-template-columns:repeat(2,1fr)}
+  .hero-img{width:200px}
+  .hero-headline{font-size:1.4rem}
+  .nivel-body{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  .header-inner{padding:0 16px;height:60px}
+  .header-logo{width:40px;height:40px}
+  .header-title{font-size:.95rem}
+  .badge{display:none}
+  .hero{padding:20px 16px}
+  .hero-inner{flex-direction:column;align-items:flex-start;gap:16px}
+  .hero-img-wrap{align-self:center}
+  .hero-img{width:60%}
+  .hero-headline{font-size:1.2rem}
+  .tabs-wrap{padding:16px 16px 0}
+  .tabs{width:100%}
+  .tab{font-size:.75rem;padding:8px 10px;flex:1;text-align:center}
+  main{padding:0 16px 60px}
+  .two-col{grid-template-columns:1fr}
+  .valid-grid{grid-template-columns:1fr}
+  .ex-label{white-space:normal}
+  .nivel-body{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-headline{font-size:1.05rem}
+  .hero-sub{font-size:.8rem}
+  .stat-pill{font-size:.68rem;padding:4px 10px}
+  .tab{font-size:.7rem;padding:7px 6px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="header-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <img class="header-logo"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
+        alt="Logo Facultad de Medicina UVa">
+      <div>
+        <div class="header-title">EduMed · UVa</div>
+        <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
+      </div>
+    </a>
+    <span class="badge">Conceptos Básicos · 2026</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-headline">Modelo de Kirkpatrick:<br>¿qué estamos evaluando realmente?</div>
+      <div class="hero-sub">Kirkpatrick no evalúa lo que el alumno sabe, sino qué impacto tiene la formación. Va de lo inmediato a lo clínicamente relevante.</div>
+      <div class="hero-stats">
+        <span class="stat-pill">📊 Evaluación del impacto</span>
+        <span class="stat-pill">4 niveles</span>
+        <span class="stat-pill">Kirkpatrick × Bloom</span>
+        <span class="stat-pill">Conceptos básicos · 2026</span>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img class="hero-img"
+        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
+        alt="Innovando en educación médica">
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('intro',this)">📖 ¿Qué es?</button>
+    <button class="tab" onclick="showTab('niveles',this)">🪜 Los 4 niveles</button>
+    <button class="tab" onclick="showTab('cruce',this)">🔀 Kirkpatrick × Bloom</button>
+    <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
+  </div>
+</div>
+
+<main>
+
+<!-- ══════ PANEL 1: INTRO ══════ -->
+<div id="intro" class="panel active">
+
+  <div class="quote-simple">
+    La pregunta no es si los alumnos aprendieron algo. La pregunta es si la formación cambió algo que importa.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧭 ¿Qué es el modelo de Kirkpatrick?</div>
+    <div class="card-body">
+      <p>Donald Kirkpatrick propuso en 1959 un modelo para evaluar la eficacia de los programas formativos. La idea central es sencilla pero poderosa: <strong>la evaluación no debería limitarse a medir la satisfacción del alumno o lo que sabe al acabar el curso</strong>. Lo que realmente importa es si esa formación cambia algo en la práctica real y, en último término, si mejora los resultados.</p>
+      <p>El modelo organiza la evaluación en <strong>cuatro niveles progresivos</strong>, desde lo más inmediato y fácil de medir hasta lo más relevante y difícil de demostrar.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪜 La escalera de Kirkpatrick · Lectura rápida</div>
+    <div class="card-body">
+      <div class="ladder">
+        <div class="ladder-row">
+          <div class="ladder-num">4</div>
+          <div>
+            <div class="ladder-label">Resultados</div>
+            <div class="ladder-desc">Mejora el paciente</div>
+          </div>
+          <div class="ladder-arrow">↑ más difícil de demostrar</div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-num">3</div>
+          <div>
+            <div class="ladder-label">Conducta</div>
+            <div class="ladder-desc">Lo hago en la práctica</div>
+          </div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-num">2</div>
+          <div>
+            <div class="ladder-label">Aprendizaje</div>
+            <div class="ladder-desc">He aprendido algo</div>
+          </div>
+        </div>
+        <div class="ladder-row">
+          <div class="ladder-num">1</div>
+          <div>
+            <div class="ladder-label">Reacción</div>
+            <div class="ladder-desc">Me gusta</div>
+          </div>
+          <div class="ladder-arrow">↓ más fácil de medir</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">⚠️ El error más común</div>
+      <div class="card-body">
+        <p>Mucha educación médica se queda en los <strong>niveles 1 y 2</strong>: medimos si la sesión gustó y si el alumno aprobó el test. Pero eso no nos dice si algo cambió en la práctica clínica ni si mejoró la atención al paciente.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🎯 El verdadero reto</div>
+      <div class="card-body">
+        <p>Diseñar experiencias formativas que lleguen al <strong>nivel 3</strong> (cambio de conducta) y al <strong>nivel 4</strong> (impacto clínico) requiere alinear objetivos, metodología y evaluación desde el principio — no añadirlos al final.</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 2: NIVELES ══════ -->
+<div id="niveles" class="panel">
+
+  <div class="quote-simple">
+    Cada nivel responde a una pregunta diferente. Y cada pregunta exige un instrumento de evaluación distinto.
+  </div>
+
+  <!-- Nivel 1 -->
+  <div class="nivel-card n1">
+    <div class="nivel-header">
+      <span class="nivel-badge">Nivel 1</span>
+      <div>
+        <div class="nivel-title">😊 Reacción — ¿Les ha gustado?</div>
+        <div class="nivel-subtitle">Mide la satisfacción del alumno con la experiencia formativa</div>
+      </div>
+    </div>
+    <div class="nivel-body">
+      <div>
+        <div class="nivel-sub">¿Qué evalúa?</div>
+        <div class="nivel-desc">Si la sesión resultó útil, interesante y bien organizada. Es la percepción subjetiva del alumno sobre la calidad de la formación recibida.</div>
+        <div class="nivel-tools">
+          <span class="nivel-tool">📋 Encuesta de satisfacción</span>
+          <span class="nivel-tool">⭐ Valoración numérica</span>
+          <span class="nivel-tool">💬 Comentarios abiertos</span>
+        </div>
+      </div>
+      <div>
+        <div class="nivel-sub">Ejemplo en medicina</div>
+        <div class="nivel-desc">Tras un taller de exploración cardiaca, los estudiantes valoran si les ha resultado claro, útil o motivador mediante una encuesta anónima al finalizar.</div>
+        <div class="nivel-key">💡 <strong>El nivel más fácil… y el más engañoso.</strong> Una clase puede gustar mucho y enseñar poco. La satisfacción no es sinónimo de aprendizaje.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nivel 2 -->
+  <div class="nivel-card n2">
+    <div class="nivel-header">
+      <span class="nivel-badge">Nivel 2</span>
+      <div>
+        <div class="nivel-title">🧠 Aprendizaje — ¿Han aprendido?</div>
+        <div class="nivel-subtitle">Mide conocimientos, habilidades o actitudes adquiridas</div>
+      </div>
+    </div>
+    <div class="nivel-body">
+      <div>
+        <div class="nivel-sub">¿Qué evalúa?</div>
+        <div class="nivel-desc">Lo que el alumno sabe, sabe hacer o valora de forma diferente tras la formación, en un entorno controlado.</div>
+        <div class="nivel-tools">
+          <span class="nivel-tool">📝 Test de conocimientos</span>
+          <span class="nivel-tool">🏥 OSCE / ECOE</span>
+          <span class="nivel-tool">🤖 Simulación clínica</span>
+          <span class="nivel-tool">📊 Pre-post</span>
+        </div>
+      </div>
+      <div>
+        <div class="nivel-sub">Ejemplo en medicina</div>
+        <div class="nivel-desc">El estudiante identifica correctamente un soplo sistólico o realiza una anamnesis estructurada en un paciente simulado durante la evaluación.</div>
+        <div class="nivel-key">💡 <strong>Aquí es donde solemos quedarnos… pero no es suficiente.</strong> Saber en el examen no garantiza hacer en la práctica.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nivel 3 -->
+  <div class="nivel-card n3">
+    <div class="nivel-header">
+      <span class="nivel-badge">Nivel 3</span>
+      <div>
+        <div class="nivel-title">🔄 Conducta — ¿Lo aplican?</div>
+        <div class="nivel-subtitle">Mide si el aprendizaje cambia la práctica real</div>
+      </div>
+    </div>
+    <div class="nivel-body">
+      <div>
+        <div class="nivel-sub">¿Qué evalúa?</div>
+        <div class="nivel-desc">Si el alumno transfiere lo aprendido a su entorno clínico real y si cambia su forma de actuar con los pacientes.</div>
+        <div class="nivel-tools">
+          <span class="nivel-tool">👁️ Observación directa</span>
+          <span class="nivel-tool">📁 Portafolio clínico</span>
+          <span class="nivel-tool">🩺 Mini-CEX</span>
+          <span class="nivel-tool">👥 Feedback de supervisores</span>
+        </div>
+      </div>
+      <div>
+        <div class="nivel-sub">Ejemplo en medicina</div>
+        <div class="nivel-desc">Tras la formación, el estudiante o residente explora sistemáticamente el pulso venoso yugular en planta, cuando antes no lo hacía. El cambio es observable y consistente.</div>
+        <div class="nivel-key">💡 <strong>Este es el gran salto: del aula al paciente.</strong> Requiere tiempo, entorno favorable y supervisión real.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nivel 4 -->
+  <div class="nivel-card n4">
+    <div class="nivel-header">
+      <span class="nivel-badge">Nivel 4</span>
+      <div>
+        <div class="nivel-title">🏥 Resultados — ¿Mejora algo importante?</div>
+        <div class="nivel-subtitle">Mide el impacto en resultados clínicos o del sistema</div>
+      </div>
+    </div>
+    <div class="nivel-body">
+      <div>
+        <div class="nivel-sub">¿Qué evalúa?</div>
+        <div class="nivel-desc">El impacto final de la formación en indicadores de calidad asistencial, seguridad del paciente o resultados en salud medibles.</div>
+        <div class="nivel-tools">
+          <span class="nivel-tool">📉 Indicadores clínicos</span>
+          <span class="nivel-tool">📊 Auditoría</span>
+          <span class="nivel-tool">🔬 Investigación educativa</span>
+          <span class="nivel-tool">💊 Outcomes de pacientes</span>
+        </div>
+      </div>
+      <div>
+        <div class="nivel-sub">Ejemplo en medicina</div>
+        <div class="nivel-desc">Después de un programa de formación en sepsis: ↓ tiempo a antibiótico, ↓ mortalidad, ↓ ingresos en UCI. El impacto es medible en el sistema sanitario.</div>
+        <div class="nivel-key">💡 <strong>Este es el nivel que realmente importa… pero el más difícil de demostrar.</strong> Requiere diseño riguroso y seguimiento a largo plazo.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 3: CRUCE KIRKPATRICK × BLOOM ══════ -->
+<div id="cruce" class="panel">
+
+  <div class="quote-simple">
+    Kirkpatrick te dice qué impacto tiene la formación. Bloom te dice qué tipo de pensamiento estás activando. Cuando los cruzas, aparece algo muy útil para diseñar docencia clínica.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔀 ¿Por qué cruzar los dos modelos?</div>
+    <div class="card-body">
+      <p>Ambos modelos se complementan: <strong>Bloom</strong> describe el nivel cognitivo que activamos en el alumno (desde recordar hasta crear), mientras que <strong>Kirkpatrick</strong> describe el impacto que eso tiene en la práctica y en los resultados clínicos. Cruzarlos permite preguntarse no solo qué enseñamos, sino qué tipo de pensamiento estamos activando y si ese pensamiento llega a traducirse en acción.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Tabla cruzada Kirkpatrick × Bloom</div>
+    <div class="card-body">
+      <div class="matrix-wrap">
+        <table class="kbmatrix">
+          <thead>
+            <tr>
+              <th>Kirkpatrick</th>
+              <th>Pregunta clave</th>
+              <th>Bloom dominante</th>
+              <th>Ejemplo clínico</th>
+              <th>Interpretación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="kb1">
+              <td class="row-hd">😊 Nivel 1<br>Reacción</td>
+              <td>¿Me gusta?</td>
+              <td><div class="cell-bloom">Recordar · Comprender</div></td>
+              <td class="cell-ex">Clase dinámica sobre insuficiencia cardiaca muy bien valorada porque «se entiende bien».</td>
+              <td class="cell-tip">Puedes tener buena reacción con niveles cognitivos bajos. Riesgo: confundir claridad con aprendizaje profundo.</td>
+            </tr>
+            <tr class="kb2">
+              <td class="row-hd">🧠 Nivel 2<br>Aprendizaje</td>
+              <td>¿Aprendo?</td>
+              <td><div class="cell-bloom">Comprender · Aplicar<br><span style="font-weight:400;font-size:.72rem">(a veces Analizar)</span></div></td>
+              <td class="cell-ex">El alumno explica la fisiopatología de la sepsis y aplica criterios diagnósticos en un caso clínico.</td>
+              <td class="cell-tip">Aquí empieza el aprendizaje real, pero todavía en entorno controlado.</td>
+            </tr>
+            <tr class="kb3">
+              <td class="row-hd">🔄 Nivel 3<br>Conducta</td>
+              <td>¿Lo hago?</td>
+              <td><div class="cell-bloom">Aplicar · Analizar · Evaluar</div></td>
+              <td class="cell-ex">En planta, el estudiante prioriza diagnósticos diferenciales, ajusta la anamnesis según el contexto y decide qué explorar y qué no.</td>
+              <td class="cell-tip">Aquí aparece el razonamiento clínico auténtico.</td>
+            </tr>
+            <tr class="kb4">
+              <td class="row-hd">🏥 Nivel 4<br>Resultados</td>
+              <td>¿Impacta?</td>
+              <td><div class="cell-bloom">Evaluar · Crear</div></td>
+              <td class="cell-ex">Un equipo rediseña un protocolo de manejo de sepsis, detecta fallos del sistema e implementa mejoras que reducen mortalidad.</td>
+              <td class="cell-tip">Este nivel implica no solo pensar bien, sino cambiar sistemas y generar soluciones nuevas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 Lo que revela el cruce</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">😊➡️🧠</div>
+          <div class="valid-title">Reacción ≠ Aprendizaje</div>
+          <div class="valid-desc">Una clase muy satisfactoria puede moverse solo en Bloom 1–2. La claridad no garantiza profundidad cognitiva.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🧠➡️🔄</div>
+          <div class="valid-title">Aprender ≠ Cambiar</div>
+          <div class="valid-desc">Superar un examen (Kirkpatrick 2) no garantiza transferencia a la práctica real (Kirkpatrick 3).</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔄➡️🏥</div>
+          <div class="valid-title">Cambiar ≠ Mejorar</div>
+          <div class="valid-desc">Un cambio de conducta no mejora resultados automáticamente si no está bien diseñado e implementado.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 4: IMPLICACIONES ══════ -->
+<div id="implicaciones" class="panel">
+
+  <div class="quote-simple">
+    La enseñanza potente en medicina es la que alinea Bloom alto + Kirkpatrick 3–4.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎯 El mensaje clave para el docente</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">❌ No todo lo que gusta enseña</td>
+            <td class="ex-desc">El aprendizaje profundo a veces genera incomodidad. La dificultad deseable (Bjork) es parte del proceso. Una sesión muy valorada puede moverse solo en Bloom 1–2.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">❌ No todo lo que se evalúa cambia</td>
+            <td class="ex-desc">Aprobar un examen de conocimientos (Kirkpatrick 2) no garantiza que el alumno actúe diferente en planta (Kirkpatrick 3). El salto requiere diseño explícito.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">❌ No todo cambio mejora resultados</td>
+            <td class="ex-desc">Un cambio de conducta sin coherencia sistémica ni seguimiento no necesariamente mejora la atención al paciente (Kirkpatrick 4).</td>
+          </tr>
+          <tr>
+            <td class="ex-label">✅ La enseñanza potente alinea</td>
+            <td class="ex-desc"><strong>Bloom alto + Kirkpatrick 3–4.</strong> Activa Analizar, Evaluar y Crear (Bloom 4–6) y diseña experiencias que transfieren al entorno clínico real y generan impacto medible.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🪞 Preguntas para la autoevaluación docente</div>
+    <div class="card-body">
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">📋</div>
+          <div class="valid-title">¿En qué nivel evalúo?</div>
+          <div class="valid-desc">¿Mi evaluación se limita a la satisfacción y al conocimiento, o mide cambios reales de conducta?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔄</div>
+          <div class="valid-title">¿Diseño para la transferencia?</div>
+          <div class="valid-desc">¿Hay algo en mi programa que favorezca que lo aprendido llegue al paciente real?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📊</div>
+          <div class="valid-title">¿Mido el impacto?</div>
+          <div class="valid-desc">¿Tengo indicadores de resultado clínico ligados a mi formación, o solo datos de satisfacción?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🎯</div>
+          <div class="valid-title">¿Alineo objetivos y evaluación?</div>
+          <div class="valid-desc">¿El nivel de Kirkpatrick que me importa está alineado con el nivel de Bloom que trabajo en el aula?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">⏳</div>
+          <div class="valid-title">¿Evalúo en el momento adecuado?</div>
+          <div class="valid-desc">El Kirkpatrick 3–4 no puede medirse al acabar la sesión. ¿Tengo mecanismos de seguimiento a largo plazo?</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🏥</div>
+          <div class="valid-title">¿El entorno facilita el cambio?</div>
+          <div class="valid-desc">¿El contexto clínico donde el alumno practica refuerza lo aprendido o lo contradice?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Conexión con otros recursos EduMed.UVa</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">🧠 Taxonomía de Bloom</td>
+            <td class="ex-desc">Bloom describe el nivel cognitivo que activas. Cruzarlo con Kirkpatrick te ayuda a saber si ese nivel cognitivo tiene impacto real. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">📓 Cuaderno 2 · Clase magistral</td>
+            <td class="ex-desc">La clase magistral cubre bien Kirkpatrick 1–2. Las 5 Aes ayudan a llegar al nivel 3 desde el propio formato expositivo. <a href="https://tutorcyllo.github.io/clasemagistral2026/" style="color:var(--yellow-deep);font-weight:600">Ver cuaderno →</a></td>
+          </tr>
+          <tr>
+            <td class="ex-label">📋 Rúbricas</td>
+            <td class="ex-desc">Una rúbrica bien diseñada, alineada con Bloom y Kirkpatrick, puede llegar a evaluar Kirkpatrick 3 de forma sistemática. <a href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026 ·
+  Contacto: <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a> ·
+  <a href="https://tutorcyllo.wixsite.com/educacionmedicauva">TutorCyLlo</a><br>
+  <span style="margin-top:4px;display:inline-block">Desarrollada con Claude Sonnet 4.6 a partir de un documento original de EduMed UVa</span>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+
+<script>
+function showTab(id, btn) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+window.addEventListener('scroll', () => {
+  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+});
+</script>
+</body>
+</html>
