@@ -56,11 +56,11 @@ header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep);
 main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
 /* ── SECTION BLOCKS ── */
-.section-block { margin-bottom: 28px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
-.section-header { display: flex; align-items: center; gap: 14px; padding: 16px 24px; color: var(--yellow); }
-.section-icon { width: 40px; height: 40px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; background: var(--white); box-shadow: var(--shadow-sm); }
-.section-title { font-size: 1.0rem; font-weight: 800; line-height: 1.15; }
-.section-desc { font-size: 0.73rem; margin-top: 2px; opacity: 0.75; }
+.section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; color: var(--yellow); }
+.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: var(--white); box-shadow: var(--shadow-sm); }
+.section-title { font-size: 1.15rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.2px; }
+.section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
 .section-body { padding: 20px; }
 
 .sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; }
@@ -147,6 +147,21 @@ footer a:hover { text-decoration: underline; }
   .valid-grid { grid-template-columns: 1fr; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
+
+  /* ── MOBILE SECTION HEADERS: opción D ── */
+  .section-block { margin-bottom: 40px; }
+  .section-block + .section-block { border-top: 3px solid var(--yellow); }
+  .section-header { padding: 20px 18px; gap: 12px; }
+  .section-icon { width: 46px; height: 46px; font-size: 1.4rem; }
+  .section-title {
+    font-size: 1.2rem;
+    letter-spacing: -0.3px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .section-desc { font-size: 0.75rem; opacity: 0.85; margin-top: 4px; }
 }
 </style>
 </head>
@@ -255,8 +270,8 @@ footer a:hover { text-decoration: underline; }
         <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">
           <div class="rc-icon">🏔️</div>
           <span class="rc-tag">Habilidades clínicas</span>
-          <div class="rc-title">La pirámide de Miller, la práctica deliberada de Ericsson y las actividades profesionales confiables</div>
-          <div class="rc-desc">Una reflexión sobre cómo se adquieren las habilidades clínicas y qué marcos teóricos nos ayudan a entenderlo.</div>
+          <div class="rc-title">De saber a hacer: marcos para entender y diseñar la competencia clínica</div>
+          <div class="rc-desc">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla. (Pirámide de Miller, Kolb, práctica deliberada de Ericsson, EPAs…)</div>
           <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
       </div>
