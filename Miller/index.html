@@ -193,12 +193,14 @@ footer a:hover{text-decoration:underline}
 <div class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-headline">De saber a hacer:<br>Pirámide de Miller y práctica deliberada</div>
-      <div class="hero-sub">¿Estamos formando estudiantes que saben… o que saben hacer? Dos marcos complementarios y muy potentes para responder esta pregunta en educación médica.</div>
+      <div class="hero-headline">De saber a hacer:<br>marcos para entender y diseñar la competencia clínica</div>
+      <div class="hero-sub">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla.</div>
       <div class="hero-stats">
         <span class="stat-pill">🔺 Pirámide de Miller</span>
+        <span class="stat-pill">🔄 Kolb</span>
         <span class="stat-pill">🔁 Práctica deliberada</span>
-        <span class="stat-pill">4 niveles de competencia</span>
+        <span class="stat-pill">🏥 Aprendizaje situado</span>
+        <span class="stat-pill">📋 EPAs</span>
         <span class="stat-pill">Conceptos básicos · 2026</span>
       </div>
     </div>
@@ -215,9 +217,12 @@ footer a:hover{text-decoration:underline}
     <button class="tab active" onclick="showTab('intro',this)">📖 ¿Qué es?</button>
     <button class="tab" onclick="showTab('miller',this)">🔺 Pirámide de Miller</button>
     <button class="tab" onclick="showTab('deliberada',this)">🔁 Práctica deliberada</button>
+    <button class="tab" onclick="showTab('kolb',this)">🔄 Kolb</button>
+    <button class="tab" onclick="showTab('situado',this)">🏥 Aprendizaje situado</button>
     <button class="tab" onclick="showTab('epas',this)">📋 EPAs</button>
     <button class="tab" onclick="showTab('cruce',this)">🔗 Miller × Práctica deliberada</button>
     <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
+    <button class="tab" onclick="showTab('lentendi',this)">🤔 ¿Lo entendí?</button>
   </div>
 </div>
 
@@ -257,6 +262,15 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">⚠️ El problema que resuelven juntos</div>
     <div class="card-body">
       <p>El <strong>salto entre "sabe cómo" y "demuestra / hace"</strong> no ocurre de forma espontánea. No basta con explicar bien ni con evaluar bien. Se necesita un diseño formativo explícito que cree oportunidades repetidas de práctica con retroalimentación — eso es exactamente lo que proporciona la práctica deliberada.</p>
+      <p>Y para que esa práctica genere aprendizaje duradero, el estudiante necesita completar el <strong>ciclo de Kolb</strong>: no basta con vivir la experiencia clínica, hay que reflexionar sobre ella, extraer principios y aplicarlos en el siguiente caso. Sin ese ciclo, la experiencia se acumula pero no se transforma en competencia.</p>
+      <p>Todo ello debe ocurrir en un <strong>contexto auténtico</strong> (aprendizaje situado) y en un clima de <strong>seguridad psicológica</strong> que permita al estudiante exponerse, arriesgar y equivocarse sin miedo.</p>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--yellow-pale);border-color:var(--yellow-mid)">
+    <div class="card-title">🤔 ¿Lo has entendido de verdad?</div>
+    <div class="card-body">
+      <p>Al final de la página encontrarás la sección <strong>«¿Lo entendí?»</strong> con preguntas diseñadas para comprobar si realmente has integrado estos marcos — no si los has memorizado. No tienen respuesta fácil: están pensadas para discutirlas con compañeros o explorarlas con un LLM en modo socrático.</p>
     </div>
   </div>
 
@@ -397,6 +411,10 @@ footer a:hover{text-decoration:underline}
           </div>
         </div>
         <div class="acc-highlight dark">💡 <strong>El nivel que realmente importa en la formación médica.</strong> Y el más difícil de evaluar de forma sistemática y rigurosa.</div>
+        <div style="margin-top:10px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 14px">
+          <div style="font-size:.78rem;font-weight:800;color:var(--gray-900);margin-bottom:6px">➕ ¿Y el nivel 5? — IS · «Es»</div>
+          <div style="font-size:.82rem;color:var(--gray-700);line-height:1.65">Algunos autores (Cruess, Cruess y Steinert, 2016) proponen un quinto nivel: <strong>Is</strong> — lo que el profesional hace de forma habitual cuando nadie le observa. No es lo que <em>demuestra</em> ser capaz de hacer (Does), sino lo que <em>es</em> como profesional en su práctica cotidiana. Integra identidad profesional, valores, actitud y conducta ética. Es el nivel de la <strong>profesionalidad interiorizada</strong>: el médico que actúa bien no porque le evalúen, sino porque es parte de quién es. Difícilmente evaluable con instrumentos clásicos — se manifiesta en la cultura del servicio, en cómo trata al paciente a las 3 de la mañana, en si consulta cuando tiene dudas aunque nadie se lo exija.</div>
+        </div>
       </div>
     </div>
   </div>
@@ -476,7 +494,259 @@ footer a:hover{text-decoration:underline}
 
 </div>
 
-<!-- ══════ PANEL 4: EPAs ══════ -->
+<!-- ══════ PANEL 4: KOLB ══════ -->
+<div id="kolb" class="panel">
+
+  <div class="quote-simple">
+    No aprendemos de la experiencia. Aprendemos cuando reflexionamos sobre la experiencia.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔄 ¿Qué es la teoría del aprendizaje experiencial de Kolb?</div>
+    <div class="card-body">
+      <p>David Kolb propuso en 1984 que el aprendizaje no ocurre por el mero hecho de vivir una experiencia, sino a través de un <strong>ciclo de cuatro fases</strong> que transforma esa experiencia en conocimiento aplicable. Es un modelo especialmente relevante en educación médica, donde la práctica clínica es la principal fuente de aprendizaje — pero también donde más frecuentemente se rompe el ciclo.</p>
+      <p>La idea central: <strong>la experiencia clínica sin reflexión estructurada no genera aprendizaje duradero</strong>. Un residente que atiende 500 guardias sin reflexionar sobre ellas puede acumular hábitos, pero no necesariamente desarrollar competencia.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔄 El ciclo de Kolb · Las 4 fases</div>
+    <div class="card-body">
+      <div style="display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin-bottom:14px">
+        <!-- Ciclo visual -->
+        <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-width:200px">
+          <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
+            <circle cx="100" cy="100" r="36" fill="#F5C518" stroke="#D4A000" stroke-width="2"/>
+            <text x="100" y="96" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="800" fill="#111318">Ciclo</text>
+            <text x="100" y="108" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="800" fill="#111318">de Kolb</text>
+            <!-- Nodo 1: arriba -->
+            <circle cx="100" cy="28" r="22" fill="#111318" stroke="#D4A000" stroke-width="2"/>
+            <text x="100" y="25" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#F5C518">Experiencia</text>
+            <text x="100" y="35" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#F5C518">concreta</text>
+            <!-- Nodo 2: derecha -->
+            <circle cx="172" cy="100" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
+            <text x="172" y="97" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#FEF0A0">Observación</text>
+            <text x="172" y="107" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#FEF0A0">reflexiva</text>
+            <!-- Nodo 3: abajo -->
+            <circle cx="100" cy="172" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
+            <text x="100" y="169" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">Conceptual.</text>
+            <text x="100" y="179" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">abstracta</text>
+            <!-- Nodo 4: izquierda -->
+            <circle cx="28" cy="100" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
+            <text x="28" y="97" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">Experim.</text>
+            <text x="28" y="107" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">activa</text>
+            <!-- Flechas -->
+            <path d="M115,46 Q148,52 152,78" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
+            <path d="M163,122 Q158,150 122,162" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
+            <path d="M78,165 Q52,158 40,122" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
+            <path d="M37,78 Q48,46 78,36" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
+            <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D4A000"/></marker></defs>
+          </svg>
+        </div>
+        <!-- Descripción de fases -->
+        <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
+          <div style="background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:10px 14px">
+            <div style="font-size:.78rem;font-weight:800;margin-bottom:3px">1 · Experiencia concreta</div>
+            <div style="font-size:.78rem;color:var(--yellow-mid);line-height:1.5">Hacer algo real: atender a un paciente, tomar una decisión clínica, cometer un error. Es el punto de partida del aprendizaje.</div>
+          </div>
+          <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
+            <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">2 · Observación reflexiva</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Pararse a pensar: ¿qué ocurrió? ¿qué hice bien? ¿qué falló? ¿por qué reaccioné así? Es la fase que más frecuentemente se omite en la formación clínica.</div>
+          </div>
+          <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
+            <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">3 · Conceptualización abstracta</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Extraer un principio general: «cuando un paciente anciano presenta X, debo considerar Y». Transformar la experiencia concreta en conocimiento transferible.</div>
+          </div>
+          <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
+            <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">4 · Experimentación activa</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Aplicar lo aprendido en el siguiente caso. El ciclo vuelve a empezar — ideally con más competencia y más capacidad de reflexión.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏥 El ciclo de Kolb en la rotación clínica</div>
+    <div class="card-body">
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">❌ Rotación sin ciclo completo</td>
+            <td class="ex-desc">El estudiante atiende pacientes (fase 1), pero nadie estructura la reflexión (fase 2), no hay sesión de debriefing que extraiga principios (fase 3), y el siguiente caso llega sin aplicar lo aprendido (fase 4). Resultado: experiencia acumulada pero competencia estancada.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">✅ Rotación con ciclo completo</td>
+            <td class="ex-desc">El estudiante atiende al paciente (fase 1), el tutor facilita una reflexión estructurada — «¿qué habrías hecho diferente?» (fase 2), juntos extraen el principio clínico aplicable (fase 3), y el estudiante lo aplica conscientemente en el caso siguiente (fase 4).</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔑 El debriefing como herramienta</td>
+            <td class="ex-desc">El debriefing post-simulación o post-guardia es la herramienta que activa las fases 2 y 3 del ciclo. Sin él, la simulación más sofisticada pierde gran parte de su valor formativo.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🧩 Los cuatro estilos de aprendizaje de Kolb</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">Cada persona tiende a entrar al ciclo por una fase diferente y a sentirse más cómoda en ciertas fases que en otras. Kolb describió cuatro <strong>estilos de aprendizaje</strong> según qué par de fases del ciclo predomina en cada individuo:</p>
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🌐</div>
+          <div class="valid-title">Divergente</div>
+          <div class="valid-desc"><strong>Experiencia concreta + Observación reflexiva.</strong> Aprende observando y generando ideas. Creativo, empático, orientado a las personas. Le cuesta actuar sin reflexionar primero.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">📐</div>
+          <div class="valid-title">Asimilador</div>
+          <div class="valid-desc"><strong>Observación reflexiva + Conceptualización abstracta.</strong> Aprende construyendo modelos teóricos. Lógico, analítico, disfruta de la teoría. Le cuesta aplicar si no entiende el marco conceptual.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">⚙️</div>
+          <div class="valid-title">Convergente</div>
+          <div class="valid-desc"><strong>Conceptualización abstracta + Experimentación activa.</strong> Aprende resolviendo problemas prácticos con base teórica. Técnico, preciso, orientado a la solución. Le cuesta trabajar con ambigüedad.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔄</div>
+          <div class="valid-title">Acomodador</div>
+          <div class="valid-desc"><strong>Experimentación activa + Experiencia concreta.</strong> Aprende haciendo y adaptándose. Intuitivo, flexible, orientado a la acción. Le cuesta detenerse a reflexionar o teorizar.</div>
+        </div>
+      </div>
+      <div style="margin-top:12px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.6">
+        ⚠️ <strong>Importante:</strong> los estilos de Kolb son descriptivos, no prescriptivos. El objetivo formativo no es reforzar el estilo dominante de cada estudiante, sino asegurarse de que todos sean capaces de completar el ciclo completo — independientemente de sus preferencias. Un médico que solo sabe actuar pero no reflexionar, o que solo teoriza pero no aplica, tiene una competencia incompleta.
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Kolb, Miller y práctica deliberada: cómo encajan</div>
+    <div class="card-body">
+      <p style="margin-bottom:12px">Los tres marcos se necesitan mutuamente para explicar el aprendizaje clínico completo:</p>
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">🔺</div>
+          <div class="valid-title">Miller define el destino</div>
+          <div class="valid-desc">¿Hasta dónde tiene que llegar el estudiante? Del Knows al Does, pasando por la autonomía que miden las EPAs.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔄</div>
+          <div class="valid-title">Kolb explica el mecanismo</div>
+          <div class="valid-desc">¿Cómo se transforma la experiencia clínica en aprendizaje? Solo si se completa el ciclo de reflexión, conceptualización y aplicación.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🔁</div>
+          <div class="valid-title">Práctica deliberada optimiza el ciclo</div>
+          <div class="valid-desc">¿Cómo aceleramos y mejoramos ese aprendizaje? Con objetivos concretos, repetición estructurada, retroalimentación específica y dificultad progresiva.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 5: APRENDIZAJE SITUADO ══════ -->
+<div id="situado" class="panel">
+
+  <div class="quote-simple">
+    No aprendemos medicina en abstracto. Aprendemos medicina en contextos clínicos reales — o en entornos que los imitan con suficiente fidelidad.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🏥 Aprendizaje situado: el contexto importa</div>
+    <div class="card-body">
+      <p>La Teoría del Aprendizaje Situado, desarrollada por Lave y Wenger en 1991, sostiene que el aprendizaje no es un proceso puramente cognitivo e individual, sino que está <strong>profundamente ligado al contexto</strong> en que ocurre. No se aprende medicina leyendo sobre medicina — se aprende ejerciendo medicina, o en entornos que replican con fidelidad sus condiciones.</p>
+      <p>En educación médica esto tiene una implicación directa: <strong>el aula no es suficiente</strong>. El conocimiento adquirido en contextos descontextualizados (clases, libros, exámenes tipo test) no se transfiere automáticamente a la práctica clínica. Para que ocurra esa transferencia, el aprendizaje debe suceder — o al menos practicarse — en entornos auténticos.</p>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <div class="card">
+      <div class="card-title">🔗 Conexión con Miller</div>
+      <div class="card-body">
+        <p>El aprendizaje situado explica por qué los niveles inferiores de Miller (Knows, Knows how) no garantizan los superiores (Shows how, Does). <strong>El contexto auténtico no es un complemento — es una condición</strong> para que el aprendizaje se consolide en competencia real.</p>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">🔄 Conexión con Kolb</div>
+      <div class="card-body">
+        <p>El ciclo de Kolb necesita una experiencia concreta como punto de partida. El aprendizaje situado garantiza que esa experiencia sea <strong>auténtica y contextualmente rica</strong> — no un ejercicio artificial desconectado de la práctica real.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🎭 Participación periférica legítima</div>
+    <div class="card-body">
+      <p style="margin-bottom:12px">Lave y Wenger introdujeron también el concepto de <strong>participación periférica legítima</strong>: los aprendices no entran directamente al núcleo de la práctica, sino que participan desde la periferia, observando y realizando tareas menores, hasta que gradualmente adquieren la competencia para asumir responsabilidades mayores.</p>
+      <div class="valid-grid">
+        <div class="valid-item">
+          <div class="valid-icon">👁️</div>
+          <div class="valid-title">Periferia: observar</div>
+          <div class="valid-desc">El estudiante observa cómo el experto realiza la tarea. No interviene, pero participa legítimamente en la comunidad de práctica.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🤝</div>
+          <div class="valid-title">Transición: co-participar</div>
+          <div class="valid-desc">El estudiante asume partes de la tarea bajo supervisión. La responsabilidad se comparte y se transfiere gradualmente.</div>
+        </div>
+        <div class="valid-item">
+          <div class="valid-icon">🩺</div>
+          <div class="valid-title">Centro: actuar</div>
+          <div class="valid-desc">El estudiante realiza la tarea de forma autónoma. Ha pasado de la periferia al núcleo de la práctica — exactamente el nivel Does de Miller.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🛡️ Seguridad psicológica: el prerrequisito silencioso</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">El aprendizaje situado exige que el estudiante se exponga, cometa errores y reflexione sobre ellos. Pero eso solo ocurre si existe <strong>seguridad psicológica</strong> — el término acuñado por Amy Edmondson para describir la creencia de que uno puede asumir riesgos interpersonales sin miedo a ser juzgado, humillado o penalizado.</p>
+      <p style="margin-bottom:14px">En educación médica, la seguridad psicológica es el <strong>prerrequisito silencioso</strong> de todo lo demás: sin ella, el ciclo de Kolb no arranca, la práctica deliberada se bloquea y las EPAs se convierten en actuaciones para no fallar en lugar de oportunidades para aprender.</p>
+      <div class="pd-grid">
+        <div class="pd-item">
+          <div class="pd-icon">😟</div>
+          <div class="pd-title">Sin seguridad psicológica</div>
+          <div class="pd-desc">El estudiante oculta sus errores, evita preguntar por miedo al juicio, simula competencia que no tiene y no reflexiona sobre sus fallos. El aprendizaje se detiene.</div>
+          <div class="pd-example">El residente que no llama al adjunto de guardia porque teme parecer incompetente — y toma una decisión arriesgada solo.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🌱</div>
+          <div class="pd-title">Con seguridad psicológica</div>
+          <div class="pd-desc">El estudiante reconoce sus limitaciones, hace preguntas, admite errores y los convierte en material de aprendizaje. El ciclo de Kolb puede completarse.</div>
+          <div class="pd-example">El residente que dice «no estoy seguro de este diagnóstico, ¿lo revisamos juntos?» — y aprende más en esa guardia que en un mes de rotación pasiva.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🏥</div>
+          <div class="pd-title">Simulación como entorno seguro</div>
+          <div class="pd-desc">La simulación clínica existe precisamente para crear un espacio de alta fidelidad y baja consecuencia: el error es posible, visible y educativo — sin riesgo para el paciente.</div>
+          <div class="pd-example">Una guardia simulada donde el residente puede «perder» a un paciente virtual, reflexionar sobre ello y aprender — algo imposible en la práctica real.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">👨‍⚕️</div>
+          <div class="pd-title">El supervisor como constructor</div>
+          <div class="pd-desc">La seguridad psicológica no surge sola — la construye el supervisor con su actitud: cómo responde a los errores, cómo pregunta, cómo retroalimenta. Un supervisor que penaliza el error destruye el aprendizaje.</div>
+          <div class="pd-example">La diferencia entre «¿cómo se te ocurrió hacer eso?» y «cuéntame qué estabas pensando en ese momento» es la diferencia entre cerrar y abrir el aprendizaje.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">💡 Lo que une aprendizaje situado y seguridad psicológica</div>
+    <div class="card-body">
+      <p>El aprendizaje situado define <strong>dónde</strong> debe ocurrir el aprendizaje: en contextos auténticos, con tareas reales, dentro de una comunidad de práctica. La seguridad psicológica define <strong>en qué condiciones emocionales</strong> puede ocurrir ese aprendizaje: solo cuando el estudiante se siente lo suficientemente seguro para exponerse, arriesgar y equivocarse.</p>
+      <div style="background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:14px 18px;margin-top:12px;font-size:.845rem;line-height:1.65;border-left:4px solid var(--yellow-deep)">
+        💡 <strong>Implicación directa para el docente:</strong> no basta con diseñar buenas experiencias clínicas. Hay que diseñar también el clima emocional en el que esas experiencias ocurren. Un entorno clínico exigente pero psicológicamente seguro es el contexto óptimo para el aprendizaje médico.
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL 6: EPAs ══════ -->
 <div id="epas" class="panel">
 
   <div class="quote-simple">
@@ -860,6 +1130,105 @@ footer a:hover{text-decoration:underline}
 
 </div>
 </main>
+
+<!-- ══════ PANEL: ¿LO ENTENDÍ? ══════ -->
+<div id="lentendi" class="panel">
+
+  <div class="quote-simple">
+    Memorizar los nombres de los marcos es el nivel 1 de Bloom. Entender cuándo aplicarlos, por qué fallan y cómo se contradicen entre sí — eso es otra cosa.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🤔 ¿Cómo usar esta sección?</div>
+    <div class="card-body">
+      <p>Las preguntas que siguen no tienen una respuesta única ni están pensadas para responderse en solitario en dos minutos. Están diseñadas para <strong>revelar si has integrado los marcos</strong> — o solo los has leído.</p>
+      <p>Dos formas de trabajarlas:</p>
+      <div class="two-col" style="margin-top:12px;margin-bottom:0">
+        <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:800;margin-bottom:6px">👥 Con compañeros</div>
+          <div style="font-size:.78rem;color:var(--gray-700);line-height:1.55">Discútelas en grupo. Las mejores respuestas surgirán del desacuerdo. Si todos estáis de acuerdo de inmediato, la pregunta no era suficientemente buena — o no la habéis pensado suficientemente bien.</div>
+        </div>
+        <div style="background:var(--gray-900);border-radius:8px;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:800;margin-bottom:6px;color:var(--yellow)">🤖 Con un LLM en modo socrático</div>
+          <div style="font-size:.78rem;color:var(--yellow-mid);line-height:1.55">Pide al LLM que no te dé la respuesta, sino que te haga preguntas para que llegues tú. Dile: <em>«Actúa como un tutor socrático. No me des la respuesta, ayúdame a pensar.»</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔺 Sobre la pirámide de Miller</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 1</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Un estudiante supera con nota todas las estaciones de la ECOE. Tres meses después, en la rotación clínica, su tutor observa que su desempeño es claramente inferior al esperado. ¿Cómo lo explicas usando la pirámide de Miller? ¿Qué falló en el diseño formativo?</div>
+        </div>
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 2</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Algunos autores proponen un quinto nivel: <em>«Is»</em> — lo que el profesional hace cuando nadie le observa. ¿Qué añade este nivel al modelo? ¿Cómo podría fomentarse durante la formación de grado, antes de llegar a la práctica clínica real?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔁 Sobre la práctica deliberada y Kolb</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 3</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Piensa en una rotación clínica que hayas hecho. ¿Completaste el ciclo de Kolb en algún momento — o solo viviste experiencias sin reflexionar sobre ellas de forma estructurada? ¿Qué habría necesitado el entorno para que el ciclo fuera completo?</div>
+        </div>
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 4</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">La práctica deliberada requiere operar en el límite de la competencia, lo que implica cometer errores. ¿Cómo se reconcilia esto con la presión de «hacerlo bien a la primera» que existe en muchos entornos clínicos? ¿Qué papel juega aquí la seguridad psicológica?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 Sobre EPAs, aprendizaje situado y seguridad psicológica</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 5</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">¿Puede existir aprendizaje situado auténtico en un entorno de simulación? ¿Dónde está el límite entre «fidelidad suficiente para aprender» y «tan artificial que no transfiere»? Pon un ejemplo concreto de tu área clínica.</div>
+        </div>
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 6</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">La seguridad psicológica favorece el aprendizaje, pero en medicina también existe la presión legítima de la excelencia y la responsabilidad ante el paciente. ¿Cómo se construye un entorno que sea simultáneamente psicológicamente seguro y exigente? ¿Son compatibles?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Preguntas integradoras</div>
+    <div class="card-body">
+      <p style="margin-bottom:12px;font-size:.845rem;color:var(--gray-700)">Estas preguntas exigen conectar varios marcos a la vez. Son las más difíciles — y las más útiles.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 7</div>
+          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Diseña en 10 minutos un plan formativo para que un estudiante de 4º de medicina alcance el nivel 3 de supervisión en la EPA «valorar un paciente con disnea aguda». ¿Qué elementos de práctica deliberada incluirías? ¿Cómo asegurarías el ciclo de Kolb? ¿Qué condiciones de aprendizaje situado y seguridad psicológica necesitas?</div>
+        </div>
+        <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 8</div>
+          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Todos los marcos de esta página tienen limitaciones y críticas en la literatura. ¿Cuál crees que es la debilidad más importante de cada uno? ¿Hay alguno que consideres sobrevalorado en educación médica? ¿Por qué?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--yellow);border-radius:var(--radius);padding:20px 24px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+    <div style="font-size:.88rem;font-weight:800;color:var(--gray-900);margin-bottom:8px">💬 Prompt sugerido para trabajar estas preguntas con un LLM</div>
+    <div style="background:var(--white);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.65;font-family:monospace;border:1px solid var(--yellow-mid)">
+      «Actúa como un tutor socrático experto en educación médica. Voy a compartirte mi respuesta a una pregunta sobre [Miller / Kolb / EPAs / práctica deliberada / aprendizaje situado]. No me des la respuesta correcta. Hazme preguntas que me ayuden a identificar los puntos débiles de mi razonamiento y a profundizar en mi comprensión. Empieza cuando yo te comparta mi respuesta.»
+    </div>
+  </div>
+
+</div>
 
 <footer>
   <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026 ·
