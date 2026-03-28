@@ -203,6 +203,7 @@ footer a:hover{text-decoration:underline}
     <button class="tab" onclick="showTab('niveles',this)">🪜 Los 4 niveles</button>
     <button class="tab" onclick="showTab('cruce',this)">🔀 Kirkpatrick × Bloom</button>
     <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
+    <button class="tab" onclick="showTab('lentendi',this)">🤔 ¿Lo entendí?</button>
   </div>
 </div>
 
@@ -587,6 +588,95 @@ footer a:hover{text-decoration:underline}
           </tr>
         </tbody>
       </table>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--yellow-pale);border-color:var(--yellow-mid)">
+    <div class="card-title">🤔 ¿Lo has entendido de verdad?</div>
+    <div class="card-body">
+      <p>Al final de la página encontrarás la sección <strong>«¿Lo entendí?»</strong> con preguntas diseñadas para comprobar si realmente has integrado el modelo — no si lo has memorizado. No tienen respuesta fácil: están pensadas para discutirlas con compañeros o explorarlas con un LLM en modo socrático.</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL: ¿LO ENTENDÍ? ══════ -->
+<div id="lentendi" class="panel">
+
+  <div class="quote-simple">
+    Saber que Kirkpatrick tiene 4 niveles es nivel 1 de Bloom. Saber por qué tu programa formativo nunca llega al nivel 3 — y qué harías para cambiarlo — es nivel 5.
+  </div>
+
+  <div class="card">
+    <div class="card-title">🤔 ¿Cómo usar esta sección?</div>
+    <div class="card-body">
+      <p>Las preguntas que siguen no tienen una respuesta única ni están pensadas para responderse en solitario en dos minutos. Están diseñadas para <strong>revelar si has integrado el modelo</strong> — o solo lo has leído.</p>
+      <div class="two-col" style="margin-top:12px;margin-bottom:0">
+        <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:800;margin-bottom:6px">👥 Con compañeros</div>
+          <div style="font-size:.78rem;color:var(--gray-700);line-height:1.55">Discútelas en grupo. Las mejores respuestas surgirán del desacuerdo. Si todos estáis de acuerdo de inmediato, no las habéis pensado suficientemente bien.</div>
+        </div>
+        <div style="background:var(--gray-900);border-radius:8px;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:800;margin-bottom:6px;color:var(--yellow)">🤖 Con un LLM en modo socrático</div>
+          <div style="font-size:.78rem;color:var(--yellow-mid);line-height:1.55">Dile: <em>«Actúa como un tutor socrático. No me des la respuesta, ayúdame a pensar.»</em></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Sobre los 4 niveles</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 1</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Un taller de comunicación médico-paciente recibe puntuaciones de satisfacción altísimas (Kirkpatrick 1) y los estudiantes demuestran mejoras claras en la evaluación post-taller (Kirkpatrick 2). Sin embargo, en las prácticas clínicas nadie observa cambios en cómo se comunican con los pacientes reales. ¿Qué puede estar fallando? ¿Qué cambiarías en el diseño del taller?</div>
+        </div>
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 2</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">El nivel 4 de Kirkpatrick (impacto clínico) es el más relevante pero el más difícil de demostrar. ¿Qué obstáculos concretos —metodológicos, institucionales, temporales— dificultan medirlo en educación médica de grado? ¿Es razonable exigirlo siempre?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔀 Sobre Kirkpatrick × Bloom</div>
+    <div class="card-body">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 3</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">¿Es posible alcanzar el nivel 3 de Kirkpatrick (cambio de conducta) si la formación se mueve solo en los niveles 1 y 2 de Bloom (recordar y comprender)? Argumenta tu respuesta con un ejemplo clínico concreto.</div>
+        </div>
+        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 4</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Una clase magistral muy bien valorada (Kirkpatrick 1) y que genera aprendizaje demostrable (Kirkpatrick 2) puede operar solo en Bloom 1–2. ¿Cómo rediseñarías esa misma clase para que active Bloom 4–5 sin perder la satisfacción del estudiante?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 Preguntas integradoras</div>
+    <div class="card-body">
+      <p style="margin-bottom:12px;font-size:.845rem;color:var(--gray-700)">Estas preguntas exigen conectar Kirkpatrick con otros marcos y con decisiones docentes reales.</p>
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 5</div>
+          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Diseña un sistema de evaluación para un bloque de prácticas clínicas de 3º de medicina que llegue al menos al nivel 3 de Kirkpatrick. ¿Qué instrumentos usarías? ¿Cuándo evaluarías? ¿Qué recursos necesitas que probablemente no tienes ahora?</div>
+        </div>
+        <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 6</div>
+          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Kirkpatrick mide el impacto de la formación, pero no dice nada sobre cómo producirlo. ¿Qué marcos de los que has estudiado en EduMed.UVa (Bloom, Miller, práctica deliberada, Kolb…) completarían el modelo de Kirkpatrick para tener una visión completa del diseño formativo?</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="background:var(--yellow);border-radius:var(--radius);padding:20px 24px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
+    <div style="font-size:.88rem;font-weight:800;color:var(--gray-900);margin-bottom:8px">💬 Prompt sugerido para trabajar estas preguntas con un LLM</div>
+    <div style="background:var(--white);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.65;font-family:monospace;border:1px solid var(--yellow-mid)">
+      «Actúa como un tutor socrático experto en educación médica. Voy a compartirte mi respuesta a una pregunta sobre el modelo de Kirkpatrick. No me des la respuesta correcta. Hazme preguntas que me ayuden a identificar los puntos débiles de mi razonamiento y a profundizar en mi comprensión. Empieza cuando yo te comparta mi respuesta.»
     </div>
   </div>
 
