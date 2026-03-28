@@ -33,8 +33,8 @@ header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep);
 .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .header-brand { display: flex; align-items: center; gap: 12px; }
 .header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
-.header-title { font-size: 1.05rem; font-weight: 800; color: var(--gray-900); letter-spacing: -0.5px; line-height: 1.1; }
-.header-subtitle { font-size: 0.65rem; font-weight: 600; color: var(--gray-700); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+.header-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--gray-900); letter-spacing: -0.5px; line-height: 1.1; }
+.header-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 0.65rem; font-weight: 600; color: var(--gray-700); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
 .badge { background: var(--gray-900); color: var(--yellow); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
 
 /* ── HERO ── */
@@ -59,7 +59,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
 .section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; color: var(--yellow); }
 .section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: var(--white); box-shadow: var(--shadow-sm); }
-.section-title { font-size: 1.15rem; font-weight: 800; line-height: 1.15; letter-spacing: -0.2px; }
+.section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.2px; }
 .section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
 .section-body { padding: 20px; }
 
@@ -154,9 +154,10 @@ footer a:hover { text-decoration: underline; }
   .section-header { padding: 20px 18px; gap: 12px; }
   .section-icon { width: 46px; height: 46px; font-size: 1.4rem; }
   .section-title {
+    font-family: 'Space Grotesk', sans-serif;
     font-size: 1.5rem;
-    text-transform: uppercase;
-    letter-spacing: 0.03em;
+    text-transform: none;
+    letter-spacing: 0.01em;
     font-weight: 800;
     line-height: 1.2;
   }
@@ -187,6 +188,7 @@ footer a:hover { text-decoration: underline; }
       <p class="hero-sub">Bienvenido a la Web App de EduMed.UVa. Un espacio diseñado para potenciar tu docencia con acceso directo a cuadernos, materiales docentes y un repositorio colaborativo donde compartir actividades innovadoras con otros profesionales. Explora la plataforma y descubre cómo estas herramientas pueden ayudar a mejorar tu día a día educativo. ¡Entra y comienza a compartir!</p>
       <div class="hero-stats">
         <span class="stat-pill">📓 Cuadernos Docentes</span>
+        <span class="stat-pill">🧱 Básicos</span>
         <span class="stat-pill">📋 Evaluación</span>
         <span class="stat-pill">🤖 IA en el Aula</span>
         <span class="stat-pill">🔬 Innovación</span>
