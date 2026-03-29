@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduMed.UVa · Unidad de Educación Médica · Universidad de Valladolid</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --yellow:      #F5C518;
@@ -24,111 +24,132 @@
   --shadow-md:   0 4px 12px rgba(0,0,0,0.10);
   --shadow-lg:   0 8px 24px rgba(0,0,0,0.13);
 }
-
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Figtree', sans-serif; background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
 
-/* ── HEADER ── */
+/* HEADER */
 header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
 .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .header-brand { display: flex; align-items: center; gap: 12px; }
 .header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
-.header-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--gray-900); letter-spacing: -0.5px; line-height: 1.1; }
-.header-subtitle { font-family: 'Space Grotesk', sans-serif; font-size: 0.8rem; font-weight: 600; color: var(--gray-700); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
 .badge { background: var(--gray-900); color: var(--yellow); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
 
-/* ── HERO ── */
+/* HERO */
 .hero { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); padding: 40px 36px 36px; }
 .hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 40px; }
 .hero-text { flex: 1; min-width: 0; }
-.hero-headline { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; color: var(--gray-900); line-height: 1.15; letter-spacing: -0.3px; margin-bottom: 10px; }
+.hero-headline { font-family: 'Figtree', sans-serif; font-size: 2.75rem; font-weight: 800; color: var(--gray-900); line-height: 1.1; letter-spacing: -0.3px; margin-bottom: 10px; }
 .hero-sub { font-size: 0.9rem; color: var(--gray-700); font-weight: 500; margin-bottom: 20px; line-height: 1.65; }
 .hero-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
 .stat-pill { background: var(--gray-900); color: var(--yellow); font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 100px; }
 .hero-grados { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: var(--gray-700); line-height: 1.6; }
 .hero-grados strong { color: var(--gray-900); font-weight: 700; }
-
-/* imagen hero */
 .hero-img-wrap { flex-shrink: 0; width: 260px; }
 .hero-img { display: block; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18)); border-radius: 12px; }
 
-/* ── MAIN ── */
+/* MAIN */
 main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
-/* ── SECTION BLOCKS ── */
+/* SECTION BLOCKS */
 .section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
-.section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; color: var(--yellow); }
-.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: var(--white); box-shadow: var(--shadow-sm); }
-.section-title { font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 800; line-height: 1.2; letter-spacing: -0.2px; }
+.section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; }
+.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: var(--shadow-sm); }
+.section-title { font-family: 'Figtree', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
 .section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
+.section-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
 .section-body { padding: 20px; }
 
-.sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; }
-.sec-2 .section-header { background: #3D4A5C; border-bottom: 2px solid #2a3447; }
-.sec-3 .section-header { background: #4B5263; border-bottom: 2px solid #3a4052; }
-.sec-4 .section-header { background: #6B7280; border-bottom: 2px solid #555c6a; }
+/* SEC-1: Cuadernos — gris muy oscuro */
+.sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; color: #F5C518; }
+.sec-1 .section-body   { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; }
 
-.sec-1 .section-body { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; }
-.sec-2 .section-body { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; }
-.sec-3 .section-body { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; }
-.sec-4 .section-body { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; }
+/* SEC-2: Básicos — gris oscuro azulado */
+.sec-2 .section-header { background: #3D4A5C; border-bottom: 2px solid #2a3447; color: #F5C518; }
+.sec-2 .section-body   { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; }
 
-/* ── RESOURCE CARDS ── */
+/* SEC-3: Evaluación — gris medio */
+.sec-3 .section-header { background: #4B5263; border-bottom: 2px solid #3a4052; color: #F5C518; }
+.sec-3 .section-body   { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; }
+
+/* SEC-4: IAgen — negro total con amarillo */
+.sec-4 .section-header { background: #000000; border-bottom: 2px solid #F5C518; color: #ffffff; }
+.sec-4 .section-header .section-icon { background: #F5C518; }
+.sec-4 .section-header .section-desc { color: #F5C518; opacity: 1; }
+.sec-4 .section-body   { background: #111318; border: 1.5px solid #222; border-top: none; }
+.sec-4 .section-body .resource-card { background: #1e2027; border-color: #333; }
+.sec-4 .section-body .rc-title { color: #ffffff; }
+.sec-4 .section-body .rc-desc  { color: #aaaaaa; }
+.sec-4 .section-body .rc-cta   { color: #F5C518; }
+.sec-4 .section-body .resource-card::before { background: #F5C518; }
+.sec-4 .section-body .rc-tag   { background: #333; color: #F5C518; border-color: #555; }
+.sec-4 .section-body .pending-badge { background: #333; color: #aaa; border-color: #555; }
+.sec-4 .section-body .resource-card.pending .rc-title { color: #666; }
+.sec-4 .section-body .resource-card.pending .rc-desc  { color: #444; }
+
+/* SEC-5: Repositorios — gris claro */
+.sec-5 .section-header { background: #6B7280; border-bottom: 2px solid #555c6a; color: #F5C518; }
+.sec-5 .section-body   { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; }
+
+/* SEC-QUIEN: Para quién — amarillo dorado */
+.sec-quien .section-header { background: #D4A000; border-bottom: 2px solid #b38900; color: #111318; }
+.sec-quien .section-header .section-icon { background: #ffffff; }
+.sec-quien .section-header .section-desc { color: #111318; opacity: 0.75; }
+.sec-quien .section-body   { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; }
+
+/* RESOURCE CARDS */
 .cards-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
 .cards-grid .resource-card.hidden { display: none; }
-
-.resource-card { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: box-shadow 0.18s, transform 0.18s; text-decoration: none; color: inherit; position: relative; overflow: hidden; }
-.resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: var(--yellow); }
+.resource-card { background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: box-shadow 0.18s, transform 0.18s; text-decoration: none; color: inherit; position: relative; overflow: hidden; }
+.resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #F5C518; }
 .resource-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-.resource-card:hover::before { background: var(--yellow-deep); }
-
+.resource-card:hover::before { background: #D4A000; }
 .rc-icon { font-size: 1.8rem; margin-bottom: 10px; }
-.rc-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: var(--yellow-pale); color: var(--yellow-deep); border: 1px solid var(--yellow-mid); }
-.rc-title { font-size: 0.95rem; font-weight: 700; color: var(--gray-900); line-height: 1.3; margin-bottom: 6px; }
-.rc-desc { font-size: 0.82rem; color: var(--gray-500); line-height: 1.6; flex: 1; }
-.rc-cta { margin-top: 14px; font-size: 0.78rem; font-weight: 700; color: var(--gray-900); display: flex; align-items: center; gap: 4px; }
+.rc-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: #FFFDE7; color: #D4A000; border: 1px solid #FEF0A0; }
+.rc-title { font-size: 0.95rem; font-weight: 700; color: #111318; line-height: 1.3; margin-bottom: 6px; }
+.rc-desc { font-size: 0.82rem; color: #6B7280; line-height: 1.6; flex: 1; }
+.rc-cta { margin-top: 14px; font-size: 0.78rem; font-weight: 700; color: #111318; display: flex; align-items: center; gap: 4px; }
 .rc-cta svg { transition: transform 0.15s; }
 .resource-card:hover .rc-cta svg { transform: translateX(4px); }
 
-/* ── PENDING CARDS ── */
-.resource-card.pending { background: var(--gray-100); border-color: var(--gray-200); cursor: default; pointer-events: none; }
-.resource-card.pending::before { background: var(--gray-300); }
-.resource-card.pending .rc-title { color: var(--gray-500); }
-.resource-card.pending .rc-desc { color: var(--gray-300); }
-.pending-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: var(--gray-200); color: var(--gray-500); border: 1px solid var(--gray-300); }
+/* PENDING */
+.resource-card.pending { background: #F3F4F6; border-color: #E5E7EB; cursor: default; pointer-events: none; }
+.resource-card.pending::before { background: #D1D5DB; }
+.resource-card.pending .rc-title { color: #6B7280; }
+.resource-card.pending .rc-desc  { color: #9CA3AF; }
+.pending-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: #E5E7EB; color: #6B7280; border: 1px solid #D1D5DB; }
 
-/* ── SEE MORE ── */
+/* SEE MORE */
 .see-more-wrap { margin-top: 14px; text-align: center; }
-.see-more-btn { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 9px 22px; border-radius: 100px; border: 2px solid var(--gray-500); cursor: pointer; background: transparent; color: var(--gray-700); transition: background 0.15s, color 0.15s, border-color 0.15s; display: inline-flex; align-items: center; gap: 6px; }
-.see-more-btn:hover { background: var(--gray-900); color: var(--yellow); border-color: var(--gray-900); }
+.see-more-btn { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 9px 22px; border-radius: 100px; border: 2px solid #6B7280; cursor: pointer; background: transparent; color: #3D4451; transition: background 0.15s, color 0.15s, border-color 0.15s; display: inline-flex; align-items: center; gap: 6px; }
+.see-more-btn:hover { background: #111318; color: #F5C518; border-color: #111318; }
 
-/* ── FOR WHOM ── */
+/* FOR WHOM */
 .valid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.valid-item { background: var(--white); border: 1.5px solid var(--gray-200); border-radius: 8px; padding: 14px 16px; }
-.valid-icon { font-size: 1.3rem; margin-bottom: 6px; }
-.valid-title { font-size: 0.82rem; font-weight: 700; color: var(--gray-900); margin-bottom: 4px; }
-.valid-desc { font-size: 0.78rem; color: var(--gray-700); line-height: 1.55; }
+.valid-item { background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 8px; padding: 14px 16px; }
+.valid-icon  { font-size: 1.3rem; margin-bottom: 6px; }
+.valid-title { font-size: 0.82rem; font-weight: 700; color: #111318; margin-bottom: 4px; }
+.valid-desc  { font-size: 0.78rem; color: #3D4451; line-height: 1.55; }
 
-/* ── CONTACT ── */
-.contact-block { background: var(--gray-900); border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); }
+/* CONTACT */
+.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); }
 .contact-text { flex: 1; }
-.contact-title { font-size: 1.1rem; font-weight: 800; color: var(--yellow); margin-bottom: 8px; }
-.contact-desc { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
-.contact-btn { display: inline-flex; align-items: center; gap: 8px; background: var(--yellow); color: var(--gray-900); font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; box-shadow: var(--shadow-md); flex-shrink: 0; }
-.contact-btn:hover { background: var(--yellow-deep); transform: translateY(-2px); }
+.contact-title { font-size: 1.1rem; font-weight: 800; color: #F5C518; margin-bottom: 8px; }
+.contact-desc  { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
+.contact-btn { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; box-shadow: var(--shadow-md); flex-shrink: 0; }
+.contact-btn:hover { background: #D4A000; transform: translateY(-2px); }
 
-/* ── FOOTER ── */
-footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: var(--gray-500); border-top: 1px solid var(--gray-200); background: var(--white); }
-footer strong { color: var(--yellow-deep); }
-footer a { color: var(--gray-700); text-decoration: none; }
+/* FOOTER */
+footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: #6B7280; border-top: 1px solid #E5E7EB; background: #ffffff; }
+footer strong { color: #D4A000; }
+footer a { color: #3D4451; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
-/* ── BACK TOP ── */
-.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: var(--gray-900); color: var(--yellow); border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
+/* BACK TOP */
+.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
 .back-top.visible { opacity: 1; pointer-events: auto; }
-.back-top:hover { background: var(--gray-700); transform: translateY(-2px); }
+.back-top:hover { background: #3D4451; transform: translateY(-2px); }
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media (max-width: 1024px) {
   .cards-grid { grid-template-columns: repeat(2, 1fr); }
   .valid-grid { grid-template-columns: repeat(2, 1fr); }
@@ -147,20 +168,11 @@ footer a:hover { text-decoration: underline; }
   .valid-grid { grid-template-columns: 1fr; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
-
-  /* ── MOBILE SECTION HEADERS: opción D ── */
   .section-block { margin-bottom: 40px; }
-  .section-block + .section-block { border-top: 3px solid var(--yellow); }
+  .section-block + .section-block { border-top: 3px solid #F5C518; }
   .section-header { padding: 20px 18px; gap: 12px; }
   .section-icon { width: 46px; height: 46px; font-size: 1.4rem; }
-  .section-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.5rem;
-    text-transform: none;
-    letter-spacing: 0.01em;
-    font-weight: 800;
-    line-height: 1.2;
-  }
+  .section-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
   .section-desc { font-size: 0.75rem; opacity: 0.85; margin-top: 4px; }
 }
 </style>
@@ -173,8 +185,8 @@ footer a:hover { text-decoration: underline; }
       <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
            alt="Logo Facultad de Medicina UVa" class="header-logo">
       <div>
-        <div class="header-title">EduMed · UVa</div>
-        <div class="header-subtitle">Unidad de Educación Médica · Universidad de Valladolid</div>
+        <div class="header-title" style="font-family:'Figtree',sans-serif;font-size:1.05rem;font-weight:800;">EduMed · UVa</div>
+        <div class="header-subtitle" style="font-family:'Figtree',sans-serif;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Unidad de Educación Médica · Universidad de Valladolid</div>
       </div>
     </div>
     <div class="badge">Actualizado en marzo de 2026</div>
@@ -213,6 +225,7 @@ footer a:hover { text-decoration: underline; }
     <div class="section-header">
       <div class="section-icon">📓</div>
       <div>
+        <div class="section-num">Sección 01</div>
         <div class="section-title">Cuadernos Docentes</div>
         <div class="section-desc">Colección EduMed.UVa · 2 cuadernos disponibles</div>
       </div>
@@ -248,6 +261,7 @@ footer a:hover { text-decoration: underline; }
     <div class="section-header">
       <div class="section-icon">🧱</div>
       <div>
+        <div class="section-num">Sección 02</div>
         <div class="section-title">Básicos en educación médica explicados para principiantes</div>
         <div class="section-desc">Los fundamentos que todo docente debería conocer</div>
       </div>
@@ -280,10 +294,11 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- 3. EVALUACIÓN -->
-  <div class="section-block sec-2">
+  <div class="section-block sec-3">
     <div class="section-header">
       <div class="section-icon">📋</div>
       <div>
+        <div class="section-num">Sección 03</div>
         <div class="section-title">Evaluando la evaluación</div>
         <div class="section-desc">Herramientas para diseñar una evaluación más justa y eficaz</div>
       </div>
@@ -315,45 +330,47 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <!-- 3. IAGEN -->
-  <div class="section-block sec-3">
+  <!-- 4. IAGEN — negro -->
+  <div class="section-block sec-4">
     <div class="section-header">
-      <div class="section-icon">🤖</div>
+      <div class="section-icon" style="background:#F5C518;">🤖</div>
       <div>
-        <div class="section-title">El reto de la IAgen</div>
-        <div class="section-desc">Inteligencia artificial generativa en la docencia médica</div>
+        <div class="section-num" style="color:#F5C518;">Sección 04</div>
+        <div class="section-title" style="color:#ffffff;">El reto de la IAgen</div>
+        <div class="section-desc" style="color:#F5C518;opacity:1;">Inteligencia artificial generativa en la docencia médica</div>
       </div>
     </div>
-    <div class="section-body">
+    <div class="section-body" style="background:#111318;border:1.5px solid #222;border-top:none;">
       <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener">
+        <a class="resource-card" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener" style="background:#52596e;border-color:#636b80;">
           <div class="rc-icon">🤖</div>
-          <span class="rc-tag">IA en el aula</span>
-          <div class="rc-title">Small TeAIching e IA lenta o fluente</div>
-          <div class="rc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+          <span class="rc-tag" style="background:#636b80;color:#F5C518;border-color:#737b90;">IA en el aula</span>
+          <div class="rc-title" style="color:#ffffff;">Small TeAIching e IA lenta o fluente</div>
+          <div class="rc-desc" style="color:#ffffff;">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</div>
+          <div class="rc-cta" style="color:#F5C518;">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
         </a>
-        <div class="resource-card pending">
+        <div class="resource-card pending" style="background:#52596e;border-color:#636b80;">
           <div class="rc-icon">🚧</div>
-          <span class="pending-badge">🚧 En construcción</span>
-          <div class="rc-title">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
-          <div class="rc-desc">Próximamente disponible.</div>
+          <span class="pending-badge" style="background:#636b80;color:#aaa;border-color:#737b90;">🚧 En construcción</span>
+          <div class="rc-title" style="color:#ffffff;">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
+          <div class="rc-desc" style="color:#ffffff;">Próximamente disponible.</div>
         </div>
-        <div class="resource-card pending">
+        <div class="resource-card pending" style="background:#52596e;border-color:#636b80;">
           <div class="rc-icon">🚧</div>
-          <span class="pending-badge">🚧 En construcción</span>
-          <div class="rc-title">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? El razonamiento clínico y el diagnóstico en prompts</div>
-          <div class="rc-desc">Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados. Próximamente disponible.</div>
+          <span class="pending-badge" style="background:#636b80;color:#aaa;border-color:#737b90;">🚧 En construcción</span>
+          <div class="rc-title" style="color:#ffffff;">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? El razonamiento clínico y el diagnóstico en prompts</div>
+          <div class="rc-desc" style="color:#ffffff;">Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados. Próximamente disponible.</div>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 4. INNOVACIÓN -->
-  <div class="section-block sec-4">
+  <!-- 5. REPOSITORIOS -->
+  <div class="section-block sec-5">
     <div class="section-header">
       <div class="section-icon">🔬</div>
       <div>
+        <div class="section-num">Sección 05</div>
         <div class="section-title">Repositorios de iniciativas innovadoras</div>
         <div class="section-desc">Comparte y descubre experiencias de innovación docente en medicina</div>
       </div>
@@ -379,15 +396,15 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- PARA QUIÉN -->
-  <div class="section-block sec-1">
-    <div class="section-header">
-      <div class="section-icon">👩‍🏫</div>
+  <div class="section-block sec-quien">
+    <div class="section-header" style="background:#D4A000;border-bottom:2px solid #b38900;">
+      <div class="section-icon" style="background:#ffffff;">👩‍🏫</div>
       <div>
-        <div class="section-title">¿Para quién es EduMed.UVa?</div>
-        <div class="section-desc">Dirigido al profesorado de todos los grados de la Facultad y a la comunidad docente médica nacional e internacional</div>
+        <div class="section-title" style="color:#111318;">¿Para quién es EduMed.UVa?</div>
+        <div class="section-desc" style="color:#111318;opacity:0.75;">Dirigido al profesorado de todos los grados de la Facultad y a la comunidad docente médica nacional e internacional</div>
       </div>
     </div>
-    <div class="section-body" style="background:var(--gray-50);">
+    <div class="section-body" style="background:#FFFDE7;border:1.5px solid #FEF0A0;border-top:none;">
       <div class="valid-grid">
         <div class="valid-item">
           <div class="valid-icon">🏫</div>
@@ -429,13 +446,10 @@ footer a:hover { text-decoration: underline; }
 <button class="back-top" id="backTop">↑</button>
 
 <script>
-// Back to top
 document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 window.addEventListener('scroll', () => {
   document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
 });
-
-// Grid "Ver más"
 document.querySelectorAll('.cards-grid[data-max]').forEach(grid => {
   const max = parseInt(grid.dataset.max, 10);
   const cards = Array.from(grid.querySelectorAll('.resource-card'));
