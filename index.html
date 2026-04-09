@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduMed.UVa · Unidad de Educación Médica · Universidad de Valladolid</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --yellow:      #F5C518;
@@ -55,74 +55,106 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
 .section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; }
 .section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: var(--shadow-sm); }
+.section-num  { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
 .section-title { font-family: 'Figtree', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
-.section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
-.section-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
-.section-body { padding: 20px; }
+.section-desc  { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
+.section-body  { padding: 16px 20px; }
 
-/* SEC-1: Cuadernos — gris muy oscuro */
 .sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; color: #F5C518; }
 .sec-1 .section-body   { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; }
-
-/* SEC-2: Básicos — gris oscuro azulado */
 .sec-2 .section-header { background: #3D4A5C; border-bottom: 2px solid #2a3447; color: #F5C518; }
 .sec-2 .section-body   { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; }
-
-/* SEC-3: Evaluación — gris medio */
 .sec-3 .section-header { background: #4B5263; border-bottom: 2px solid #3a4052; color: #F5C518; }
 .sec-3 .section-body   { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; }
-
-/* SEC-4: IAgen — negro total con amarillo */
 .sec-4 .section-header { background: #000000; border-bottom: 2px solid #F5C518; color: #ffffff; }
 .sec-4 .section-header .section-icon { background: #F5C518; }
-.sec-4 .section-header .section-desc { color: #F5C518; opacity: 1; }
 .sec-4 .section-body   { background: #111318; border: 1.5px solid #222; border-top: none; }
-.sec-4 .section-body .resource-card { background: #1e2027; border-color: #333; }
-.sec-4 .section-body .rc-title { color: #ffffff; }
-.sec-4 .section-body .rc-desc  { color: #aaaaaa; }
-.sec-4 .section-body .rc-cta   { color: #F5C518; }
-.sec-4 .section-body .resource-card::before { background: #F5C518; }
-.sec-4 .section-body .rc-tag   { background: #333; color: #F5C518; border-color: #555; }
-.sec-4 .section-body .pending-badge { background: #333; color: #aaa; border-color: #555; }
-.sec-4 .section-body .resource-card.pending .rc-title { color: #666; }
-.sec-4 .section-body .resource-card.pending .rc-desc  { color: #444; }
-
-/* SEC-5: Repositorios — gris claro */
 .sec-5 .section-header { background: #6B7280; border-bottom: 2px solid #555c6a; color: #F5C518; }
 .sec-5 .section-body   { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; }
-
-/* SEC-QUIEN: Para quién — amarillo dorado */
-.sec-quien .section-header { background: #D4A000; border-bottom: 2px solid #b38900; color: #111318; }
-.sec-quien .section-header .section-icon { background: #ffffff; }
-.sec-quien .section-header .section-desc { color: #111318; opacity: 0.75; }
+.sec-quien .section-header { background: #D4A000; border-bottom: 2px solid #b38900; }
 .sec-quien .section-body   { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; }
 
-/* RESOURCE CARDS */
-.cards-grid { display: grid; gap: 14px; grid-template-columns: repeat(3, 1fr); }
-.cards-grid .resource-card.hidden { display: none; }
-.resource-card { background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: var(--radius); padding: 22px 24px; box-shadow: var(--shadow-sm); display: flex; flex-direction: column; transition: box-shadow 0.18s, transform 0.18s; text-decoration: none; color: inherit; position: relative; overflow: hidden; }
-.resource-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: #F5C518; }
-.resource-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-3px); }
-.resource-card:hover::before { background: #D4A000; }
-.rc-icon { font-size: 1.8rem; margin-bottom: 10px; }
-.rc-tag { display: inline-block; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: #FFFDE7; color: #D4A000; border: 1px solid #FEF0A0; }
-.rc-title { font-size: 0.95rem; font-weight: 700; color: #111318; line-height: 1.3; margin-bottom: 6px; }
-.rc-desc { font-size: 0.82rem; color: #6B7280; line-height: 1.6; flex: 1; }
-.rc-cta { margin-top: 14px; font-size: 0.78rem; font-weight: 700; color: #111318; display: flex; align-items: center; gap: 4px; }
-.rc-cta svg { transition: transform 0.15s; }
-.resource-card:hover .rc-cta svg { transform: translateX(4px); }
+/* ACCORDION */
+.accordion { display: flex; flex-direction: column; gap: 6px; }
 
-/* PENDING */
-.resource-card.pending { background: #F3F4F6; border-color: #E5E7EB; cursor: default; pointer-events: none; }
-.resource-card.pending::before { background: #D1D5DB; }
-.resource-card.pending .rc-title { color: #6B7280; }
-.resource-card.pending .rc-desc  { color: #9CA3AF; }
-.pending-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; margin-bottom: 8px; background: #E5E7EB; color: #6B7280; border: 1px solid #D1D5DB; }
+.acc-item { border-radius: 8px; overflow: hidden; }
 
-/* SEE MORE */
-.see-more-wrap { margin-top: 14px; text-align: center; }
-.see-more-btn { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 9px 22px; border-radius: 100px; border: 2px solid #6B7280; cursor: pointer; background: transparent; color: #3D4451; transition: background 0.15s, color 0.15s, border-color 0.15s; display: inline-flex; align-items: center; gap: 6px; }
-.see-more-btn:hover { background: #111318; color: #F5C518; border-color: #111318; }
+/* row = clickable header */
+.acc-row {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 16px; cursor: pointer;
+  background: #ffffff; border: 1.5px solid #E5E7EB;
+  border-radius: 8px;
+  transition: background 0.15s;
+  user-select: none;
+}
+.acc-row:hover { background: var(--yellow-pale); }
+.acc-row.open  { border-radius: 8px 8px 0 0; border-bottom-color: transparent; background: var(--yellow-pale); }
+
+.acc-icon  { font-size: 1.4rem; flex-shrink: 0; }
+.acc-title { font-size: 0.9rem; font-weight: 700; color: var(--gray-900); flex: 1; line-height: 1.3; }
+.acc-tag   { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; background: var(--yellow-pale); color: var(--yellow-deep); border: 1px solid var(--yellow-mid); white-space: nowrap; flex-shrink: 0; }
+.acc-pending-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; background: #E5E7EB; color: #6B7280; border: 1px solid #D1D5DB; white-space: nowrap; flex-shrink: 0; }
+.acc-chevron { font-size: 0.8rem; color: var(--gray-500); flex-shrink: 0; transition: transform 0.2s; }
+.acc-row.open .acc-chevron { transform: rotate(180deg); }
+
+/* pending row */
+.acc-row.pending { background: var(--gray-100); cursor: default; opacity: 0.7; }
+.acc-row.pending:hover { background: var(--gray-100); }
+.acc-row.pending .acc-title { color: var(--gray-500); }
+
+/* body = expandable content */
+.acc-body {
+  display: none;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1.5px solid #E5E7EB;
+  border-top: none;
+  border-radius: 0 0 8px 8px;
+}
+.acc-body.open { display: block; }
+.acc-desc { font-size: 0.85rem; color: var(--gray-500); line-height: 1.65; margin-bottom: 14px; }
+.acc-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--gray-900); color: var(--yellow);
+  font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700;
+  padding: 8px 18px; border-radius: 100px; text-decoration: none;
+  transition: background 0.15s, transform 0.15s;
+}
+.acc-cta:hover { background: var(--gray-700); transform: translateY(-1px); }
+
+/* dark accordion (IAgen) */
+.acc-dark .acc-row         { background: #52596e; border-color: #636b80; }
+.acc-dark .acc-row:hover   { background: #5e6678; }
+.acc-dark .acc-row.open    { background: #5e6678; border-bottom-color: transparent; }
+.acc-dark .acc-title       { color: #ffffff; }
+.acc-dark .acc-chevron     { color: #aaaaaa; }
+.acc-dark .acc-tag         { background: #636b80; color: #F5C518; border-color: #737b90; }
+.acc-dark .acc-pending-tag { background: #3a3f52; color: #888; border-color: #4a5068; }
+.acc-dark .acc-row.pending { background: #3a3f52; opacity: 0.7; }
+.acc-dark .acc-body        { background: #3a3f52; border-color: #4a5068; }
+.acc-dark .acc-desc        { color: #ffffff; }
+.acc-dark .acc-cta         { background: #F5C518; color: #111318; }
+.acc-dark .acc-cta:hover   { background: #D4A000; }
+
+/* FOLDER TABS */
+.folder-tabs { border-radius: 10px; overflow: hidden; border: 2px solid #D4A000; }
+.folder-tab-bar { display: flex; }
+.folder-tab { flex: 1; padding: 11px 8px; text-align: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; background: #FEF0A0; color: #D4A000; border-right: 1px solid #D4A000; transition: background 0.15s, color 0.15s; user-select: none; }
+.folder-tab:last-child { border-right: none; }
+.folder-tab.active { background: #D4A000; color: #111318; }
+.folder-tab:hover:not(.active) { background: #FDE68A; }
+.folder-content { padding: 18px 20px; background: #ffffff; font-size: 0.88rem; color: #3D4451; line-height: 1.7; border-top: 2px solid #D4A000; min-height: 80px; }
+.folder-content strong { color: #111318; }
+
+/* QUIEN TABS */
+.quien-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
+.quien-tab { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 8px 16px; border-radius: 100px; border: 2px solid #D4A000; background: transparent; color: #D4A000; cursor: pointer; transition: background 0.15s, color 0.15s; }
+.quien-tab:hover { background: #FEF0A0; }
+.quien-tab.active { background: #D4A000; color: #111318; }
+.quien-panel { display: none; font-size: 0.88rem; color: #3D4451; line-height: 1.7; padding: 4px 2px; }
+.quien-panel.active { display: block; }
+.quien-panel strong { color: #111318; }
 
 /* FOR WHOM */
 .valid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
@@ -133,10 +165,10 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
 /* CONTACT */
 .contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); }
-.contact-text { flex: 1; }
+.contact-text  { flex: 1; }
 .contact-title { font-size: 1.1rem; font-weight: 800; color: #F5C518; margin-bottom: 8px; }
 .contact-desc  { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
-.contact-btn { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; box-shadow: var(--shadow-md); flex-shrink: 0; }
+.contact-btn   { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; box-shadow: var(--shadow-md); flex-shrink: 0; }
 .contact-btn:hover { background: #D4A000; transform: translateY(-2px); }
 
 /* FOOTER */
@@ -152,7 +184,6 @@ footer a:hover { text-decoration: underline; }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .cards-grid { grid-template-columns: repeat(2, 1fr); }
   .valid-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-img-wrap { width: 200px; }
 }
@@ -161,20 +192,16 @@ footer a:hover { text-decoration: underline; }
   .badge { display: none; }
   .hero { padding: 24px 16px; }
   .hero-inner { flex-direction: column; align-items: stretch; }
-  .hero-img-wrap { width: 100%; margin-top: 16px; }
-  .hero-img { width: 60%; margin: 0 auto; display: block; }
-  .hero-headline { font-size: 1.25rem; }
+  .hero-img-wrap { display: none; }
+  .hero-headline { font-size: 1.8rem; }
   main { padding: 24px 16px 60px; }
-  .cards-grid { grid-template-columns: 1fr; }
   .valid-grid { grid-template-columns: 1fr; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
-  .section-block { margin-bottom: 40px; }
-  .section-block + .section-block { border-top: 3px solid #F5C518; }
-  .section-header { padding: 20px 18px; gap: 12px; }
-  .section-icon { width: 46px; height: 46px; font-size: 1.4rem; }
-  .section-title { font-size: 1.5rem; font-weight: 800; line-height: 1.2; }
-  .section-desc { font-size: 0.75rem; opacity: 0.85; margin-top: 4px; }
+  .section-block { margin-bottom: 32px; }
+  .section-title { font-size: 1.5rem; }
+  .section-header { padding: 16px 18px; }
+  .acc-title { font-size: 0.85rem; }
 }
 </style>
 </head>
@@ -186,8 +213,8 @@ footer a:hover { text-decoration: underline; }
       <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
            alt="Logo Facultad de Medicina UVa" class="header-logo">
       <div>
-        <div class="header-title" style="font-family:'Figtree',sans-serif;font-size:1.05rem;font-weight:800;">EduMed · UVa</div>
-        <div class="header-subtitle" style="font-family:'Figtree',sans-serif;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Unidad de Educación Médica · Facultad de Medicina</div>
+        <div style="font-family:'Figtree',sans-serif;font-size:1.05rem;font-weight:800;">EduMed · UVa</div>
+        <div style="font-family:'Figtree',sans-serif;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Unidad de Educación Médica · Facultad de Medicina</div>
       </div>
     </div>
     <div class="badge">Actualizado en marzo de 2026</div>
@@ -232,26 +259,37 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="section-body">
-      <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/aprendizaje.multimedia/" target="_blank" rel="noopener">
-          <div class="rc-icon">🎬</div>
-          <span class="rc-tag">Cuaderno 1</span>
-          <div class="rc-title">Aprendizaje Multimedia. Bases teóricas y aplicación práctica</div>
-          <div class="rc-desc">Fundamentos del aprendizaje multimedia y orientaciones para su aplicación en la docencia de ciencias de la salud.</div>
-          <div class="rc-cta">Acceder al cuaderno <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/clasemagistral2026/" target="_blank" rel="noopener">
-          <div class="rc-icon">🎓</div>
-          <span class="rc-tag">Cuaderno 2</span>
-          <div class="rc-title">¿Podemos seguir utilizando la clase magistral como herramienta educativa?</div>
-          <div class="rc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</div>
-          <div class="rc-cta">Acceder al cuaderno <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <div class="resource-card pending">
-          <div class="rc-icon">🚧</div>
-          <span class="pending-badge">🚧 En construcción</span>
-          <div class="rc-title">¿Cómo visualizar el pensamiento en Educación Médica? El caso del razonamiento clínico</div>
-          <div class="rc-desc">Cuaderno 3 · Próximamente disponible.</div>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🎬</div>
+            <div class="acc-title">Aprendizaje Multimedia. Bases teóricas y aplicación práctica</div>
+            <span class="acc-tag">Cuaderno 1</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Fundamentos del aprendizaje multimedia y orientaciones para su aplicación en la docencia de ciencias de la salud.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/aprendizaje.multimedia/" target="_blank" rel="noopener">Acceder al cuaderno →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🎓</div>
+            <div class="acc-title">¿Podemos seguir utilizando la clase magistral como herramienta educativa?</div>
+            <span class="acc-tag">Cuaderno 2</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/clasemagistral2026/" target="_blank" rel="noopener">Acceder al cuaderno →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row pending">
+            <div class="acc-icon">🚧</div>
+            <div class="acc-title">¿Cómo visualizar el pensamiento en Educación Médica? El caso del razonamiento clínico</div>
+            <span class="acc-pending-tag">🚧 En construcción</span>
+          </div>
         </div>
       </div>
     </div>
@@ -268,28 +306,43 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="section-body">
-      <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/taxonomiabloom/" target="_blank" rel="noopener">
-          <div class="rc-icon">🔺</div>
-          <span class="rc-tag">Taxonomía</span>
-          <div class="rc-title">Taxonomía de Bloom (revisada). ¿Qué es? ¿Cómo aplicarla?</div>
-          <div class="rc-desc">Introducción a la Taxonomía de Bloom: qué es, para qué sirve y cómo aplicarla en la docencia de ciencias de la salud.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/Kirkpatrick/" target="_blank" rel="noopener">
-          <div class="rc-icon">📊</div>
-          <span class="rc-tag">Evaluación</span>
-          <div class="rc-title">Niveles de Kirkpatrick aplicados a la educación médica</div>
-          <div class="rc-desc">Cuáles son los niveles del modelo de Kirkpatrick, qué es lo que realmente medimos en cada uno y cómo aplicarlos en la formación médica.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">
-          <div class="rc-icon">🏔️</div>
-          <span class="rc-tag">Habilidades clínicas</span>
-          <div class="rc-title">De saber a hacer: marcos para entender y diseñar la competencia clínica</div>
-          <div class="rc-desc">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla. (Pirámide de Miller, Kolb, práctica deliberada de Ericsson, EPAs…)</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🔺</div>
+            <div class="acc-title">Taxonomía de Bloom (revisada). ¿Qué es? ¿Cómo aplicarla?</div>
+            <span class="acc-tag">Taxonomía</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Introducción a la Taxonomía de Bloom: qué es, para qué sirve y cómo aplicarla en la docencia de ciencias de la salud.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/taxonomiabloom/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">📊</div>
+            <div class="acc-title">Niveles de Kirkpatrick aplicados a la educación médica</div>
+            <span class="acc-tag">Evaluación</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Cuáles son los niveles del modelo de Kirkpatrick, qué es lo que realmente medimos en cada uno y cómo aplicarlos en la formación médica.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Kirkpatrick/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🏔️</div>
+            <div class="acc-title">De saber a hacer: marcos para entender y diseñar la competencia clínica</div>
+            <span class="acc-tag">Habilidades clínicas</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla. (Pirámide de Miller, Kolb, práctica deliberada de Ericsson, EPAs…)</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -305,33 +358,48 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="section-body">
-      <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" target="_blank" rel="noopener">
-          <div class="rc-icon">📋</div>
-          <span class="rc-tag">Evaluación</span>
-          <div class="rc-title">Rúbricas. Cómo construirlas, adaptarlas o mejorarlas</div>
-          <div class="rc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/preguntas/" target="_blank" rel="noopener">
-          <div class="rc-icon">❓</div>
-          <span class="rc-tag">Evaluación</span>
-          <div class="rc-title">Tipos de preguntas para examen: test, hecho clave y concordancia de guiones</div>
-          <div class="rc-desc">Guía sobre los principales tipos de preguntas para examen y cómo utilizarlas de forma efectiva en ciencias de la salud.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/EduMed.UVa/retroalimentacion/" target="_blank" rel="noopener">
-          <div class="rc-icon">🔁</div>
-          <span class="rc-tag">Evaluación</span>
-          <div class="rc-title">Retroalimentación: mitos y consejos para hacerla formativa</div>
-          <div class="rc-desc">Claves para convertir la retroalimentación en una herramienta de aprendizaje real, desmontando mitos frecuentes en la práctica docente.</div>
-          <div class="rc-cta">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">📋</div>
+            <div class="acc-title">Rúbricas. Cómo construirlas, adaptarlas o mejorarlas</div>
+            <span class="acc-tag">Evaluación</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">❓</div>
+            <div class="acc-title">Tipos de preguntas para examen: test, hecho clave y concordancia de guiones</div>
+            <span class="acc-tag">Evaluación</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Guía sobre los principales tipos de preguntas para examen y cómo utilizarlas de forma efectiva en ciencias de la salud.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/preguntas/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🔁</div>
+            <div class="acc-title">Retroalimentación: mitos y consejos para hacerla formativa</div>
+            <span class="acc-tag">Evaluación</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Claves para convertir la retroalimentación en una herramienta de aprendizaje real, desmontando mitos frecuentes en la práctica docente.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/retroalimentacion/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- 4. IAGEN — negro -->
+  <!-- 4. IAGEN -->
   <div class="section-block sec-4" id="sec-iagen">
     <div class="section-header">
       <div class="section-icon" style="background:#F5C518;">🤖</div>
@@ -342,25 +410,32 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="section-body" style="background:#111318;border:1.5px solid #222;border-top:none;">
-      <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener" style="background:#52596e;border-color:#636b80;">
-          <div class="rc-icon">🤖</div>
-          <span class="rc-tag" style="background:#636b80;color:#F5C518;border-color:#737b90;">IA en el aula</span>
-          <div class="rc-title" style="color:#ffffff;">Small TeAIching e IA lenta o fluente</div>
-          <div class="rc-desc" style="color:#ffffff;">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</div>
-          <div class="rc-cta" style="color:#F5C518;">Ver recurso <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <div class="resource-card pending" style="background:#52596e;border-color:#636b80;">
-          <div class="rc-icon">🚧</div>
-          <span class="pending-badge" style="background:#636b80;color:#aaa;border-color:#737b90;">🚧 En construcción</span>
-          <div class="rc-title" style="color:#ffffff;">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
-          <div class="rc-desc" style="color:#ffffff;">Próximamente disponible.</div>
+      <div class="accordion acc-dark">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🤖</div>
+            <div class="acc-title">Small TeAIching e IA lenta o fluente</div>
+            <span class="acc-tag">IA en el aula</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
         </div>
-        <div class="resource-card pending" style="background:#52596e;border-color:#636b80;">
-          <div class="rc-icon">🚧</div>
-          <span class="pending-badge" style="background:#636b80;color:#aaa;border-color:#737b90;">🚧 En construcción</span>
-          <div class="rc-title" style="color:#ffffff;">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? El razonamiento clínico y el diagnóstico en prompts</div>
-          <div class="rc-desc" style="color:#ffffff;">Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados. Próximamente disponible.</div>
+        <div class="acc-item">
+          <div class="acc-row pending">
+            <div class="acc-icon">🚧</div>
+            <div class="acc-title">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
+            <span class="acc-pending-tag">🚧 En construcción</span>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row pending">
+            <div class="acc-icon">🚧</div>
+            <div class="acc-title">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados.</div>
+            <span class="acc-pending-tag">🚧 En construcción</span>
+          </div>
         </div>
       </div>
     </div>
@@ -377,21 +452,31 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="section-body">
-      <div class="cards-grid" data-max="3">
-        <a class="resource-card" href="https://tutorcyllo.github.io/Innovacion.EduMed.UVa/" target="_blank" rel="noopener">
-          <div class="rc-icon">🏫</div>
-          <span class="rc-tag">Innovación · UVa</span>
-          <div class="rc-title">Innovación en EduMed.UVa</div>
-          <div class="rc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender.</div>
-          <div class="rc-cta">Ver repositorio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
-        <a class="resource-card" href="https://tutorcyllo.github.io/Innovacion.EduMed.CNDFM/" target="_blank" rel="noopener">
-          <div class="rc-icon">🏛️</div>
-          <span class="rc-tag">Innovación · Nacional</span>
-          <div class="rc-title">Innovación en las Facultades de Medicina españolas</div>
-          <div class="rc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España.</div>
-          <div class="rc-cta">Ver repositorio <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
-        </a>
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🏫</div>
+            <div class="acc-title">Innovación en EduMed.UVa</div>
+            <span class="acc-tag">Innovación · UVa</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.UVa/" target="_blank" rel="noopener">Ver repositorio →</a>
+          </div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">🏛️</div>
+            <div class="acc-title">Innovación en las Facultades de Medicina españolas</div>
+            <span class="acc-tag">Innovación · Nacional</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.CNDFM/" target="_blank" rel="noopener">Ver repositorio →</a>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -405,22 +490,15 @@ footer a:hover { text-decoration: underline; }
         <div class="section-desc" style="color:#111318;opacity:0.75;">Dirigido al profesorado de todos los grados de la Facultad y a la comunidad docente médica nacional e internacional</div>
       </div>
     </div>
-    <div class="section-body" style="background:#FFFDE7;border:1.5px solid #FEF0A0;border-top:none;">
-      <div class="valid-grid">
-        <div class="valid-item">
-          <div class="valid-icon">🏫</div>
-          <div class="valid-title">Todo el profesorado de la Facultad</div>
-          <div class="valid-desc">Docentes de todos los grados: Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas, y Farmacia.</div>
+    <div class="section-body" style="background:#FFFDE7;border:1.5px solid #FEF0A0;border-top:none;padding:20px;">
+      <div class="folder-tabs">
+        <div class="folder-tab-bar">
+          <div class="folder-tab active" id="ftab-1">🏫 Profesorado</div>
+          <div class="folder-tab" id="ftab-2">🤝 Uso del material</div>
+          <div class="folder-tab" id="ftab-3">🌍 Más allá de la UVa</div>
         </div>
-        <div class="valid-item">
-          <div class="valid-icon">🤝</div>
-          <div class="valid-title">Un espacio compartido</div>
-          <div class="valid-desc">Los materiales y recursos están pensados para ser útiles a cualquier docente de ciencias de la salud, independientemente de su grado o especialidad.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">🌍</div>
-          <div class="valid-title">Comunidad nacional e internacional</div>
-          <div class="valid-desc">Docentes de otras facultades de medicina y ciencias de la salud en español interesados en compartir experiencias innovadoras.</div>
+        <div class="folder-content" id="folder-content">
+          Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>
         </div>
       </div>
     </div>
@@ -447,33 +525,54 @@ footer a:hover { text-decoration: underline; }
 <button class="back-top" id="backTop">↑</button>
 
 <script>
+// Tabs "Para quién"
+const tabContents = {
+  'ftab-1': 'Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
+  'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
+  'ftab-3': 'Docentes de otras facultades de medicina y ciencias de la salud <strong>en español</strong> interesados en compartir y aprender de experiencias innovadoras a nivel nacional e internacional.'
+};
+document.querySelectorAll('.folder-tab').forEach(tab => {
+  tab.addEventListener('click', () => {
+    document.querySelectorAll('.folder-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById('folder-content').innerHTML = tabContents[tab.id];
+  });
+});
+
+function quienTab(name) {
+  ['profesorado','uso','masalla'].forEach(t => {
+    document.getElementById('panel-' + t).style.display = t === name ? 'block' : 'none';
+    const btn = document.getElementById('btn-' + t);
+    btn.style.background = t === name ? '#D4A000' : '#FFFDE7';
+    btn.style.color = t === name ? '#111318' : '#D4A000';
+  });
+}
+
+function switchTab(btn, panelId) {
+  const body = btn.closest('.section-body');
+  body.querySelectorAll('.quien-tab').forEach(t => t.classList.remove('active'));
+  ['tab-profesorado','tab-uso','tab-masalla'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.style.display = 'none';
+  });
+  btn.classList.add('active');
+  const panel = document.getElementById(panelId);
+  if (panel) panel.style.display = 'block';
+}
+
+// Acordeón
+function toggleAcc(row) {
+  if (row.classList.contains('pending')) return;
+  const body = row.nextElementSibling;
+  const isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// Back to top
 document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 window.addEventListener('scroll', () => {
   document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
-});
-document.querySelectorAll('.cards-grid[data-max]').forEach(grid => {
-  const max = parseInt(grid.dataset.max, 10);
-  const cards = Array.from(grid.querySelectorAll('.resource-card'));
-  if (cards.length <= max) return;
-  cards.slice(max).forEach(c => c.classList.add('hidden'));
-  const wrap = document.createElement('div');
-  wrap.className = 'see-more-wrap';
-  const btn = document.createElement('button');
-  btn.className = 'see-more-btn';
-  let expanded = false;
-  const update = () => {
-    btn.innerHTML = expanded
-      ? `Ver menos <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>`
-      : `Ver todos (${cards.length}) <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>`;
-  };
-  update();
-  btn.addEventListener('click', () => {
-    expanded = !expanded;
-    cards.slice(max).forEach(c => c.classList.toggle('hidden', !expanded));
-    update();
-  });
-  wrap.appendChild(btn);
-  grid.parentNode.insertBefore(wrap, grid.nextSibling);
 });
 </script>
 </body>
