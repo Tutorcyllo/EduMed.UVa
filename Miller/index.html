@@ -11,6 +11,7 @@
   --yellow-deep:#D4A000; --gray-900:#111318; --gray-700:#3D4451;
   --gray-500:#6B7280; --gray-300:#D1D5DB; --gray-200:#E5E7EB;
   --gray-100:#F3F4F6; --gray-50:#F9FAFB; --white:#FFFFFF;
+  --red-pale:#FFF5F5; --red-mid:#FED7D7; --red-deep:#C53030;
   --radius:10px; --shadow-sm:0 1px 3px rgba(0,0,0,.08);
   --shadow-md:0 4px 12px rgba(0,0,0,.10);
 }
@@ -41,6 +42,7 @@ header{background:var(--yellow);border-bottom:2px solid var(--yellow-deep);posit
 .tab:hover{color:var(--gray-900);background:var(--gray-100)}
 .tab.active{background:var(--yellow);color:var(--gray-900);box-shadow:var(--shadow-sm)}
 
+
 main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
 .panel{display:none}.panel.active{display:block}
 
@@ -49,9 +51,20 @@ main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
 .card-body{font-size:.875rem;color:var(--gray-700);line-height:1.65}
 .card-body p{margin-bottom:10px}.card-body p:last-child{margin-bottom:0}
 
+/* Tarjeta de crítica — estilo diferenciado */
+.card-critica{background:var(--white);border:1.5px solid var(--red-mid);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow-sm);margin-bottom:14px}
+.card-critica .card-title{color:var(--red-deep)}
+.card-critica-inner{background:var(--red-pale);border-radius:8px;padding:14px 16px;margin-top:10px;font-size:.845rem;color:#742a2a;line-height:1.65}
+.critica-badge{display:inline-flex;align-items:center;gap:6px;background:var(--red-deep);color:white;font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:.05em;margin-bottom:10px}
+.critica-ref{font-size:.75rem;color:var(--gray-500);font-style:italic;margin-top:8px;padding-top:8px;border-top:1px solid var(--red-mid)}
+
 .quote-simple{background:var(--gray-900);color:var(--yellow);border-radius:var(--radius);padding:16px 20px 16px 24px;margin-bottom:14px;font-size:.9rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid var(--yellow-deep)}
 
+/* Quote diferenciada para IS y Objeciones */
+.quote-is{background:linear-gradient(135deg,#1a1f2e 0%,#111318 100%);color:#e2e8f0;border-radius:var(--radius);padding:18px 22px 18px 26px;margin-bottom:14px;font-size:.92rem;font-weight:600;line-height:1.6;font-style:italic;border-left:4px solid #a78bfa}
+
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px}
+.three-col{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px}
 
 .valid-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:4px}
 .valid-item{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px}
@@ -77,6 +90,9 @@ main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
 .pyr-2{background:#FEF3C7;margin:0 5%}
 .pyr-3{background:#FCD34D;margin:0 10%}
 .pyr-4{background:#F5C518;margin:0 15%}
+.pyr-5{background:linear-gradient(135deg,#7c3aed,#a78bfa);margin:0 20%}
+.pyr-5 .pyr-label{color:white}
+.pyr-5 .pyr-n{color:rgba(255,255,255,.5)}
 .pyr-note{font-size:.75rem;color:var(--gray-500);text-align:center;margin-top:10px;font-style:italic}
 
 .accordion{margin-bottom:10px;border-radius:var(--radius);overflow:hidden;border:1.5px solid var(--gray-200);box-shadow:var(--shadow-sm)}
@@ -130,6 +146,45 @@ main{max-width:1280px;margin:0 auto;padding:0 36px 80px}
 .km3{background:rgba(245,197,24,.15)}
 .km4{background:rgba(245,197,24,.28)}
 
+/* FAQ / Objeciones */
+.faq-item{background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--radius);margin-bottom:10px;box-shadow:var(--shadow-sm);overflow:hidden}
+.faq-btn{width:100%;background:transparent;border:none;padding:18px 20px;text-align:left;cursor:pointer;font-family:'Figtree',sans-serif;display:flex;align-items:flex-start;gap:14px;transition:background .15s}
+.faq-btn:hover{background:var(--gray-50)}
+.faq-btn.open{background:var(--gray-900)}
+.faq-icon{font-size:1.2rem;flex-shrink:0;margin-top:1px}
+.faq-q{font-size:.9rem;font-weight:700;color:var(--gray-900);line-height:1.4}
+.faq-btn.open .faq-q{color:var(--yellow)}
+.faq-arrow{margin-left:auto;font-size:.75rem;color:var(--gray-400);flex-shrink:0;transition:transform .2s;padding-top:3px}
+.faq-btn.open .faq-arrow{transform:rotate(180deg);color:var(--yellow-mid)}
+.faq-body{display:none;padding:0 20px 20px 52px;background:var(--white)}
+.faq-body.open{display:block}
+.faq-respuesta{font-size:.875rem;color:var(--gray-700);line-height:1.7;margin-bottom:12px}
+.faq-tip{background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 14px;font-size:.82rem;color:var(--gray-900);line-height:1.6}
+.faq-tip-label{font-weight:800;color:var(--yellow-deep);font-size:.75rem;text-transform:uppercase;letter-spacing:.05em;margin-bottom:4px}
+
+/* IS / Identidad profesional */
+.is-level{background:linear-gradient(135deg,#1a1f2e,#2d3748);border-radius:var(--radius);padding:24px;color:white;margin-bottom:14px;box-shadow:var(--shadow-md)}
+.is-level-title{font-size:1.1rem;font-weight:800;color:#a78bfa;margin-bottom:8px;display:flex;align-items:center;gap:10px}
+.is-level-body{font-size:.875rem;color:#e2e8f0;line-height:1.7}
+.is-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:14px}
+.is-item{background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.3);border-radius:8px;padding:14px 16px}
+.is-icon{font-size:1.3rem;margin-bottom:6px}
+.is-title{font-size:.82rem;font-weight:700;color:#c4b5fd;margin-bottom:4px}
+.is-desc{font-size:.78rem;color:#cbd5e0;line-height:1.55}
+
+.hc-card{background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:var(--radius);padding:22px;color:white;margin-bottom:14px;box-shadow:var(--shadow-md);border-left:4px solid #a78bfa}
+.hc-title{font-size:.95rem;font-weight:800;color:#a78bfa;margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.hc-body{font-size:.875rem;color:#e2e8f0;line-height:1.7}
+.hc-example{margin-top:12px;background:rgba(167,139,250,.1);border:1px solid rgba(167,139,250,.25);border-radius:8px;padding:12px 14px;font-size:.82rem;color:#c4b5fd;line-height:1.6;font-style:italic}
+
+/* Evidencia badge */
+.ev-badge{display:inline-flex;align-items:center;gap:5px;font-size:.68rem;font-weight:800;padding:3px 10px;border-radius:100px;letter-spacing:.04em;margin-right:6px;margin-bottom:4px}
+.ev-fuerte{background:#d1fae5;color:#065f46;border:1px solid #6ee7b7}
+.ev-moderada{background:#fef3c7;color:#92400e;border:1px solid #fcd34d}
+.ev-debil{background:var(--red-mid);color:#7f1d1d;border:1px solid #fc8181}
+.ev-legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.ev-legend-label{font-size:.75rem;font-weight:700;color:var(--gray-500);margin-right:4px}
+
 .back-top{position:fixed;bottom:24px;right:24px;width:44px;height:44px;border-radius:50%;background:var(--gray-900);color:var(--yellow);border:none;cursor:pointer;font-size:1.2rem;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow-md);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:200}
 .back-top.visible{opacity:1;pointer-events:auto}
 .back-top:hover{background:var(--gray-700);transform:translateY(-2px)}
@@ -141,10 +196,12 @@ footer a:hover{text-decoration:underline}
 
 @media(max-width:1024px){
   .valid-grid{grid-template-columns:repeat(2,1fr)}
+  .is-grid{grid-template-columns:repeat(2,1fr)}
   .hero-img{width:200px}
   .pd-grid{grid-template-columns:1fr}
   .comp-wrap{grid-template-columns:1fr}
   .acc-grid{grid-template-columns:1fr}
+  .three-col{grid-template-columns:1fr 1fr}
 }
 @media(max-width:768px){
   .header-inner{padding:0 16px;height:60px}
@@ -161,9 +218,12 @@ footer a:hover{text-decoration:underline}
   .tab{font-size:.75rem;padding:8px 10px;flex:1;text-align:center}
   main{padding:0 16px 60px}
   .two-col{grid-template-columns:1fr}
+  .three-col{grid-template-columns:1fr}
   .valid-grid{grid-template-columns:1fr}
+  .is-grid{grid-template-columns:1fr}
   .acc-grid{grid-template-columns:1fr}
   .comp-wrap{grid-template-columns:1fr}
+  .faq-body{padding-left:20px}
 }
 @media(max-width:480px){
   .hero-headline{font-size:1.05rem}
@@ -201,6 +261,7 @@ footer a:hover{text-decoration:underline}
         <span class="stat-pill">🔁 Práctica deliberada</span>
         <span class="stat-pill">🏥 Aprendizaje situado</span>
         <span class="stat-pill">📋 EPAs</span>
+        <span class="stat-pill">🪞 Nivel IS</span>
         <span class="stat-pill">Conceptos básicos · 2026</span>
       </div>
     </div>
@@ -216,11 +277,14 @@ footer a:hover{text-decoration:underline}
   <div class="tabs">
     <button class="tab active" onclick="showTab('intro',this)">📖 ¿Qué es?</button>
     <button class="tab" onclick="showTab('miller',this)">🔺 Pirámide de Miller</button>
+    <button class="tab" onclick="showTab('nivel_is',this)">🪞 Nivel IS</button>
     <button class="tab" onclick="showTab('deliberada',this)">🔁 Práctica deliberada</button>
     <button class="tab" onclick="showTab('kolb',this)">🔄 Kolb</button>
     <button class="tab" onclick="showTab('situado',this)">🏥 Aprendizaje situado</button>
     <button class="tab" onclick="showTab('epas',this)">📋 EPAs</button>
-    <button class="tab" onclick="showTab('cruce',this)">🔗 Miller × Práctica deliberada</button>
+    <button class="tab" onclick="showTab('cruce',this)">🔗 Miller × PD</button>
+    <button class="tab" onclick="showTab('criticas',this)">⚠️ Críticas</button>
+    <button class="tab" onclick="showTab('objeciones',this)">💬 Objeciones</button>
     <button class="tab" onclick="showTab('implicaciones',this)">🎯 Implicaciones</button>
     <button class="tab" onclick="showTab('lentendi',this)">🤔 ¿Lo entendí?</button>
   </div>
@@ -268,9 +332,17 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <div class="card" style="background:var(--yellow-pale);border-color:var(--yellow-mid)">
+    <div class="card-title">⚠️ Un aviso sobre estos marcos</div>
+    <div class="card-body">
+      <p>Los marcos de esta página son herramientas, no verdades absolutas. Todos tienen <strong>limitaciones documentadas, críticas en la literatura y riesgos de aplicación mecánica</strong>. La pestaña <strong>«⚠️ Críticas»</strong> recoge los puntos débiles de cada uno — y es tan importante como el resto del contenido.</p>
+      <p>Un docente que conoce las limitaciones de sus herramientas las usa mejor que uno que las aplica acríticamente.</p>
+    </div>
+  </div>
+
+  <div class="card" style="background:var(--yellow-pale);border-color:var(--yellow-mid)">
     <div class="card-title">🤔 ¿Lo has entendido de verdad?</div>
     <div class="card-body">
-      <p>Al final de la página encontrarás la sección <strong>«¿Lo entendí?»</strong> con preguntas diseñadas para comprobar si realmente has integrado estos marcos — no si los has memorizado. No tienen respuesta fácil: están pensadas para discutirlas con compañeros o explorarlas con un LLM en modo socrático.</p>
+      <p>Al final de la página encontrarás la sección <strong>«¿Lo entendí?»</strong> con preguntas diseñadas para comprobar si realmente has integrado estos marcos — no si los has memorizado.</p>
     </div>
   </div>
 
@@ -288,24 +360,41 @@ footer a:hover{text-decoration:underline}
     <div class="card-body">
       <p style="margin-bottom:16px">George Miller propuso en 1990 un modelo para evaluar la competencia clínica. Su idea central es que <strong>el conocimiento y la competencia no son lo mismo</strong>, y que la evaluación en medicina debe abarcar todos los niveles — no solo los más fáciles de medir.</p>
       <div class="pyramid">
+        <div class="pyr-row pyr-5"><span class="pyr-n">5</span><span class="pyr-label">IS <span class="pyr-sublabel">— Es</span></span><span style="font-size:.7rem;color:rgba(255,255,255,.6)">identidad profesional</span></div>
         <div class="pyr-row pyr-4"><span class="pyr-n">4</span><span class="pyr-label">DOES <span class="pyr-sublabel">— Hace</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">práctica real</span></div>
         <div class="pyr-row pyr-3"><span class="pyr-n">3</span><span class="pyr-label">SHOWS HOW <span class="pyr-sublabel">— Demuestra cómo</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">entorno simulado</span></div>
         <div class="pyr-row pyr-2"><span class="pyr-n">2</span><span class="pyr-label">KNOWS HOW <span class="pyr-sublabel">— Sabe cómo</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">aplicación conceptual</span></div>
         <div class="pyr-row pyr-1"><span class="pyr-n">1</span><span class="pyr-label">KNOWS <span class="pyr-sublabel">— Sabe</span></span><span style="font-size:.7rem;color:rgba(0,0,0,.5)">conocimiento teórico</span></div>
       </div>
-      <p class="pyr-note">La pirámide se lee de abajo arriba: cada nivel es condición necesaria del siguiente, pero no suficiente.</p>
+      <p class="pyr-note">La pirámide se lee de abajo arriba. El nivel IS (propuesto por Cruess et al., 2016) no era parte del modelo original de Miller de 1990. Ver pestaña 🪞 Nivel IS.</p>
     </div>
   </div>
 
   <div style="margin-bottom:14px">
     <p style="font-size:.82rem;font-weight:700;color:var(--gray-500);text-transform:uppercase;letter-spacing:.08em;margin-bottom:10px">Despliega cada nivel</p>
 
+    <div class="accordion" style="border:1.5px solid #a78bfa">
+      <button class="acc-btn" onclick="toggleAcc(this)" style="border-bottom:2px solid #a78bfa">
+        <div class="acc-left"><span class="acc-level" style="background:#7c3aed">Nivel 5</span> 🪞 IS — <em style="font-weight:400;font-size:.82rem;color:#7c3aed">«Is» · Es</em> <span class="acc-en">— Identidad profesional · Nivel añadido por Cruess et al., 2016</span></div>
+        <span class="acc-arrow">▼</span>
+      </button>
+      <div class="acc-body">
+        <div style="margin-top:12px;background:linear-gradient(135deg,#1a1f2e,#2d3748);border-radius:8px;padding:14px 18px;color:#e2e8f0;font-size:.845rem;line-height:1.65;margin-bottom:12px">
+          <strong style="color:#a78bfa">¿Qué significa «IS»?</strong> Es la tercera persona del singular del verbo <em>to be</em> en inglés: «is» = «es». Así como los otros niveles usan verbos en inglés (<em>knows, shows, does</em>), este usa <em>is</em> — no «hace» o «demuestra», sino <strong>«es»</strong>. Describe lo que el profesional <em>es</em> como médico, no lo que hace o puede demostrar que hace. Propuesto por Cruess, Cruess y Steinert (2016) como extensión del modelo original de Miller de 1990.
+        </div>
+        <div class="acc-desc">El nivel IS va más allá de lo que el profesional <em>puede hacer</em>: describe lo que <em>es</em> como profesional cuando nadie le observa. No es lo que demuestra ser capaz de hacer (Does), sino la identidad profesional interiorizada: valores, actitud, conducta ética habitual.</div>
+        <div style="margin-top:12px;background:linear-gradient(135deg,#1a1f2e,#2d3748);border-radius:8px;padding:14px 18px;color:#e2e8f0;font-size:.845rem;line-height:1.65">
+          💡 El médico que actúa bien no porque le evalúen, sino porque es parte de quién es. Difícilmente evaluable con instrumentos clásicos. Se manifiesta en la cultura del servicio, en cómo trata al paciente a las 3 de la mañana, en si consulta cuando tiene dudas aunque nadie se lo exija. <strong style="color:#a78bfa">Ver pestaña 🪞 Nivel IS para el desarrollo completo.</strong>
+        </div>
+      </div>
+    </div>
+
+    <div style="height:10px"></div>
+    <p style="font-size:.78rem;font-weight:600;color:var(--gray-500);letter-spacing:.06em;margin-bottom:8px">MODELO ORIGINAL DE MILLER (1990) · Niveles 1–4</p>
+
     <div class="accordion">
       <button class="acc-btn" onclick="toggleAcc(this)">
-        <div class="acc-left">
-          <span class="acc-level">Nivel 1</span>
-          📚 KNOWS <span class="acc-en">— Sabe</span>
-        </div>
+        <div class="acc-left"><span class="acc-level">Nivel 1</span> 📚 KNOWS <span class="acc-en">— Sabe</span></div>
         <span class="acc-arrow">▼</span>
       </button>
       <div class="acc-body">
@@ -330,17 +419,14 @@ footer a:hover{text-decoration:underline}
 
     <div class="accordion">
       <button class="acc-btn" onclick="toggleAcc(this)">
-        <div class="acc-left">
-          <span class="acc-level">Nivel 2</span>
-          🧩 KNOWS HOW <span class="acc-en">— Sabe cómo</span>
-        </div>
+        <div class="acc-left"><span class="acc-level">Nivel 2</span> 🧩 KNOWS HOW <span class="acc-en">— Sabe cómo</span></div>
         <span class="acc-arrow">▼</span>
       </button>
       <div class="acc-body">
         <div class="acc-grid">
           <div>
             <div class="acc-sub">Descripción</div>
-            <div class="acc-desc">El estudiante <strong>aplica el conocimiento a situaciones</strong>: sabe cómo abordaría un problema, qué decisiones tomaría, qué pasos seguiría. Pero todavía en el plano conceptual, no en la acción real.</div>
+            <div class="acc-desc">El estudiante <strong>aplica el conocimiento a situaciones</strong>: sabe cómo abordaría un problema, qué decisiones tomaría, qué pasos seguiría. Pero todavía en el plano conceptual.</div>
             <div style="margin-top:8px">
               <span class="acc-tag">📋 Casos clínicos escritos</span>
               <span class="acc-tag">🗣️ Discusión de casos</span>
@@ -358,17 +444,14 @@ footer a:hover{text-decoration:underline}
 
     <div class="accordion">
       <button class="acc-btn" onclick="toggleAcc(this)">
-        <div class="acc-left">
-          <span class="acc-level">Nivel 3</span>
-          🎭 SHOWS HOW <span class="acc-en">— Demuestra cómo</span>
-        </div>
+        <div class="acc-left"><span class="acc-level">Nivel 3</span> 🎭 SHOWS HOW <span class="acc-en">— Demuestra cómo</span></div>
         <span class="acc-arrow">▼</span>
       </button>
       <div class="acc-body">
         <div class="acc-grid">
           <div>
             <div class="acc-sub">Descripción</div>
-            <div class="acc-desc">El estudiante <strong>ejecuta la habilidad en un entorno controlado</strong>: simulación, paciente estandarizado, ECOE. Demuestra que sabe hacer, no solo que sabe explicar.</div>
+            <div class="acc-desc">El estudiante <strong>ejecuta la habilidad en un entorno controlado</strong>: simulación, paciente estandarizado, ECOE.</div>
             <div style="margin-top:8px">
               <span class="acc-tag">🤖 Simulación clínica</span>
               <span class="acc-tag">🏥 OSCE / ECOE</span>
@@ -378,26 +461,23 @@ footer a:hover{text-decoration:underline}
           </div>
           <div>
             <div class="acc-sub">Ejemplo clínico</div>
-            <div class="acc-desc">El estudiante realiza una anamnesis completa y una exploración cardiaca correcta en una estación ECOE, con un paciente simulado que presenta disnea.</div>
+            <div class="acc-desc">El estudiante realiza una anamnesis completa y una exploración cardiaca correcta en una estación ECOE con paciente simulado.</div>
           </div>
         </div>
-        <div class="acc-highlight yellow">💡 <strong>El gran salto cualitativo.</strong> Aquí empieza la competencia clínica real. Pero sigue siendo un entorno controlado — no es aún la práctica con pacientes reales.</div>
+        <div class="acc-highlight yellow">💡 <strong>El gran salto cualitativo.</strong> Pero sigue siendo un entorno controlado. La correlación entre ECOE y desempeño real es más baja de lo esperado — ver pestaña ⚠️ Críticas.</div>
       </div>
     </div>
 
     <div class="accordion">
       <button class="acc-btn" onclick="toggleAcc(this)">
-        <div class="acc-left">
-          <span class="acc-level">Nivel 4</span>
-          🩺 DOES <span class="acc-en">— Hace</span>
-        </div>
+        <div class="acc-left"><span class="acc-level">Nivel 4</span> 🩺 DOES <span class="acc-en">— Hace</span></div>
         <span class="acc-arrow">▼</span>
       </button>
       <div class="acc-body">
         <div class="acc-grid">
           <div>
             <div class="acc-sub">Descripción</div>
-            <div class="acc-desc">El estudiante <strong>actúa con competencia en la práctica clínica real</strong>: con pacientes reales, en condiciones reales, con incertidumbre real. Es el nivel de la actuación auténtica.</div>
+            <div class="acc-desc">El estudiante <strong>actúa con competencia en la práctica clínica real</strong>: con pacientes reales, en condiciones reales, con incertidumbre real.</div>
             <div style="margin-top:8px">
               <span class="acc-tag">👁️ Observación directa en planta</span>
               <span class="acc-tag">🩺 Mini-CEX</span>
@@ -407,14 +487,10 @@ footer a:hover{text-decoration:underline}
           </div>
           <div>
             <div class="acc-sub">Ejemplo clínico</div>
-            <div class="acc-desc">El estudiante valora a un paciente en planta: realiza la anamnesis, explora los hallazgos relevantes, prioriza diagnósticos diferenciales y propone un plan de actuación razonado.</div>
+            <div class="acc-desc">El estudiante valora a un paciente en planta: realiza la anamnesis, explora los hallazgos relevantes, prioriza diagnósticos diferenciales y propone un plan razonado.</div>
           </div>
         </div>
-        <div class="acc-highlight dark">💡 <strong>El nivel que realmente importa en la formación médica.</strong> Y el más difícil de evaluar de forma sistemática y rigurosa.</div>
-        <div style="margin-top:10px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 14px">
-          <div style="font-size:.78rem;font-weight:800;color:var(--gray-900);margin-bottom:6px">➕ ¿Y el nivel 5? — IS · «Es»</div>
-          <div style="font-size:.82rem;color:var(--gray-700);line-height:1.65">Algunos autores (Cruess, Cruess y Steinert, 2016) proponen un quinto nivel: <strong>Is</strong> — lo que el profesional hace de forma habitual cuando nadie le observa. No es lo que <em>demuestra</em> ser capaz de hacer (Does), sino lo que <em>es</em> como profesional en su práctica cotidiana. Integra identidad profesional, valores, actitud y conducta ética. Es el nivel de la <strong>profesionalidad interiorizada</strong>: el médico que actúa bien no porque le evalúen, sino porque es parte de quién es. Difícilmente evaluable con instrumentos clásicos — se manifiesta en la cultura del servicio, en cómo trata al paciente a las 3 de la mañana, en si consulta cuando tiene dudas aunque nadie se lo exija.</div>
-        </div>
+        <div class="acc-highlight dark">💡 <strong>El nivel que realmente importa.</strong> Y el más difícil de evaluar de forma sistemática y rigurosa.</div>
       </div>
     </div>
   </div>
@@ -455,7 +531,7 @@ footer a:hover{text-decoration:underline}
         <div class="pd-item">
           <div class="pd-icon">💬</div>
           <div class="pd-title">Retroalimentación inmediata y específica</div>
-          <div class="pd-desc">La retroalimentación genérica («bien hecho») no mejora la habilidad. La retroalimentación eficaz señala exactamente qué fue correcto, qué falló y cómo corregirlo — cuanto más próxima a la acción, más útil.</div>
+          <div class="pd-desc">La retroalimentación genérica no mejora la habilidad. La eficaz señala exactamente qué fue correcto, qué falló y cómo corregirlo — cuanto más próxima a la acción, más útil.</div>
           <div class="pd-example">En medicina: el supervisor que detiene la simulación en el momento del error y ofrece una corrección concreta, no al finalizar la sesión.</div>
         </div>
         <div class="pd-item">
@@ -505,7 +581,6 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">🔄 ¿Qué es la teoría del aprendizaje experiencial de Kolb?</div>
     <div class="card-body">
       <p>David Kolb propuso en 1984 que el aprendizaje no ocurre por el mero hecho de vivir una experiencia, sino a través de un <strong>ciclo de cuatro fases</strong> que transforma esa experiencia en conocimiento aplicable. Es un modelo especialmente relevante en educación médica, donde la práctica clínica es la principal fuente de aprendizaje — pero también donde más frecuentemente se rompe el ciclo.</p>
-      <p>La idea central: <strong>la experiencia clínica sin reflexión estructurada no genera aprendizaje duradero</strong>. Un residente que atiende 500 guardias sin reflexionar sobre ellas puede acumular hábitos, pero no necesariamente desarrollar competencia.</p>
     </div>
   </div>
 
@@ -513,29 +588,23 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">🔄 El ciclo de Kolb · Las 4 fases</div>
     <div class="card-body">
       <div style="display:flex;align-items:stretch;gap:14px;flex-wrap:wrap;margin-bottom:14px">
-        <!-- Ciclo visual -->
         <div style="flex:0 0 auto;display:flex;align-items:center;justify-content:center;min-width:200px">
           <svg viewBox="0 0 200 200" width="200" height="200" xmlns="http://www.w3.org/2000/svg" style="max-width:100%">
             <circle cx="100" cy="100" r="36" fill="#F5C518" stroke="#D4A000" stroke-width="2"/>
             <text x="100" y="96" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="800" fill="#111318">Ciclo</text>
             <text x="100" y="108" text-anchor="middle" font-family="Figtree,sans-serif" font-size="9" font-weight="800" fill="#111318">de Kolb</text>
-            <!-- Nodo 1: arriba -->
             <circle cx="100" cy="28" r="22" fill="#111318" stroke="#D4A000" stroke-width="2"/>
             <text x="100" y="25" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#F5C518">Experiencia</text>
             <text x="100" y="35" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#F5C518">concreta</text>
-            <!-- Nodo 2: derecha -->
             <circle cx="172" cy="100" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
             <text x="172" y="97" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#FEF0A0">Observación</text>
             <text x="172" y="107" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7.5" font-weight="800" fill="#FEF0A0">reflexiva</text>
-            <!-- Nodo 3: abajo -->
             <circle cx="100" cy="172" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
             <text x="100" y="169" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">Conceptual.</text>
             <text x="100" y="179" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">abstracta</text>
-            <!-- Nodo 4: izquierda -->
             <circle cx="28" cy="100" r="22" fill="#3D4451" stroke="#D4A000" stroke-width="2"/>
             <text x="28" y="97" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">Experim.</text>
             <text x="28" y="107" text-anchor="middle" font-family="Figtree,sans-serif" font-size="7" font-weight="800" fill="#FEF0A0">activa</text>
-            <!-- Flechas -->
             <path d="M115,46 Q148,52 152,78" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
             <path d="M163,122 Q158,150 122,162" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
             <path d="M78,165 Q52,158 40,122" fill="none" stroke="#D4A000" stroke-width="2" marker-end="url(#arr)"/>
@@ -543,7 +612,6 @@ footer a:hover{text-decoration:underline}
             <defs><marker id="arr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#D4A000"/></marker></defs>
           </svg>
         </div>
-        <!-- Descripción de fases -->
         <div style="flex:1;min-width:220px;display:flex;flex-direction:column;gap:8px">
           <div style="background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:10px 14px">
             <div style="font-size:.78rem;font-weight:800;margin-bottom:3px">1 · Experiencia concreta</div>
@@ -551,15 +619,15 @@ footer a:hover{text-decoration:underline}
           </div>
           <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
             <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">2 · Observación reflexiva</div>
-            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Pararse a pensar: ¿qué ocurrió? ¿qué hice bien? ¿qué falló? ¿por qué reaccioné así? Es la fase que más frecuentemente se omite en la formación clínica.</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Pararse a pensar: ¿qué ocurrió? ¿qué hice bien? ¿qué falló? Es la fase que más frecuentemente se omite en la formación clínica.</div>
           </div>
           <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
             <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">3 · Conceptualización abstracta</div>
-            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Extraer un principio general: «cuando un paciente anciano presenta X, debo considerar Y». Transformar la experiencia concreta en conocimiento transferible.</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Extraer un principio general: «cuando un paciente anciano presenta X, debo considerar Y». Transformar la experiencia en conocimiento transferible.</div>
           </div>
           <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:10px 14px">
             <div style="font-size:.78rem;font-weight:800;margin-bottom:3px;color:var(--gray-900)">4 · Experimentación activa</div>
-            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Aplicar lo aprendido en el siguiente caso. El ciclo vuelve a empezar — ideally con más competencia y más capacidad de reflexión.</div>
+            <div style="font-size:.78rem;color:var(--gray-700);line-height:1.5">Aplicar lo aprendido en el siguiente caso. El ciclo vuelve a empezar con más competencia y más capacidad de reflexión.</div>
           </div>
         </div>
       </div>
@@ -577,7 +645,7 @@ footer a:hover{text-decoration:underline}
           </tr>
           <tr>
             <td class="ex-label">✅ Rotación con ciclo completo</td>
-            <td class="ex-desc">El estudiante atiende al paciente (fase 1), el tutor facilita una reflexión estructurada — «¿qué habrías hecho diferente?» (fase 2), juntos extraen el principio clínico aplicable (fase 3), y el estudiante lo aplica conscientemente en el caso siguiente (fase 4).</td>
+            <td class="ex-desc">El estudiante atiende al paciente (fase 1), el tutor facilita una reflexión estructurada (fase 2), juntos extraen el principio clínico aplicable (fase 3), y el estudiante lo aplica conscientemente en el caso siguiente (fase 4).</td>
           </tr>
           <tr>
             <td class="ex-label">🔑 El debriefing como herramienta</td>
@@ -588,58 +656,46 @@ footer a:hover{text-decoration:underline}
     </div>
   </div>
 
+  <!-- SECCIÓN REFORMULADA: ESTILOS CON ADVERTENCIA DE EVIDENCIA -->
   <div class="card">
-    <div class="card-title">🧩 Los cuatro estilos de aprendizaje de Kolb</div>
+    <div class="card-title">🧩 Los cuatro estilos de aprendizaje de Kolb <span style="font-size:.72rem;font-weight:600;color:var(--red-deep);background:var(--red-mid);padding:2px 8px;border-radius:100px;margin-left:6px">⚠️ Evidencia débil</span></div>
     <div class="card-body">
-      <p style="margin-bottom:14px">Cada persona tiende a entrar al ciclo por una fase diferente y a sentirse más cómoda en ciertas fases que en otras. Kolb describió cuatro <strong>estilos de aprendizaje</strong> según qué par de fases del ciclo predomina en cada individuo:</p>
+
+      <div style="background:var(--red-pale);border:1.5px solid var(--red-mid);border-radius:8px;padding:14px 16px;margin-bottom:16px">
+        <div style="font-size:.82rem;font-weight:800;color:var(--red-deep);margin-bottom:6px">⚠️ Advertencia sobre la evidencia empírica</div>
+        <div style="font-size:.82rem;color:#742a2a;line-height:1.65">
+          Los <strong>estilos de aprendizaje de Kolb</strong> (divergente, asimilador, convergente, acomodador) son uno de los elementos más conocidos —y más cuestionados— de su teoría. Pashler et al. (2008) revisaron sistemáticamente la evidencia sobre estilos de aprendizaje y concluyeron que la idea de adaptar la enseñanza al estilo predominante de cada alumno <strong>carece de apoyo empírico sólido</strong>. Rogowsky et al. (2015) tampoco encontraron beneficio de la instrucción adaptada al estilo en comprensión lectora. La clasificación en tipos es descriptiva y con validez predictiva limitada.
+        </div>
+        <div style="font-size:.75rem;color:var(--gray-500);margin-top:8px;font-style:italic">Pashler H et al. <em>Psychological Science in the Public Interest</em>, 2008; 9(3):105–119 · Rogowsky BA et al. <em>J Educ Res</em>, 2015; 108(3):186–196</div>
+      </div>
+
+      <p style="margin-bottom:14px;font-size:.875rem;color:var(--gray-700)">Dicho esto, los estilos de Kolb son útiles como <strong>marco descriptivo y reflexivo</strong> — no como categorías diagnósticas rígidas ni como justificación para diseñar enseñanza diferenciada. Entender la tendencia de un estudiante puede ayudar al tutor a guiar su reflexión, no a limitar su exposición a ciertos tipos de aprendizaje.</p>
+
       <div class="valid-grid">
         <div class="valid-item">
           <div class="valid-icon">🌐</div>
           <div class="valid-title">Divergente</div>
-          <div class="valid-desc"><strong>Experiencia concreta + Observación reflexiva.</strong> Aprende observando y generando ideas. Creativo, empático, orientado a las personas. Le cuesta actuar sin reflexionar primero.</div>
+          <div class="valid-desc"><strong>Experiencia concreta + Observación reflexiva.</strong> Tiende a aprender observando y generando ideas. Creativo, empático, orientado a las personas.</div>
         </div>
         <div class="valid-item">
           <div class="valid-icon">📐</div>
           <div class="valid-title">Asimilador</div>
-          <div class="valid-desc"><strong>Observación reflexiva + Conceptualización abstracta.</strong> Aprende construyendo modelos teóricos. Lógico, analítico, disfruta de la teoría. Le cuesta aplicar si no entiende el marco conceptual.</div>
+          <div class="valid-desc"><strong>Observación reflexiva + Conceptualización abstracta.</strong> Tiende a construir modelos teóricos. Lógico, analítico, disfruta de la teoría.</div>
         </div>
         <div class="valid-item">
           <div class="valid-icon">⚙️</div>
           <div class="valid-title">Convergente</div>
-          <div class="valid-desc"><strong>Conceptualización abstracta + Experimentación activa.</strong> Aprende resolviendo problemas prácticos con base teórica. Técnico, preciso, orientado a la solución. Le cuesta trabajar con ambigüedad.</div>
+          <div class="valid-desc"><strong>Conceptualización abstracta + Experimentación activa.</strong> Tiende a resolver problemas prácticos con base teórica. Técnico, preciso.</div>
         </div>
         <div class="valid-item">
           <div class="valid-icon">🔄</div>
           <div class="valid-title">Acomodador</div>
-          <div class="valid-desc"><strong>Experimentación activa + Experiencia concreta.</strong> Aprende haciendo y adaptándose. Intuitivo, flexible, orientado a la acción. Le cuesta detenerse a reflexionar o teorizar.</div>
+          <div class="valid-desc"><strong>Experimentación activa + Experiencia concreta.</strong> Tiende a aprender haciendo y adaptándose. Intuitivo, flexible, orientado a la acción.</div>
         </div>
       </div>
-      <div style="margin-top:12px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.6">
-        ⚠️ <strong>Importante:</strong> los estilos de Kolb son descriptivos, no prescriptivos. El objetivo formativo no es reforzar el estilo dominante de cada estudiante, sino asegurarse de que todos sean capaces de completar el ciclo completo — independientemente de sus preferencias. Un médico que solo sabe actuar pero no reflexionar, o que solo teoriza pero no aplica, tiene una competencia incompleta.
-      </div>
-    </div>
-  </div>
 
-  <div class="card">
-    <div class="card-title">🔗 Kolb, Miller y práctica deliberada: cómo encajan</div>
-    <div class="card-body">
-      <p style="margin-bottom:12px">Los tres marcos se necesitan mutuamente para explicar el aprendizaje clínico completo:</p>
-      <div class="valid-grid">
-        <div class="valid-item">
-          <div class="valid-icon">🔺</div>
-          <div class="valid-title">Miller define el destino</div>
-          <div class="valid-desc">¿Hasta dónde tiene que llegar el estudiante? Del Knows al Does, pasando por la autonomía que miden las EPAs.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">🔄</div>
-          <div class="valid-title">Kolb explica el mecanismo</div>
-          <div class="valid-desc">¿Cómo se transforma la experiencia clínica en aprendizaje? Solo si se completa el ciclo de reflexión, conceptualización y aplicación.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">🔁</div>
-          <div class="valid-title">Práctica deliberada optimiza el ciclo</div>
-          <div class="valid-desc">¿Cómo aceleramos y mejoramos ese aprendizaje? Con objetivos concretos, repetición estructurada, retroalimentación específica y dificultad progresiva.</div>
-        </div>
+      <div style="margin-top:12px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.6">
+        🎯 <strong>Implicación práctica válida:</strong> el objetivo formativo no es reforzar el estilo dominante de cada estudiante, sino asegurarse de que todos sean capaces de <strong>completar el ciclo completo</strong> — independientemente de sus preferencias. Un médico que solo actúa pero no reflexiona, o que solo teoriza pero no aplica, tiene una competencia incompleta. Usar los estilos como punto de partida para la conversación reflexiva con el estudiante es razonable; usarlos para clasificar y segmentar la enseñanza, no.
       </div>
     </div>
   </div>
@@ -704,7 +760,6 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">🛡️ Seguridad psicológica: el prerrequisito silencioso</div>
     <div class="card-body">
       <p style="margin-bottom:14px">El aprendizaje situado exige que el estudiante se exponga, cometa errores y reflexione sobre ellos. Pero eso solo ocurre si existe <strong>seguridad psicológica</strong> — el término acuñado por Amy Edmondson para describir la creencia de que uno puede asumir riesgos interpersonales sin miedo a ser juzgado, humillado o penalizado.</p>
-      <p style="margin-bottom:14px">En educación médica, la seguridad psicológica es el <strong>prerrequisito silencioso</strong> de todo lo demás: sin ella, el ciclo de Kolb no arranca, la práctica deliberada se bloquea y las EPAs se convierten en actuaciones para no fallar en lugar de oportunidades para aprender.</p>
       <div class="pd-grid">
         <div class="pd-item">
           <div class="pd-icon">😟</div>
@@ -727,19 +782,9 @@ footer a:hover{text-decoration:underline}
         <div class="pd-item">
           <div class="pd-icon">👨‍⚕️</div>
           <div class="pd-title">El supervisor como constructor</div>
-          <div class="pd-desc">La seguridad psicológica no surge sola — la construye el supervisor con su actitud: cómo responde a los errores, cómo pregunta, cómo retroalimenta. Un supervisor que penaliza el error destruye el aprendizaje.</div>
+          <div class="pd-desc">La seguridad psicológica no surge sola — la construye el supervisor con su actitud: cómo responde a los errores, cómo pregunta, cómo retroalimenta.</div>
           <div class="pd-example">La diferencia entre «¿cómo se te ocurrió hacer eso?» y «cuéntame qué estabas pensando en ese momento» es la diferencia entre cerrar y abrir el aprendizaje.</div>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">💡 Lo que une aprendizaje situado y seguridad psicológica</div>
-    <div class="card-body">
-      <p>El aprendizaje situado define <strong>dónde</strong> debe ocurrir el aprendizaje: en contextos auténticos, con tareas reales, dentro de una comunidad de práctica. La seguridad psicológica define <strong>en qué condiciones emocionales</strong> puede ocurrir ese aprendizaje: solo cuando el estudiante se siente lo suficientemente seguro para exponerse, arriesgar y equivocarse.</p>
-      <div style="background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:14px 18px;margin-top:12px;font-size:.845rem;line-height:1.65;border-left:4px solid var(--yellow-deep)">
-        💡 <strong>Implicación directa para el docente:</strong> no basta con diseñar buenas experiencias clínicas. Hay que diseñar también el clima emocional en el que esas experiencias ocurren. Un entorno clínico exigente pero psicológicamente seguro es el contexto óptimo para el aprendizaje médico.
       </div>
     </div>
   </div>
@@ -757,7 +802,7 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">📋 ¿Qué son las EPAs?</div>
     <div class="card-body">
       <p>Las <strong>Entrustable Professional Activities</strong> (Actividades Profesionales Confiables) son tareas o responsabilidades clínicas concretas que un profesional en formación puede realizar de forma autónoma cuando ha alcanzado la competencia suficiente. El concepto fue propuesto por Olle ten Cate en 2005 y se ha convertido en uno de los marcos más influyentes en educación médica basada en competencias.</p>
-      <p>La idea central es sencilla pero poderosa: <strong>la confianza clínica real</strong> — la decisión de un supervisor de dejar actuar a un estudiante o residente sin supervisión directa — es el indicador más auténtico de que se ha alcanzado el nivel «Does» de Miller.</p>
+      <p>La idea central: <strong>la confianza clínica real</strong> — la decisión de un supervisor de dejar actuar a un estudiante o residente sin supervisión directa — es el indicador más auténtico de que se ha alcanzado el nivel «Does» de Miller.</p>
     </div>
   </div>
 
@@ -779,7 +824,6 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">📊 Los 5 niveles de confianza (supervisión)</div>
     <div class="card-body">
-      <p style="margin-bottom:14px">Cada EPA se evalúa según el nivel de supervisión que requiere el estudiante para ejecutarla. La progresión va de la observación pasiva a la autonomía total:</p>
       <table class="ex-table">
         <tbody>
           <tr>
@@ -788,7 +832,7 @@ footer a:hover{text-decoration:underline}
           </tr>
           <tr>
             <td class="ex-label">Nivel 2<br><small style="font-weight:400;color:var(--gray-500)">Hace con supervisión directa</small></td>
-            <td class="ex-desc">El supervisor está presente y puede intervenir en cualquier momento. El estudiante ejecuta la tarea pero bajo vigilancia activa y continua.</td>
+            <td class="ex-desc">El supervisor está presente y puede intervenir en cualquier momento. El estudiante ejecuta la tarea bajo vigilancia activa y continua.</td>
           </tr>
           <tr>
             <td class="ex-label">Nivel 3<br><small style="font-weight:400;color:var(--gray-500)">Hace con supervisión indirecta</small></td>
@@ -796,11 +840,11 @@ footer a:hover{text-decoration:underline}
           </tr>
           <tr>
             <td class="ex-label">Nivel 4<br><small style="font-weight:400;color:var(--gray-500)">Hace de forma autónoma</small></td>
-            <td class="ex-desc"><strong>El nivel de confianza plena.</strong> El estudiante o residente puede realizar la tarea de forma completamente independiente. Es el objetivo final de cada EPA.</td>
+            <td class="ex-desc"><strong>El nivel de confianza plena.</strong> El estudiante puede realizar la tarea de forma completamente independiente. Es el objetivo final de cada EPA.</td>
           </tr>
           <tr>
             <td class="ex-label">Nivel 5<br><small style="font-weight:400;color:var(--gray-500)">Supervisa a otros</small></td>
-            <td class="ex-desc">El profesional ya formado es capaz de supervisar y enseñar la EPA a estudiantes o residentes de menor nivel. Es el nivel experto.</td>
+            <td class="ex-desc">El profesional ya formado es capaz de supervisar y enseñar la EPA a estudiantes o residentes de menor nivel.</td>
           </tr>
         </tbody>
       </table>
@@ -845,35 +889,123 @@ footer a:hover{text-decoration:underline}
     </div>
   </div>
 
+</div>
+
+<!-- ══════ PANEL NUEVO: NIVEL IS ══════ -->
+<div id="nivel_is" class="panel">
+
+  <div class="quote-is">
+    Does mide lo que el médico hace cuando alguien le observa. IS describe lo que hace cuando nadie le mira. Esa diferencia lo es todo.
+  </div>
+
+  <div class="is-level">
+    <div class="is-level-title">🪞 Nivel 5 · IS — «Es»: identidad profesional interiorizada</div>
+    <div class="is-level-body">
+      <p style="margin-bottom:12px">El nivel IS fue propuesto por Cruess, Cruess y Steinert en 2016 como extensión del modelo original de Miller. No formaba parte de la pirámide de 1990. Surge de la observación de que el nivel <em>Does</em> —por sólido que sea— sigue describiendo una actuación que puede estar condicionada por la observación, la evaluación o las consecuencias externas.</p>
+      <p>El nivel IS describe algo cualitativamente diferente: <strong>la integración de los valores, la ética y la conducta profesional en la identidad del médico</strong>. No es lo que el profesional demuestra ser capaz de hacer, sino quién es como profesional en su práctica cotidiana sin que nadie le evalúe.</p>
+    </div>
+    <div class="is-grid">
+      <div class="is-item">
+        <div class="is-icon">🌙</div>
+        <div class="is-title">A las 3 de la mañana</div>
+        <div class="is-desc">El médico que trata con dignidad al paciente en urgencias a las 3 de la mañana — no porque le evalúen, sino porque es parte de quién es. Does puede fingirse; IS, no.</div>
+      </div>
+      <div class="is-item">
+        <div class="is-icon">🤔</div>
+        <div class="is-title">La consulta honesta</div>
+        <div class="is-desc">El residente que reconoce sus límites y consulta cuando tiene dudas — aunque nadie le obligue y la consulta implique admitir incertidumbre ante el equipo.</div>
+      </div>
+      <div class="is-item">
+        <div class="is-icon">📢</div>
+        <div class="is-title">La voz en el equipo</div>
+        <div class="is-desc">El médico que señala un error del sistema aunque sea incómodo, o que defiende al paciente aunque sea impopular. No por obligación: por convicción.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hc-card">
+    <div class="hc-title">👻 El currículo oculto: donde se forma el IS</div>
+    <div class="hc-body">
+      <p style="margin-bottom:12px">El concepto de <strong>currículo oculto</strong> (<em>hidden curriculum</em>), acuñado por Philip Jackson en 1968 y desarrollado en educación médica por Hafferty (1998), describe el conjunto de mensajes, normas y valores que los estudiantes aprenden <em>sin que nadie se los enseñe explícitamente</em>.</p>
+      <p style="margin-bottom:12px">Si el currículo formal enseña empatía, trabajo en equipo y centralidad del paciente… pero el currículo oculto transmite que la eficiencia importa más que la comunicación, que los errores se ocultan y que el paciente es un «caso» — el IS que se forma será el del currículo oculto, no el del formal.</p>
+      <p><strong>El IS se construye, en gran parte, en el currículo oculto.</strong> No en lo que los docentes dicen, sino en lo que el estudiante ve hacer.</p>
+      <div class="hc-example">
+        «Los estudiantes aprenden a comportarse observando cómo se comportan sus superiores. La brecha entre lo que se predica y lo que se practica es el currículo oculto más poderoso de la educación médica.» — Hafferty, 1998
+      </div>
+    </div>
+  </div>
+
   <div class="card">
-    <div class="card-title">💡 ¿Qué aportan las EPAs que no aporta Miller?</div>
+    <div class="card-title">🔍 Ejemplos del currículo oculto en acción</div>
     <div class="card-body">
       <table class="ex-table">
         <tbody>
           <tr>
-            <td class="ex-label">🎯 Concreción clínica</td>
-            <td class="ex-desc">Miller describe niveles abstractos; las EPAs definen tareas clínicas reales y específicas. «Valorar autónomamente un paciente con dolor torácico» es mucho más accionable que «nivel Does».</td>
+            <td class="ex-label">❌ Mensaje oculto destructivo</td>
+            <td class="ex-desc">El tutor dice «siempre hay que explicar al paciente el diagnóstico» — pero en la visita pasa por la cama sin hablarle. El estudiante aprende lo segundo, no lo primero.</td>
           </tr>
           <tr>
-            <td class="ex-label">🤝 La confianza como métrica</td>
-            <td class="ex-desc">Las EPAs capturan algo que Miller no mide: la <strong>decisión clínica del supervisor</strong> de confiar en el estudiante. Esa confianza integra conocimiento, habilidad, actitud y juicio profesional.</td>
+            <td class="ex-label">❌ Cultura del silencio ante el error</td>
+            <td class="ex-desc">Nadie habla del error médico en las sesiones clínicas. El mensaje implícito: los errores son vergonzantes y deben ocultarse. El estudiante aprende a no comunicar incidentes.</td>
           </tr>
           <tr>
-            <td class="ex-label">🔄 Progresión gradual</td>
-            <td class="ex-desc">Los 5 niveles de supervisión permiten una progresión más granular que los 4 niveles de Miller, y facilitan conversaciones concretas entre tutor y estudiante sobre dónde está y adónde va.</td>
+            <td class="ex-label">❌ Jerarquía como herramienta de control</td>
+            <td class="ex-desc">El adjunto que corrige públicamente y con dureza al residente transmite que la autoridad se ejerce por humillación. El residente aprende ese modelo y lo reproducirá.</td>
           </tr>
           <tr>
-            <td class="ex-label">📋 Evaluación auténtica</td>
-            <td class="ex-desc">Evaluar EPAs obliga a observar al estudiante en la práctica real, no solo en simulación o en papel. Esto alinea directamente evaluación y práctica clínica.</td>
+            <td class="ex-label">✅ Currículo oculto positivo</td>
+            <td class="ex-desc">El tutor que dice «no sé, vamos a buscar juntos» modeliza epistemic humility. El estudiante aprende que admitir incertidumbre es una fortaleza, no una debilidad.</td>
           </tr>
         </tbody>
       </table>
     </div>
   </div>
 
+  <div class="card">
+    <div class="card-title">🎓 ¿Puede enseñarse el IS? ¿Puede evaluarse?</div>
+    <div class="card-body">
+      <div class="pd-grid">
+        <div class="pd-item">
+          <div class="pd-icon">🌱</div>
+          <div class="pd-title">¿Cómo se fomenta el IS?</div>
+          <div class="pd-desc">No con asignaturas de ética ni con clases sobre profesionalismo. Se fomenta con <strong>modelado explícito</strong>: que los docentes reflexionen en voz alta sobre sus propias decisiones éticas, incertidumbres y límites. Con espacios de reflexión sobre la identidad profesional. Con narrativas clínicas.</div>
+          <div class="pd-example">Un tutor que dice en la visita: «Antes de entrar a esta habitación, ¿cuál es nuestra obligación con esta paciente más allá del diagnóstico?»</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🔬</div>
+          <div class="pd-title">¿Puede evaluarse?</div>
+          <div class="pd-desc">Es el nivel más difícil de evaluar. Los instrumentos clásicos (test, ECOE, Mini-CEX) no lo capturan. Se manifiesta en: portafolios reflexivos, incidentes críticos narrados, observación longitudinal por múltiples evaluadores, 360°. Ninguno es perfecto.</div>
+          <div class="pd-example">Un portafolio reflexivo que documenta no solo «qué hice» sino «qué sentí, qué cuestioné, cómo evolucionó mi forma de entender este tipo de situación».</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">⚠️</div>
+          <div class="pd-title">El riesgo de evaluarlo mal</div>
+          <div class="pd-desc">Si se evalúa el IS con instrumentos demasiado explícitos o en contextos formales, los estudiantes aprenden a <em>representar</em> la identidad profesional esperada en lugar de interiorizarla. La autenticidad es la condición de la evaluación del IS.</div>
+          <div class="pd-example">El estudiante que en el examen oral responde «siempre me preocupo por la familia del paciente» — pero en la guardia no habla con ninguna.</div>
+        </div>
+        <div class="pd-item">
+          <div class="pd-icon">🏥</div>
+          <div class="pd-title">IS y cultura institucional</div>
+          <div class="pd-desc">El IS no se forma solo en el individuo. Se forma en la cultura del servicio, del hospital, de la facultad. Un entorno clínico que practica lo que predica es la condición estructural del IS saludable.</div>
+          <div class="pd-example">Una unidad donde los errores se analizan sin buscar culpables, donde se cuida al equipo y donde la excelencia se modela desde arriba genera un IS distinto a una donde reina la jerarquía punitiva.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🔗 IS, Does y la brecha que nadie nombra</div>
+    <div class="card-body">
+      <p style="margin-bottom:14px">Existe una brecha entre Does e IS que los programas formativos raramente abordan de forma explícita. Un médico puede alcanzar un <em>Does</em> impecable en todos los niveles de supervisión y seguir teniendo un IS que no refleja los valores que la profesión dice defender.</p>
+      <div style="background:linear-gradient(135deg,#1a1f2e,#2d3748);border-radius:8px;padding:16px 20px;color:#e2e8f0;font-size:.855rem;line-height:1.7;border-left:4px solid #a78bfa">
+        💡 <strong style="color:#a78bfa">La pregunta incómoda para el programa formativo:</strong> ¿Nuestros graduados saben hacer medicina? Probablemente sí. ¿Son los médicos que queremos que sean cuando nadie les observa? Esa es la pregunta del IS — y la que más raramente sabemos responder con evidencia.
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- ══════ PANEL 5: CRUCE ══════ -->
+<!-- ══════ PANEL 7: CRUCE ══════ -->
 <div id="cruce" class="panel">
 
   <div class="card">
@@ -918,7 +1050,7 @@ footer a:hover{text-decoration:underline}
             <tr class="km4">
               <td class="row-hd">🩺 Does<br><small style="font-weight:400">Hace</small></td>
               <td><div class="cell-main">Actuación real con pacientes</div></td>
-              <td><div class="cell-sub">Supervisión con observación directa. Retroalimentación regular sobre actuación real. Reflexión sistemática. Casos de complejidad creciente.</div></td>
+              <td><div class="cell-sub">Supervisión con observación directa. Retroalimentación regular. Reflexión sistemática. Casos de complejidad creciente.</div></td>
               <td><div class="cell-sub">Mini-CEX, portafolio clínico, supervisión directa en guardia o planta, rotaciones estructuradas.</div></td>
             </tr>
           </tbody>
@@ -928,32 +1060,8 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <div class="card">
-    <div class="card-title">💡 La idea potente</div>
-    <div class="card-body">
-      <div class="valid-grid">
-        <div class="valid-item">
-          <div class="valid-icon">📚➡️🩺</div>
-          <div class="valid-title">El salto no es automático</div>
-          <div class="valid-desc">Pasar de Knows a Does requiere diseño explícito. No ocurre solo con el paso del tiempo ni con la acumulación de horas de rotación.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">💬</div>
-          <div class="valid-title">La retroalimentación es el motor</div>
-          <div class="valid-desc">Sin retroalimentación estructurada y específica, la repetición consolida errores en lugar de corregirlos. La práctica sin retroalimentación puede ser contraproducente.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">📈</div>
-          <div class="valid-title">La dificultad debe crecer</div>
-          <div class="valid-desc">Un estudiante que siempre trabaja con casos fáciles no desarrolla la competencia para los difíciles. El diseño debe incorporar complejidad progresiva.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
     <div class="card-title">🔗 EPAs como objetivos de la práctica deliberada</div>
     <div class="card-body">
-      <p style="margin-bottom:14px">Las EPAs y la práctica deliberada se necesitan mutuamente: las EPAs definen <strong>qué hay que practicar</strong> y a qué nivel de autonomía; la práctica deliberada explica <strong>cómo diseñar esa práctica</strong> para que sea eficaz. Sin EPAs, la práctica deliberada carece de objetivo clínico concreto. Sin práctica deliberada, las EPAs son solo una lista de tareas sin método para alcanzarlas.</p>
       <table class="ex-table">
         <tbody>
           <tr>
@@ -962,11 +1070,11 @@ footer a:hover{text-decoration:underline}
           </tr>
           <tr>
             <td class="ex-label">🔁 Práctica deliberada como método</td>
-            <td class="ex-desc">Para alcanzar esa EPA: simulaciones repetidas con casos de complejidad creciente (SCA típico → presentación atípica en anciana → dolor torácico en paciente anticoagulado), retroalimentación específica tras cada caso, y criterios explícitos de progresión entre niveles de supervisión.</td>
+            <td class="ex-desc">Para alcanzar esa EPA: simulaciones repetidas con casos de complejidad creciente (SCA típico → presentación atípica en anciana → dolor torácico en anticoagulado), retroalimentación específica tras cada caso, y criterios explícitos de progresión entre niveles de supervisión.</td>
           </tr>
           <tr>
-            <td class="ex-label">📊 Nivel de supervisión como métrica de progreso</td>
-            <td class="ex-desc">Los 5 niveles de confianza de las EPAs permiten al tutor y al estudiante tener conversaciones concretas sobre dónde está y cuántas repeticiones con retroalimentación son necesarias para avanzar al siguiente nivel.</td>
+            <td class="ex-label">📊 Nivel de supervisión como métrica</td>
+            <td class="ex-desc">Los 5 niveles de confianza de las EPAs permiten al tutor y al estudiante tener conversaciones concretas sobre dónde está y qué necesita para avanzar al siguiente nivel.</td>
           </tr>
         </tbody>
       </table>
@@ -975,7 +1083,358 @@ footer a:hover{text-decoration:underline}
 
 </div>
 
-<!-- ══════ PANEL 5: IMPLICACIONES ══════ -->
+<!-- ══════ PANEL NUEVO: CRÍTICAS ══════ -->
+<div id="criticas" class="panel">
+
+  <div class="quote-simple">
+    Conocer las limitaciones de una herramienta no la hace inútil. La hace usable con criterio.
+  </div>
+
+  <div class="card">
+    <div class="card-title">⚠️ Por qué importa esta sección</div>
+    <div class="card-body">
+      <p>Todos los marcos de este recurso tienen limitaciones documentadas en la literatura científica. Presentarlos sin sus críticas sería un error pedagógico y, paradójicamente, reduciría su utilidad: un docente que conoce los puntos débiles de sus herramientas las aplica con más criterio y adapta mejor su uso al contexto.</p>
+      <p>Esta sección no invalida los marcos. Los completa.</p>
+    </div>
+  </div>
+
+  <!-- CRÍTICAS MILLER -->
+  <div class="card-critica">
+    <div class="card-title">🔺 Críticas a la pirámide de Miller</div>
+    <div class="card-body">
+
+      <div class="card-critica-inner">
+        <div class="critica-badge">⚠️ Crítica 1</div>
+        <strong>La correlación entre Shows how y Does es más baja de lo esperado</strong>
+        <p style="margin-top:6px">Si la pirámide fuera un modelo perfectamente válido, un estudiante excelente en ECOE (nivel 3) debería predecir bien su desempeño en la práctica real (nivel 4). Pero varios estudios muestran que esta correlación es sorprendentemente baja. Rethans et al. (2002) demostraron que los médicos en prácticas evaluadas con paciente estandarizado obtienen puntuaciones significativamente más bajas que con pacientes reales — y viceversa: algunos que rinden bien en la práctica fallan en la evaluación simulada.</p>
+        <div class="critica-ref">Rethans JJ et al. <em>BMJ</em>, 2002; 325(7356):123. · Norman G. <em>Med Educ</em>, 2005; 39(4):331–333.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 2</div>
+        <strong>La pirámide asume linealidad donde hay circularidad</strong>
+        <p style="margin-top:6px">El modelo implica que se sube de nivel de forma secuencial: primero Knows, luego Knows how, luego Shows how, luego Does. Pero el aprendizaje clínico real no funciona así. Un estudiante puede desarrollar competencia práctica (Does) que retroalimenta y consolida su conocimiento teórico (Knows) — la relación es bidireccional. La pirámide puede inducir a diseños formativos artificialmente secuenciales.</p>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 3</div>
+        <strong>El nivel Does solo captura el desempeño observable en condiciones de evaluación</strong>
+        <p style="margin-top:6px">Incluso el nivel más alto de Miller (Does) mide lo que el estudiante hace cuando sabe que está siendo observado. El efecto Hawthorne puede inflar el rendimiento evaluado. Es precisamente por esto que Cruess et al. propusieron el nivel IS como extensión necesaria: el desempeño habitual cuando nadie observa puede ser radicalmente diferente.</p>
+        <div class="critica-ref">Cruess RL, Cruess SR, Steinert Y. <em>Acad Med</em>, 2016; 91(2):180–185.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 4</div>
+        <strong>Infravalora las competencias transversales y la integración</strong>
+        <p style="margin-top:6px">La pirámide se concibió para competencias técnicas discretas y evaluables. Se adapta mal a competencias complejas como el razonamiento clínico en condiciones de incertidumbre, el trabajo en equipo o la toma de decisiones compartida, que no son fácilmente ubicables en un solo nivel de la pirámide.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRÍTICAS PRÁCTICA DELIBERADA -->
+  <div class="card-critica">
+    <div class="card-title">🔁 Críticas a la práctica deliberada (Ericsson)</div>
+    <div class="card-body">
+
+      <div class="card-critica-inner">
+        <div class="critica-badge">⚠️ Crítica 1</div>
+        <strong>La «regla de las 10.000 horas» se popularizó distorsionando el modelo original</strong>
+        <p style="margin-top:6px">Ericsson nunca postuló que 10.000 horas garantizan la excelencia. La cifra popularizada por Malcolm Gladwell en <em>Outliers</em> (2008) simplifica y distorsiona el modelo. Lo que Ericsson sostuvo es que no es la cantidad de práctica sino su calidad lo que determina el nivel de excelencia — pero la distorsión mediática ha generado expectativas irreales sobre la formación clínica.</p>
+        <div class="critica-ref">Ericsson KA et al. <em>Psychol Rev</em>, 1993; 100(3):363–406. · Macnamara BN et al. <em>Psychol Sci</em>, 2014; 25(8):1608–1618.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 2</div>
+        <strong>El papel del talento innato es mayor de lo que el modelo admite</strong>
+        <p style="margin-top:6px">Macnamara et al. (2014) realizaron un metaanálisis con 88 estudios y encontraron que la práctica deliberada explica solo el 26% de la varianza en el rendimiento en juegos, el 21% en música, el 18% en deportes y el 4% en profesiones como la medicina. El talento, la memoria de trabajo, la inteligencia y otros factores contribuyen independientemente. La práctica deliberada importa — pero no lo explica todo.</p>
+        <div class="critica-ref">Macnamara BN, Hambrick DZ, Oswald FL. <em>Psychol Sci</em>, 2014; 25(8):1608–1618.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 3</div>
+        <strong>Su aplicabilidad en medicina tiene condiciones estructurales difíciles de cumplir</strong>
+        <p style="margin-top:6px">La práctica deliberada requiere un entorno donde sea posible repetir, obtener retroalimentación inmediata y controlar la dificultad. En la formación clínica real, la presentación de casos es aleatoria, el supervisor tiene sobrecarga asistencial y la retroalimentación sistemática es rara. El modelo es normativamente correcto pero estructuralmente exigente — aplicarlo requiere cambios institucionales que van más allá del docente individual.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CRÍTICAS KOLB -->
+  <div class="card-critica">
+    <div class="card-title">🔄 Críticas al modelo de Kolb</div>
+    <div class="card-body">
+
+      <div class="card-critica-inner">
+        <div class="critica-badge">⚠️ Crítica 1 — Estilos de aprendizaje</div>
+        <strong>Los estilos de aprendizaje carecen de validez predictiva sólida</strong>
+        <p style="margin-top:6px">Esta es la crítica más importante y mejor documentada. Pashler et al. (2008) revisaron sistemáticamente la evidencia y concluyeron que adaptar la instrucción al estilo de aprendizaje predominante de cada alumno no mejora los resultados de aprendizaje. La categorización en tipos (divergente, asimilador, convergente, acomodador) tiene escasa validez predictiva. Las personas no aprenden de una única forma — aprenden de formas diferentes según el contexto, el contenido y el estado emocional.</p>
+        <div class="critica-ref">Pashler H et al. <em>Psychol Sci Public Interest</em>, 2008; 9(3):105–119.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 2</div>
+        <strong>El instrumento de medición (LSI) tiene problemas psicométricos</strong>
+        <p style="margin-top:6px">El Learning Style Inventory (LSI) de Kolb ha sido criticado por su fiabilidad test-retest limitada (el mismo individuo puede clasificarse en categorías distintas en momentos diferentes) y por sesgos metodológicos en su construcción. Kolb revisó el instrumento varias veces (LSI-1, LSI-2, LSI-3), lo que complica la comparabilidad entre estudios.</p>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 3</div>
+        <strong>El ciclo en sí tiene más soporte teórico que empírico robusto</strong>
+        <p style="margin-top:6px">El ciclo de Kolb es conceptualmente coherente y educativamente útil — pero la evidencia empírica directa de que completar el ciclo de las cuatro fases produce mejor aprendizaje que otros enfoques es más limitada de lo que su popularidad sugiere. Su utilidad es mayor como marco organizativo para el diseño formativo que como teoría predictiva del aprendizaje individual.</p>
+      </div>
+
+      <div style="margin-top:12px;background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.6">
+        🎯 <strong>Qué sí es válido de Kolb:</strong> El ciclo como marco organizativo para el diseño de experiencias formativas reflexivas tiene valor pedagógico real. La idea de que la experiencia clínica sin reflexión estructurada genera menos aprendizaje es coherente con la evidencia. Lo que no tiene soporte sólido es la categorización de los individuos en tipos de aprendiz y la instrucción adaptada al tipo.
+      </div>
+    </div>
+  </div>
+
+  <!-- CRÍTICAS EPAs -->
+  <div class="card-critica">
+    <div class="card-title">📋 Críticas a las EPAs</div>
+    <div class="card-body">
+
+      <div class="card-critica-inner">
+        <div class="critica-badge">⚠️ Crítica 1 — Leniency bias</div>
+        <strong>Los supervisores tienden a sobrevalorar sistemáticamente el nivel de confianza</strong>
+        <p style="margin-top:6px">Uno de los problemas más documentados en la evaluación de EPAs es el <em>leniency bias</em>: la tendencia de los supervisores a otorgar niveles de confianza más altos de lo justificado, especialmente cuando tienen una relación positiva con el estudiante, cuando el estudiante expresa seguridad en sí mismo, o cuando dar una evaluación negativa implica una conversación incómoda. Holmboe et al. han documentado extensamente este sesgo. Resultado: los niveles de confianza otorgados no reflejan necesariamente la competencia real.</p>
+        <div class="critica-ref">Holmboe ES et al. <em>Acad Med</em>, 2010; 85(7 Suppl):S24–S29.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 2</div>
+        <strong>Alta variabilidad inter-evaluador: el mismo estudiante recibe niveles muy diferentes según el supervisor</strong>
+        <p style="margin-top:6px">La confianza clínica es subjetiva y contextual. Un supervisor puede considerar que un estudiante está en nivel 3 de supervisión para una EPA determinada mientras otro supervisor del mismo servicio le asigna nivel 2 o incluso nivel 4. Esta variabilidad inter-evaluador cuestiona la objetividad del sistema y complica la toma de decisiones formativas y certificadoras basadas en EPAs.</p>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 3</div>
+        <strong>Riesgo de burocratización: listas de tareas sin cambio real en la cultura evaluativa</strong>
+        <p style="margin-top:6px">En muchos programas, la implementación de EPAs se ha reducido a crear listas de actividades que el estudiante y el tutor «verifican» sin que haya observación directa ni retroalimentación real. Ten Cate, el creador del concepto, ha advertido explícitamente contra esta tendencia: las EPAs son tan buenas como la cultura evaluativa que las rodea. Sin observación directa y conversación honesta, son papel mojado.</p>
+        <div class="critica-ref">Ten Cate O. <em>Acad Med</em>, 2017; 92(4):429–432.</div>
+      </div>
+
+      <div class="card-critica-inner" style="margin-top:10px">
+        <div class="critica-badge">⚠️ Crítica 4</div>
+        <strong>Las EPAs pueden fragmentar artificialmente competencias que son integrales</strong>
+        <p style="margin-top:6px">Definir competencias clínicas como unidades discretas («valorar dolor torácico», «prescribir de forma segura») facilita la evaluación pero puede obscurecer la integración que caracteriza al médico competente. Un paciente con dolor torácico que además es ansioso, tiene barreras idiomáticas y está en un contexto de final de vida no se resuelve con una EPA aislada sino con la integración de múltiples. El marco puede inducir una visión fragmentada de la competencia.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📊 Resumen: nivel de evidencia por marco</div>
+    <div class="card-body">
+      <div class="ev-legend">
+        <span class="ev-legend-label">Leyenda:</span>
+        <span class="ev-badge ev-fuerte">● Evidencia sólida</span>
+        <span class="ev-badge ev-moderada">● Evidencia moderada</span>
+        <span class="ev-badge ev-debil">● Evidencia débil o cuestionada</span>
+      </div>
+      <table class="ex-table">
+        <tbody>
+          <tr>
+            <td class="ex-label">🔺 Miller — Niveles 1–4</td>
+            <td class="ex-desc"><span class="ev-badge ev-moderada">● Moderada</span> El modelo es conceptualmente útil y ampliamente usado, pero la correlación entre niveles adyacentes (especialmente 3→4) es menor de lo esperado. Útil como marco organizativo, no como escala lineal de progresión.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔺 Miller — Nivel IS</td>
+            <td class="ev-desc"><span class="ev-badge ev-debil">● Débil (en evaluación)</span> Conceptualmente valioso. Metodológicamente difícil de evaluar. El constructo tiene respaldo teórico; los instrumentos de medición, no.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔁 Práctica deliberada — Principios</td>
+            <td class="ex-desc"><span class="ev-badge ev-fuerte">● Sólida</span> La importancia de la retroalimentación específica, la dificultad progresiva y los objetivos concretos está bien documentada en contextos educativos y clínicos.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔄 Kolb — Ciclo experiencial</td>
+            <td class="ex-desc"><span class="ev-badge ev-moderada">● Moderada</span> Como marco organizativo para el diseño formativo, útil y coherente. Como teoría predictiva del aprendizaje individual, evidencia más limitada.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">🔄 Kolb — Estilos de aprendizaje</td>
+            <td class="ex-desc"><span class="ev-badge ev-debil">● Débil</span> La adaptación de la instrucción al estilo predominante no mejora resultados de aprendizaje según la evidencia disponible. Útil solo como herramienta de reflexión, no como criterio de diseño instruccional.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">📋 EPAs — Concepto</td>
+            <td class="ex-desc"><span class="ev-badge ev-fuerte">● Sólida</span> La confianza como indicador de competencia es clínicamente válida. El concepto está bien fundamentado y es ampliamente adoptado.</td>
+          </tr>
+          <tr>
+            <td class="ex-label">📋 EPAs — Implementación</td>
+            <td class="ex-desc"><span class="ev-badge ev-moderada">● Moderada</span> La variabilidad inter-evaluador, el leniency bias y el riesgo de burocratización son limitaciones documentadas que condicionan la validez de la implementación real.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL NUEVO: OBJECIONES ══════ -->
+<div id="objeciones" class="panel">
+
+  <div class="quote-simple">
+    Las objeciones más frecuentes no son excusas: son señales de que hay tensiones reales que el cambio debe gestionar. Ignorarlas es perder.
+  </div>
+
+  <div class="card">
+    <div class="card-title">💬 Para qué sirve este panel</div>
+    <div class="card-body">
+      <p>Si presentas estos marcos en una sesión de formación de tutores o en una reunión de coordinación docente, te encontrarás con objeciones. Algunas son resistencias al cambio; muchas son preguntas legítimas que señalan tensiones reales entre el ideal formativo y la realidad institucional.</p>
+      <p>Este panel recoge las más frecuentes con respuestas que no minimizan la dificultad ni resultan condescendientes. El objetivo no es «ganar» la discusión sino abrirla honestamente.</p>
+    </div>
+  </div>
+
+  <!-- FAQ ITEMS -->
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">⏰</span>
+      <span class="faq-q">«No tenemos tiempo para todo esto. Ya tenemos demasiado trabajo asistencial.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta es la objeción más honesta y la que más merece respeto. Es verdad: la sobrecarga asistencial en los hospitales universitarios españoles es real, y el tiempo dedicado a la docencia raramente se descuenta de la carga asistencial. No tiene sentido responder con «solo son 15 minutos».
+      </div>
+      <div class="faq-respuesta">
+        La respuesta más útil no es defender que es fácil, sino identificar el <strong>cambio mínimo viable de mayor impacto</strong>. Un Mini-CEX bien hecho son 15 minutos y produce más aprendizaje que un mes de rotación pasiva. Una pregunta reflexiva al final de la visita («¿qué cambiarías de lo que hiciste hoy?») no requiere preparación adicional. No hay que rediseñar el programa entero para empezar.
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «Entiendo que el tiempo es el problema real. ¿Qué cambiaría si un residente cometiera un error evitable por falta de retroalimentación sistemática? ¿Cuánto tiempo cuesta ese error? La inversión formativa tiene un retorno en seguridad del paciente que rara vez calculamos.»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">🎓</span>
+      <span class="faq-q">«Yo aprendí así — rotando, viendo casos, con el tiempo. Y funciona.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta objeción tiene trampa cognitiva: los que llegaron a ser tutores clínicos son los que <em>sobrevivieron</em> al sistema formativo tradicional. No vemos a los que se quedaron en el camino o los que llegaron con lagunas que nunca se detectaron. El sesgo de supervivencia afecta cómo evaluamos la efectividad del modelo en el que nos formamos.
+      </div>
+      <div class="faq-respuesta">
+        Además, la medicina ha cambiado. La complejidad de las decisiones clínicas, la reducción de la jornada de formación y la mayor exigencia de seguridad del paciente hacen que el modelo «aprende con el tiempo» sea hoy más arriesgado que hace 30 años.
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «No digo que el modelo antiguo no funcionara para ti. Digo que tenemos datos de que hay formas de hacerlo mejor con el mismo tiempo y que la variabilidad entre buenos y malos tutores es enorme. ¿Qué hacía diferente el tutor que más aprendiste? Probablemente, exactamente esto.»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">📋</span>
+      <span class="faq-q">«Las EPAs son burocracia. Más papeles para rellenar y poco cambio real.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta crítica es completamente válida cuando las EPAs se implementan mal — y ocurre con frecuencia. Cuando el sistema se reduce a que el residente presente un formulario y el tutor lo firme sin haber observado nada, las EPAs son papel mojado. Ten Cate, el creador del concepto, ha advertido explícitamente contra esto.
+      </div>
+      <div class="faq-respuesta">
+        La respuesta no es defender la burocracia, sino distinguir entre el <strong>concepto</strong> (válido) y la <strong>implementación</strong> (mejorable). La pregunta que abre la conversación: «¿Qué necesitarías para que esto no fuera burocracia y sí fuera una conversación real sobre el progreso del residente?»
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «Tienes razón en que puede convertirse en burocracia. ¿Cómo haríamos para que sea lo contrario? La EPA es excusa para una conversación que de otra forma no ocurre: ¿hasta dónde confío en este residente para esta tarea específica, y qué necesita para que yo confíe más? Esa conversación vale la pena aunque los formularios no.»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">🎭</span>
+      <span class="faq-q">«La simulación es artificial. Los estudiantes saben que no es real y actúan diferente.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Es una objeción parcialmente correcta. La simulación tiene limitaciones de transferencia, especialmente en aspectos emocionales y en la gestión de la incertidumbre real. Nadie aprende a manejar el estrés de una guardia real en un maniquí.
+      </div>
+      <div class="faq-respuesta">
+        Pero la pregunta no es si la simulación es perfecta, sino si es <strong>mejor que la alternativa</strong>. La alternativa es que el estudiante aprenda a hacer una punción lumbar por primera vez en un paciente real, sin repetición, sin retroalimentación inmediata y con las consecuencias reales de un error. La simulación no reemplaza la práctica real — la <em>prepara</em> para ella.
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «Los pilotos de aviación aprenden en simuladores antes de volar un avión de verdad. No porque el simulador sea idéntico al avión, sino porque el error en el simulador enseña sin costar vidas. ¿Por qué en medicina la primera vez con el paciente real debería ser la primera vez a secas?»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">💪</span>
+      <span class="faq-q">«Decirle a un residente que no está listo para algo le destroza la confianza.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta objeción revela una confusión importante entre dos tipos de feedback. Una evaluación honesta de competencia entregada con respeto y con un plan de mejora no destruye la confianza — la construye. Lo que destruye la confianza es la crítica sin orientación, la humillación pública, o la retroalimentación inconsistente.
+      </div>
+      <div class="faq-respuesta">
+        La alternativa a «decirle que no está listo» no es «fingir que sí está listo». La alternativa es dar confianza prematura a alguien que cometerá un error que le afectará a él, al paciente y a su propia confianza a largo plazo. El tutor que evita la conversación difícil no protege al residente — lo pone en riesgo.
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «La pregunta no es si darle feedback honesto le afecta — es si el feedback honesto y con plan de mejora le afecta más o menos que descubrir sus limitaciones en una situación real sin red. ¿Preferirías enterarte de que no estabas listo en la simulación o en la guardia?»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">📚</span>
+      <span class="faq-q">«Esto es pedagogía, no medicina. No me han formado para ser docente.»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta es quizás la objeción más legítima del conjunto. Es cierto: la formación pedagógica de los tutores clínicos en España es casi inexistente. Nadie les ha explicado qué es una EPA, cómo dar feedback estructurado o cómo diseñar una sesión de debriefing. Se les pide que hagan algo que nunca se les ha enseñado.
+      </div>
+      <div class="faq-respuesta">
+        La respuesta honesta: tienes razón, y eso es un fallo del sistema, no tuyo. Pero «no me han formado» no puede ser el argumento final cuando tenemos herramientas sencillas y accesibles para mejorar. La pregunta es: ¿qué sería lo primero más sencillo que podrías incorporar esta semana?
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «Lo que hacéis como tutores ya es docencia — la cuestión es si es docencia buena o solo acompañamiento pasivo. Los mejores tutores que todos hemos tenido hacían exactamente esto de forma intuitiva. La formación pedagógica no os convierte en pedagógos: os da el lenguaje para hacer explícito lo que los mejores ya hacen.»
+      </div>
+    </div>
+  </div>
+
+  <div class="faq-item">
+    <button class="faq-btn" onclick="toggleFaq(this)">
+      <span class="faq-icon">🔬</span>
+      <span class="faq-q">«¿Hay evidencia de que todo esto realmente mejora los resultados en pacientes?»</span>
+      <span class="faq-arrow">▼</span>
+    </button>
+    <div class="faq-body">
+      <div class="faq-respuesta">
+        Esta es la mejor pregunta que puede hacer un clínico — y merece una respuesta honesta, no una venta. La evidencia que conecta directamente modelos de educación médica con resultados en pacientes es escasa, metodológicamente compleja y difícil de obtener. La cadena causal (mejor formación → mejor competencia → mejores resultados en pacientes) es larga y tiene muchos eslabones.
+      </div>
+      <div class="faq-respuesta">
+        Lo que sí tiene evidencia más sólida: los programas de simulación con práctica deliberada reducen complicaciones en procedimientos específicos (cateterismo venoso central, intubación). El feedback estructurado mejora la competencia evaluada. La observación directa del supervisor mejora la detección temprana de dificultades.
+      </div>
+      <div class="faq-tip">
+        <div class="faq-tip-label">💡 Argumento clave</div>
+        «Tienes razón en que la evidencia directa sobre resultados en pacientes es limitada. Pero la pregunta alternativa es: ¿hay evidencia de que el modelo actual — rotación sin objetivos, sin feedback sistemático, sin observación directa — es mejor? Ninguna. El estándar no es la perfección, sino la mejora sobre lo que ya hacemos.»
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:14px;background:var(--yellow-pale);border-color:var(--yellow-mid)">
+    <div class="card-title">🎯 La meta-objeción: el cambio institucional</div>
+    <div class="card-body">
+      <p>Detrás de muchas objeciones individuales hay una objeción estructural legítima: <strong>los tutores no pueden cambiar solos lo que es un problema institucional</strong>. Sin tiempo protegido para la docencia, sin formación pedagógica, sin reconocimiento de la labor tutorial y sin sistemas de evaluación que obliguen a observar directamente al estudiante, la mayor voluntad individual produce cambios marginales.</p>
+      <p style="margin-top:10px">Nombrar esto explícitamente en las sesiones de formación de tutores no es derrotismo — es honestidad que genera confianza. La pregunta no es «¿qué podéis hacer solos?» sino «¿qué podemos cambiar juntos, empezando por lo que está a nuestro alcance?»</p>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══════ PANEL: IMPLICACIONES ══════ -->
 <div id="implicaciones" class="panel">
 
   <div class="quote-simple">
@@ -1049,7 +1508,6 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">👨‍⚕️ El supervisor: el agente que más importa y menos se forma</div>
     <div class="card-body">
-      <p style="margin-bottom:14px">En toda esta arquitectura — Miller, práctica deliberada, EPAs — hay un agente sin el cual nada funciona: <strong>el supervisor o tutor clínico</strong>. Y es, paradójicamente, el que menos formación pedagógica recibe.</p>
       <div class="pd-grid">
         <div class="pd-item">
           <div class="pd-icon">👁️</div>
@@ -1080,48 +1538,21 @@ footer a:hover{text-decoration:underline}
   </div>
 
   <div class="card">
-    <div class="card-title">⚠️ El error y la seguridad del paciente: la tensión que no podemos ignorar</div>
-    <div class="card-body">
-      <p style="margin-bottom:14px">Toda la progresión de Miller tiene una tensión subyacente que la educación médica no siempre nombra con claridad: <strong>¿hasta dónde dejamos que el estudiante aprenda equivocándose con pacientes reales?</strong></p>
-      <div class="valid-grid">
-        <div class="valid-item">
-          <div class="valid-icon">🔬</div>
-          <div class="valid-title">El error como fuente de aprendizaje</div>
-          <div class="valid-desc">La práctica deliberada requiere operar en el límite de la competencia — y eso implica cometer errores. En simulación, el error es seguro y valioso. En la práctica real, hay un paciente.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">🛡️</div>
-          <div class="valid-title">La simulación como espacio seguro</div>
-          <div class="valid-desc">La simulación clínica existe precisamente para resolver esta tensión: permite cometer errores, aprender de ellos y recibir retroalimentación sin riesgo real para el paciente.</div>
-        </div>
-        <div class="valid-item">
-          <div class="valid-icon">📐</div>
-          <div class="valid-title">Supervisión calibrada como solución</div>
-          <div class="valid-desc">El nivel de supervisión de las EPAs no es solo una métrica de progreso — es una herramienta de gestión del riesgo. Más supervisión = más seguridad para el paciente mientras el estudiante aprende.</div>
-        </div>
-      </div>
-      <div style="margin-top:14px;background:var(--gray-900);color:var(--yellow);border-radius:8px;padding:14px 18px;font-size:.845rem;line-height:1.65;border-left:4px solid var(--yellow-deep)">
-        💡 <strong>La pregunta que todo programa formativo debería responder:</strong> ¿En qué tareas clínicas permitimos que el estudiante aprenda con pacientes reales, con qué nivel de supervisión, y en base a qué criterios decidimos cuándo reducirla?
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
     <div class="card-title">🔗 Conexión con otros recursos EduMed.UVa</div>
     <div class="card-body">
       <table class="ex-table">
         <tbody>
           <tr>
             <td class="ex-label">🧠 Taxonomía de Bloom</td>
-            <td class="ex-desc">Knows/Knows how se corresponden con Bloom 1–3; Shows how y Does requieren Bloom 3–6. Los niveles superiores de Miller exigen activar al estudiante. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+            <td class="ex-desc">Knows/Knows how se corresponden con Bloom 1–3; Shows how y Does requieren Bloom 3–6. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
           </tr>
           <tr>
             <td class="ex-label">📊 Modelo de Kirkpatrick</td>
-            <td class="ex-desc">Shows how equivale a Kirkpatrick 2; Does equivale a Kirkpatrick 3–4. Los niveles altos de ambos modelos coinciden en su exigencia y dificultad. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
+            <td class="ex-desc">Shows how equivale a Kirkpatrick 2; Does equivale a Kirkpatrick 3–4. <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--yellow-deep);font-weight:600">Ver recurso →</a></td>
           </tr>
           <tr>
             <td class="ex-label">📓 Cuaderno 2 · Clase magistral</td>
-            <td class="ex-desc">La clase magistral bien diseñada lleva al estudiante hasta Knows how. Para llegar a Shows how y Does se necesitan las metodologías activas descritas en las 5 Aes. <a href="https://tutorcyllo.github.io/clasemagistral2026/" style="color:var(--yellow-deep);font-weight:600">Ver cuaderno →</a></td>
+            <td class="ex-desc">La clase magistral bien diseñada lleva al estudiante hasta Knows how. Para llegar a Shows how y Does se necesitan las metodologías activas. <a href="https://tutorcyllo.wixsite.com/educacionmedicauva" style="color:var(--yellow-deep);font-weight:600">Ver cuaderno →</a></td>
           </tr>
         </tbody>
       </table>
@@ -1129,7 +1560,6 @@ footer a:hover{text-decoration:underline}
   </div>
 
 </div>
-</main>
 
 <!-- ══════ PANEL: ¿LO ENTENDÍ? ══════ -->
 <div id="lentendi" class="panel">
@@ -1142,7 +1572,6 @@ footer a:hover{text-decoration:underline}
     <div class="card-title">🤔 ¿Cómo usar esta sección?</div>
     <div class="card-body">
       <p>Las preguntas que siguen no tienen una respuesta única ni están pensadas para responderse en solitario en dos minutos. Están diseñadas para <strong>revelar si has integrado los marcos</strong> — o solo los has leído.</p>
-      <p>Dos formas de trabajarlas:</p>
       <div class="two-col" style="margin-top:12px;margin-bottom:0">
         <div style="background:var(--yellow-pale);border:1px solid var(--yellow-mid);border-radius:8px;padding:14px 16px">
           <div style="font-size:.82rem;font-weight:800;margin-bottom:6px">👥 Con compañeros</div>
@@ -1162,18 +1591,18 @@ footer a:hover{text-decoration:underline}
       <div style="display:flex;flex-direction:column;gap:10px">
         <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
           <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 1</div>
-          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Un estudiante supera con nota todas las estaciones de la ECOE. Tres meses después, en la rotación clínica, su tutor observa que su desempeño es claramente inferior al esperado. ¿Cómo lo explicas usando la pirámide de Miller? ¿Qué falló en el diseño formativo?</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Un estudiante supera con nota todas las estaciones de la ECOE. Tres meses después, en la rotación clínica, su tutor observa que su desempeño es claramente inferior al esperado. ¿Cómo lo explicas usando la pirámide de Miller? ¿Qué falló en el diseño formativo? ¿Qué dice la literatura sobre la correlación entre Shows how y Does?</div>
         </div>
         <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
           <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 2</div>
-          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Algunos autores proponen un quinto nivel: <em>«Is»</em> — lo que el profesional hace cuando nadie le observa. ¿Qué añade este nivel al modelo? ¿Cómo podría fomentarse durante la formación de grado, antes de llegar a la práctica clínica real?</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">El nivel IS describe lo que el médico hace cuando nadie le observa. ¿Puedes identificar un ejemplo de tu propio contexto clínico en que el currículo oculto transmitió un mensaje que contradecía el currículo formal? ¿Qué IS se estaba formando en ese momento?</div>
         </div>
       </div>
     </div>
   </div>
 
   <div class="card">
-    <div class="card-title">🔁 Sobre la práctica deliberada y Kolb</div>
+    <div class="card-title">🔁 Sobre práctica deliberada, Kolb y evidencia</div>
     <div class="card-body">
       <div style="display:flex;flex-direction:column;gap:10px">
         <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
@@ -1182,23 +1611,7 @@ footer a:hover{text-decoration:underline}
         </div>
         <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
           <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 4</div>
-          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">La práctica deliberada requiere operar en el límite de la competencia, lo que implica cometer errores. ¿Cómo se reconcilia esto con la presión de «hacerlo bien a la primera» que existe en muchos entornos clínicos? ¿Qué papel juega aquí la seguridad psicológica?</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="card">
-    <div class="card-title">📋 Sobre EPAs, aprendizaje situado y seguridad psicológica</div>
-    <div class="card-body">
-      <div style="display:flex;flex-direction:column;gap:10px">
-        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
-          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 5</div>
-          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">¿Puede existir aprendizaje situado auténtico en un entorno de simulación? ¿Dónde está el límite entre «fidelidad suficiente para aprender» y «tan artificial que no transfiere»? Pon un ejemplo concreto de tu área clínica.</div>
-        </div>
-        <div style="background:var(--yellow-pale);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
-          <div style="font-size:.82rem;font-weight:700;color:var(--gray-900);margin-bottom:4px">Pregunta 6</div>
-          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">La seguridad psicológica favorece el aprendizaje, pero en medicina también existe la presión legítima de la excelencia y la responsabilidad ante el paciente. ¿Cómo se construye un entorno que sea simultáneamente psicológicamente seguro y exigente? ¿Son compatibles?</div>
+          <div style="font-size:.875rem;color:var(--gray-700);line-height:1.65">Ahora que sabes que los estilos de aprendizaje de Kolb tienen evidencia débil como criterio para diseñar instrucción diferenciada, ¿cambia esto cómo usarías el modelo de Kolb en tu práctica docente? ¿Qué sí conservarías y qué descartarías?</div>
         </div>
       </div>
     </div>
@@ -1207,15 +1620,14 @@ footer a:hover{text-decoration:underline}
   <div class="card">
     <div class="card-title">🔗 Preguntas integradoras</div>
     <div class="card-body">
-      <p style="margin-bottom:12px;font-size:.845rem;color:var(--gray-700)">Estas preguntas exigen conectar varios marcos a la vez. Son las más difíciles — y las más útiles.</p>
       <div style="display:flex;flex-direction:column;gap:10px">
         <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
-          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 7</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 5</div>
           <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Diseña en 10 minutos un plan formativo para que un estudiante de 4º de medicina alcance el nivel 3 de supervisión en la EPA «valorar un paciente con disnea aguda». ¿Qué elementos de práctica deliberada incluirías? ¿Cómo asegurarías el ciclo de Kolb? ¿Qué condiciones de aprendizaje situado y seguridad psicológica necesitas?</div>
         </div>
         <div style="background:var(--gray-900);border-left:4px solid var(--yellow-deep);border-radius:0 8px 8px 0;padding:14px 16px">
-          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 8</div>
-          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Todos los marcos de esta página tienen limitaciones y críticas en la literatura. ¿Cuál crees que es la debilidad más importante de cada uno? ¿Hay alguno que consideres sobrevalorado en educación médica? ¿Por qué?</div>
+          <div style="font-size:.82rem;font-weight:700;color:var(--yellow);margin-bottom:4px">Pregunta 6 — Crítica integradora</div>
+          <div style="font-size:.875rem;color:var(--yellow-mid);line-height:1.65">Después de haber leído las críticas de cada marco, ¿cuál consideras que tiene la limitación más grave para su aplicación en tu contexto concreto? ¿Cambia esto tu valoración de qué herramientas son prioritarias?</div>
         </div>
       </div>
     </div>
@@ -1224,17 +1636,19 @@ footer a:hover{text-decoration:underline}
   <div style="background:var(--yellow);border-radius:var(--radius);padding:20px 24px;margin-bottom:14px;box-shadow:var(--shadow-sm)">
     <div style="font-size:.88rem;font-weight:800;color:var(--gray-900);margin-bottom:8px">💬 Prompt sugerido para trabajar estas preguntas con un LLM</div>
     <div style="background:var(--white);border-radius:8px;padding:12px 16px;font-size:.82rem;color:var(--gray-700);line-height:1.65;font-family:monospace;border:1px solid var(--yellow-mid)">
-      «Actúa como un tutor socrático experto en educación médica. Voy a compartirte mi respuesta a una pregunta sobre [Miller / Kolb / EPAs / práctica deliberada / aprendizaje situado]. No me des la respuesta correcta. Hazme preguntas que me ayuden a identificar los puntos débiles de mi razonamiento y a profundizar en mi comprensión. Empieza cuando yo te comparta mi respuesta.»
+      «Actúa como un tutor socrático experto en educación médica. Voy a compartirte mi respuesta a una pregunta sobre [Miller / Kolb / EPAs / práctica deliberada / nivel IS / currículo oculto]. No me des la respuesta correcta. Hazme preguntas que me ayuden a identificar los puntos débiles de mi razonamiento y a profundizar en mi comprensión. Empieza cuando yo te comparta mi respuesta.»
     </div>
   </div>
 
 </div>
 
+</main>
+
 <footer>
   <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · 2026 ·
   Contacto: <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a> ·
   <a href="https://tutorcyllo.wixsite.com/educacionmedicauva">TutorCyLlo</a><br>
-  <span style="margin-top:4px;display:inline-block">Desarrollada con Claude Sonnet 4.6 a partir de un documento original de EduMed UVa</span>
+  <span style="margin-top:4px;display:inline-block">Desarrollada con Claude Sonnet 4.6 · EduMed UVa 2026</span>
 </footer>
 
 <button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
@@ -1245,8 +1659,15 @@ function showTab(id, btn) {
   document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   btn.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 function toggleAcc(btn) {
+  const body = btn.nextElementSibling;
+  const isOpen = btn.classList.contains('open');
+  btn.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+function toggleFaq(btn) {
   const body = btn.nextElementSibling;
   const isOpen = btn.classList.contains('open');
   btn.classList.toggle('open', !isOpen);
