@@ -63,6 +63,7 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
 
 /* ── NAV ── */
 .nav-sticky{background:var(--cream);border-bottom:1px solid var(--line);position:sticky;top:68px;z-index:90;}
+@media(max-width:640px){.nav-sticky{position:static;}}
 .nav-pills{display:flex;flex-wrap:wrap;gap:8px;padding:16px 0;}
 .nav-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);transition:all .18s;cursor:pointer;font-family:"Inter",sans-serif;appearance:none;}
 .nav-pill:hover,.nav-pill.active{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
@@ -810,6 +811,17 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
           <div class="cc-badge">
             <span style="font-size:16px;">🔓</span>
             <span>Publicado bajo licencia <strong>CC BY-NC-SA 4.0</strong> — Copyright 2025 Rick Dakan, Joseph Feller y Anthropic. Libre para uso educativo no comercial con atribución.</span>
+          </div>
+          <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
+            <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Cursos completos en Anthropic Academy</div>
+            <a href="https://anthropic.skilljar.com/ai-fluency-for-students" target="_blank" rel="noopener" class="ref-doi" style="display:inline-flex;width:fit-content;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
+              AI Fluency for Students
+            </a>
+            <a href="https://anthropic.skilljar.com/ai-fluency-for-educators" target="_blank" rel="noopener" class="ref-doi" style="display:inline-flex;width:fit-content;">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
+              AI Fluency for Educators
+            </a>
           </div>
         </div>
       </div>
