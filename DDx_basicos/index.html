@@ -1,1 +1,914 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Razonamiento clínico y diagnóstico diferencial · EduMed UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uva-blue:      #003973;
+      --uva-blue-soft: #1d4f8a;
+      --uva-red:       #c60046;
+      --ink:           #1a1f2e;
+      --ink-soft:      #3d4554;
+      --muted:         #6b7486;
+      --cream:         #faf7f2;
+      --cream-2:       #f3ede3;
+      --paper:         #ffffff;
+      --line:          #e8e1d4;
+      --line-strong:   #d9cfbb;
+      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
+      --e-orange:      #b45309;   --e-orange-l: #fef3c7;
+      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
+      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
+      --e-green:       #166534;   --e-green-l:  #dcfce7;
+      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
+      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+      --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
+      --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --max: 960px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
 
+    /* ── Barra EduMed ── */
+    .edumed-bar { position: sticky; top: 0; z-index: 100; background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+    .edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
+    .edumed-back:hover { background: #fff; transform: translateX(-1px); }
+    .edumed-back svg { width: 14px; height: 14px; }
+
+    /* ── Nav pills ── */
+    .nav-index { background: var(--cream); border-bottom: 1px solid var(--line); }
+    .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+    .nav-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); transition: all .18s; cursor: pointer; font-family: "Inter", sans-serif; appearance: none; }
+    .nav-pill:hover, .nav-pill.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+    /* ── Hero ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 52px 0 44px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--uva-red); }
+    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); margin-bottom: 14px; }
+    .hero-title em { font-style: italic; color: var(--uva-blue); }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 680px; margin-bottom: 32px; line-height: 1.55; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-badge { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow-sm); }
+    .hero-badge-icon { font-size: 20px; }
+    .hero-badge-text { display: flex; flex-direction: column; }
+    .hero-badge-text span:first-child { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .hero-badge-text span:last-child { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+    /* ── Secciones ── */
+    .section { padding: 52px 0; }
+    .section + .section { border-top: 1px solid var(--line); }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
+    .section-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
+    .section-title { font-family: "Fraunces", serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.15; color: var(--ink); margin-bottom: 14px; }
+    .section-lead { font-size: 15px; color: var(--ink-soft); max-width: 720px; line-height: 1.65; margin-bottom: 28px; }
+
+    /* ── Two col ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+
+    /* ── Info cards ── */
+    .info-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; box-shadow: var(--shadow-sm); }
+    .info-card.accent-blue { border-left: 3px solid var(--uva-blue); }
+    .info-card.accent-red  { border-left: 3px solid var(--uva-red); }
+    .info-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 8px; }
+    .info-card-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .info-card-body { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+    .info-card-body p + p { margin-top: 8px; }
+
+    /* ── Dark card ── */
+    .dark-card { background: var(--uva-blue); color: #fff; border-radius: var(--r-lg); padding: 24px; }
+    .dark-card-title { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 600; color: #f5c518; margin-bottom: 10px; }
+    .dark-card-body { font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.65; }
+
+    /* ── Pullquote ── */
+    .pullquote { background: var(--paper); border-left: 4px solid var(--uva-blue); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 18px 22px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .pullquote p { font-family: "Fraunces", serif; font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.5; }
+
+    /* ── Callout ── */
+    .callout { border-radius: var(--r-md); padding: 16px 20px; font-size: 13px; line-height: 1.65; margin-top: 16px; }
+    .callout-teal { background: var(--e-teal-l); border: 1px solid #99d6d4; color: var(--e-teal); }
+    .callout-blue { background: #dbeafe; border: 1px solid #93c5fd; color: var(--uva-blue); }
+    .callout-title { font-weight: 700; margin-bottom: 5px; font-size: 13px; }
+
+    /* ── Alert ── */
+    .alert-warning { background: var(--e-amber-l); border: 1px solid #fcd34d; border-radius: var(--r-md); padding: 16px 20px; display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
+    .alert-icon { font-size: 22px; flex-shrink: 0; }
+    .alert-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 4px; }
+    .alert-desc { font-size: 13px; color: #78350f; line-height: 1.55; }
+
+    /* ── Acordeón ── */
+    .acc-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .acc-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: box-shadow .2s; }
+    .acc-item.open { box-shadow: var(--shadow-md); }
+    .acc-trigger { width: 100%; border: 0; background: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 16px 20px; text-align: left; transition: background .15s; font-family: "Inter", sans-serif; }
+    .acc-trigger:hover { background: var(--cream); }
+    .acc-num { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 1rem; font-style: italic; }
+    .acc-label-wrap { flex: 1; text-align: left; }
+    .acc-label { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); display: block; }
+    .acc-sublabel { font-size: 12px; color: var(--muted); font-family: "Inter", sans-serif; font-weight: 400; display: block; margin-top: 2px; }
+    .acc-chevron { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s, background .2s; }
+    .acc-chevron svg { width: 13px; height: 13px; color: var(--muted); }
+    .acc-item.open .acc-chevron { transform: rotate(180deg); background: var(--uva-blue); border-color: var(--uva-blue); }
+    .acc-item.open .acc-chevron svg { color: #fff; }
+    .acc-body { display: none; padding: 0 20px 20px 66px; }
+    .acc-item.open .acc-body { display: block; }
+    .acc-body p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+
+    /* ── Pestañas (modos) ── */
+    .tabs-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+    .tab-btn { appearance: none; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 10px 18px; font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); background: var(--cream-2); border: 1px solid var(--line); border-bottom: none; border-radius: var(--r-md) var(--r-md) 0 0; transition: color .18s, background .18s; position: relative; bottom: -1px; }
+    .tab-btn:hover { color: var(--ink); background: var(--paper); }
+    .tabs-body { border: 1px solid var(--line); border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 24px; }
+    .tab-pane { display: none; padding: 28px; }
+    .tab-pane.active { display: block; }
+    .tab-pane-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
+    .tab-pane-title { font-family: "Fraunces", serif; font-size: 1.3rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .tab-pane-def { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 0; }
+    .tab-subcats { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.08); }
+    .tab-subcat { background: rgba(255,255,255,.65); border: 1px solid rgba(0,0,0,.07); border-radius: var(--r-md); padding: 14px 16px; }
+    .tab-subcat-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .tab-subcat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+    /* colores activos de pestañas modos */
+    .tab-btn.active[data-tab="m1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="m2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+    .tab-btn.active[data-tab="m3"] { background: var(--e-amber-l);  border-color: #fcd34d;  color: var(--e-amber);  z-index:1; }
+
+    /* colores activos de pestañas diferencial */
+    .tab-btn.active[data-tab="d1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="d2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+    .tab-btn.active[data-tab="d3"] { background: var(--e-amber-l);  border-color: #fcd34d;  color: var(--e-amber);  z-index:1; }
+    .tab-btn.active[data-tab="d4"] { background: var(--e-amber-l); border-color: #fcd34d; color: var(--e-amber); z-index:1; }
+
+    /* ── Use-list (checklist estilo use-item) ── */
+    .use-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .use-item { display: flex; gap: 12px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 14px 16px; box-shadow: var(--shadow-sm); font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+    .use-item::before { content: "✓"; color: var(--e-teal); font-weight: 800; flex-shrink: 0; margin-top: 1px; font-size: 13px; }
+
+    /* ── Activity list ── */
+    .activity-list { display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
+    .activity-item { background: var(--cream); border: 1px solid var(--line); border-left: 3px solid var(--uva-blue); border-radius: var(--r-sm); padding: 13px 16px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ── Case box ── */
+    .case-box { background: var(--e-indigo-l); border: 1px solid #c4b5fd; border-left: 4px solid var(--e-indigo); border-radius: var(--r-md); padding: 16px 18px; margin: 16px 0; font-size: 14px; color: var(--ink); line-height: 1.65; }
+
+    /* colores activos de pestañas marco */
+    .tab-btn.active[data-tab="c1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="c2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+
+    /* ── DDx pills (horizontal, no pestaña) ── */
+    .ddx-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .ddx-pill { appearance: none; cursor: pointer; font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--line); background: var(--paper); color: var(--muted); transition: all .18s; }
+    .ddx-pill:hover { color: var(--ink); border-color: var(--ink-soft); }
+    .ddx-pill.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); box-shadow: var(--shadow-sm); }
+    .ddx-body { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 24px; }
+    .ddx-body .tab-pane { border-radius: var(--r-lg); }
+
+    /* colores activos de pestañas pruebas */
+    .tab-btn.active[data-tab="p1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="p2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+    .tab-btn.active[data-tab="p3"] { background: var(--e-green-l);  border-color: #86efac;  color: var(--e-green);  z-index:1; }
+
+    /* ── Activity CTA — light theme ── */
+    .activity-cta { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-md); }
+    .activity-cta-header { display: flex; gap: 16px; align-items: flex-start; padding: 24px 24px 20px; background: var(--cream-2); border-bottom: 1px solid var(--line); }
+    .activity-cta-icon { font-size: 2.2rem; flex-shrink: 0; }
+    .activity-cta-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .activity-cta-subtitle { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+    .activity-cases { display: flex; flex-direction: column; }
+    .activity-case { background: var(--paper); padding: 18px 24px; cursor: pointer; transition: background .15s; display: flex; gap: 16px; align-items: flex-start; border-bottom: 1px solid var(--line); }
+    .activity-case:last-child { border-bottom: none; }
+    .activity-case:hover { background: var(--cream); }
+    .activity-case.open { background: var(--cream-2); }
+    .activity-case-num { font-family: "Fraunces", serif; font-size: 2rem; font-weight: 700; font-style: italic; color: var(--line-strong); flex-shrink: 0; width: 44px; line-height: 1; margin-top: 2px; }
+    .activity-case.open .activity-case-num { color: var(--uva-blue); }
+    .activity-case-content { flex: 1; min-width: 0; }
+    .activity-case-q { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 0; }
+    .activity-case-answer { display: none; margin-top: 14px; flex-direction: column; gap: 7px; }
+    .activity-case.open .activity-case-answer { display: flex; }
+    .activity-answer-row { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+    .answer-badge { flex-shrink: 0; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; margin-top: 2px; white-space: nowrap; }
+    .answer-1 { background: var(--uva-blue); color: #fff; }
+    .answer-2 { background: #dbeafe; color: var(--uva-blue); }
+    .answer-3 { background: var(--cream-2); color: var(--ink-soft); border: 1px solid var(--line); }
+    .answer-d { background: var(--e-teal-l); color: var(--e-teal); }
+    .activity-case-cta { font-size: 12px; font-weight: 600; color: var(--uva-blue); flex-shrink: 0; margin-top: 4px; transition: color .15s; white-space: nowrap; opacity: .7; }
+    .activity-case:hover .activity-case-cta { opacity: 1; }
+    .activity-case.open .activity-case-cta { display: none; }
+    .activity-cta-footer { text-align: center; padding: 12px 24px; font-size: 12px; color: var(--muted); background: var(--cream); border-top: 1px solid var(--line); }
+
+    /* ── Footer ── */
+    .footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
+
+    /* ── Animaciones ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .edumed-bar-inner { padding: 10px 14px; }
+      .edumed-wordmark .w1 { font-size: 15px; }
+      .edumed-wordmark .w2 { font-size: 9px; }
+      .edumed-back { padding: 7px 10px; font-size: 12px; }
+      .hero { padding: 36px 0 28px; }
+      .hero-meta { flex-direction: column; }
+      .section { padding: 36px 0; }
+      .two-col { grid-template-columns: 1fr; }
+      .acc-body { padding-left: 20px; }
+      .tabs-nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .tab-btn { white-space: nowrap; flex-shrink: 0; }
+    }
+    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA EDUMED ── -->
+  <div class="edumed-bar">
+    <div class="edumed-bar-inner">
+      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+        <div class="edumed-wordmark">
+          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+        </div>
+      </a>
+      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+        Volver a DDx_IA
+      </a>
+    </div>
+  </div>
+
+  <!-- ── NAV ÍNDICE ── -->
+  <div class="nav-index">
+    <div class="container">
+      <div class="nav-pills">
+        <button class="nav-pill" onclick="scrollToSection('marco')">🧠 Qué es</button>
+        <button class="nav-pill" onclick="scrollToSection('modos')">⚡ Cómo razona</button>
+        <button class="nav-pill" onclick="scrollToSection('pasos')">📋 Pasos básicos</button>
+        <button class="nav-pill" onclick="scrollToSection('diferencial')">🔍 Diferencial</button>
+        <button class="nav-pill" onclick="scrollToSection('errores')">⚠️ Errores</button>
+        <button class="nav-pill" onclick="scrollToSection('pruebas')">🧪 Pruebas</button>
+        <button class="nav-pill" onclick="scrollToSection('caso')">📝 Caso</button>
+        <button class="nav-pill" onclick="scrollToSection('cierre')">🎯 Qué hacer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span>Curso IA y razonamiento clínico · EduMed UVa</span>
+      </div>
+      <h1 class="hero-title">Razonamiento clínico<br><em>y diagnóstico diferencial</em></h1>
+      <p class="hero-subtitle">Antes de trabajar con inteligencia artificial conviene entender cómo razona un clínico de forma habitual. Este material resume qué es el razonamiento clínico, cómo se construyen hipótesis diagnósticas, qué errores son frecuentes y cómo pedir pruebas con sentido.</p>
+      <div class="hero-meta">
+        <div class="hero-badge"><div class="hero-badge-icon">💡</div><div class="hero-badge-text"><span>Objetivo 1</span><span>Qué es el razonamiento y por qué no es adivinar</span></div></div>
+        <div class="hero-badge"><div class="hero-badge-icon">📋</div><div class="hero-badge-text"><span>Objetivo 2</span><span>Secuencia ordenada para construir un diferencial útil</span></div></div>
+        <div class="hero-badge"><div class="hero-badge-icon">🛡️</div><div class="hero-badge-text"><span>Objetivo 3</span><span>Reconocer errores y desarrollar hábitos críticos</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════
+       1. QUÉ ES EL RAZONAMIENTO CLÍNICO
+  ══════════════════════════════════ -->
+  <section class="section" id="marco">
+    <div class="container">
+      <div class="section-eyebrow">Fundamentos</div>
+      <h2 class="section-title">1. Qué es el razonamiento clínico</h2>
+      <p class="section-lead">El razonamiento clínico es el proceso mental mediante el cual el médico recoge información, la interpreta, formula hipótesis, decide qué datos faltan, prioriza diagnósticos y ajusta su plan según la evolución. No es una lista rígida de pasos, sino un proceso dinámico que combina observación, memoria, conocimiento fisiopatológico, probabilidad y reflexión.</p>
+
+      <div class="tabs-nav" id="marcoNav">
+        <button class="tab-btn active" data-tab="c1" onclick="switchTab(this,'pane-c1','marcoNav','marcoBody')">💡 Idea central</button>
+        <button class="tab-btn" data-tab="c2" onclick="switchTab(this,'pane-c2','marcoNav','marcoBody')">🎓 Consecuencia docente</button>
+      </div>
+      <div class="tabs-body" id="marcoBody">
+        <div class="tab-pane active" id="pane-c1" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Idea central</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">No consiste en adivinar</div>
+          <p class="tab-pane-def">Razonar bien no significa acertar por intuición la enfermedad, sino construir la explicación más coherente con la historia clínica, la exploración física y las pruebas complementarias. Un buen clínico no busca una respuesta rápida, sino una <strong>explicación sólida y revisable</strong>.</p>
+        </div>
+        <div class="tab-pane" id="pane-c2" style="background:var(--e-teal-l);">
+          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">Consecuencia docente</div>
+          <div class="tab-pane-title" style="color:var(--e-teal);">Se entrena, no aparece de forma espontánea</div>
+          <p class="tab-pane-def">Este proceso mejora con entrenamiento deliberado, exposición a casos y revisión de los propios errores. En cursos iniciales conviene enseñar explícitamente <strong>cómo se construyen hipótesis</strong> y cómo se reabren cuando los datos no encajan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       2. CÓMO RAZONA UN MÉDICO
+  ══════════════════════════════════ -->
+  <section class="section" id="modos">
+    <div class="container">
+      <div class="section-eyebrow">Sistema 1 y sistema 2</div>
+      <h2 class="section-title">2. Cómo razona un médico</h2>
+      <p class="section-lead">Podemos entender el razonamiento clínico en dos modos complementarios. Ninguno sustituye al otro. Lo importante es saber cuándo predomina cada uno y cuándo conviene frenar para revisar una primera impresión.</p>
+
+      <div class="tabs-nav" id="modosNav">
+        <button class="tab-btn active" data-tab="m1" onclick="switchTab(this,'pane-m1','modosNav','modosBody')">⚡ Modo rápido</button>
+        <button class="tab-btn" data-tab="m2" onclick="switchTab(this,'pane-m2','modosNav','modosBody')">🔬 Modo analítico</button>
+        <button class="tab-btn" data-tab="m3" onclick="switchTab(this,'pane-m3','modosNav','modosBody')">📚 En estudiantes</button>
+      </div>
+      <div class="tabs-body" id="modosBody">
+
+        <div class="tab-pane active" id="pane-m1" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Sistema 1</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">Intuitivo o por reconocimiento de patrones</div>
+          <p class="tab-pane-def">Usa experiencia previa y patrones clínicos conocidos. Especialmente útil en situaciones frecuentes, relativamente claras o muy repetidas en la práctica. Permite actuar con agilidad, pero puede inducir errores si el caso se parece solo en apariencia a otro más conocido.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Cuándo usarlo con más precaución?</div><div class="tab-subcat-desc">Cuando el caso tiene características atípicas, cuando el paciente es especialmente vulnerable o cuando la primera impresión genera una sensación de certeza prematura que cierra el razonamiento antes de tiempo.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-m2" style="background:var(--e-teal-l);">
+          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">Sistema 2</div>
+          <div class="tab-pane-title" style="color:var(--e-teal);">Lento, deliberado y comprobador</div>
+          <p class="tab-pane-def">Sirve para casos complejos, atípicos o cuando hay que verificar si una impresión inicial es correcta. Obliga a ordenar datos, buscar hipótesis alternativas y justificar por qué una explicación es mejor que otra. Es el modo que más se beneficia del entrenamiento deliberado.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Por qué entrenarlo primero en estudiantes?</div><div class="tab-subcat-desc">Porque los patrones de reconocimiento rápido se construyen después, sobre una base sólida de razonamiento analítico. Sin esa base, el modo rápido se convierte en una fuente de errores difíciles de detectar.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-m3" style="background:var(--e-amber-l);">
+          <div class="tab-pane-tag" style="background:rgba(146,64,14,.12);color:var(--e-amber);">Formación inicial</div>
+          <div class="tab-pane-title" style="color:var(--e-amber);">Cómo construir ambos modos al inicio</div>
+          <p class="tab-pane-def">En estudiantes de medicina todavía se están construyendo los patrones de referencia. Por eso conviene fortalecer sobre todo el razonamiento analítico. Con la experiencia clínica acumulada, ambos modos se combinan mejor y el modo rápido gana en precisión.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">Implicación práctica para la docencia</div><div class="tab-subcat-desc">Enseñar al estudiante a narrar su razonamiento en voz alta — articular por qué prioriza una hipótesis, qué dato le genera duda, qué buscaría a continuación — es una de las estrategias más efectivas para entrenar el modo analítico.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       3. PASOS BÁSICOS
+  ══════════════════════════════════ -->
+  <section class="section" id="pasos">
+    <div class="container">
+      <div class="section-eyebrow">Secuencia ordenada</div>
+      <h2 class="section-title">3. Pasos básicos</h2>
+      <p class="section-lead">Una forma útil de ordenar el pensamiento clínico es seguir una secuencia sencilla. No es un algoritmo rígido, pero sí una guía práctica para no saltarse pasos importantes.</p>
+
+      <div class="acc-group" id="acc-pasos">
+
+        <div class="acc-item open">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">1</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Definir el problema</span>
+              <span class="acc-sublabel">La primera pregunta no es "¿qué enfermedad tiene?" sino "¿qué le pasa realmente?"</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">A veces el problema no está bien formulado y todo el razonamiento posterior se construye mal. La pregunta correcta de partida es "¿qué le pasa realmente al paciente?", no "¿qué enfermedad tiene?".</p>
+            <div class="callout callout-blue"><div class="callout-title">En la práctica</div>Intenta resumir el caso en una frase que capture el núcleo del cuadro: edad, síntoma principal, tiempo de evolución y los dos o tres datos más orientadores. Esa síntesis inicial protege frente al desorden posterior.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">2</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Recolectar datos</span>
+              <span class="acc-sublabel">Antes de hipótesis complejas, asegurar una base informativa suficiente</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Historia clínica, exploración física, constantes vitales y pruebas disponibles. Antes de pensar en diagnósticos complejos hay que asegurarse de que la base informativa del caso es suficiente.</p>
+            <div class="alert-warning"><div class="alert-icon">⚠️</div><div><div class="alert-title">Error frecuente en este paso</div><div class="alert-desc">Saltar a hipótesis sin haber completado la historia. La anamnesis incompleta es la fuente más común de razonamientos incorrectos, más que la falta de conocimiento médico.</div></div></div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-amber-l);color:var(--e-amber);">3</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Agrupar hallazgos</span>
+              <span class="acc-sublabel">Separar lo relevante de lo accesorio y construir una representación del caso</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">El objetivo es construir una representación del problema que sintetice el caso sin perder los datos que lo orientan o lo complican.</p>
+            <div class="callout callout-teal"><div class="callout-title">Técnica útil</div>Clasifica los hallazgos en: datos que apuntan a la hipótesis principal, datos que la contradicen y datos que no encajan con ninguna hipótesis todavía. Esta clasificación activa fuerza el pensamiento crítico.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">4</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Generar un diagnóstico diferencial</span>
+              <span class="acc-sublabel">Al menos 3–5 posibilidades razonables, ordenadas y defendibles</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Un diferencial útil no es infinito: debe ser breve, defendible y suficientemente amplio como para evitar el cierre prematuro.</p>
+            <div class="callout callout-blue"><div class="callout-title">Cómo ampliar el diferencial si se queda corto</div>Recorre mentalmente categorías: infeccioso, inflamatorio, vascular, neoplásico, metabólico, tóxico, funcional y psicógeno. Este recorrido reduce el riesgo de quedarse con una sola explicación cómoda.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">5</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Priorizar por gravedad y probabilidad</span>
+              <span class="acc-sublabel">Lo más peligroso no siempre coincide con lo más probable</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">En clínica hay que pensar primero qué diagnóstico podría tener consecuencias graves si no se reconoce a tiempo.</p>
+            <div class="callout callout-teal"><div class="callout-title">La pregunta clave de priorización</div><em>"¿Qué diagnóstico podría llevar al fallecimiento del paciente si no lo pienso ahora?"</em> — Esta pregunta debe hacerse explícita antes de cerrar el diferencial.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-green-l);color:var(--e-green);">6</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Pedir pruebas con una pregunta concreta</span>
+              <span class="acc-sublabel">Cada prueba debe responder a una duda específica</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Qué dato apoyaría o descartaría una hipótesis, y qué cambiaría en la conducta clínica si el resultado sale de una forma u otra.</p>
+            <div class="callout callout-blue"><div class="callout-title">Antes de pedir una prueba, responde:</div>(1) ¿Qué hipótesis estoy probando? · (2) ¿Qué resultado apoyaría mi sospecha? · (3) ¿Qué resultado la descartaría? · (4) ¿Cambiaría mi conducta dependiendo del resultado? Si no puedes responder a las cuatro, la prueba no tiene indicación clara.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-pasos')">
+            <div class="acc-num" style="background:var(--e-orange-l);color:var(--e-orange);">7</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Reevaluar</span>
+              <span class="acc-sublabel">Si los datos no encajan, revisar el caso es parte del buen razonamiento</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Si los datos no encajan, no hay que forzar la hipótesis. Conviene revisar el caso, reformular el problema y volver a empezar. La reevaluación no es un fracaso: es parte del buen razonamiento clínico.</p>
+            <div class="alert-warning"><div class="alert-icon">⚠️</div><div><div class="alert-title">Señal de alarma</div><div class="alert-desc">Si llevas varios pasos intentando que los datos encajen con tu hipótesis y no lo consigues, el problema no suele estar en los datos: suele estar en la hipótesis. Cambia la pregunta antes de cambiar los datos.</div></div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       4. DIAGNÓSTICO DIFERENCIAL
+  ══════════════════════════════════ -->
+  <section class="section" id="diferencial">
+    <div class="container">
+      <div class="section-eyebrow">El listado razonado</div>
+      <h2 class="section-title">4. Diagnóstico diferencial</h2>
+      <p class="section-lead">El diagnóstico diferencial es el listado razonado de enfermedades o problemas que pueden explicar el cuadro clínico. No es un catálogo infinito, sino una lista breve, ordenada y útil para avanzar.</p>
+
+      <div class="tabs-nav" id="ddxNav">
+        <button class="tab-btn active" data-tab="d1" onclick="switchTab(this,'pane-d1','ddxNav','ddxBody')">📝 Representación</button>
+        <button class="tab-btn" data-tab="d2" onclick="switchTab(this,'pane-d2','ddxNav','ddxBody')">🔄 Categorías</button>
+        <button class="tab-btn" data-tab="d3" onclick="switchTab(this,'pane-d3','ddxNav','ddxBody')">❓ Preguntas clave</button>
+        <button class="tab-btn" data-tab="d4" onclick="switchTab(this,'pane-d4','ddxNav','ddxBody')">💡 Idea operativa</button>
+      </div>
+      <div class="tabs-body" id="ddxBody">
+
+        <div class="tab-pane active" id="pane-d1" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Primer paso</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">Una frase bien hecha orienta mucho</div>
+          <p class="tab-pane-def">Una estrategia eficaz es resumir primero el caso en una frase: por ejemplo, <em>"mujer de 56 años con disnea progresiva, ortopnea y edemas tras un vuelo largo"</em>. Esa síntesis separa el núcleo del cuadro de los datos secundarios y facilita generar hipótesis principales y alternativas.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué debe contener esa frase?</div><div class="tab-subcat-desc">Edad, sexo, síntoma principal, tiempo de evolución y los dos o tres datos más orientadores del caso. Si la frase ocupa tres líneas, todavía no has sintetizado: solo has resumido.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-d2" style="background:var(--e-teal-l);">
+          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">Estrategia de generación</div>
+          <div class="tab-pane-title" style="color:var(--e-teal);">Pensar en categorías evita quedarse atrapado</div>
+          <p class="tab-pane-def">Recorrer categorías sistemáticamente reduce el riesgo de quedarse demasiado pronto con una sola explicación cómoda.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">🦠 Infeccioso</div><div class="tab-subcat-desc">¿Puede haber un agente infeccioso responsable del cuadro?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🔥 Inflamatorio</div><div class="tab-subcat-desc">¿Podría ser una respuesta inmune descontrolada o una enfermedad autoinmune?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🫀 Vascular</div><div class="tab-subcat-desc">¿Hay un evento vascular agudo que lo explique?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🔬 Neoplásico</div><div class="tab-subcat-desc">¿Podría ser la manifestación de un proceso tumoral, primario o metastásico?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">⚗️ Metabólico</div><div class="tab-subcat-desc">¿Podría ser una alteración metabólica o endocrina?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">💊 Tóxico / Farmacológico</div><div class="tab-subcat-desc">¿Podría ser la acción de un fármaco, tóxico o sustancia exógena?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🧩 Funcional</div><div class="tab-subcat-desc">¿Hay un componente funcional que no deba descartarse prematuramente?</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🧠 Psicógeno</div><div class="tab-subcat-desc">¿Puede haber un componente psicológico o psiquiátrico que explique o amplifique el cuadro?</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-d3" style="background:var(--e-amber-l);">
+          <div class="tab-pane-tag" style="background:rgba(146,64,14,.12);color:var(--e-amber);">Para no cerrarse</div>
+          <div class="tab-pane-title" style="color:var(--e-amber);">Cuatro preguntas que amplían el diferencial</div>
+          <p class="tab-pane-def">Formularse estas preguntas de forma explícita antes de cerrar el razonamiento activa el pensamiento crítico y reduce el riesgo de cierre prematuro.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué diagnóstico podría llevar al fallecimiento si no lo pienso ahora?</div><div class="tab-subcat-desc">La más importante. Fuerza a considerar siempre el diagnóstico más grave aunque no sea el más probable.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué diagnóstico es más probable por edad, contexto y síntomas?</div><div class="tab-subcat-desc">El contrapunto: la frecuencia también cuenta, y no todo es una rareza.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué dato no encaja con mi hipótesis principal?</div><div class="tab-subcat-desc">Buscar activamente el dato discordante protege frente al sesgo de confirmación.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué dato nuevo cambiaría mi conducta?</div><div class="tab-subcat-desc">Identifica qué información aún falta y orienta hacia dónde debe ir el siguiente paso diagnóstico.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-d4" style="background:var(--e-amber-l);">
+          <div class="tab-pane-tag" style="background:rgba(146,64,14,.12);color:var(--e-amber);">Principio rector</div>
+          <div class="tab-pane-title" style="color:var(--e-amber);">Frecuencia, gravedad y coherencia clínica</div>
+          <p class="tab-pane-def">En medicina, la prioridad no siempre coincide con la probabilidad. Un diagnóstico menos frecuente puede ser más urgente si implica riesgo inmediato.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">📊 Frecuencia</div><div class="tab-subcat-desc">¿Qué es más habitual en este perfil de paciente? Lo común es común — no descartes lo frecuente por buscar rareza.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">⚠️ Gravedad</div><div class="tab-subcat-desc">¿Qué no puedo dejar de descartar? El diagnóstico peligroso debe estar siempre en el diferencial, aunque sea menos probable.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">🔬 Coherencia fisiopatológica</div><div class="tab-subcat-desc">¿Qué explicación encaja mejor con todos los datos disponibles? La hipótesis que mejor integra todos los hallazgos, sin forzar ni ignorar ninguno, es la más sólida.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       5. ERRORES FRECUENTES
+  ══════════════════════════════════ -->
+  <section class="section" id="errores">
+    <div class="container">
+      <div class="section-eyebrow">Sesgos cognitivos en la clínica</div>
+      <h2 class="section-title">5. Errores frecuentes</h2>
+      <p class="section-lead">Los errores de razonamiento son esperables y conviene enseñarlos de forma explícita. Reconocerlos ayuda más que fingir que no existen.</p>
+
+      <div class="acc-group" id="acc-errores">
+
+        <div class="acc-item open">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-errores')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">1</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Anclaje</span>
+              <span class="acc-sublabel">Fijarse demasiado pronto en una primera impresión diagnóstica</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Fijarse demasiado pronto en una primera impresión y seguir interpretando todo el caso desde ahí. El anclaje no siempre produce un diagnóstico incorrecto, pero sí reduce la amplitud del diferencial considerado.</p>
+            <div class="callout callout-teal"><div class="callout-title">Cómo protegerse</div>Antes de cerrar el razonamiento, obliga a generar explícitamente al menos una hipótesis alternativa que no se derive de la primera impresión. Nombrar la alternativa es suficiente para activar el pensamiento crítico.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-errores')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">2</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Cierre prematuro</span>
+              <span class="acc-sublabel">Aceptar un diagnóstico antes de verificarlo o explorar alternativas</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Aceptar un diagnóstico antes de verificarlo suficientemente bien o antes de explorar alternativas razonables. Es especialmente frecuente cuando la primera hipótesis es plausible y está bien presentada.</p>
+            <div class="callout callout-teal"><div class="callout-title">Cómo protegerse</div>Antes de cerrar, pregúntate: <em>"¿hay algún dato en este caso que no encaje con mi diagnóstico?"</em> Si la respuesta es sí, el caso no está cerrado.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-errores')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">3</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Sesgo de confirmación</span>
+              <span class="acc-sublabel">Buscar datos que apoyen la idea inicial e ignorar los que la contradicen</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Buscar sobre todo datos que apoyen la idea inicial y prestar menos atención a los que la contradicen. Es un sesgo pervasivo que afecta a todos los clínicos con independencia de la experiencia.</p>
+            <div class="callout callout-teal"><div class="callout-title">Cómo protegerse</div>Busca activamente los datos que <em>no</em> encajan con tu hipótesis. No los que la apoyan, que tu mente ya registrará de forma espontánea, sino los que la contradicen.</div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-errores')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">4</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Momentum diagnóstico</span>
+              <span class="acc-sublabel">Repetir una etiqueta previa sin reabrir el caso</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p style="margin-bottom:10px">Repetir una etiqueta previa sin reabrir el caso, como si el diagnóstico heredado ya estuviera definitivamente demostrado. Es frecuente en contextos de traspaso de información clínica.</p>
+            <div class="callout callout-teal"><div class="callout-title">Cómo protegerse</div>Cuando recibes un paciente con un diagnóstico previo, trátalo como una hipótesis de trabajo. Pregúntate: <em>"¿tengo evidencia propia que respalde este diagnóstico, o solo lo he heredado?"</em></div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="pullquote">
+        <p>Oblígate a buscar activamente datos que contradigan tu hipótesis principal. Si no aparecen, la hipótesis gana fuerza. Si aparecen, hay que reformularla.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       6. RELACIÓN CON LAS PRUEBAS
+  ══════════════════════════════════ -->
+  <section class="section" id="pruebas">
+    <div class="container">
+      <div class="section-eyebrow">Probabilidad previa y pruebas</div>
+      <h2 class="section-title">6. Relación con las pruebas diagnósticas</h2>
+      <p class="section-lead">Una prueba no "da" la respuesta por sí sola. Su valor depende de la probabilidad previa: es decir, de lo creíble que era el diagnóstico antes de pedirla.</p>
+
+      <div class="tabs-nav" id="pruebasNav">
+        <button class="tab-btn active" data-tab="p1" onclick="switchTab(this,'pane-p1','pruebasNav','pruebasBody')">🎯 La pregunta correcta</button>
+        <button class="tab-btn" data-tab="p2" onclick="switchTab(this,'pane-p2','pruebasNav','pruebasBody')">📋 Ejemplos</button>
+        <button class="tab-btn" data-tab="p3" onclick="switchTab(this,'pane-p3','pruebasNav','pruebasBody')">✅ Las cuatro preguntas</button>
+      </div>
+      <div class="tabs-body" id="pruebasBody">
+
+        <div class="tab-pane active" id="pane-p1" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Principio rector</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">No solo "¿qué prueba pido?" sino "¿qué quiero aprender?"</div>
+          <p class="tab-pane-def">Una buena prueba debe <strong>cambiar la probabilidad de una hipótesis</strong> o guiar una acción clínica. Pedir pruebas indiscriminadamente genera ruido, retrasa decisiones y puede aumentar la confusión diagnóstica. Su valor depende de la probabilidad previa: de lo creíble que era el diagnóstico antes de pedirla.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-p2" style="background:var(--e-teal-l);">
+          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">En la práctica</div>
+          <div class="tab-pane-title" style="color:var(--e-teal);">La misma prueba no sirve igual en cualquier contexto</div>
+          <p class="tab-pane-def">Dos ejemplos del mismo principio en acción:</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">BNP en disnea con signos de IC</div><div class="tab-subcat-desc">Probabilidad pretest alta → un BNP elevado apoya la sospecha y puede orientar hacia el inicio de tratamiento. La prueba añade información porque la hipótesis ya era creíble.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">D-dímero en sospecha de TEP</div><div class="tab-subcat-desc">Solo útil si la probabilidad pretest es baja o intermedia. Con alta probabilidad clínica, un D-dímero negativo no descarta el TEP con suficiente seguridad — la prueba correcta es otra.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-p3" style="background:var(--e-green-l);">
+          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Antes de pedir</div>
+          <div class="tab-pane-title" style="color:var(--e-green);">Cuatro preguntas que validan la indicación</div>
+          <p class="tab-pane-def">Si no puedes responder con claridad a las cuatro, la prueba probablemente no tiene indicación bien definida en este momento del razonamiento.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué hipótesis estoy probando con esta prueba?</div><div class="tab-subcat-desc">Debe estar vinculada a una hipótesis concreta del diferencial, no ser una "batería de rutina".</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué resultado apoyaría mi sospecha diagnóstica?</div><div class="tab-subcat-desc">El resultado positivo esperado debe ser coherente con la fisiopatología de la hipótesis principal.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Qué resultado la descartaría con suficiente certeza?</div><div class="tab-subcat-desc">La prueba tiene valor diagnóstico real cuando un resultado negativo cambia genuinamente la probabilidad.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">¿Cambiaría mi conducta clínica dependiendo del resultado?</div><div class="tab-subcat-desc">Si la respuesta es "no" en ambas direcciones, la prueba no aporta nada al razonamiento ni a la acción clínica.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="caso">
+    <div class="container">
+      <div class="section-eyebrow">Aplicación práctica</div>
+      <h2 class="section-title">7. Construye el caso paso a paso</h2>
+      <p class="section-lead">Aplica los pasos del razonamiento clínico a este caso real. Pulsa cada etapa para ver los datos disponibles, reflexiona antes de revelar el análisis.</p>
+
+      <div class="case-box" style="margin-bottom:20px;">
+        <strong>Caso:</strong> Paciente de 56 años con disnea de dos semanas, ortopnea, tos leve y piernas hinchadas tras un vuelo prolongado.
+      </div>
+
+      <div class="acc-group" id="acc-caso">
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-caso')">
+            <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">1</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Define el problema en una frase</span>
+              <span class="acc-sublabel">Antes de continuar: ¿cómo resumirías este caso en una sola frase orientadora?</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="callout callout-blue" style="margin-bottom:12px;"><div class="callout-title">Una posible síntesis</div>Mujer de 56 años con disnea progresiva, ortopnea y edemas en piernas de 2 semanas de evolución, en contexto de vuelo prolongado reciente.</div>
+            <p style="font-size:13px;color:var(--ink-soft);">El vuelo prolongado es un dato clave que no puede omitirse: abre la puerta al TEP aunque los otros síntomas apunten a IC.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-caso')">
+            <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">2</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">¿Qué datos adicionales pedirías en este momento?</span>
+              <span class="acc-sublabel">Piensa antes de revelar: ¿qué falta para completar la base informativa?</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="callout callout-teal" style="margin-bottom:12px;"><div class="callout-title">Datos a obtener antes de generar hipótesis</div>Exploración física completa (ingurgitación yugular, crepitantes, soplos), constantes (SpO₂, FC, TA), antecedentes cardiovasculares, tratamiento anticoagulante previo, simetría del edema.</div>
+            <p style="font-size:13px;color:var(--ink-soft);">La exploración revela: taquicardia 102 lpm, ingurgitación yugular, crepitantes bibasales y edema asimétrico en pierna izquierda.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-caso')">
+            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">3</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Genera tu diagnóstico diferencial</span>
+              <span class="acc-sublabel">Con todos los datos disponibles, ¿qué diagnósticos incluirías y en qué orden?</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="callout callout-blue" style="margin-bottom:12px;"><div class="callout-title">DDx razonado</div>1. IC descompensada (disnea, ortopnea, crepitantes, ingurgitación yugular) · 2. TEP (vuelo largo, edema asimétrico, taquicardia) · 3. Neumonía atípica (tos, disnea, fiebre si la hubiera) · 4. Anemia grave (disnea de esfuerzo sin signos claros de sobrecarga)</div>
+            <p style="font-size:13px;color:var(--ink-soft);">El edema <strong>asimétrico</strong> es el dato que más complica la hipótesis única de IC — fuerza a mantener TEP activo en el diferencial.</p>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-caso')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">4</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">¿Qué pruebas pedirías y por qué?</span>
+              <span class="acc-sublabel">Para cada prueba: ¿qué hipótesis estás probando y qué resultado cambiaría tu conducta?</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="callout callout-teal"><div class="callout-title">Pruebas dirigidas</div>ECG (descartar arritmia o signos de sobrecarga derecha) · RxTx (cardiomegalia, redistribución vascular) · Troponina + BNP (daño miocárdico, sobrecarga de presión) · D-dímero si probabilidad pretest baja-intermedia de TEP · Eco urgente si inestabilidad.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="cierre">
+    <div class="container">
+      <div class="section-eyebrow">Para llevarte de aquí</div>
+      <h2 class="section-title">8. Qué debe hacer el estudiante</h2>
+      <p class="section-lead">Hábitos concretos y una actividad de cierre para consolidar lo aprendido.</p>
+
+      <div class="info-card accent-blue" style="margin-bottom:14px;">
+          <div class="info-card-eyebrow">Hábitos útiles</div>
+          <div class="use-list" style="margin-top:8px;">
+            <div class="use-item">Practicar la síntesis del problema en una frase.</div>
+            <div class="use-item">Generar diferenciales cortos y razonados, no extensos y sin priorizar.</div>
+            <div class="use-item">Justificar cada prueba que solicitas con una pregunta concreta.</div>
+            <div class="use-item">Buscar activamente datos en contra de tu primera impresión.</div>
+            <div class="use-item">Repetir el ciclo: pensar → comprobar → corregir.</div>
+          </div>
+      </div>
+      <div class="dark-card" style="margin-bottom:28px;">
+          <div class="dark-card-title">🎯 Meta formativa</div>
+          <div class="dark-card-body">
+            <p style="margin-bottom:12px">Una buena meta para 3.º de Medicina es pasar de <em>"memorizar enfermedades"</em> a <em>"pensar en problemas clínicos"</em>.</p>
+            <p style="color:#f5c518;font-weight:700;">Ese cambio de enfoque es una base importante de práctica clínica segura.</p>
+          </div>
+      </div>
+
+      <!-- Mini actividad call-to-action -->
+      <div class="activity-cta">
+        <div class="activity-cta-header">
+          <div class="activity-cta-icon">✍️</div>
+          <div>
+            <div class="activity-cta-title">Mini actividad · Ponlo en práctica ahora</div>
+            <div class="activity-cta-subtitle">Para cada caso escribe: 3 diagnósticos en orden de prioridad + 1 dato que descartaría tu hipótesis principal</div>
+          </div>
+        </div>
+        <div class="activity-cases" id="activityCases">
+          <div class="activity-case" onclick="toggleCase(this)">
+            <div class="activity-case-num">01</div>
+            <div class="activity-case-content">
+              <div class="activity-case-q">Dolor torácico opresivo con sudoración y náuseas.</div>
+              <div class="activity-case-answer">
+                <div class="activity-answer-row"><span class="answer-badge answer-1">1°</span>Síndrome coronario agudo — más probable y más grave: no puedes dejarlo fuera.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-2">2°</span>Disección aórtica — menos frecuente pero letal si se retrasa el diagnóstico.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-3">3°</span>TEP masivo · Esofagitis / espasmo esofágico.</div>
+                <div class="activity-answer-row" style="margin-top:8px;"><span class="answer-badge answer-d">Descarte</span>ECG sin cambios isquémicos + troponina negativa en serie alejan el SCA.</div>
+              </div>
+            </div>
+            <div class="activity-case-cta">Ver respuesta ↓</div>
+          </div>
+          <div class="activity-case" onclick="toggleCase(this)">
+            <div class="activity-case-num">02</div>
+            <div class="activity-case-content">
+              <div class="activity-case-q">Fiebre, cefalea y rigidez de nuca.</div>
+              <div class="activity-case-answer">
+                <div class="activity-answer-row"><span class="answer-badge answer-1">1°</span>Meningitis bacteriana — must-not-miss por excelencia: actuar antes del diagnóstico confirmado.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-2">2°</span>Meningitis vírica — más frecuente, mejor pronóstico, pero no se puede asumir sin pruebas.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-3">3°</span>Hemorragia subaracnoidea · Encefalitis.</div>
+                <div class="activity-answer-row" style="margin-top:8px;"><span class="answer-badge answer-d">Descarte</span>LCR sin pleocitosis ni proteínas elevadas aleja la meningitis bacteriana.</div>
+              </div>
+            </div>
+            <div class="activity-case-cta">Ver respuesta ↓</div>
+          </div>
+          <div class="activity-case" onclick="toggleCase(this)">
+            <div class="activity-case-num">03</div>
+            <div class="activity-case-content">
+              <div class="activity-case-q">Dolor abdominal en fosa iliaca derecha con anorexia y fiebre.</div>
+              <div class="activity-case-answer">
+                <div class="activity-answer-row"><span class="answer-badge answer-1">1°</span>Apendicitis aguda — clásica y quirúrgica: la más probable y urgente en este perfil.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-2">2°</span>Enfermedad de Crohn (primer brote) · Adenitis mesentérica.</div>
+                <div class="activity-answer-row"><span class="answer-badge answer-3">3°</span>En mujer: embarazo ectópico, torsión ovárica, salpingitis.</div>
+                <div class="activity-answer-row" style="margin-top:8px;"><span class="answer-badge answer-d">Descarte</span>ECO/TC sin hallazgos apendiculares + PCR normal alejan apendicitis.</div>
+              </div>
+            </div>
+            <div class="activity-case-cta">Ver respuesta ↓</div>
+          </div>
+        </div>
+        <div class="activity-cta-footer">Pulsa cada caso para revelar el análisis · Intenta responder antes de ver</div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Scroll a sección ──
+    function scrollToSection(id) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Nav activa por scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navBtns  = document.querySelectorAll('.nav-pill');
+    sections.forEach(s => new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navBtns.forEach(b => {
+            const oc = b.getAttribute('onclick') || '';
+            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
+
+    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
+    function toggleAcc(btn, groupId) {
+      const item    = btn.closest('.acc-item');
+      const group   = document.getElementById(groupId);
+      const wasOpen = item.classList.contains('open');
+      group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) {
+        item.classList.add('open');
+        setTimeout(() => {
+          const top = item.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // ── DDx pills ──
+    function switchDdx(btn, paneId) {
+      document.querySelectorAll('.ddx-pill').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('#ddxBody .tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(paneId).classList.add('active');
+    }
+
+    // ── Activity cases ──
+    function toggleCase(el) {
+      el.classList.toggle('open');
+    }
+
+    // ── Pestañas ──
+    function switchTab(btn, paneId, navId, bodyId) {
+      const nav  = document.getElementById(navId);
+      const body = document.getElementById(bodyId);
+      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(paneId).classList.add('active');
+      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
+      const idx  = btns.indexOf(btn);
+      const last = btns.length - 1;
+      body.style.borderRadius =
+        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
+        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
+                       'var(--r-lg)';
+    }
+  </script>
+</body>
+</html>
