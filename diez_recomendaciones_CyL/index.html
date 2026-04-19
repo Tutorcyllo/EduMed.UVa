@@ -61,6 +61,7 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
 
 /* ── NAV ────────────────────────────────────── */
 .nav-sticky{background:var(--cream);border-bottom:1px solid var(--line);position:sticky;top:68px;z-index:90;}
+@media(max-width:640px){.nav-sticky{position:static;}}
 .nav-pills{display:flex;flex-wrap:wrap;gap:8px;padding:16px 0;}
 .nav-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);transition:all .18s;cursor:pointer;font-family:"Inter",sans-serif;appearance:none;}
 .nav-pill:hover,.nav-pill.active{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
