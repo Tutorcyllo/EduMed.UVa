@@ -1,1 +1,1243 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escritura en EducaMed · IAgen · Corral-Gudino & Marcos 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --uva-blue:#003973; --uva-blue-soft:#1d4f8a; --uva-red:#c60046;
+  --ink:#1a1f2e; --ink-soft:#3d4554; --muted:#6b7486; --muted-2:#9099aa;
+  --cream:#faf7f2; --cream-2:#f3ede3; --paper:#ffffff;
+  --line:#e8e1d4; --line-strong:#d9cfbb;
+  --shadow-sm:0 1px 2px rgba(26,31,46,0.04),0 2px 8px rgba(26,31,46,0.04);
+  --shadow-md:0 2px 6px rgba(26,31,46,0.05),0 12px 32px rgba(26,31,46,0.08);
+  --r-sm:10px; --r-md:16px; --r-lg:22px; --r-xl:28px; --max:960px;
+  /* palette */
+  --e-red:#9d174d;   --e-red-l:#fce7f3;
+  --e-orange:#b45309; --e-orange-l:#fef3c7;
+  --e-teal:#0d6e6e;  --e-teal-l:#e0f2f1;
+  --e-indigo:#3730a3;--e-indigo-l:#ede9fe;
+  --e-green:#166534; --e-green-l:#dcfce7;
+  --e-violet:#6d28d9;--e-violet-l:#f5f3ff;
+  --e-amber:#92400e; --e-amber-l:#fffbeb;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;}
+.container{width:min(100% - 32px,var(--max));margin:0 auto;}
 
+/* ── BARRA ────────────────────────────────────── */
+.edumed-bar{position:sticky;top:0;z-index:100;background:#f5c518;border-bottom:1px solid #d9a800;box-shadow:0 1px 0 rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06);}
+.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;}
+.edumed-brand{display:flex;align-items:center;gap:14px;color:#1a1f2e;text-decoration:none;}
+.edumed-wordmark{display:flex;flex-direction:column;line-height:1.1;}
+.edumed-wordmark .w1{font-family:"Inter",sans-serif;font-weight:800;font-size:18px;letter-spacing:-0.01em;color:#1a1f2e;}
+.edumed-wordmark .w1 .sep{opacity:.45;margin:0 4px;font-weight:500;}
+.edumed-wordmark .w2{font-family:"Inter",sans-serif;font-weight:600;font-size:10.5px;letter-spacing:0.08em;color:#1a1f2e;opacity:.8;margin-top:3px;}
+.edumed-back{display:inline-flex;align-items:center;gap:6px;font-family:"Inter",sans-serif;font-size:13px;font-weight:600;color:#1a1f2e;text-decoration:none;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid rgba(26,31,46,.15);transition:background .15s,transform .15s;white-space:nowrap;}
+.edumed-back:hover{background:#fff;transform:translateX(-1px);}
+.edumed-back svg{width:14px;height:14px;}
+
+/* ── HERO ────────────────────────────────────── */
+.hero{background:var(--cream);border-bottom:1px solid var(--line);padding:56px 0 48px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 80% 20%,rgba(0,57,115,.05) 0%,transparent 60%),radial-gradient(ellipse at 10% 90%,rgba(157,23,77,.05) 0%,transparent 50%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line-strong);border-radius:999px;padding:6px 14px;margin-bottom:24px;}
+.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--e-red);}
+.hero-tag span{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.hero-title{font-family:"Fraunces",serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--ink);margin-bottom:12px;}
+.hero-title em{font-style:italic;color:var(--uva-blue);}
+.hero-subtitle{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--ink-soft);max-width:600px;margin-bottom:36px;line-height:1.5;}
+.hero-meta{display:flex;flex-wrap:wrap;gap:16px;}
+.hero-badge{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:10px 16px;box-shadow:var(--shadow-sm);}
+.hero-badge-icon{font-size:22px;}
+.hero-badge-text{display:flex;flex-direction:column;}
+.hero-badge-text span:first-child{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+.hero-badge-text span:last-child{font-size:14px;font-weight:600;color:var(--ink);}
+
+/* ── NAV ────────────────────────────────────── */
+.nav-sticky{background:var(--cream);border-bottom:1px solid var(--line);position:sticky;top:68px;z-index:90;}
+.nav-pills{display:flex;flex-wrap:wrap;gap:8px;padding:16px 0;}
+.nav-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);transition:all .18s;cursor:pointer;font-family:"Inter",sans-serif;appearance:none;}
+.nav-pill:hover,.nav-pill.active{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+.nav-pill span{font-size:15px;}
+
+/* ── SECCIONES ────────────────────────────────────── */
+.section{padding:56px 0;}
+.section+.section{border-top:1px solid var(--line);}
+.section-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);margin-bottom:12px;}
+.section-eyebrow::before{content:"";width:20px;height:2px;background:var(--uva-red);border-radius:1px;}
+.section-title{font-family:"Fraunces",serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:600;letter-spacing:-.025em;line-height:1.15;color:var(--ink);margin-bottom:16px;}
+.section-lead{font-size:16px;color:var(--ink-soft);max-width:720px;line-height:1.65;margin-bottom:32px;}
+
+/* ── ABOUT CARDS ────────────────────────────────────── */
+.about-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;margin-bottom:28px;}
+.about-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s;}
+.about-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.about-card-icon{width:46px;height:46px;border-radius:var(--r-md);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;}
+.about-card-title{font-family:"Fraunces",serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;}
+.about-card-desc{font-size:13px;color:var(--ink-soft);line-height:1.55;}
+
+/* ── PESTAÑAS RIESGOS ────────────────────────────────────── */
+.risk-tabs-nav{display:flex;gap:4px;flex-wrap:wrap;}
+.risk-tab-btn{appearance:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:10px 16px;font-family:"Inter",sans-serif;font-size:13px;font-weight:700;color:var(--muted);background:var(--cream-2);border:1px solid var(--line);border-bottom:none;border-radius:var(--r-md) var(--r-md) 0 0;transition:color .18s,background .18s;position:relative;bottom:-1px;}
+.risk-tab-btn:hover{color:var(--ink);background:var(--paper);}
+.risk-tab-btn.active[data-tab="cognitivo"]{background:var(--e-red-l);border-color:#f9a8d4;color:var(--e-red);z-index:1;}
+.risk-tab-btn.active[data-tab="deshumanizacion"]{background:var(--e-orange-l);border-color:#fcd34d;color:var(--e-orange);z-index:1;}
+.risk-tab-btn.active[data-tab="conocimiento"]{background:var(--e-indigo-l);border-color:#c4b5fd;color:var(--e-indigo);z-index:1;}
+.risk-tab-btn.active[data-tab="integridad"]{background:var(--e-teal-l);border-color:#99d6d4;color:var(--e-teal);z-index:1;}
+.risk-tabs-body{border:1px solid var(--line);border-radius:0 var(--r-lg) var(--r-lg) var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
+.risk-tab-pane{display:none;padding:28px;}
+.risk-tab-pane.active{display:block;}
+#risk-cognitivo{background:var(--e-red-l);}
+#risk-deshumanizacion{background:var(--e-orange-l);}
+#risk-conocimiento{background:var(--e-indigo-l);}
+#risk-integridad{background:var(--e-teal-l);}
+.risk-list{display:flex;flex-direction:column;gap:10px;margin-top:4px;}
+.risk-item{display:flex;gap:12px;align-items:flex-start;background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.07);border-radius:var(--r-md);padding:14px 16px;}
+.risk-icon{width:32px;height:32px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:16px;}
+.risk-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:3px;}
+.risk-desc{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.risk-pane-intro{font-size:14px;color:var(--ink-soft);line-height:1.6;margin-bottom:18px;padding:14px 16px;background:rgba(255,255,255,.5);border-radius:var(--r-sm);border:1px solid rgba(0,0,0,.07);}
+
+/* ── PASIVO vs ACTIVO ────────────────────────────────────── */
+.pasact-grid{display:flex;flex-direction:column;gap:16px;}
+.pasact-item{display:grid;grid-template-columns:1fr 40px 1fr;gap:0;align-items:stretch;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-sm);}
+.pasact-passive{background:#fef2f2;padding:18px 20px;}
+.pasact-arrow{background:#f3ede3;display:flex;align-items:center;justify-content:center;color:var(--uva-red);font-size:18px;}
+.pasact-active{background:#f0fdf4;padding:18px 20px;}
+.pasact-label{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
+.pasact-passive .pasact-label{color:#991b1b;}
+.pasact-active .pasact-label{color:#166534;}
+.pasact-title{font-family:"Fraunces",serif;font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.pasact-desc{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+.pasact-badge{display:inline-block;margin-top:6px;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;}
+.pasact-passive .pasact-badge{background:#fee2e2;color:#991b1b;}
+.pasact-active .pasact-badge{background:#dcfce7;color:#166534;}
+@media(max-width:640px){.pasact-item{grid-template-columns:1fr;}.pasact-arrow{padding:8px;transform:rotate(90deg);}}
+
+/* ── ACORDEÓN DECÁLOGO ────────────────────────────────────── */
+.acc-group{display:flex;flex-direction:column;gap:8px;}
+.acc-item{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);overflow:hidden;transition:box-shadow .2s;}
+.acc-item.open{box-shadow:var(--shadow-md);}
+.acc-trigger{width:100%;border:0;background:none;cursor:pointer;display:flex;align-items:center;gap:14px;padding:16px 20px;text-align:left;transition:background .15s;}
+.acc-trigger:hover{background:var(--cream);}
+.acc-num{width:32px;height:32px;border-radius:8px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-weight:700;font-size:1rem;font-style:italic;}
+.acc-label{font-family:"Fraunces",serif;font-size:1rem;font-weight:600;color:var(--ink);flex:1;text-align:left;}
+.acc-chevron{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--cream);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .3s,background .2s;}
+.acc-chevron svg{width:13px;height:13px;color:var(--muted);}
+.acc-item.open .acc-chevron{transform:rotate(180deg);background:var(--uva-blue);border-color:var(--uva-blue);}
+.acc-item.open .acc-chevron svg{color:#fff;}
+.acc-body{display:none;padding:0 20px 20px 66px;}
+.acc-item.open .acc-body{display:block;}
+.acc-body p{font-size:14px;color:var(--ink-soft);line-height:1.65;}
+
+/* ── CHECKLIST INTERACTIVO ────────────────────────────────────── */
+.checklist-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px;box-shadow:var(--shadow-sm);}
+.checklist-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.checklist-title{font-family:"Fraunces",serif;font-size:1.3rem;font-weight:600;color:var(--ink);}
+.checklist-progress{display:flex;align-items:center;gap:10px;}
+.progress-bar-wrap{width:120px;height:8px;background:var(--cream-2);border-radius:999px;overflow:hidden;}
+.progress-bar{height:100%;background:var(--uva-blue);border-radius:999px;transition:width .3s;}
+.progress-text{font-size:13px;font-weight:700;color:var(--uva-blue);min-width:40px;}
+.checklist-group{margin-bottom:20px;}
+.checklist-group-title{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--line);}
+.checklist-items{display:flex;flex-direction:column;gap:8px;}
+.checklist-item{display:flex;gap:12px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-sm);border:1px solid var(--line);cursor:pointer;transition:background .15s,border-color .15s;user-select:none;}
+.checklist-item:hover{background:var(--cream);}
+.checklist-item.checked{background:#f0fdf4;border-color:#86efac;}
+.check-box{width:22px;height:22px;border-radius:6px;border:2px solid var(--line);flex-shrink:0;display:flex;align-items:center;justify-content:center;margin-top:1px;transition:background .15s,border-color .15s;}
+.checklist-item.checked .check-box{background:#16a34a;border-color:#16a34a;}
+.check-box svg{width:12px;height:12px;color:#fff;opacity:0;transition:opacity .15s;}
+.checklist-item.checked .check-box svg{opacity:1;}
+.check-text{font-size:13px;color:var(--ink-soft);line-height:1.5;flex:1;}
+.checklist-item.checked .check-text{color:var(--muted);text-decoration:line-through;text-decoration-color:rgba(0,0,0,.2);}
+.checklist-reset{appearance:none;border:1px solid var(--line);background:var(--cream-2);padding:8px 16px;border-radius:999px;font:600 13px "Inter",sans-serif;cursor:pointer;color:var(--muted);transition:all .18s;}
+.checklist-reset:hover{background:var(--uva-red);color:#fff;border-color:var(--uva-red);}
+
+/* ── FLASHCARDS PROFESORADO ────────────────────────────────────── */
+.choice-intro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
+.choice-progress{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;}
+.choice-stack{position:relative;height:380px;max-width:460px;margin:0 auto;perspective:1400px;}
+.choice-card{position:absolute;inset:0;appearance:none;border:0;background:transparent;padding:0;border-radius:var(--r-xl);cursor:pointer;transform-style:preserve-3d;display:none;}
+.choice-card.visible{display:block;}
+.choice-inner{position:absolute;inset:0;border-radius:var(--r-xl);transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.8,.2,1);}
+.choice-card.flipped .choice-inner{transform:rotateY(180deg);}
+.choice-face{position:absolute;inset:0;border-radius:var(--r-xl);padding:26px 24px;display:flex;flex-direction:column;justify-content:space-between;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow-md);overflow:hidden;}
+.choice-front{background:var(--paper);border:1px solid var(--line);}
+.choice-back{background:var(--card-tint,#e8f0f8);transform:rotateY(180deg);text-align:left;}
+.choice-eyebrow{font:700 11px "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);}
+.choice-num{font-family:"Fraunces",serif;font-size:52px;font-weight:400;line-height:1;color:var(--card-ink,var(--uva-blue));font-style:italic;opacity:.2;}
+.choice-q{font-family:"Fraunces",serif;font-size:clamp(1.1rem,3.5vw,1.4rem);font-weight:600;letter-spacing:-.015em;line-height:1.25;color:var(--ink);margin:10px 0 0;text-align:left;}
+.choice-hint{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500;margin-top:12px;}
+.choice-hint svg{width:13px;height:13px;}
+.choice-back-label{font:700 11px "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--card-ink,var(--uva-blue));display:block;margin-bottom:8px;}
+.choice-back-text{font-size:13px;color:var(--ink);line-height:1.6;}
+.choice-back-list{list-style:none;padding:0;margin-top:8px;display:flex;flex-direction:column;gap:6px;}
+.choice-back-list li{font-size:12px;color:var(--ink);line-height:1.45;display:flex;gap:7px;align-items:flex-start;}
+.choice-back-list li::before{content:"→";color:var(--card-ink,var(--uva-blue));flex-shrink:0;font-weight:700;font-size:11px;margin-top:1px;}
+.choice-controls{display:flex;justify-content:center;gap:12px;margin-top:20px;}
+.choice-ctrl{appearance:none;background:var(--paper);border:1px solid var(--line);width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);transition:all .18s;box-shadow:var(--shadow-sm);}
+.choice-ctrl:hover{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-2px);}
+.choice-ctrl svg{width:18px;height:18px;}
+.choice-ctrl.flip{width:auto;padding:0 18px;border-radius:999px;font:600 13px "Inter",sans-serif;gap:6px;}
+
+/* Alerta turnitin */
+.alert-warning{background:#fef3c7;border:1px solid #fcd34d;border-radius:var(--r-md);padding:16px 20px;margin-top:28px;display:flex;gap:14px;align-items:flex-start;}
+.alert-icon{font-size:24px;flex-shrink:0;}
+.alert-title{font-size:13px;font-weight:700;color:#92400e;margin-bottom:4px;}
+.alert-desc{font-size:13px;color:#78350f;line-height:1.55;}
+
+/* ── RECOMENDACIONES INSTITUCIONALES ────────────────────────────────────── */
+.inst-tabs-nav{display:flex;gap:4px;}
+.inst-tab-btn{appearance:none;cursor:pointer;display:flex;align-items:center;gap:10px;padding:12px 20px;font-family:"Inter",sans-serif;font-size:14px;font-weight:600;color:var(--muted);background:var(--cream-2);border:1px solid var(--line);border-bottom:none;border-radius:var(--r-md) var(--r-md) 0 0;transition:color .18s,background .18s;position:relative;bottom:-1px;}
+.inst-tab-btn:hover{color:var(--ink);background:var(--paper);}
+.inst-tab-btn.active[data-inst="1"]{background:var(--e-teal-l);border-color:#99d6d4;color:var(--e-teal);z-index:1;}
+.inst-tab-btn.active[data-inst="2"]{background:var(--e-indigo-l);border-color:#c4b5fd;color:var(--e-indigo);z-index:1;}
+.inst-tabs-body{border:1px solid var(--line);box-shadow:var(--shadow-sm);overflow:hidden;}
+.inst-tab-pane{display:none;padding:28px;}
+.inst-tab-pane.active{display:block;}
+#inst-pane-1{background:var(--e-teal-l);}
+#inst-pane-2{background:var(--e-indigo-l);}
+.inst-pane-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:10px;}
+.inst-pane-title{font-family:"Fraunces",serif;font-size:1.25rem;font-weight:600;color:var(--ink);margin-bottom:10px;}
+.inst-pane-desc{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:18px;}
+.inst-pills{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;}
+.inst-pill{font-size:12px;font-weight:600;color:var(--ink-soft);background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.08);border-radius:999px;padding:4px 12px;}
+
+/* Indicadores tabla */
+.indicators-section{margin-top:36px;}
+.indicators-title{font-family:"Fraunces",serif;font-size:1.15rem;font-weight:600;color:var(--ink);margin-bottom:20px;}
+.indicators-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
+.ind-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;}
+.ind-card::before{content:"";position:absolute;top:0;left:0;right:0;height:3px;}
+.ind-card:hover{box-shadow:var(--shadow-md);transform:translateY(-2px);}
+.ind-card-icon{font-size:24px;margin-bottom:10px;display:block;}
+.ind-card-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:8px;}
+.ind-list{list-style:none;padding:0;display:flex;flex-direction:column;gap:5px;}
+.ind-list li{font-size:12px;color:var(--ink-soft);line-height:1.4;display:flex;gap:6px;}
+.ind-list li::before{content:"·";font-weight:700;flex-shrink:0;}
+
+/* ── JUEGO PASIVO vs ACTIVO ────────────────────────────────────── */
+.game-progress-row {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+}
+.game-progress-bar-wrap {
+  flex: 1; height: 6px; background: var(--line); border-radius: 999px; overflow: hidden;
+}
+.game-progress-bar {
+  height: 100%; background: var(--uva-blue); border-radius: 999px;
+  transition: width .4s ease;
+}
+.game-progress-text { font-size: 13px; color: var(--muted); font-weight: 600; white-space: nowrap; }
+
+.game-scenario-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 28px 28px 24px;
+  box-shadow: var(--shadow-md); margin-bottom: 20px;
+}
+.game-scenario-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--uva-red); margin-bottom: 14px; display: block;
+}
+.game-scenario-q {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.1rem, 3vw, 1.4rem);
+  font-weight: 600; color: var(--ink); line-height: 1.3; margin-bottom: 12px;
+}
+.game-scenario-context {
+  font-size: 14px; color: var(--ink-soft); line-height: 1.6;
+  padding-top: 12px; border-top: 1px solid var(--line);
+}
+
+.game-choices {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+}
+.game-choice-btn {
+  appearance: none; cursor: pointer;
+  background: var(--paper); border: 2px solid var(--line);
+  border-radius: var(--r-lg); padding: 18px 16px;
+  font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600;
+  color: var(--ink); text-align: left; line-height: 1.45;
+  transition: border-color .18s, background .18s, transform .18s, box-shadow .18s;
+  min-height: 80px;
+}
+.game-choice-btn:hover {
+  border-color: var(--uva-blue); background: #e8f0f8;
+  transform: translateY(-2px); box-shadow: var(--shadow-md);
+}
+.game-choice-btn.correct {
+  border-color: #16a34a; background: #f0fdf4; color: #15803d;
+  transform: none;
+}
+.game-choice-btn.wrong {
+  border-color: #dc2626; background: #fef2f2; color: #b91c1c;
+  transform: none;
+}
+.game-choice-btn.reveal-correct {
+  border-color: #16a34a; background: #f0fdf4; color: #15803d;
+}
+.game-choice-btn:disabled { cursor: default; }
+
+/* Feedback */
+.game-feedback-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 28px;
+  box-shadow: var(--shadow-md);
+}
+.game-feedback-icon { font-size: 3rem; margin-bottom: 10px; }
+.game-feedback-verdict {
+  font-family: "Fraunces", serif; font-size: 1.5rem;
+  font-weight: 700; margin-bottom: 10px;
+}
+.game-feedback-chosen {
+  display: inline-block; font-size: 12px; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase;
+  padding: 4px 12px; border-radius: 999px; margin-bottom: 14px;
+}
+.game-feedback-explain {
+  font-size: 14px; color: var(--ink-soft); line-height: 1.65;
+  margin-bottom: 16px;
+}
+.game-feedback-contrast {
+  background: var(--cream-2); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 14px 16px;
+  font-size: 13px; color: var(--ink-soft); line-height: 1.55;
+}
+.game-feedback-contrast strong { color: var(--ink); }
+
+/* Resultado final */
+.game-result-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-xl); padding: 40px 32px;
+  box-shadow: var(--shadow-lg); text-align: center;
+  max-width: 520px; margin: 0 auto;
+}
+.game-result-emoji { font-size: 4rem; margin-bottom: 12px; }
+.game-result-score {
+  font-family: "Fraunces", serif; font-size: 2.4rem;
+  font-weight: 700; color: var(--ink); margin-bottom: 8px;
+}
+.game-result-msg {
+  font-family: "Fraunces", serif; font-size: 1.2rem;
+  font-style: italic; color: var(--ink-soft); margin-bottom: 16px;
+}
+.game-result-detail {
+  font-size: 14px; color: var(--muted); line-height: 1.6;
+}
+
+.game-next-btn {
+  appearance: none; cursor: pointer;
+  background: var(--uva-blue); color: #fff;
+  border: 0; border-radius: 999px;
+  padding: 12px 28px; font: 600 14px "Inter", sans-serif;
+  transition: background .18s, transform .18s;
+}
+.game-next-btn:hover { background: var(--uva-blue-soft); transform: translateY(-1px); }
+
+@media (max-width: 540px) {
+  .game-choices { grid-template-columns: 1fr; }
+}
+
+/* ── INDICADORES ────────────────────────────────────── */
+.ethics-list { display: flex; flex-direction: column; gap: 16px; }
+.ethics-item {
+  display: flex; gap: 20px; align-items: flex-start;
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-lg); padding: 24px;
+  box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s;
+}
+.ethics-item:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
+.ethics-num {
+  font-family: "Fraunces", serif; font-size: 3rem; font-weight: 700;
+  font-style: italic; line-height: 1; flex-shrink: 0; width: 60px; text-align: center;
+}
+.ethics-content { flex: 1; }
+.ethics-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.ethics-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+.ethics-tag {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--cream-2); border: 1px solid var(--line);
+  border-radius: 999px; padding: 3px 10px;
+  font-size: 11px; font-weight: 600; letter-spacing: .06em;
+  text-transform: uppercase; color: var(--muted); margin-top: 10px;
+}
+
+/* ── REFERENCIAS ────────────────────────────────────── */
+.refs-block{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 32px;box-shadow:var(--shadow-sm);}
+.ref-item{display:flex;gap:14px;align-items:flex-start;}
+.ref-num{width:28px;height:28px;border-radius:6px;background:var(--uva-blue);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ref-cite{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:8px;}
+.ref-cite strong{color:var(--ink);}
+.ref-doi{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--uva-blue);text-decoration:none;font-family:"JetBrains Mono",monospace;padding:4px 10px;background:var(--e-indigo-l);border-radius:6px;transition:background .15s;}
+.ref-doi:hover{background:#ddd6fe;}
+.ref-doi svg{width:12px;height:12px;}
+
+/* ── FOOTER ────────────────────────────────────── */
+.footer{margin-top:40px;padding:28px 0 40px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);}
+.footer-row{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;}
+
+/* ── UTILS ────────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.section{animation:fadeUp .4s ease both;}
+@media(max-width:640px){.about-grid{grid-template-columns:1fr;}.indicators-grid{grid-template-columns:1fr;}.inst-tabs-nav{flex-wrap:wrap;}}
+</style>
+</head>
+<body>
+
+<!-- BARRA EDUMED -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">UNIDAD DE EDUCACIÓN MÉDICA · FACULTAD DE MEDICINA</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+      <span class="edumed-back-label">IA en EduMed</span>
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container hero-inner">
+    <div class="hero-tag"><div class="hero-tag-dot"></div><span>RevEspEduMed · Abril 2026</span></div>
+    <h1 class="hero-title">Escritura médica<br><em>en la era de la IAgen</em></h1>
+    <p class="hero-subtitle">Recomendaciones para fomentar la creatividad y el pensamiento crítico en un entorno de aprendizaje asistido por inteligencia artificial generativa.</p>
+    <div class="hero-meta">
+      <div class="hero-badge"><div class="hero-badge-icon">✍️</div><div class="hero-badge-text"><span>Autores</span><span>Corral-Gudino &amp; Marcos</span></div></div>
+      <div class="hero-badge"><div class="hero-badge-icon">📋</div><div class="hero-badge-text"><span>Tipo</span><span>Artículo de posición + revisión narrativa</span></div></div>
+      <div class="hero-badge"><div class="hero-badge-icon">📌</div><div class="hero-badge-text"><span>12 recomendaciones</span><span>10 para el alumnado · 2 institucionales</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="nav-sticky"><div class="container"><div class="nav-pills">
+  <button class="nav-pill" onclick="scrollToSection('sobre')"><span>📋</span> Sobre el artículo</button>
+  <button class="nav-pill" onclick="scrollToSection('riesgos')"><span>⚠️</span> Riesgos</button>
+  <button class="nav-pill" onclick="scrollToSection('pasivo-activo')"><span>⚡</span> Pasivo vs Activo</button>
+  <button class="nav-pill" onclick="scrollToSection('decalogo')"><span>📜</span> Decálogo</button>
+  <button class="nav-pill" onclick="scrollToSection('checklist')"><span>✅</span> Checklist</button>
+  <button class="nav-pill" onclick="scrollToSection('profesorado')"><span>🎓</span> Profesorado</button>
+  <button class="nav-pill" onclick="scrollToSection('institucional')"><span>🏛️</span> Institucional</button>
+  <button class="nav-pill" onclick="scrollToSection('referencias')"><span>📚</span> Referencia</button>
+</div></div></div>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 1: SOBRE EL ARTÍCULO
+═══════════════════════════════════════════════ -->
+<section class="section" id="sobre">
+  <div class="container">
+    <div class="section-eyebrow">Sobre el artículo</div>
+    <h2 class="section-title">¿De qué trata y qué aporta?</h2>
+    <p class="section-lead">La escritura es una de las competencias más vulnerables al uso automatizado de la IAgen: el estudiante puede delegar la redacción en la herramienta, generando <em>descarga cognitiva</em>, <em>ilusión de competencia</em> y <em>dependencia</em>. Este artículo propone cómo evitarlo.</p>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-icon" style="background:var(--e-red-l);">🧠</div>
+        <div class="about-card-title">La escritura como competencia clínica</div>
+        <div class="about-card-desc">La escritura no es solo una tarea académica: es el vehículo del pensamiento crítico, el razonamiento diagnóstico y la comunicación médica. Su delegación en la IA la pone en riesgo.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background:var(--e-orange-l);">⚡</div>
+        <div class="about-card-title">Uso activo vs uso pasivo</div>
+        <div class="about-card-desc">El riesgo principal no es la IA en sí, sino su uso pasivo. El artículo propone transformar cada interacción en una oportunidad de aprendizaje profundo, no de descarga cognitiva.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background:var(--e-teal-l);">📜</div>
+        <div class="about-card-title">Un decálogo accionable</div>
+        <div class="about-card-desc">10 recomendaciones concretas para el alumnado, desde "escribe primero, edita después" hasta la autoevaluación metacognitiva, con niveles de fluidez requeridos para cada una.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background:var(--e-indigo-l);">🏛️</div>
+        <div class="about-card-title">Hoja de ruta institucional</div>
+        <div class="about-card-desc">Dos recomendaciones para universidades: incluir la educación <em>en</em> IAgen en el currículo y establecer marcos de gobernanza, con indicadores concretos de implementación.</div>
+      </div>
+    </div>
+    <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px 26px;box-shadow:var(--shadow-sm);">
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;">El artículo propone un marco claro: <strong style="color:var(--ink);">«La IAgen debe ser tu entrenador, un andamiaje, y no un jugador sustituto que realiza "tu" esfuerzo»</strong>. Su potencial transformador solo se realiza cuando el estudiante permanece como agente protagonista de su propio aprendizaje, utilizando la herramienta como un potenciador de sus capacidades y no como un sustituto.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 2: RIESGOS EN PESTAÑAS
+═══════════════════════════════════════════════ -->
+<section class="section" id="riesgos">
+  <div class="container">
+    <div class="section-eyebrow">Tabla 1 del artículo</div>
+    <h2 class="section-title">Riesgos del uso inadecuado de la IAgen</h2>
+    <p class="section-lead">El artículo clasifica los riesgos en cuatro categorías. Selecciona cada pestaña para explorarlos.</p>
+
+    <div class="risk-tabs-nav">
+      <button class="risk-tab-btn active" data-tab="cognitivo" onclick="switchRisk(this,'risk-cognitivo')"><span>🧠</span> Empobrecimiento cognitivo</button>
+      <button class="risk-tab-btn" data-tab="deshumanizacion" onclick="switchRisk(this,'risk-deshumanizacion')"><span>❤️</span> Deshumanización</button>
+      <button class="risk-tab-btn" data-tab="conocimiento" onclick="switchRisk(this,'risk-conocimiento')"><span>🔬</span> Generación de conocimiento</button>
+      <button class="risk-tab-btn" data-tab="integridad" onclick="switchRisk(this,'risk-integridad')"><span>📝</span> Integridad y desigualdad</button>
+    </div>
+    <div class="risk-tabs-body">
+
+      <div class="risk-tab-pane active" id="risk-cognitivo">
+        <p class="risk-pane-intro">El uso pasivo de la IAgen puede erosionar los procesos cognitivos esenciales para la formación clínica, creando una falsa sensación de dominio sin el esfuerzo real del aprendizaje.</p>
+        <div class="risk-list">
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(157,23,77,.1);">⚠️</div><div><div class="risk-title">Evitar el esfuerzo constructivo</div><div class="risk-desc">El estudiante omite la "lucha productiva" de integrar conceptos nuevos con conocimientos previos, debilitando el aprendizaje profundo y la consolidación de esquemas mentales clínicos.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(157,23,77,.1);">🪞</div><div><div class="risk-title">Ilusión de conocimiento</div><div class="risk-desc">La fluidez de las respuestas de la IAgen hace que el alumnado crea que comprende un tema complejo, cuando en realidad solo reconoce su superficie (sobreestimación metacognitiva).</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(157,23,77,.1);">🔌</div><div><div class="risk-title">Descarga cognitiva</div><div class="risk-desc">Se externalizan procesos mentales esenciales —como el razonamiento diagnóstico— a la IAgen, impidiendo que el cerebro desarrolle las rutas cognitivas necesarias para la práctica autónoma.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(157,23,77,.1);">🔗</div><div><div class="risk-title">Dependencia</div><div class="risk-desc">El estudiante pierde la confianza para resumir textos, tomar decisiones clínicas o resolver problemas sin la validación de la IAgen; se debilita la autoeficacia y se incrementa la evitación.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(157,23,77,.1);">📉</div><div><div class="risk-title">Pérdida del análisis crítico</div><div class="risk-desc">Se acepta la respuesta de la IAgen como "verdad técnica" (sesgo de automatización), dejando de cuestionar la evidencia, la fuente o la lógica; se reduce la vigilancia epistémica.</div></div></div>
+        </div>
+      </div>
+
+      <div class="risk-tab-pane" id="risk-deshumanizacion">
+        <p class="risk-pane-intro">El uso de la IAgen para escribir o narrar puede erosionar habilidades comunicativas esenciales que son irreemplazables en la práctica clínica centrada en el paciente.</p>
+        <div class="risk-list">
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(180,83,9,.1);">💔</div><div><div class="risk-title">Atrofia de la empatía clínica</div><div class="risk-desc">Al usar IAgen para escribir sobre el paciente, el estudiante puede reducir la conexión emocional y la sensibilidad, debilitando la escucha activa, la validación emocional y la comunicación centrada en la persona.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(180,83,9,.1);">🗣️</div><div><div class="risk-title">Empobrecimiento del lenguaje</div><div class="risk-desc">El estudiante puede perder la capacidad de adaptar el lenguaje técnico al lenguaje humano necesario para comunicarse con pacientes, con menor claridad y peor transmisión de incertidumbre y riesgos.</div></div></div>
+        </div>
+      </div>
+
+      <div class="risk-tab-pane" id="risk-conocimiento">
+        <p class="risk-pane-intro">La generación de conocimiento médico puede verse afectada por las limitaciones estructurales de los modelos de IA, con consecuencias que van más allá del aula.</p>
+        <div class="risk-list">
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(55,48,163,.1);">⚖️</div><div><div class="risk-title">Sesgo algorítmico</div><div class="risk-desc">Al entrenarse con datos históricos, la IAgen puede replicar sesgos raciales, de género o geográficos en el diagnóstico y las recomendaciones, perpetuando desigualdades en salud.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(55,48,163,.1);">🎭</div><div><div class="risk-title">Alucinaciones con alta plausibilidad</div><div class="risk-desc">La IAgen puede generar afirmaciones incorrectas, referencias inexistentes o recomendaciones no sustentadas con apariencia de rigor científico; su plausibilidad lingüística incrementa el riesgo de aceptación acrítica.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(55,48,163,.1);">🌀</div><div><div class="risk-title">Homogeneización del pensamiento</div><div class="risk-desc">Se reduce la diversidad de enfoques: todos los estudiantes terminan adoptando la "respuesta promedio" del modelo, limitando el pensamiento lateral y la innovación clínica.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(55,48,163,.1);">🧱</div><div><div class="risk-title">Falta de transparencia</div><div class="risk-desc">El efecto "caja negra" impide conocer o predecir cómo se generan las respuestas, dificultando la evaluación crítica de su fiabilidad y el reconocimiento de sus sesgos estructurales.</div></div></div>
+        </div>
+      </div>
+
+      <div class="risk-tab-pane" id="risk-integridad">
+        <p class="risk-pane-intro">La integridad académica y la equidad educativa se ven amenazadas de formas nuevas que los mecanismos de detección tradicionales no pueden capturar.</p>
+        <div class="risk-list">
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(13,110,110,.1);">✍️</div><div><div class="risk-title">Pérdida de la voz y la autoría</div><div class="risk-desc">El estudiante deja de desarrollar un estilo propio de comunicación y reflexión ética, delegando su identidad profesional y narrativa a la IAgen.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(13,110,110,.1);">🚫</div><div><div class="risk-title">Falta de sentido de responsabilidad</div><div class="risk-desc">Dificultad para que el estudiante entienda que es responsable del material desarrollado y que el texto propuesto por la IAgen debe ser revisado y validado antes de presentarlo.</div></div></div>
+          <div class="risk-item"><div class="risk-icon" style="background:rgba(13,110,110,.1);">📊</div><div><div class="risk-title">Brecha de desigualdad</div><div class="risk-desc">Los estudiantes con acceso a mejores suscripciones de pago o mayor alfabetización digital tienen ventajas significativas sobre el resto, amplificando las desigualdades existentes.</div></div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 3: PASIVO vs ACTIVO
+═══════════════════════════════════════════════ -->
+<section class="section" id="pasivo-activo">
+  <div class="container">
+    <div class="section-eyebrow">Tabla 2 del artículo</div>
+    <h2 class="section-title">Uso pasivo frente a uso activo</h2>
+    <p class="section-lead">El riesgo principal no es la IAgen sino su uso pasivo. Cada interacción pasiva tiene una alternativa activa que transforma la herramienta en un andamiaje de aprendizaje profundo.</p>
+
+    <div class="pasact-grid">
+
+      <!-- JUEGO INTERACTIVO: ELIGE TU CAMINO -->
+      <div id="gameWrap">
+
+        <!-- PANTALLA: pregunta -->
+        <div id="gameQuestion">
+          <div class="game-progress-row">
+            <div class="game-progress-bar-wrap"><div class="game-progress-bar" id="gameBar"></div></div>
+            <span class="game-progress-text" id="gameProgressText">Situación 1 de 4</span>
+          </div>
+          <div class="game-scenario-card" id="gameCard">
+            <div class="game-scenario-eyebrow" id="gameEybrow">Situación 1 de 4</div>
+            <p class="game-scenario-q" id="gameQ"></p>
+            <p class="game-scenario-context" id="gameCtx"></p>
+          </div>
+          <div class="game-choices" id="gameChoices">
+            <button class="game-choice-btn" id="choiceA" onclick="pickChoice(0)"></button>
+            <button class="game-choice-btn" id="choiceB" onclick="pickChoice(1)"></button>
+          </div>
+        </div>
+
+        <!-- PANTALLA: feedback -->
+        <div id="gameFeedback" style="display:none;">
+          <div class="game-feedback-card" id="feedbackCard">
+            <div class="game-feedback-icon" id="feedbackIcon"></div>
+            <div class="game-feedback-verdict" id="feedbackVerdict"></div>
+            <div class="game-feedback-chosen" id="feedbackChosen"></div>
+            <div class="game-feedback-explain" id="feedbackExplain"></div>
+            <div class="game-feedback-contrast" id="feedbackContrast"></div>
+          </div>
+          <div style="text-align:center; margin-top:20px;">
+            <button class="game-next-btn" id="gameNextBtn" onclick="nextQuestion()">Siguiente situación →</button>
+          </div>
+        </div>
+
+        <!-- PANTALLA: resultado final -->
+        <div id="gameResult" style="display:none;">
+          <div class="game-result-card">
+            <div class="game-result-emoji" id="resultEmoji"></div>
+            <div class="game-result-score" id="resultScore"></div>
+            <div class="game-result-msg" id="resultMsg"></div>
+            <div class="game-result-detail" id="resultDetail"></div>
+            <button class="game-next-btn" onclick="restartGame()" style="margin-top:20px;">↺ Volver a intentarlo</button>
+          </div>
+        </div>
+
+      </div><!-- /gameWrap -->
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 4: DECÁLOGO
+═══════════════════════════════════════════════ -->
+<section class="section" id="decalogo">
+  <div class="container">
+    <div class="section-eyebrow">10 recomendaciones para el alumnado</div>
+    <h2 class="section-title">Decálogo para el uso de la IAgen en escritura médica</h2>
+    <p class="section-lead">Recomendaciones para emplear la IAgen como andamiaje que posibilite el progreso del estudiante, preservando siempre el papel generador humano. Actividadesˌ como la argumentación, la toma de decisiones o la planificación deben seguir siendo responsabilidad del estudiante.</p>
+
+    <div class="acc-group">
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">1</div>
+          <div class="acc-label">Escribir primero, editar después</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Fomenta que la generación de ideas, el diseño del borrador o la estructura lógica del texto sigan siendo responsabilidad del alumno. El momento "eureka" solo es posible si se mantiene la intervención humana en el proceso creador. La IAgen entra <strong>después</strong>, para mejorar y pulir, nunca para crear desde cero.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-orange-l);color:var(--e-orange);">2</div>
+          <div class="acc-label">Usar la IAgen como tutor socrático, no como oráculo</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>En lugar de preguntar directamente para obtener respuestas, el estudiante pide a la IAgen que le formule preguntas sobre el tema. Al responder, repasa sus conocimientos y descubre relaciones que no habría identificado. Fomenta el pensamiento crítico y da lugar a un aprendizaje profundo y duradero.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">3</div>
+          <div class="acc-label">Solicitar ejemplos para inspirarse, no el texto definitivo</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Cuando el estudiante está bloqueado, puede pedir a la IAgen un modelo de referencia, un ejemplo o un fragmento que sirva de andamiaje para inspirarse. La clave es usar ese ejemplo como punto de partida, no como texto a copiar o adaptar. La idea inicial y la creatividad siguen siendo del estudiante.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">4</div>
+          <div class="acc-label">Crear prompts específicos y contextuales</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Aprender a diseñar instrucciones detalladas para la IAgen es en sí una competencia de alto valor. Un buen prompt debe especificar el contexto, el rol, los objetivos, la secuencia y los criterios de calidad. La capacidad de formular prompts específicos refleja el nivel de comprensión del estudiante sobre el tema.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-green-l);color:var(--e-green);">5</div>
+          <div class="acc-label">Buscar evidencias en fuentes especializadas</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>La IAgen no es un buscador fiable para datos clínicos: puede alucinar referencias, mezclar datos de distintas fuentes o presentar estadísticas incorrectas con apariencia de rigor. Para cualquier dato médico, PubMed, EMBASE u OpenEvidence son las fuentes de referencia. La IAgen puede ayudar a procesar y sintetizar, pero no a obtener los datos primarios.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">6</div>
+          <div class="acc-label">Escritura colaborativa y evaluación por pares</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Realizar tareas de escritura de forma colaborativa obliga a los estudiantes a negociar ideas, debatir y consensuar borradores, actuando como antídoto frente al aislamiento cognitivo. Al revisar el trabajo de un compañero, el estudiante desarrolla su capacidad crítica y su habilidad para escribir de forma constructiva y empática.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-amber-l);color:var(--e-amber);">7</div>
+          <div class="acc-label">Documentar el proceso de trabajo con la IAgen</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Conservar los prompts utilizados, las diferentes versiones del texto y los cambios realizados permite al alumnado evidenciar su participación y capacidad crítica. Registrar las verificaciones realizadas en fuentes primarias demuestra rigor y responsabilidad. Esta documentación es tanto una garantía de integridad como una oportunidad de aprendizaje.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">8</div>
+          <div class="acc-label">Reconocer y gestionar las limitaciones de la IAgen</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>La IAgen no es un oráculo sino una herramienta probabilística. El alumnado debe distinguir tres tipos de limitaciones: <strong>alucinaciones</strong> (afirmaciones incorrectas presentadas con rigor), <strong>sesgos</strong> (derivados de los datos de entrenamiento) y <strong>lagunas</strong> de conocimiento (áreas donde el modelo rellena con generalidades). Detectar y analizar estos errores es en sí una forma de aprendizaje activo.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">9</div>
+          <div class="acc-label">Declarar el uso de la IAgen y asumir la responsabilidad ética</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>El uso de la IAgen en la escritura médica no exime de la responsabilidad ética. Los estudiantes deben declarar explícitamente qué partes del trabajo fueron asistidas por IAgen y mediante qué tipo de interacción (edición, estructuración, búsqueda). La autoría real implica que el ser humano es el responsable último del contenido, siempre. No hacerlo puede incurrir en deshonestidad académica.</p></div>
+      </div>
+
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-num" style="background:var(--e-green-l);color:var(--e-green);">10</div>
+          <div class="acc-label">Autoevaluación metacognitiva</div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body"><p>Una vez finalizada la tarea, el estudiante debe reflexionar sobre su proceso de aprendizaje. Tres preguntas clave: <strong>¿Qué aprendí realmente?</strong> ¿Qué haría diferente si lo repitiera? <strong>¿Podría explicar y defender el contenido sin consultar la IAgen?</strong> Si la respuesta a esta última pregunta es no, la colaboración con la herramienta no ha contribuido realmente al aprendizaje.</p></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 5: CHECKLIST INTERACTIVO
+═══════════════════════════════════════════════ -->
+<section class="section" id="checklist">
+  <div class="container">
+    <div class="section-eyebrow">Tabla 3 del artículo</div>
+    <h2 class="section-title">Checklist de uso responsable</h2>
+    <p class="section-lead">Antes de entregar cualquier trabajo que haya contado con asistencia de IAgen, comprueba cada uno de estos puntos. Marca los que hayas cumplido.</p>
+
+    <div class="checklist-wrap">
+      <div class="checklist-header">
+        <div class="checklist-title">Lista de comprobación</div>
+        <div class="checklist-progress">
+          <div class="progress-bar-wrap"><div class="progress-bar" id="progressBar" style="width:0%"></div></div>
+          <span class="progress-text" id="progressText">0 / 17</span>
+          <button class="checklist-reset" onclick="resetChecklist()">↺ Reiniciar</button>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">1 · Esfuerzo constructivo</div>
+        <div class="checklist-items">
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He generado el borrador inicial, el esquema o las ideas nucleares antes de consultar la IAgen.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">No he pedido a la IAgen que cree la estructura de mi trabajo desde cero.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">El contenido refleja mi propia síntesis de los conocimientos previos y no una respuesta "promedio" del modelo.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Conozco mis objetivos de aprendizaje para esta tarea y sé que soy yo, no la IAgen, quien debe alcanzarlos.</div></div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">2 · Interacción con la herramienta</div>
+        <div class="checklist-items">
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He utilizado instrucciones detalladas (ej. método socrático) en lugar de preguntas directas y simples.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Si me quedé bloqueado, pedí a la IAgen un modelo de referencia para inspirarme, no el texto definitivo.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He solicitado a la IAgen que cuestione mis hipótesis o busque debilidades en mi argumento.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Al usar la IAgen para resumir referencias, he contrastado los resúmenes en el texto original.</div></div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">3 · Verificación de evidencia</div>
+        <div class="checklist-items">
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He contrastado cada dato médico o cita bibliográfica en repositorios oficiales (PubMed, EMBASE).</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He comprobado que la IAgen no ha inventado referencias o autores en el proceso de redacción.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">He priorizado buscadores especializados frente a modelos generalistas para datos clínicos.</div></div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">4 · Ética y responsabilidad</div>
+        <div class="checklist-items">
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Confidencialidad: no he introducido ningún dato identificativo de pacientes en la herramienta.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Atribución: he incluido una nota especificando en qué fases usé la IAgen y cómo verifiqué su contenido.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Autoría: puedo explicar el contenido de mi trabajo sin consultar la IAgen.</div></div>
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">Responsabilidad: he revisado el texto final y me siento cómodo defendiendo el trabajo como mío.</div></div>
+        </div>
+      </div>
+
+      <div class="checklist-group">
+        <div class="checklist-group-title">5 · Dimensión humana y colaborativa</div>
+        <div class="checklist-items">
+          <div class="checklist-item" onclick="toggleCheck(this)"><div class="check-box"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 6l3 3 5-5"/></svg></div><div class="check-text">El texto conserva mi estilo y tono profesional, evitando un lenguaje homogeneizado por la IAgen.</div></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 6: FLASHCARDS PROFESORADO
+═══════════════════════════════════════════════ -->
+<section class="section" id="profesorado">
+  <div class="container">
+    <div class="section-eyebrow">Nota para el profesorado</div>
+    <h2 class="section-title">Cómo encomendar y valorar tareas de escritura</h2>
+    <p class="section-lead">El docente debe transformar el encargo del trabajo en una guía que describa los objetivos y los traduzca en tareas concretas. Toca cada tarjeta para ver cómo implementarlo.</p>
+
+    <div class="choice-intro">
+      <span class="choice-progress">Recomendación <span id="prof-current">1</span> de <span id="prof-total">7</span></span>
+      <span style="font-size:13px;color:var(--muted);">Toca para ver los detalles de implementación</span>
+    </div>
+
+    <div class="choice-stack" id="profStack">
+
+      <button class="choice-card" data-idx="0" style="--card-tint:#e0f2f1;--card-ink:#0d6e6e;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 1</span><span class="choice-num">1</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">🎯</div><p class="choice-q">Describir con claridad los objetivos del trabajo</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Objetivos del encargo</span><p class="choice-back-text">El encargo debe comenzar articulando claramente el propósito educativo: qué competencias de razonamiento, transversales o clínicas se pretenden desarrollar.</p><ul class="choice-back-list"><li>El estudiante debe percibir el trabajo como práctica significativa</li><li>Conectar con competencias del Libro Blanco ANECA o estándares WFME</li><li>Explicar cómo el trabajo le ayudará a comprender o mejorar</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="1" style="--card-tint:#fef3c7;--card-ink:#b45309;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 2</span><span class="choice-num">2</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">📋</div><p class="choice-q">Especificar el contenido y los requisitos</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Estructura del encargo</span><p class="choice-back-text">Definir el contenido, tipo de análisis y estructura requerida, con límites precisos sobre el alcance, la complejidad y las fuentes permitidas.</p><ul class="choice-back-list"><li>Especificar los requisitos esenciales sin ambigüedad</li><li>Establece qué tipo de fuentes son válidas para este trabajo</li><li>Ayuda al alumno a gestionar su esfuerzo y evita la incertidumbre</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="2" style="--card-tint:#fce7f3;--card-ink:#9d174d;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 3</span><span class="choice-num">3</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">🤝</div><p class="choice-q">Proporcionar recursos de apoyo</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Acompañamiento del proceso</span><p class="choice-back-text">Ofrecer una guía sobre estrategias efectivas y pasos recomendados que eviten errores comunes, incluyendo recursos de apoyo concretos.</p><ul class="choice-back-list"><li>Indicar recursos de tutoría o colaboración entre pares</li><li>Señalar errores comunes específicos del tema</li><li>El estudiante debe saber a dónde acudir si se estanca</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="3" style="--card-tint:#ede9fe;--card-ink:#3730a3;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 4</span><span class="choice-num">4</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">⚖️</div><p class="choice-q">Definir criterios de evaluación con rúbrica</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Evaluación transparente</span><p class="choice-back-text">Proporcionar los criterios de corrección en formato de rúbrica, detallando los ítems que distinguen un trabajo excelente de uno adecuado.</p><ul class="choice-back-list"><li>Describir qué eleva un trabajo de "suficiente" a "excelente"</li><li>En TFG: valorar la defensa oral y el portafolio de elaboración</li><li>Priorizar la comprensión y el proceso sobre el producto final</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="4" style="--card-tint:#dcfce7;--card-ink:#166534;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 5</span><span class="choice-num">5</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">👥</div><p class="choice-q">Diseñar tareas de escritura colaborativa</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Trabajo en grupo con IAgen</span><p class="choice-back-text">Establecer mecanismos que permitan identificar la contribución individual en trabajos grupales cuando se permite el uso de IAgen.</p><ul class="choice-back-list"><li>Solicitar un borrador individual previo a la puesta en común</li><li>Pedir un registro breve de las aportaciones de cada uno</li><li>En evaluación por pares: la IAgen puede estructurar el feedback sin sustituir el juicio crítico</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="5" style="--card-tint:#f5f3ff;--card-ink:#6d28d9;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 6</span><span class="choice-num">6</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">📁</div><p class="choice-q">Solicitar el portafolio de elaboración</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Evidencias del proceso</span><p class="choice-back-text">Cuando se permite la IAgen, la evaluación no debe limitarse al documento final. El portafolio de elaboración puede incluir:</p><ul class="choice-back-list"><li>Trazabilidad del pensamiento: borradores iniciales, esquemas, notas</li><li>Prompts utilizados: evidencia de instrucciones específicas</li><li>Evidencias de personalización: cómo el alumno editó o reformuló la IA</li><li>Registro de verificación de referencias en fuentes primarias</li><li>Alternativa: diario de proceso breve (máx. 1 página)</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <button class="choice-card" data-idx="6" style="--card-tint:#fef9c3;--card-ink:#854d0e;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Para el profesorado · 7</span><span class="choice-num">7</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">🔍</div><p class="choice-q">Incluir la metacognición como parte evaluable</p></div>
+            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo</span>
+          </div>
+          <div class="choice-face choice-back">
+            <div><span class="choice-back-label">Reflexión sobre el proceso</span><p class="choice-back-text">Incluir un apartado final donde el estudiante reflexione sobre su proceso de aprendizaje. Tres cuestiones esenciales:</p><ul class="choice-back-list"><li>¿Qué aprendí realmente con esta tarea?</li><li>¿Qué haría de forma diferente si la repitiera?</li><li>¿Podría explicar y defender cada parte del contenido sin consultar la IAgen?</li><li>Valorar la honestidad y profundidad de la reflexión por encima de la corrección formal</li></ul></div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+    </div>
+
+    <div class="choice-controls">
+      <button class="choice-ctrl" id="profPrev"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4L6 9l5 5"/></svg></button>
+      <button class="choice-ctrl flip" id="profFlip"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M3 9a6 6 0 1 0 6-6"/><path d="M3 4v5h5"/></svg> Girar</button>
+      <button class="choice-ctrl" id="profNext"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l5 5-5 5"/></svg></button>
+    </div>
+
+    <!-- ALERTA TURNITIN -->
+    <div class="alert-warning">
+      <div class="alert-icon">⚠️</div>
+      <div>
+        <div class="alert-title">Atención: las herramientas de detección de IA (Turnitin AI, GPTZero, Pangram...) no son suficientes</div>
+        <div class="alert-desc">Estas herramientas presentan tasas relevantes de <strong>falsos negativos</strong> (no detectan texto generado por los nuevos modelos) y <strong>falsos positivos</strong> (penalizan injustamente a estudiantes con estilos de escritura formal o hablantes no nativos). Además, no pueden distinguir entre un uso pasivo y un uso activo y reflexivo de la IAgen. <strong>No se recomienda su uso como mecanismo principal de evaluación de la integridad académica.</strong> Las alternativas más fiables son: portafolio de elaboración, trazabilidad del proceso, autoevaluación metacognitiva y defensa oral del trabajo.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 7: RECOMENDACIONES INSTITUCIONALES
+═══════════════════════════════════════════════ -->
+<section class="section" id="institucional">
+  <div class="container">
+    <div class="section-eyebrow">Notas para las instituciones</div>
+    <h2 class="section-title">Recomendaciones institucionales</h2>
+    <p class="section-lead">Todo lo propuesto difícilmente será viable sin un marco normativo institucional. Estas dos recomendaciones son complementarias y necesarias para que el resto del documento sea sostenible.</p>
+
+    <div class="inst-tabs-nav">
+      <button class="inst-tab-btn active" data-inst="1" onclick="switchInst(this,'inst-pane-1')">
+        <span style="width:24px;height:24px;border-radius:6px;background:var(--e-teal);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;">+1</span>
+        Educación en IAgen en el currículo
+      </button>
+      <button class="inst-tab-btn" data-inst="2" onclick="switchInst(this,'inst-pane-2')">
+        <span style="width:24px;height:24px;border-radius:6px;background:var(--e-indigo);color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;">+2</span>
+        Marcos institucionales de gobernanza
+      </button>
+    </div>
+    <div class="inst-tabs-body" id="instTabsBody" style="border-radius:0 var(--r-lg) var(--r-lg) var(--r-lg);">
+
+      <div class="inst-tab-pane active" id="inst-pane-1">
+        <div class="inst-pane-tag" style="background:rgba(13,110,110,.2);color:var(--e-teal);">Recomendación institucional +1</div>
+        <div class="inst-pane-title">Incluir la educación <em>en</em> IAgen en el currículo</div>
+        <p class="inst-pane-desc">El uso de la IAgen por parte del estudiantado es insuficiente si no va acompañado de una comprensión crítica de su funcionamiento. No basta con enseñar a usar la IAgen <em>en</em> educación; es necesario incorporar la educación <em>sobre</em> la IAgen en el currículo universitario. Esta formación debe abordar los mecanismos técnicos que sustentan estos modelos, las alucinaciones, los sesgos, los límites éticos y la responsabilidad profesional.</p>
+        <div class="inst-pills">
+          <span class="inst-pill">🧠 Cómo funcionan los LLM</span>
+          <span class="inst-pill">🎭 Alucinaciones y sesgos</span>
+          <span class="inst-pill">🔒 Privacidad de datos clínicos</span>
+          <span class="inst-pill">⚖️ Límites éticos y responsabilidad</span>
+          <span class="inst-pill">🏥 Desigualdades en salud</span>
+        </div>
+      </div>
+
+      <div class="inst-tab-pane" id="inst-pane-2">
+        <div class="inst-pane-tag" style="background:rgba(55,48,163,.15);color:var(--e-indigo);">Recomendación institucional +2</div>
+        <div class="inst-pane-title">Establecer marcos institucionales de gobernanza</div>
+        <p class="inst-pane-desc">Universidades y facultades deben definir políticas institucionales claras que orienten el uso de la IAgen en docencia, alineadas con el artículo 4 de la AI Act europea. Estas políticas deben incluir criterios de uso apropiado e inapropiado, directrices sobre privacidad y confidencialidad de datos clínicos, y mecanismos de actualización periódica ante la vertiginosa velocidad del campo.</p>
+        <div class="inst-pills">
+          <span class="inst-pill">📜 AI Act europea (art. 4)</span>
+          <span class="inst-pill">🔐 Protección de datos RGPD</span>
+          <span class="inst-pill">👥 Roles y responsabilidades claros</span>
+          <span class="inst-pill">🔄 Mecanismos de actualización</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- INDICADORES -->
+    <div class="indicators-section">
+      <div class="indicators-title">Indicadores de implementación institucional (Tabla 4)</div>
+
+      <div class="ethics-list">
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-teal);-webkit-text-fill-color:var(--e-teal);">01</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Integración curricular</div>
+            <div class="ethics-desc">Contenidos de IAgen integrados en asignaturas existentes, con objetivos de aprendizaje progresivos y explícitos por curso. Deben estar alineados con competencias clínicas y profesionales, no solo tecnológicas, y contemplar un módulo o asignatura específica de alfabetización en IA.</div>
+            <span class="ethics-tag">📚 Currículo · ANECA · WFME</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-orange);-webkit-text-fill-color:var(--e-orange);">02</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Desarrollo docente y formación del profesorado</div>
+            <div class="ethics-desc">Programas de formación continua en uso docente de la IA, comunidades de práctica para compartir experiencias y materiales, actualización periódica de competencias docentes y apoyo práctico al profesorado para diseñar actividades de aprendizaje, de evaluación o de análisis de la docencia.</div>
+            <span class="ethics-tag">🧑‍🏫 Formación continua · Comunidades práctica</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-red);-webkit-text-fill-color:var(--e-red);">03</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Gobernanza institucional, ética y protección de datos</div>
+            <div class="ethics-desc">Política institucional aprobada sobre uso de IAgen con criterios de uso apropiado e inapropiado para estudiantes y docentes. Normas sobre privacidad, confidencialidad y protección de datos —incluidos datos clínicos o simulados—, requisitos de transparencia y declaración de uso de IA en tareas y materiales, y mecanismo de revisión periódica.</div>
+            <span class="ethics-tag">⚖️ AI Act · RGPD · Ética</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-indigo);-webkit-text-fill-color:var(--e-indigo);">04</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Infraestructura y acceso equitativo a la IA</div>
+            <div class="ethics-desc">Selección de herramientas autorizadas o recomendadas por la institución, con acceso equitativo para alumnado y profesorado. Soporte técnico y pedagógico para el uso de IA, entornos seguros de uso y criterios de selección de herramientas que garanticen la privacidad de los datos.</div>
+            <span class="ethics-tag">🖥️ Equidad · Acceso · Soporte</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-green);-webkit-text-fill-color:var(--e-green);">05</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Alfabetización en IA del estudiante</div>
+            <div class="ethics-desc">Formación básica obligatoria que incluya la comprensión de los mecanismos de los LLM, los sesgos y las alucinaciones, y el desarrollo de la capacidad de verificación de fuentes y el sentido crítico. El estudiante debe reconocer cuándo la herramienta deja de ser fiable y cómo sus algoritmos pueden perpetuar desigualdades en salud.</div>
+            <span class="ethics-tag">🎓 Alfabetización · Pensamiento crítico</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-violet);-webkit-text-fill-color:var(--e-violet);">06</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Evaluación del estudiante e IA</div>
+            <div class="ethics-desc">Normas claras sobre uso de IA en evaluación formativa y sumativa. Rúbricas que valoren el uso crítico y responsable, no solo el producto final. Diseño de tareas menos vulnerables a la delegación en la IA —enfocadas al proceso de elaboración, la defensa oral o la reflexión— y mecanismos de trazabilidad o declaración de ayuda de IA.</div>
+            <span class="ethics-tag">📊 Rúbricas · Proceso · Trazabilidad</span>
+          </div>
+        </div>
+
+        <div class="ethics-item">
+          <div class="ethics-num" style="color:var(--e-teal);-webkit-text-fill-color:var(--e-teal);">07</div>
+          <div class="ethics-content">
+            <div class="ethics-title">Seguimiento y mejora continua</div>
+            <div class="ethics-desc">Indicadores de impacto en aprendizaje y en experiencia docente, recogida sistemática de experiencias de estudiantes y profesores, revisión periódica de la política y las prácticas en IA, y monitorización de riesgos incluyendo sesgos, errores, dependencia excesiva o desigualdad de acceso.</div>
+            <span class="ethics-tag">🔄 Monitoreo · Evaluación continua</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
+     SECCIÓN 8: REFERENCIAS
+═══════════════════════════════════════════════ -->
+<section class="section" id="referencias">
+  <div class="container">
+    <div class="section-eyebrow">Fuente original</div>
+    <h2 class="section-title">Referencia bibliográfica</h2>
+    <p class="section-lead">Este recurso educativo está basado íntegramente en el artículo original publicado en <em>RevEspEduMed</em> en abril de 2026.</p>
+    <div class="refs-block">
+      <div class="ref-item">
+        <div class="ref-num">✍</div>
+        <div class="ref-body">
+          <p class="ref-cite"><strong>Corral-Gudino, L., &amp; Marcos, M.</strong> (2026). La escritura en educación médica en la era de la inteligencia artificial generativa. Recomendaciones para fomentar la creatividad y el pensamiento crítico en un entorno de aprendizaje asistido por IA generativa. <em>RevEspEduMed</em>, <em>3</em>, 708901.</p>
+          <a class="ref-doi" href="https://doi.org/10.6018.edumed.708901" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
+            doi:10.6018.edumed.708901
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <div><strong>EduMed · UVa</strong> — Unidad de Educación Médica, Facultad de Medicina, Universidad de Valladolid</div>
+      <div>Basado en Corral-Gudino &amp; Marcos (2026) · <em>RevEspEduMed</em>, 3, 708901</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
+
+function toggleAcc(btn){const item=btn.closest('.acc-item');const wasOpen=item.classList.contains('open');document.querySelectorAll('.acc-item').forEach(i=>i.classList.remove('open'));if(!wasOpen)item.classList.add('open');}
+
+function switchRisk(btn,paneId){
+  document.querySelectorAll('.risk-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.risk-tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+  const btns=Array.from(document.querySelectorAll('.risk-tab-btn'));
+  const idx=btns.indexOf(btn);
+  const body=document.querySelector('.risk-tabs-body');
+  body.style.borderRadius=idx===0?'0 var(--r-lg) var(--r-lg) var(--r-lg)':(idx===btns.length-1?'var(--r-lg) 0 var(--r-lg) var(--r-lg)':'var(--r-lg)');
+}
+
+function switchInst(btn,paneId){
+  document.querySelectorAll('.inst-tab-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.inst-tab-pane').forEach(p=>p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+  const body=document.getElementById('instTabsBody');
+  body.style.borderRadius=btn.dataset.inst==='1'?'0 var(--r-lg) var(--r-lg) var(--r-lg)':'var(--r-lg) 0 var(--r-lg) var(--r-lg)';
+}
+
+// Checklist
+const TOTAL_CHECKS=17;
+function updateProgress(){
+  const checked=document.querySelectorAll('.checklist-item.checked').length;
+  const pct=Math.round(checked/TOTAL_CHECKS*100);
+  document.getElementById('progressBar').style.width=pct+'%';
+  document.getElementById('progressText').textContent=checked+' / '+TOTAL_CHECKS;
+}
+function toggleCheck(item){item.classList.toggle('checked');updateProgress();}
+function resetChecklist(){document.querySelectorAll('.checklist-item').forEach(i=>i.classList.remove('checked'));updateProgress();}
+
+// Flashcards profesorado
+(function(){
+  const stack=document.getElementById('profStack');
+  if(!stack)return;
+  const cards=Array.from(stack.querySelectorAll('.choice-card'));
+  let current=0;
+  function update(){
+    cards.forEach(c=>c.classList.remove('visible','flipped'));
+    cards[current].classList.add('visible');
+    document.getElementById('prof-current').textContent=current+1;
+    document.getElementById('prof-total').textContent=cards.length;
+  }
+  cards.forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flipped')));
+  document.getElementById('profPrev').addEventListener('click',()=>{current=(current-1+cards.length)%cards.length;update();});
+  document.getElementById('profNext').addEventListener('click',()=>{current=(current+1)%cards.length;update();});
+  document.getElementById('profFlip').addEventListener('click',()=>cards[current].classList.toggle('flipped'));
+  update();
+})();
+
+// Nav activa
+const sections=document.querySelectorAll('section[id]');
+const navBtns=document.querySelectorAll('.nav-pill');
+new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){navBtns.forEach(b=>{const oc=b.getAttribute('onclick')||'';b.classList.toggle('active',oc.includes("'"+e.target.id+"'"));});}});
+},{rootMargin:'-30% 0px -60% 0px'}).observe&&sections.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)navBtns.forEach(b=>{const oc=b.getAttribute('onclick')||'';b.classList.toggle('active',oc.includes("'"+e.target.id+"'"));});});},{rootMargin:'-30% 0px -60% 0px'}).observe(s));
+
+// ── JUEGO PASIVO vs ACTIVO ──────────────────────────────
+const SCENARIOS = [
+  {
+    q: "Tienes que escribir una reflexión sobre un caso clínico complejo para tu portafolio. ¿Cómo usas la IAgen?",
+    ctx: "Es un trabajo individual que vale el 30% de la nota. Se evalúa la profundidad del pensamiento clínico y tu voz personal.",
+    options: [
+      { text: "«Escribe una reflexión de 400 palabras sobre el diagnóstico diferencial de esta paciente con disnea progresiva»", isActive: false },
+      { text: "«Actúa como tutor socrático. Hazme preguntas sobre el caso para ayudarme a profundizar en mi razonamiento antes de que yo escriba»", isActive: true }
+    ],
+    activeLabel: "✓ Tutor socrático",
+    passiveLabel: "✗ Delegación total",
+    explainCorrect: "Pedir preguntas en lugar de respuestas preserva tu papel generador. La IAgen actúa como andamiaje: te obliga a activar tu razonamiento clínico antes de escribir, convirtiendo el esfuerzo en aprendizaje profundo.",
+    explainWrong: "Delegar la escritura de la reflexión a la IAgen genera ilusión de competencia. El texto puede sonar profundo, pero está vacío de tu experiencia real. Pierdes el proceso introspectivo que es el verdadero objetivo de la actividad.",
+    contrast: "Pide a la IAgen que te haga preguntas sobre el caso. Tú respondes, razonas, y luego escribes la reflexión con tus propias palabras."
+  },
+  {
+    q: "Necesitas datos sobre la incidencia de sepsis en UCI en España para tu TFG. ¿Qué haces?",
+    ctx: "Tu tutor te ha pedido cifras actualizadas con referencias verificables para la sección de introducción.",
+    options: [
+      { text: "«¿Cuál es la incidencia de sepsis en UCI en España? Dame los datos con referencias»", isActive: false },
+      { text: "Busco en PubMed «sepsis incidence Spain ICU» y filtro por los últimos 5 años. Uso la IAgen para sintetizar los artículos que encuentro", isActive: true }
+    ],
+    activeLabel: "✓ Fuentes primarias + IAgen para sintetizar",
+    passiveLabel: "✗ IAgen como buscador",
+    explainCorrect: "La IAgen puede alucinar referencias o mezclar datos de distintos contextos. PubMed garantiza trazabilidad. La IAgen es útil después, para procesar artículos reales que tú has encontrado y verificado.",
+    explainWrong: "La IAgen puede generar cifras plausibles pero incorrectas, atribuirlas a estudios inexistentes o mezclar datos de diferentes países. Tu tutor notará la falta de trazabilidad al intentar localizar las fuentes.",
+    contrast: "Busca primero en PubMed, EMBASE u OpenEvidence. Una vez que tienes artículos reales, pide a la IAgen que te ayude a sintetizarlos y organizarlos."
+  },
+  {
+    q: "Empiezas un trabajo de análisis de un artículo científico. No sabes por dónde comenzar. ¿Qué haces?",
+    ctx: "El trabajo es individual y el profesor ha pedido que demuestres tu capacidad de razonamiento propio sobre el artículo.",
+    options: [
+      { text: "«Genera un esquema completo para analizar este artículo científico con todos los apartados que debo incluir»", isActive: false },
+      { text: "Dedico 10 minutos a escribir en papel mis ideas sobre el artículo. Luego pido a la IAgen un ejemplo de análisis de otro artículo para inspirarme", isActive: true }
+    ],
+    activeLabel: "✓ Escribir primero + andamiaje",
+    passiveLabel: "✗ Delegación de la estructura",
+    explainCorrect: "Escribir primero activa tu memoria y tu razonamiento. El momento 'eureka' solo ocurre si tú eres el generador de ideas. Pedir un ejemplo de otro artículo es andamiaje legítimo: te muestra el camino sin hacer tu trabajo.",
+    explainWrong: "Delegar el esquema a la IAgen atrofia tu capacidad de estructurar el pensamiento, que es exactamente lo que el profesor evalúa. El esquema resultante será genérico y no reflejará tu comprensión del artículo concreto.",
+    contrast: "Escribe primero tus ideas en papel, aunque sean desordenadas. Si te bloqueas, pide a la IAgen un ejemplo de análisis de otro artículo como modelo, no como plantilla de tu trabajo."
+  },
+  {
+    q: "Terminas un ensayo clínico sobre adherencia al tratamiento. Quieres mejorar la calidad antes de entregarlo. ¿Cómo lo haces?",
+    ctx: "Ya tienes un borrador completo escrito por ti. Quieres mejorar la claridad y la estructura sin perder tu voz personal.",
+    options: [
+      { text: "«Reescribe este ensayo mejorando el estilo, la coherencia y la estructura. Hazlo más profesional»", isActive: false },
+      { text: "«Tengo este borrador mío. ¿Qué partes son menos claras? Sugiere mejoras concretas manteniendo mi estilo y señala qué cambiarías y por qué»", isActive: true }
+    ],
+    activeLabel: "✓ Edición aumentada",
+    passiveLabel: "✗ Reescritura delegada",
+    explainCorrect: "Pedir feedback específico sobre tu borrador mantiene tu voz y autoría. La IAgen actúa como corrector inteligente que señala problemas, pero tú decides qué aceptar y cómo reformularlo. Es co-creación, no sustitución.",
+    explainWrong: "Pedir que la IAgen reescriba tu trabajo produce un texto que ya no es tuyo. Aunque suene mejor, has perdido tu voz y tu capacidad de defender el texto. Si tu profesor te pregunta sobre una frase concreta, puede que no puedas explicarla.",
+    contrast: "Comparte tu borrador y pide señalamientos específicos con justificación. Tú reformulas con tus propias palabras las partes que decidas mejorar."
+  }
+];
+
+let currentQ = 0, score = 0, answered = false;
+
+function renderQuestion() {
+  answered = false;
+  document.getElementById('gameFeedback').style.display = 'none';
+  document.getElementById('gameResult').style.display = 'none';
+  document.getElementById('gameQuestion').style.display = 'block';
+  const s = SCENARIOS[currentQ];
+  const pct = (currentQ / SCENARIOS.length) * 100;
+  document.getElementById('gameBar').style.width = pct + '%';
+  document.getElementById('gameProgressText').textContent = 'Situación ' + (currentQ+1) + ' de ' + SCENARIOS.length;
+  document.getElementById('gameEybrow').textContent = 'Situación ' + (currentQ+1) + ' de ' + SCENARIOS.length;
+  document.getElementById('gameQ').textContent = s.q;
+  document.getElementById('gameCtx').textContent = s.ctx;
+  const opts = [...s.options];
+  if (Math.random() > 0.5) opts.reverse();
+  const btnA = document.getElementById('choiceA');
+  const btnB = document.getElementById('choiceB');
+  btnA.textContent = opts[0].text; btnA.dataset.active = opts[0].isActive; btnA.className = 'game-choice-btn'; btnA.disabled = false;
+  btnB.textContent = opts[1].text; btnB.dataset.active = opts[1].isActive; btnB.className = 'game-choice-btn'; btnB.disabled = false;
+}
+
+function pickChoice(idx) {
+  if (answered) return;
+  answered = true;
+  const s = SCENARIOS[currentQ];
+  const btns = [document.getElementById('choiceA'), document.getElementById('choiceB')];
+  const chosen = btns[idx], other = btns[1-idx];
+  const isCorrect = chosen.dataset.active === 'true';
+  btns.forEach(b => b.disabled = true);
+  if (isCorrect) { score++; chosen.classList.add('correct'); other.classList.add('wrong'); }
+  else { chosen.classList.add('wrong'); other.classList.add('reveal-correct'); }
+  setTimeout(() => {
+    document.getElementById('gameQuestion').style.display = 'none';
+    document.getElementById('gameFeedback').style.display = 'block';
+    document.getElementById('feedbackIcon').textContent = isCorrect ? '✅' : '❌';
+    const vEl = document.getElementById('feedbackVerdict');
+    vEl.textContent = isCorrect ? '¡Uso activo!' : 'Uso pasivo';
+    vEl.style.color = isCorrect ? '#15803d' : '#b91c1c';
+    const cEl = document.getElementById('feedbackChosen');
+    cEl.textContent = isCorrect ? s.activeLabel : s.passiveLabel;
+    cEl.style.background = isCorrect ? '#dcfce7' : '#fee2e2';
+    cEl.style.color = isCorrect ? '#15803d' : '#b91c1c';
+    document.getElementById('feedbackExplain').textContent = isCorrect ? s.explainCorrect : s.explainWrong;
+    const conEl = document.getElementById('feedbackContrast');
+    if (isCorrect) { conEl.style.display = 'none'; }
+    else { conEl.style.display = 'block'; conEl.innerHTML = '<strong>Alternativa activa:</strong> ' + s.contrast; }
+    document.getElementById('gameNextBtn').textContent = currentQ < SCENARIOS.length-1 ? 'Siguiente situación →' : 'Ver mi resultado →';
+  }, 350);
+}
+
+function nextQuestion() {
+  currentQ++;
+  if (currentQ >= SCENARIOS.length) { showResult(); }
+  else { document.getElementById('gameFeedback').style.display = 'none'; renderQuestion(); }
+}
+
+function showResult() {
+  document.getElementById('gameFeedback').style.display = 'none';
+  document.getElementById('gameResult').style.display = 'block';
+  document.getElementById('gameBar').style.width = '100%';
+  const pct = score / SCENARIOS.length;
+  let emoji, msg, detail;
+  if (pct === 1) { emoji='🏆'; msg='¡Dominas el uso activo!'; detail='Identificaste los 4 usos activos. Estás usando la IAgen como andamiaje real: preservas tu papel generador y conviertes cada interacción en aprendizaje profundo.'; }
+  else if (pct >= 0.75) { emoji='💪'; msg='Buen instinto, pequeños ajustes'; detail='Casi perfecto. Revisa las situaciones donde elegiste el uso pasivo: en esos casos, la clave es siempre mantener tu borrador o tu razonamiento como punto de partida antes de involucrar a la IAgen.'; }
+  else if (pct >= 0.5) { emoji='🤔'; msg='Vas por el buen camino'; detail='Identificaste algunos usos activos, pero la tendencia a delegar en la IAgen es real. Recuerda: la IAgen debe entrar después de que tú hayas generado algo propio, nunca antes.'; }
+  else { emoji='📖'; msg='La IAgen te está sustituyendo'; detail='En la mayoría de situaciones elegiste el uso pasivo. La IAgen está haciendo el trabajo cognitivo que debería ser tuyo. Vuelve a leer el decálogo y vuelve a intentarlo.'; }
+  document.getElementById('resultEmoji').textContent = emoji;
+  document.getElementById('resultScore').textContent = score + ' de ' + SCENARIOS.length + ' correctas';
+  document.getElementById('resultMsg').textContent = msg;
+  document.getElementById('resultDetail').textContent = detail;
+}
+
+function restartGame() { currentQ=0; score=0; document.getElementById('gameResult').style.display='none'; renderQuestion(); }
+
+renderQuestion();
+</script>
+</body>
+</html>
