@@ -3,29 +3,30 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Fluency · Marco de Competencias · Anthropic Academy</title>
+<title>IA en Educación Médica · EduMed · UVa</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
-  --uva-blue:#003973; --uva-blue-soft:#1d4f8a; --uva-red:#c60046;
-  --ink:#1a1f2e; --ink-soft:#3d4554; --muted:#6b7486;
-  --cream:#faf7f2; --cream-2:#f3ede3; --paper:#ffffff;
-  --line:#e8e1d4; --line-strong:#d9cfbb;
-  --shadow-sm:0 1px 2px rgba(26,31,46,.04),0 2px 8px rgba(26,31,46,.04);
-  --shadow-md:0 2px 6px rgba(26,31,46,.05),0 12px 32px rgba(26,31,46,.08);
-  --shadow-lg:0 8px 28px rgba(0,57,115,.12),0 30px 80px rgba(26,31,46,.12);
+  --uva-blue:      #003973;
+  --uva-red:       #c60046;
+  --ink:           #1a1f2e;
+  --ink-soft:      #3d4554;
+  --muted:         #6b7486;
+  --cream:         #faf7f2;
+  --cream-2:       #f3ede3;
+  --paper:         #ffffff;
+  --line:          #e8e1d4;
+  --line-strong:   #d9cfbb;
+  --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+  --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+  --shadow-lg: 0 8px 28px rgba(0,57,115,.10), 0 30px 80px rgba(26,31,46,.10);
   --r-sm:10px; --r-md:16px; --r-lg:22px; --r-xl:28px; --max:960px;
-  /* 4D palette */
-  --d1:#2d6a4f; --d1-l:#d8f3dc; /* Delegation — verde */
-  --d2:#1d4e89; --d2-l:#dbeafe; /* Description — azul */
-  --d3:#7b2d8b; --d3-l:#f3e8ff; /* Discernment — violeta */
-  --d4:#9c3322; --d4-l:#fee2e2; /* Diligence — rojo */
-  /* Modes */
-  --m-auto:#b45309; --m-auto-l:#fef3c7;
-  --m-aug:#0d6e6e;  --m-aug-l:#e0f2f1;
-  --m-age:#3730a3;  --m-age-l:#ede9fe;
+  /* colectivos */
+  --c-alumnos:    #1d4e89;  --c-alumnos-l:  #dbeafe;
+  --c-profes:     #166534;  --c-profes-l:   #dcfce7;
+  --c-inst:       #7c2d12;  --c-inst-l:     #fee2e2;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;}
@@ -34,186 +35,136 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
 
 /* ── BARRA ── */
 .edumed-bar{position:sticky;top:0;z-index:100;background:#f5c518;border-bottom:1px solid #d9a800;box-shadow:0 1px 0 rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06);}
-.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;}
+.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:12px 20px;}
 .edumed-brand{display:flex;align-items:center;gap:14px;color:#1a1f2e;text-decoration:none;}
 .edumed-wordmark{display:flex;flex-direction:column;line-height:1.1;}
 .edumed-wordmark .w1{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#1a1f2e;}
 .edumed-wordmark .w1 .sep{opacity:.45;margin:0 4px;font-weight:500;}
 .edumed-wordmark .w2{font-weight:600;font-size:10.5px;letter-spacing:.08em;color:#1a1f2e;opacity:.8;margin-top:3px;}
-.edumed-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#1a1f2e;text-decoration:none;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid rgba(26,31,46,.15);transition:background .15s,transform .15s;white-space:nowrap;}
-.edumed-back:hover{background:#fff;transform:translateX(-1px);}
-.edumed-back svg{width:14px;height:14px;}
 
 /* ── HERO ── */
-.hero{background:var(--cream);border-bottom:1px solid var(--line);padding:56px 0 48px;position:relative;overflow:hidden;}
-.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 85% 20%,rgba(45,106,79,.06) 0%,transparent 60%),radial-gradient(ellipse at 5% 80%,rgba(29,78,137,.06) 0%,transparent 50%);pointer-events:none;}
+.hero{padding:80px 0 64px;position:relative;overflow:hidden;}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 90% 10%, rgba(29,78,137,.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 5% 85%, rgba(22,101,52,.06) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(124,45,18,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
 .hero-inner{position:relative;z-index:1;}
-.hero-tag{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line-strong);border-radius:999px;padding:6px 14px;margin-bottom:24px;}
-.hero-tag-dot{width:6px;height:6px;border-radius:50%;background:var(--d1);}
-.hero-tag span{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
-.hero-title{font-family:"Fraunces",serif;font-size:clamp(2rem,5vw,3.2rem);font-weight:700;letter-spacing:-.03em;line-height:1.1;color:var(--ink);margin-bottom:12px;}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line-strong);border-radius:999px;padding:6px 16px;margin-bottom:28px;}
+.hero-kicker-dot{width:7px;height:7px;border-radius:50%;background:var(--uva-red);}
+.hero-kicker span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.hero-title{font-family:"Fraunces",serif;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;letter-spacing:-.035em;line-height:1.05;color:var(--ink);margin-bottom:20px;max-width:720px;}
 .hero-title em{font-style:italic;color:var(--uva-blue);}
-.hero-subtitle{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--ink-soft);max-width:640px;margin-bottom:36px;line-height:1.5;}
-.hero-4d{display:flex;gap:12px;flex-wrap:wrap;}
-.hero-d{display:flex;align-items:center;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 18px;box-shadow:var(--shadow-sm);transition:transform .18s,box-shadow .18s;}
-.hero-d:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
-.hero-d-letter{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-size:1.3rem;font-weight:700;font-style:italic;flex-shrink:0;}
-.hero-d-info span:first-child{display:block;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
-.hero-d-info span:last-child{display:block;font-size:13px;font-weight:700;color:var(--ink);}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--ink-soft);max-width:580px;line-height:1.6;margin-bottom:40px;}
+.hero-colectivos{display:flex;flex-wrap:wrap;gap:10px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;border:1px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .18s;text-decoration:none;}
+.hero-badge:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.hb-alumnos{background:var(--c-alumnos-l);color:var(--c-alumnos);border-color:#93c5fd;}
+.hb-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
+.hb-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
+.hero-badge-icon{font-size:18px;}
 
-/* ── NAV ── */
-.nav-sticky{background:var(--cream);border-bottom:1px solid var(--line);position:sticky;top:68px;z-index:90;}
-@media(max-width:640px){.nav-sticky{position:static;}}
-.nav-pills{display:flex;flex-wrap:wrap;gap:8px;padding:16px 0;}
-.nav-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:999px;font-size:13px;font-weight:600;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);transition:all .18s;cursor:pointer;font-family:"Inter",sans-serif;appearance:none;}
-.nav-pill:hover,.nav-pill.active{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-1px);box-shadow:var(--shadow-sm);}
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--line);margin:0;}
 
-/* ── SECCIONES ── */
-.section{padding:56px 0;}
-.section+.section{border-top:1px solid var(--line);}
-.section-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);margin-bottom:12px;}
-.section-eyebrow::before{content:"";width:20px;height:2px;background:var(--uva-red);border-radius:1px;}
-.section-title{font-family:"Fraunces",serif;font-size:clamp(1.6rem,3.5vw,2.4rem);font-weight:600;letter-spacing:-.025em;line-height:1.15;color:var(--ink);margin-bottom:16px;}
-.section-lead{font-size:16px;color:var(--ink-soft);max-width:720px;line-height:1.65;margin-bottom:32px;}
+/* ── SECCIÓN COLECTIVOS ── */
+.colectivos-section{padding:64px 0;}
+.colectivos-intro{text-align:center;margin-bottom:48px;}
+.colectivos-intro p{font-size:15px;color:var(--muted);max-width:560px;margin:10px auto 0;line-height:1.65;}
+.colectivos-intro-title{font-family:"Fraunces",serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:600;letter-spacing:-.02em;color:var(--ink);}
 
-/* ── MODOS ── */
-.modes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;}
-.mode-card{border-radius:var(--r-lg);padding:24px;border:1px solid transparent;transition:transform .2s,box-shadow .2s;}
-.mode-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-md);}
-.mode-num{font-family:"Fraunces",serif;font-size:2.5rem;font-weight:700;font-style:italic;line-height:1;opacity:.3;margin-bottom:8px;}
-.mode-title{font-family:"Fraunces",serif;font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.mode-def{font-size:13px;font-weight:700;color:var(--ink-soft);margin-bottom:8px;font-style:italic;}
-.mode-desc{font-size:13px;color:var(--ink-soft);line-height:1.55;margin-bottom:10px;}
-.mode-examples{display:flex;flex-wrap:wrap;gap:6px;}
-.mode-ex{font-size:11px;font-weight:600;padding:3px 8px;border-radius:999px;}
+.colectivo-block{margin-bottom:12px;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
+.colectivo-block.open{box-shadow:var(--shadow-lg);}
+.colectivo-trigger{width:100%;border:0;background:none;cursor:pointer;display:flex;align-items:center;gap:18px;padding:22px 28px;text-align:left;transition:background .15s;}
+.colectivo-trigger:hover{background:var(--cream);}
+.colectivo-icon-wrap{width:52px;height:52px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .3s;}
+.colectivo-block.open .colectivo-icon-wrap{transform:scale(1.08);}
+.colectivo-heading{flex:1;}
+.colectivo-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+.colectivo-name{font-family:"Fraunces",serif;font-size:1.4rem;font-weight:600;color:var(--ink);}
+.colectivo-hint{font-size:12px;color:var(--muted);margin-top:2px;}
+.colectivo-chevron{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--cream-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s,background .2s;}
+.colectivo-chevron svg{width:15px;height:15px;color:var(--muted);}
+.colectivo-block.open .colectivo-chevron{transform:rotate(180deg);}
 
-/* ── MODOS — pestañas ── */
-.mode-tab-btn{appearance:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 18px;font-family:"Inter",sans-serif;font-size:14px;font-weight:700;color:var(--muted);background:var(--cream-2);border:1px solid var(--line);border-bottom:none;border-radius:var(--r-md) var(--r-md) 0 0;transition:color .18s,background .18s;position:relative;bottom:-1px;}
-.mode-tab-btn:hover{color:var(--ink);background:var(--paper);}
-.mode-tab-btn.active[data-mode="auto"]{background:var(--m-auto-l);border-color:#fcd34d;color:var(--m-auto);z-index:1;}
-.mode-tab-btn.active[data-mode="aug"]{background:var(--m-aug-l);border-color:#99d6d4;color:var(--m-aug);z-index:1;}
-.mode-tab-btn.active[data-mode="age"]{background:var(--m-age-l);border-color:#c4b5fd;color:var(--m-age);z-index:1;}
-.mode-num-badge{width:28px;height:28px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-size:1rem;font-weight:800;font-style:italic;flex-shrink:0;}
-.modes-tabs-body{border:1px solid var(--line);border-radius:0 var(--r-lg) var(--r-lg) var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
-.mode-tab-pane{display:none;padding:28px;}
-.mode-tab-pane.active{display:block;}
+.colectivo-body{display:none;padding:0 28px 32px;}
+.colectivo-block.open .colectivo-body{display:block;}
+.colectivo-body-intro{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:24px;padding:14px 18px;border-radius:var(--r-md);border-left:3px solid transparent;}
+.colectivo-questions{display:flex;flex-direction:column;gap:14px;}
+.question-item{display:flex;gap:14px;align-items:flex-start;}
+.question-mark{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:3px;}
+.question-text{font-family:"Fraunces",serif;font-size:clamp(1rem,2.5vw,1.15rem);font-style:italic;font-weight:400;line-height:1.45;color:var(--ink);}
+.question-text strong{font-style:normal;font-weight:700;}
 
-/* ── 4D PESTAÑAS ── */
-.d-tabs-nav{display:flex;gap:4px;flex-wrap:wrap;}
-.d-tab-btn{appearance:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:12px 18px;font-family:"Inter",sans-serif;font-size:14px;font-weight:700;color:var(--muted);background:var(--cream-2);border:1px solid var(--line);border-bottom:none;border-radius:var(--r-md) var(--r-md) 0 0;transition:color .18s,background .18s;position:relative;bottom:-1px;}
-.d-tab-btn:hover{color:var(--ink);background:var(--paper);}
-.d-tab-btn.active[data-d="1"]{background:var(--d1-l);border-color:#95d5a0;color:var(--d1);z-index:1;}
-.d-tab-btn.active[data-d="2"]{background:var(--d2-l);border-color:#93c5fd;color:var(--d2);z-index:1;}
-.d-tab-btn.active[data-d="3"]{background:var(--d3-l);border-color:#d8b4fe;color:var(--d3);z-index:1;}
-.d-tab-btn.active[data-d="4"]{background:var(--d4-l);border-color:#fca5a5;color:var(--d4);z-index:1;}
-.d-letter-badge{width:30px;height:30px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-family:"Fraunces",serif;font-size:1.1rem;font-weight:800;font-style:italic;flex-shrink:0;}
-.d-tabs-body{border:1px solid var(--line);border-radius:0 var(--r-lg) var(--r-lg) var(--r-lg);box-shadow:var(--shadow-sm);overflow:hidden;}
-.d-tab-pane{display:none;padding:28px;}
-.d-tab-pane.active{display:block;}
-#dp-1{background:var(--d1-l);}
-#dp-2{background:var(--d2-l);}
-#dp-3{background:var(--d3-l);}
-#dp-4{background:var(--d4-l);}
-.d-pane-head{display:flex;align-items:flex-start;gap:16px;margin-bottom:20px;}
-.d-pane-letter{font-family:"Fraunces",serif;font-size:5rem;font-weight:700;font-style:italic;line-height:1;opacity:.15;flex-shrink:0;}
-.d-pane-intro{}
-.d-pane-tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:999px;margin-bottom:8px;}
-.d-pane-title{font-family:"Fraunces",serif;font-size:1.4rem;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.d-pane-def{font-size:14px;color:var(--ink-soft);line-height:1.6;}
-.d-subcats{display:flex;flex-direction:column;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(0,0,0,.08);}
-.d-subcat{background:rgba(255,255,255,.65);border:1px solid rgba(0,0,0,.07);border-radius:var(--r-md);padding:14px 16px;}
-.d-subcat-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:4px;}
-.d-subcat-desc{font-size:12px;color:var(--ink-soft);line-height:1.5;}
+/* autoevaluación metacognitiva */
+.meta-box{margin-top:24px;border-radius:var(--r-lg);padding:20px 22px;border:1px solid transparent;}
+.meta-box-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;}
+.meta-questions{display:flex;flex-direction:column;gap:8px;}
+.meta-q{font-size:14px;color:var(--ink-soft);line-height:1.5;padding-left:16px;position:relative;}
+.meta-q::before{content:"·";position:absolute;left:0;font-weight:700;font-size:18px;line-height:1.1;}
 
-/* ── BUCLE Description+Discernment ── */
-.loop-wrap{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-xl);padding:32px;box-shadow:var(--shadow-md);}
-.loop-diagram{display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px;flex-wrap:wrap;row-gap:16px;}
-.loop-node{background:var(--paper);border:2px solid var(--line);border-radius:var(--r-lg);padding:16px 20px;text-align:center;min-width:160px;}
-.loop-node.blue{border-color:#93c5fd;background:var(--d2-l);}
-.loop-node.violet{border-color:#d8b4fe;background:var(--d3-l);}
-.loop-node-letter{font-family:"Fraunces",serif;font-size:2.5rem;font-weight:700;font-style:italic;line-height:1;opacity:.25;}
-.loop-node-title{font-family:"Fraunces",serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-top:4px;}
-.loop-node-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-.loop-arrow{font-size:2rem;color:var(--muted-2);padding:0 12px;flex-shrink:0;}
-.loop-cols{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
-.loop-col-title{font-family:"Fraunces",serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:10px;}
-.loop-items{display:flex;flex-direction:column;gap:8px;}
-.loop-item{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border-radius:var(--r-sm);}
-.loop-item-icon{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
-.loop-item-title{font-size:13px;font-weight:700;color:var(--ink);margin-bottom:2px;}
-.loop-item-desc{font-size:12px;color:var(--ink-soft);line-height:1.45;}
-@media(max-width:640px){.loop-cols{grid-template-columns:1fr;}.loop-diagram{flex-direction:column;}.loop-arrow{transform:rotate(90deg);}}
+/* ── SECCIÓN RECURSOS ── */
+.recursos-section{padding:64px 0 80px;background:var(--cream);}
+.recursos-intro{margin-bottom:36px;}
+.recursos-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);margin-bottom:10px;}
+.recursos-eyebrow::before{content:"";width:20px;height:2px;background:var(--uva-red);border-radius:1px;}
+.recursos-title{font-family:"Fraunces",serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;letter-spacing:-.025em;color:var(--ink);margin-bottom:12px;}
+.recursos-lead{font-size:15px;color:var(--ink-soft);max-width:640px;line-height:1.6;}
 
-/* ── FLASHCARDS APRENDIZAJE ── */
-.choice-intro{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px;flex-wrap:wrap;}
-.choice-progress{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;}
-.choice-stack{position:relative;height:380px;max-width:460px;margin:0 auto;perspective:1400px;}
-.choice-card{position:absolute;inset:0;appearance:none;border:0;background:transparent;padding:0;border-radius:var(--r-xl);cursor:pointer;transform-style:preserve-3d;display:none;}
-.choice-card.visible{display:block;}
-.choice-inner{position:absolute;inset:0;border-radius:var(--r-xl);transform-style:preserve-3d;transition:transform .65s cubic-bezier(.2,.8,.2,1);}
-.choice-card.flipped .choice-inner{transform:rotateY(180deg);}
-.choice-face{position:absolute;inset:0;border-radius:var(--r-xl);padding:26px 24px;display:flex;flex-direction:column;justify-content:space-between;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:var(--shadow-md);overflow:hidden;}
-.choice-front{background:var(--paper);border:1px solid var(--line);}
-.choice-back{background:var(--card-tint,#e8f0f8);transform:rotateY(180deg);text-align:left;}
-.choice-eyebrow{font:700 11px "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);}
-.choice-num{font-family:"Fraunces",serif;font-size:52px;font-weight:400;line-height:1;color:var(--card-ink,var(--uva-blue));font-style:italic;opacity:.2;}
-.choice-q{font-family:"Fraunces",serif;font-size:clamp(1.1rem,3.5vw,1.4rem);font-weight:600;letter-spacing:-.015em;line-height:1.25;color:var(--ink);margin:10px 0 0;text-align:left;}
-.choice-hint{display:inline-flex;align-items:center;gap:6px;font-size:12px;color:var(--muted);font-weight:500;margin-top:12px;}
-.choice-hint svg{width:13px;height:13px;}
-.choice-back-label{font:700 11px "Inter",sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--card-ink,var(--uva-blue));display:block;margin-bottom:8px;}
-.choice-back-text{font-size:13px;color:var(--ink);line-height:1.6;}
-.choice-back-list{list-style:none;padding:0;margin-top:8px;display:flex;flex-direction:column;gap:6px;}
-.choice-back-list li{font-size:12px;color:var(--ink);line-height:1.45;display:flex;gap:7px;}
-.choice-back-list li::before{content:"→";color:var(--card-ink,var(--uva-blue));flex-shrink:0;font-weight:700;font-size:11px;margin-top:1px;}
-.choice-controls{display:flex;justify-content:center;gap:12px;margin-top:20px;}
-.choice-ctrl{appearance:none;background:var(--paper);border:1px solid var(--line);width:48px;height:48px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;cursor:pointer;color:var(--ink);transition:all .18s;box-shadow:var(--shadow-sm);}
-.choice-ctrl:hover{background:var(--uva-blue);color:#fff;border-color:var(--uva-blue);transform:translateY(-2px);}
-.choice-ctrl svg{width:18px;height:18px;}
-.choice-ctrl.flip{width:auto;padding:0 18px;border-radius:999px;font:600 13px "Inter",sans-serif;gap:6px;}
+.recursos-list{display:flex;flex-direction:column;gap:12px;}
+.recurso-card{display:flex;gap:20px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,border-color .2s;}
+.recurso-card:hover{transform:translateX(6px);box-shadow:var(--shadow-md);border-color:var(--uva-blue);}
+.recurso-num{font-family:"Fraunces",serif;font-size:2.2rem;font-weight:700;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;opacity:.2;color:var(--uva-blue);}
+.recurso-icon{width:48px;height:48px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.recurso-content{flex:1;}
+.recurso-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.recurso-title{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.recurso-desc{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+.recurso-arrow{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--cream-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;}
+.recurso-card:hover .recurso-arrow{background:var(--uva-blue);border-color:var(--uva-blue);}
+.recurso-arrow svg{width:14px;height:14px;color:var(--muted);transition:color .18s;}
+.recurso-card:hover .recurso-arrow svg{color:#fff;}
 
-/* ── AI CARRERA ── */
-.career-grid{display:flex;flex-direction:column;gap:10px;}
-.career-item{display:flex;gap:14px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:16px 18px;box-shadow:var(--shadow-sm);transition:transform .18s;}
-.career-item:hover{transform:translateX(4px);}
-.career-icon{width:40px;height:40px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:20px;}
-.career-title{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:3px;}
-.career-desc{font-size:13px;color:var(--ink-soft);line-height:1.5;}
-.career-badge{display:inline-block;font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:2px 8px;border-radius:999px;margin-top:6px;}
+.recurso-audience{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.aud-badge{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid transparent;}
+.aud-alumnos{background:var(--c-alumnos-l);color:var(--c-alumnos);border-color:#93c5fd;}
+.aud-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
+.aud-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
 
-/* ── HUMAN IN THE LOOP ── */
-.hitl-list{display:flex;flex-direction:column;gap:16px;}
-.hitl-item{display:flex;gap:20px;align-items:flex-start;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:24px;box-shadow:var(--shadow-sm);transition:box-shadow .2s,transform .2s;}
-.hitl-item:hover{box-shadow:var(--shadow-md);transform:translateX(4px);}
-.hitl-num{font-family:"Fraunces",serif;font-size:3rem;font-weight:700;font-style:italic;line-height:1;flex-shrink:0;width:60px;text-align:center;}
-.hitl-content{flex:1;}
-.hitl-title{font-family:"Fraunces",serif;font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:6px;}
-.hitl-desc{font-size:14px;color:var(--ink-soft);line-height:1.6;}
-.hitl-tag{display:inline-flex;gap:4px;background:var(--cream-2);border:1px solid var(--line);border-radius:999px;padding:3px 10px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-top:10px;}
-
-/* ── REFERENCIA ── */
-.refs-block{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:28px 32px;box-shadow:var(--shadow-sm);}
-.ref-item{display:flex;gap:14px;align-items:flex-start;}
-.ref-num{width:28px;height:28px;border-radius:6px;background:var(--d1);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.ref-cite{font-size:14px;color:var(--ink-soft);line-height:1.55;margin-bottom:8px;}
-.ref-cite strong{color:var(--ink);}
-.ref-doi{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--d1);text-decoration:none;font-family:"JetBrains Mono",monospace;padding:4px 10px;background:var(--d1-l);border-radius:6px;transition:background .15s;}
-.ref-doi:hover{filter:brightness(.95);}
-.ref-doi svg{width:12px;height:12px;}
-.cc-badge{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line);border-radius:var(--r-md);padding:10px 14px;margin-top:16px;font-size:12px;color:var(--muted);}
+/* ── CIERRE ── */
+.cierre{padding:72px 0 80px;text-align:center;position:relative;overflow:hidden;}
+.cierre::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(0,57,115,.04) 0%,transparent 70%);pointer-events:none;}
+.cierre-inner{position:relative;z-index:1;}
+.cierre-quote{font-family:"Fraunces",serif;font-size:clamp(1.3rem,4vw,2.2rem);font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.25;color:var(--ink);max-width:680px;margin:0 auto 12px;}
+.cierre-quote em{font-style:normal;color:var(--uva-blue);}
+.cierre-attr{font-size:13px;color:var(--muted);margin-bottom:36px;}
+.cierre-credits{font-size:13px;color:var(--muted);line-height:1.7;}
+.cierre-credits strong{color:var(--ink-soft);}
 
 /* ── FOOTER ── */
-.footer{margin-top:40px;padding:28px 0 40px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);}
-.footer-row{display:flex;flex-wrap:wrap;gap:14px 24px;align-items:center;justify-content:space-between;}
+.footer{border-top:1px solid var(--line);padding:24px 0 32px;font-size:12px;color:var(--muted);}
+.footer-row{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;}
 
-/* ── UTILS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-.section{animation:fadeUp .4s ease both;}
-@media(max-width:640px){.modes-grid{grid-template-columns:1fr;}.hero-4d{flex-direction:column;}.hitl-item{flex-direction:column;gap:8px;}.hitl-num{width:auto;font-size:2rem;}}
+/* ── ANIMACIONES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.hero-inner{animation:fadeUp .5s ease both;}
+.colectivos-intro{animation:fadeUp .5s .1s ease both;}
+
+@media(max-width:640px){
+  .hero{padding:56px 0 48px;}
+  .colectivo-trigger{padding:18px 20px;}
+  .colectivo-body{padding:0 20px 24px;}
+  .recurso-card{flex-wrap:wrap;gap:12px;}
+  .recurso-num{display:none;}
+}
 </style>
 </head>
 <body>
 
-<!-- BARRA EDUMED -->
+<!-- BARRA EDUMED (sin botón derecho — esta página ES la referencia) -->
 <div class="edumed-bar">
   <div class="edumed-bar-inner">
     <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
@@ -222,676 +173,340 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
         <span class="w2">UNIDAD DE EDUCACIÓN MÉDICA · FACULTAD DE MEDICINA</span>
       </div>
     </a>
-    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
-      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
-      <span class="edumed-back-label">IA en EduMed</span>
-    </a>
   </div>
 </div>
 
-<!-- HERO -->
-<div class="hero">
+<!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+<section class="hero">
   <div class="container hero-inner">
-    <div class="hero-tag"><div class="hero-tag-dot"></div><span>Anthropic Academy · AI Fluency for Students · CC BY-NC-SA 4.0</span></div>
-    <h1 class="hero-title">Fluidez en IA:<br><em>las 4 competencias esenciales</em></h1>
-    <p class="hero-subtitle">Interactuar con la IA de forma efectiva, eficiente, ética y segura. No son trucos ni prompts: son competencias transferibles que funcionan con cualquier herramienta, ahora y en el futuro.</p>
-    <div class="hero-4d">
-      <div class="hero-d">
-        <div class="hero-d-letter" style="background:var(--d1-l);color:var(--d1);">D</div>
-        <div class="hero-d-info"><span>Competencia 1</span><span>Delegation</span></div>
-      </div>
-      <div class="hero-d">
-        <div class="hero-d-letter" style="background:var(--d2-l);color:var(--d2);">D</div>
-        <div class="hero-d-info"><span>Competencia 2</span><span>Description</span></div>
-      </div>
-      <div class="hero-d">
-        <div class="hero-d-letter" style="background:var(--d3-l);color:var(--d3);">D</div>
-        <div class="hero-d-info"><span>Competencia 3</span><span>Discernment</span></div>
-      </div>
-      <div class="hero-d">
-        <div class="hero-d-letter" style="background:var(--d4-l);color:var(--d4);">D</div>
-        <div class="hero-d-info"><span>Competencia 4</span><span>Diligence</span></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- NAV -->
-<div class="nav-sticky"><div class="container"><div class="nav-pills">
-  <button class="nav-pill" onclick="scrollToSection('intro')"><span>🎯</span> ¿Qué es?</button>
-  <button class="nav-pill" onclick="scrollToSection('modos')"><span>⚡</span> 3 Modos</button>
-  <button class="nav-pill" onclick="scrollToSection('4d')"><span>🔷</span> Las 4D</button>
-  <button class="nav-pill" onclick="scrollToSection('bucle')"><span>🔄</span> Bucle Description+Discernment</button>
-  <button class="nav-pill" onclick="scrollToSection('aprendizaje')"><span>📚</span> IA y Aprendizaje</button>
-  <button class="nav-pill" onclick="scrollToSection('carrera')"><span>🚀</span> IA y Carrera</button>
-  <button class="nav-pill" onclick="scrollToSection('hitl')"><span>👤</span> Human in the Loop</button>
-  <button class="nav-pill" onclick="scrollToSection('referencia')"><span>📄</span> Referencia</button>
-</div></div></div>
-
-<!-- ═══════════════════════════════
-     1. ¿QUÉ ES AI FLUENCY?
-═══════════════════════════════ -->
-<section class="section" id="intro">
-  <div class="container">
-    <div class="section-eyebrow">Punto de partida</div>
-    <h2 class="section-title">¿Qué es la fluidez en IA?</h2>
-    <p class="section-lead">La mayoría de guías sobre IA se centran en casos de uso que quedan obsoletos cuando aparecen nuevos modelos. La fluidez en IA va más allá: son competencias que perduran independientemente de la herramienta.</p>
-    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin-bottom:28px;">
-      <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);">
-        <div style="width:46px;height:46px;border-radius:var(--r-md);background:var(--d1-l);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;">🎯</div>
-        <div style="font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;">Más allá de los prompts</div>
-        <div style="font-size:13px;color:var(--ink-soft);line-height:1.55;">No se trata de memorizar instrucciones perfectas. La fluidez es saber qué preguntar, cómo evaluar la respuesta y hacerse responsable del resultado.</div>
-      </div>
-      <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);">
-        <div style="width:46px;height:46px;border-radius:var(--r-md);background:var(--d2-l);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;">🤝</div>
-        <div style="font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;">Aumentación, no automatización</div>
-        <div style="font-size:13px;color:var(--ink-soft);line-height:1.55;">En el contexto del aprendizaje, el objetivo no es que la IA haga el trabajo por ti, sino que te ayude a hacer tu trabajo mejor. La diferencia es crítica.</div>
-      </div>
-      <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);">
-        <div style="width:46px;height:46px;border-radius:var(--r-md);background:var(--d3-l);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;">🛡️</div>
-        <div style="font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;">Agnóstica a la herramienta</div>
-        <div style="font-size:13px;color:var(--ink-soft);line-height:1.55;">El marco es independiente de la plataforma. Las 4 competencias son igual de válidas con ChatGPT, Claude, Gemini o cualquier sistema que aparezca mañana.</div>
-      </div>
-      <div style="background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--shadow-sm);">
-        <div style="width:46px;height:46px;border-radius:var(--r-md);background:var(--d4-l);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:12px;">⚖️</div>
-        <div style="font-family:'Fraunces',serif;font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:6px;">Ética como fundamento</div>
-        <div style="font-size:13px;color:var(--ink-soft);line-height:1.55;">El uso responsable y seguro de la IA es tan importante como su uso eficaz. La ética no es un apartado adicional: está integrada en cada competencia.</div>
-      </div>
-    </div>
-    <div style="background:var(--paper);border-left:4px solid var(--d1);border-radius:0 var(--r-md) var(--r-md) 0;padding:18px 22px;box-shadow:var(--shadow-sm);">
-      <p style="font-family:'Fraunces',serif;font-size:1.1rem;font-style:italic;color:var(--ink);line-height:1.5;">«La fluidez en IA transforma la IA de una herramienta que hace trabajo por ti en un socio que te ayuda a hacer tu trabajo mejor.»</p>
-      <p style="font-size:12px;color:var(--muted);margin-top:8px;">— Dakan, Feller & Anthropic, AI Fluency Framework v1.5 (2025)</p>
+    <div class="hero-kicker"><div class="hero-kicker-dot"></div><span>IA en Educación Médica</span></div>
+    <h1 class="hero-title">La IA ha llegado<br>a la medicina.<br><em>La pregunta no es<br>si usarla, sino cómo.</em></h1>
+    <p class="hero-sub">Esta página es para quienes se lo están preguntando. Para los que quieren ir más allá de la prohibición o la adopción acrítica, y construir una relación profesional, ética y pedagógicamente sólida con la inteligencia artificial generativa.</p>
+    <div class="hero-colectivos">
+      <a class="hero-badge hb-alumnos" href="#alumnos" onclick="openColectivo('alumnos')">
+        <span class="hero-badge-icon">🎓</span> Soy alumno
+      </a>
+      <a class="hero-badge hb-profes" href="#profesores" onclick="openColectivo('profesores')">
+        <span class="hero-badge-icon">🧑‍🏫</span> Soy docente
+      </a>
+      <a class="hero-badge hb-inst" href="#instituciones" onclick="openColectivo('instituciones')">
+        <span class="hero-badge-icon">🏛️</span> Soy responsable institucional
+      </a>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     2. LOS 3 MODOS
-═══════════════════════════════ -->
-<section class="section" id="modos">
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     COLECTIVOS
+══════════════════════════ -->
+<section class="colectivos-section">
   <div class="container">
-    <div class="section-eyebrow">Modalidades de interacción</div>
-    <h2 class="section-title">Los 3 modos de interacción con la IA</h2>
-    <p class="section-lead">La fluidez implica saber en qué modo operas en cada momento y elegirlo conscientemente. Las interacciones reales a menudo combinan varios modos dentro de un mismo proyecto.</p>
-
-    <div class="d-tabs-nav" id="modesNav">
-      <button class="mode-tab-btn active" data-mode="auto" onclick="switchMode(this,'mp-auto')">
-        <span class="mode-num-badge" style="background:var(--m-auto-l);color:var(--m-auto);">1</span>
-        Automatización
-      </button>
-      <button class="mode-tab-btn" data-mode="aug" onclick="switchMode(this,'mp-aug')">
-        <span class="mode-num-badge" style="background:var(--m-aug-l);color:var(--m-aug);">2</span>
-        Aumentación
-      </button>
-      <button class="mode-tab-btn" data-mode="age" onclick="switchMode(this,'mp-age')">
-        <span class="mode-num-badge" style="background:var(--m-age-l);color:var(--m-age);">3</span>
-        Agencia
-      </button>
+    <div class="colectivos-intro">
+      <div class="colectivos-intro-title">Antes de comenzar a buscar respuestas, párate a hacer las preguntas que más te van a ayudar a integrar la IA en tu día a día</div>
+      <p>La literatura científica sobre IA en educación médica ya es extensa. Pero antes de explorarla, estos son algunos de los interrogantes que cada colectivo debería plantearse.</p>
     </div>
-    <div class="modes-tabs-body" id="modesTabsBody">
 
-      <div class="mode-tab-pane active" id="mp-auto" style="background:var(--m-auto-l);">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--m-auto);">1</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(180,83,9,.2);color:var(--m-auto);">Modo 1 · Automatización</div>
-            <div class="d-pane-title">La IA ejecuta una tarea definida por el humano</div>
-            <div class="d-pane-def">El modo más directo: el humano da instrucciones y la IA las ejecuta de forma independiente. Útil para tareas repetitivas, intensivas en datos o que consumen tiempo. Requiere definición clara y control de calidad del resultado.</div>
+    <!-- ALUMNOS -->
+    <div class="colectivo-block" id="alumnos">
+      <button class="colectivo-trigger" onclick="toggleColectivo('alumnos')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-alumnos-l);">🎓</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-alumnos);">Para el alumnado</div>
+          <div class="colectivo-name">Si eres estudiante de medicina</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-alumnos-l);border-left-color:var(--c-alumnos);">
+          Los riesgos reales no están en la IA, sino en su uso pasivo: la descarga cognitiva, la ilusión de conocimiento y la pérdida de autoría. Pero la IA usada bien puede ser el mejor tutor que hayas tenido. La diferencia la marca la pregunta que te hagas antes de abrir la herramienta.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">¿Cómo puedo usar la IA como un <strong>tutor socrático o un abogado del diablo</strong> que me obligue a razonar, en lugar de pedirle respuestas directas que atrofien mi pensamiento clínico?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">Si la IA me redacta resúmenes perfectos o historias clínicas, <strong>¿cómo evito caer en la «ilusión de conocimiento»</strong> y me aseguro de que realmente estoy asimilando la información y no solo delegando el esfuerzo?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text"><strong>¿Cómo mantengo mi propia voz, mi autoría intelectual y mi empatía humana</strong> hacia el paciente si me acostumbro a que una máquina edite y homogeneice todos mis textos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">Sabiendo que las herramientas pueden generar «alucinaciones» con apariencia de rigor científico, <strong>¿qué estrategias personales de verificación debo adoptar</strong> para no poner en riesgo a un futuro paciente?</div>
           </div>
         </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚡ Cuándo es el modo adecuado</div>
-            <div class="d-subcat-desc">Tareas bien definidas con criterios de éxito claros, donde el objetivo es eficiencia y velocidad: redactar un correo de seguimiento, resumir un artículo largo, formatear una lista de referencias o generar opciones iniciales para una tarea.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚠️ Riesgo principal en el aprendizaje</div>
-            <div class="d-subcat-desc">En contextos educativos, la automatización sin reflexión previa es el mayor enemigo del aprendizaje profundo. Si delegas automáticamente una tarea académica a la IA sin definir primero qué quieres aprender, estás automatizando en lugar de aumentar.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🩺 Ejemplos en medicina</div>
-            <div class="d-subcat-desc">Generar un borrador de correo para un paciente · Resumir los puntos clave de una guía clínica · Formatear una bibliografía · Crear un esquema inicial de una presentación de caso · Traducir un abstract al español.</div>
+        <div class="meta-box" style="background:var(--c-alumnos-l);border-color:#93c5fd;">
+          <div class="meta-box-title" style="color:var(--c-alumnos);">Tres preguntas para hacerte al terminar cualquier tarea asistida por IA</div>
+          <div class="meta-questions">
+            <div class="meta-q">¿Qué he aprendido realmente con esta tarea, más allá del producto entregado?</div>
+            <div class="meta-q">¿Qué haría de forma diferente si tuviera que repetir la actividad?</div>
+            <div class="meta-q">¿Sería capaz de explicar y defender cada parte del contenido sin consultar la IA? Si la respuesta es no, la colaboración no ha contribuido a tu aprendizaje.</div>
           </div>
         </div>
       </div>
-
-      <div class="mode-tab-pane" id="mp-aug" style="background:var(--m-aug-l);">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--m-aug);">2</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(13,110,110,.2);color:var(--m-aug);">Modo 2 · Aumentación ⭐ Óptimo para aprender</div>
-            <div class="d-pane-title">Humano e IA colaboran y co-ejecutan de forma iterativa</div>
-            <div class="d-pane-def">Centrado en potenciar la creatividad y el razonamiento humanos mediante un socio pensante. Implica una interacción dinámica e iterativa. <strong>Es el modo óptimo para el aprendizaje</strong> porque mantienes el papel generador mientras la IA amplifica tus capacidades.</div>
-          </div>
-        </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚡ Cuándo es el modo adecuado</div>
-            <div class="d-subcat-desc">Tareas complejas donde el proceso de pensar es tan valioso como el resultado: escribir un ensayo clínico, desarrollar un diagnóstico diferencial, explorar una decisión difícil, refinar un argumento. La IA actúa como espejo crítico de tu razonamiento.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🔄 Cómo funciona la colaboración</div>
-            <div class="d-subcat-desc">El bucle Description ↔ Discernment está en su máxima expresión aquí. Describes lo que necesitas, evalúas lo que obtienes, ajustas, y en cada iteración el pensamiento se profundiza. Lo que empieza como "ayúdame con este caso" evoluciona hacia un razonamiento clínico más matizado.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🩺 Ejemplos en medicina</div>
-            <div class="d-subcat-desc">Practicar el razonamiento diagnóstico con un tutor socrático · Explorar múltiples perspectivas sobre un dilema ético · Desarrollar y refinar una reflexión clínica · Debate argumentativo para preparar una presentación de caso · Co-redactar una sección de investigación.</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="mode-tab-pane" id="mp-age" style="background:var(--m-age-l);">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--m-age);">3</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(55,48,163,.2);color:var(--m-age);">Modo 3 · Agencia</div>
-            <div class="d-pane-title">El humano configura la IA para actuar de forma autónoma en el futuro</div>
-            <div class="d-pane-def">El humano define las características y el comportamiento futuro de la IA para que ejecute tareas independientemente, incluso para otros usuarios. No se define una tarea específica sino el comportamiento del sistema. Requiere una comprensión sofisticada de las capacidades y los límites de la IA.</div>
-          </div>
-        </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚡ Cuándo es el modo adecuado</div>
-            <div class="d-subcat-desc">Cuando necesitas que la IA actúe de forma repetida con un comportamiento consistente para ti o para otros: configurar un asistente de estudio personalizado, crear un simulador de entrevistas clínicas, diseñar un chatbot de orientación para estudiantes de primer año.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🛡️ Mayor nivel de Diligence requerido</div>
-            <div class="d-subcat-desc">Al configurar un agente que actuará de forma autónoma, las decisiones de diseño tienen consecuencias amplificadas. Debes anticipar comportamientos inesperados, definir límites claros y mantener supervisión. La responsabilidad del humano no desaparece — se eleva.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🩺 Ejemplos en medicina</div>
-            <div class="d-subcat-desc">Configurar un tutor de IA personalizado para preparar el MIR · Diseñar un simulador de pacientes virtuales para practicar anamnesis · Crear un asistente que recuerde tus objetivos de aprendizaje y te haga preguntas sobre ellos · Construir un bot de triaje para preguntas frecuentes de pacientes.</div>
-          </div>
-        </div>
-      </div>
-
     </div>
+
+    <!-- PROFESORES -->
+    <div class="colectivo-block" id="profesores">
+      <button class="colectivo-trigger" onclick="toggleColectivo('profesores')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-profes-l);">🧑‍🏫</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-profes);">Para el profesorado</div>
+          <div class="colectivo-name">Si eres docente o educador médico</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-profes-l);border-left-color:var(--c-profes);">
+          La tentación de prohibir es comprensible pero ineficaz. La IA ya está en el aula. El reto docente ya no es detectar si se usó, sino diseñar experiencias de aprendizaje donde usarla pasivamente no sirva de nada.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Sabiendo que los detectores de IA no son fiables, <strong>¿cómo rediseño mis métodos de evaluación para calificar el «proceso» de aprendizaje</strong> —borradores, historiales de prompts, defensas orales— en lugar del documento final?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text"><strong>¿Cómo integro la IA como un «andamiaje» en mis clases</strong> —inspiración, guía, interlocutor— sin robarles a los alumnos la «lucha productiva» que necesitan para construir esquemas mentales profundos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text"><strong>¿Cómo enseño alfabetización en IA</strong> para que mis alumnos sepan distinguir cuándo deben automatizar una tarea y cuándo deben colaborar activamente con la tecnología para aumentar sus propias capacidades?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Al encargar un trabajo, <strong>¿cuál es el propósito educativo y qué competencias de razonamiento, transversales o clínicas pretendo desarrollar</strong> en el estudiante? ¿Tiene sentido esa tarea en un mundo con IA?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Ante la rápida adopción tecnológica, <strong>¿debemos innovar primero o validar primero</strong> el uso de estas herramientas? ¿Cuál será el impacto a largo plazo en las habilidades de los futuros médicos?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTITUCIONES -->
+    <div class="colectivo-block" id="instituciones">
+      <button class="colectivo-trigger" onclick="toggleColectivo('instituciones')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-inst-l);">🏛️</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-inst);">Para las instituciones</div>
+          <div class="colectivo-name">Si eres responsable académico o institucional</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-inst-l);border-left-color:var(--c-inst);">
+          Las instituciones tienen la doble responsabilidad de proteger las competencias fundamentales de sus graduados y garantizar que la adopción de la IA no amplíe las brechas de desigualdad existentes. La gobernanza llega tarde cuando reacciona; llega a tiempo cuando anticipa.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text"><strong>¿Cuáles son las competencias clínicas innegociables</strong> que debemos garantizar que cada graduado domine de forma autónoma, incluso cuando los sistemas de IA no estén disponibles?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">En lugar de la simple prohibición, <strong>¿cómo construimos un marco de gobernanza institucional</strong> con normas claras sobre el uso apropiado, la privacidad y la supervisión de la IA en todo el currículo?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Ante la aparición de herramientas de pago y estudiantes con distintos niveles de habilidad digital, <strong>¿qué medidas proactivas tomamos para cerrar la brecha de recursos</strong> y garantizar la equidad educativa?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Al utilizar el rastro de datos de estudiantes y pacientes para analíticas de aprendizaje, <strong>¿cómo protegemos la privacidad y la propiedad real de sus datos</strong>? ¿Tienen los alumnos derecho a reclamar la propiedad de sus datos académicos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Si el uso de datos de estudiantes incrementa el valor y los ingresos de la institución, <strong>¿tenemos el derecho ético de utilizarlos sin restitución</strong>, o deberían los alumnos recibir algún tipo de recompensa por ello?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     3. LAS 4D — PESTAÑAS
-═══════════════════════════════ -->
-<section class="section" id="4d">
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     RECURSOS
+══════════════════════════ -->
+<section class="recursos-section">
   <div class="container">
-    <div class="section-eyebrow">Marco de competencias</div>
-    <h2 class="section-title">Las cuatro competencias: las 4D</h2>
-    <p class="section-lead">Cuatro competencias interconectadas que, combinadas, crean la fluidez en IA. Selecciona cada una para explorar su definición y sus subcategorías.</p>
-
-    <div class="d-tabs-nav" id="dTabsNav">
-      <button class="d-tab-btn active" data-d="1" onclick="switchD(this,'dp-1')">
-        <span class="d-letter-badge" style="background:var(--d1-l);color:var(--d1);">D</span>Delegation
-      </button>
-      <button class="d-tab-btn" data-d="2" onclick="switchD(this,'dp-2')">
-        <span class="d-letter-badge" style="background:var(--d2-l);color:var(--d2);">D</span>Description
-      </button>
-      <button class="d-tab-btn" data-d="3" onclick="switchD(this,'dp-3')">
-        <span class="d-letter-badge" style="background:var(--d3-l);color:var(--d3);">D</span>Discernment
-      </button>
-      <button class="d-tab-btn" data-d="4" onclick="switchD(this,'dp-4')">
-        <span class="d-letter-badge" style="background:var(--d4-l);color:var(--d4);">D</span>Diligence
-      </button>
+    <div class="recursos-intro">
+      <div class="recursos-eyebrow">Cinco recursos para profundizar</div>
+      <h2 class="recursos-title">Algunas herramientas que pueden<br>ayudarte a reflexionar</h2>
+      <p class="recursos-lead">Hay muchas más, pero estos recursos están seleccionados por su rigor y su utilidad práctica. No es necesario leerlos todos: elige el que más conecta con las preguntas que te has planteado.</p>
     </div>
-    <div class="d-tabs-body" id="dTabsBody">
 
-      <div class="d-tab-pane active" id="dp-1">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--d1);">D</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(45,106,79,.2);color:var(--d1);">Competencia 1 · Delegation</div>
-            <div class="d-pane-title">Decidir qué hacemos nosotros, qué hace la IA y qué hacemos juntos</div>
-            <div class="d-pane-def">Identificar cuándo y cómo usar la IA de forma efectiva, entendiendo sus capacidades y limitaciones para tomar decisiones informadas sobre automatización, aumentación o agencia.</div>
-          </div>
-        </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">🎯 Conciencia del problema (Problem Awareness)</div>
-            <div class="d-subcat-desc">Antes de abrir la IA: ¿qué estoy intentando conseguir realmente? Clarificar el objetivo es el punto de partida de toda colaboración fluida. Sin claridad del objetivo, es fácil derivar y perder el norte. Tu comprensión del problema es el fundamento de la fluidez.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🖥️ Conciencia de plataforma (Platform Awareness)</div>
-            <div class="d-subcat-desc">No todos los sistemas de IA son iguales. Algunos son excelentes en razonamiento complejo, otros están optimizados para el aprendizaje. Evaluar las herramientas según los requisitos del proyecto, el contexto clínico, la privacidad y las necesidades regulatorias.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚖️ Delegación de tareas (Task Delegation)</div>
-            <div class="d-subcat-desc">Dividir el trabajo entre humano e IA para aprovechar los puntos fuertes de cada uno. Los humanos aportan creatividad, juicio y contexto del mundo real. La IA aporta velocidad, consistencia y capacidad de procesar grandes volúmenes de información.</div>
-          </div>
-        </div>
-      </div>
+    <div class="recursos-list">
 
-      <div class="d-tab-pane" id="dp-2">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--d2);">D</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(29,78,137,.2);color:var(--d2);">Competencia 2 · Description</div>
-            <div class="d-pane-title">Describir con eficacia lo que necesitas de la IA</div>
-            <div class="d-pane-def">Comunicar ideas, requisitos y restricciones a los sistemas de IA para obtener los comportamientos y resultados deseados. Más que memorizar prompts, es como mantener una conversación con un colaborador.</div>
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/ocho_roles_ia/" target="_blank" rel="noopener">
+        <div class="recurso-num">1</div>
+        <div class="recurso-icon" style="background:#ede9fe;">🎭</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Mollick & Mollick · Ocho roles pedagógicos</div>
+          <div class="recurso-title">Los ocho roles de la IA en el aula</div>
+          <div class="recurso-desc">Ideal para alumnos que quieran descubrir otras formas de usar la IA que mejoren su rendimiento sin perder su papel protagonista: tutor socrático, mentor, entrenador, compañero de estudio, abogado del diablo y más.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
           </div>
         </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">📦 Descripción del producto (Product Description)</div>
-            <div class="d-subcat-desc">Describir qué quieres en el resultado final. Cuanto más detallado mejor: extensión, mensajes clave, audiencia, formato, estilo. No digas solo "necesito escribir un correo": especifica a quién, para qué, en qué tono y con qué estructura.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">⚙️ Descripción del proceso (Process Description)</div>
-            <div class="d-subcat-desc">Describir cómo debe abordar la IA tu solicitud. Imagina que estás instruyendo a otra persona: "piensa paso a paso", "considera múltiples perspectivas", "empieza por los puntos más importantes". Esto guía el razonamiento de la IA para un resultado más alineado con tu visión.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🎭 Descripción del rendimiento (Performance Description)</div>
-            <div class="d-subcat-desc">Definir cómo quieres que se comporte la IA durante la interacción. ¿Necesitas un editor crítico que desafíe tus ideas? ¿Un tutor socrático que te haga preguntas? ¿Un brainstorming de apoyo? Tú defines el rol. Tú moldeas cómo responde tu asistente de IA.</div>
-          </div>
-        </div>
-      </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
 
-      <div class="d-tab-pane" id="dp-3">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--d3);">D</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(123,45,139,.2);color:var(--d3);">Competencia 3 · Discernment</div>
-            <div class="d-pane-title">Evaluar con criterio lo que la IA produce y cómo se comporta</div>
-            <div class="d-pane-def">Tener buen juicio sobre lo que produce la IA y saber cómo adaptar y ajustar en consecuencia. El discernimiento protege contra los errores y abre nuevas formas creativas de alcanzar los objetivos.</div>
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/diez_recomendaciones_CyL/" target="_blank" rel="noopener">
+        <div class="recurso-num">2</div>
+        <div class="recurso-icon" style="background:#fce7f3;">📋</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">UVa · USAL · RevEspEduMed 2026</div>
+          <div class="recurso-title">10 recomendaciones para escribir con IA</div>
+          <div class="recurso-desc">Para alumnos e instituciones: cómo dejar de usar la IA pasivamente y convertirla en un asistente que potencia tu aprendizaje sin sustituirte. Incluye checklist interactivo y orientaciones para el profesorado.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
           </div>
         </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">📋 Discernimiento del producto (Product Discernment)</div>
-            <div class="d-subcat-desc">Evaluar la calidad de lo que crea la IA: ¿es la información precisa? ¿Las sugerencias ayudan realmente? Pero también: ¿la IA te mostró algo que no habías considerado? No solo se trata de cazar errores: también de abrirse a nuevas perspectivas.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🔍 Discernimiento del proceso (Process Discernment)</div>
-            <div class="d-subcat-desc">Examinar cómo llegó la IA al resultado. ¿Consideró todos los factores relevantes? ¿Hizo suposiciones razonables? ¿Siguió pasos lógicos? Entender el razonamiento de la IA te ayuda a confiar en los buenos resultados y detectar los problemas.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🎯 Discernimiento del rendimiento (Performance Discernment)</div>
-            <div class="d-subcat-desc">Evaluar cómo se comportó la IA durante la interacción: ¿fue útil de la forma que necesitabas? ¿Mantuvo el rol que le pediste? ¿Te desafió cuando era apropiado? Esta conciencia te ayuda a ajustar las interacciones futuras para mejorar la colaboración.</div>
-          </div>
-        </div>
-      </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
 
-      <div class="d-tab-pane" id="dp-4">
-        <div class="d-pane-head">
-          <div class="d-pane-letter" style="color:var(--d4);">D</div>
-          <div class="d-pane-intro">
-            <div class="d-pane-tag" style="background:rgba(156,51,34,.2);color:var(--d4);">Competencia 4 · Diligence</div>
-            <div class="d-pane-title">Asumir la responsabilidad de cómo usamos la IA y de lo que creamos con ella</div>
-            <div class="d-pane-def">Uso responsable de la IA, incluyendo consideraciones éticas, transparencia sobre el uso de IA y responsabilidad sobre los productos finales. No es burocracia: es usar la IA de forma que puedas sentirte bien y defender.</div>
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/AI_Fluency/" target="_blank" rel="noopener">
+        <div class="recurso-num">3</div>
+        <div class="recurso-icon" style="background:#d8f3dc;">🔷</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Anthropic Academy · Marco de competencias</div>
+          <div class="recurso-title">AI Fluency · Las 4 competencias esenciales</div>
+          <div class="recurso-desc">Para desarrollar las competencias que hacen que la IA trabaje contigo, no por ti. De la delegación a la aumentación: qué significa colaborar <em>con</em> la IA en lugar de dejar que trabaje <em>en tu lugar</em>.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
           </div>
         </div>
-        <div class="d-subcats">
-          <div class="d-subcat">
-            <div class="d-subcat-title">🛡️ Diligencia en la creación (Creation Diligence)</div>
-            <div class="d-subcat-desc">Seleccionar conscientemente qué sistemas de IA usar y cómo interactuar con ellos. Al elegir un asistente, considera la privacidad, la seguridad y la adecuación a tu contexto específico. Sé consciente de los sesgos y de los impactos potenciales en terceros.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">🔍 Diligencia en la transparencia (Transparency Diligence)</div>
-            <div class="d-subcat-desc">Ser honesto sobre cómo trabajaste con la IA. Tus profesores, compañeros de equipo y futuros empleadores merecen saber cuándo la IA te ayudó y cómo. Documentar la interacción con la IA es en sí mismo una habilidad profesional que se construye con la práctica.</div>
-          </div>
-          <div class="d-subcat">
-            <div class="d-subcat-title">✅ Diligencia en el despliegue (Deployment Diligence)</div>
-            <div class="d-subcat-desc">Tomar plena responsabilidad de lo que creamos con la IA: verificar la precisión, garantizar la idoneidad y asumir la responsabilidad de lo que ponemos en el mundo. La IA puede redactar el correo, pero tú lo envías. La IA puede sugerir ideas, pero tú decides cuáles usar. Siempre somos responsables del resultado final.</div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/Macy_Foundation_2025/" target="_blank" rel="noopener">
+        <div class="recurso-num">4</div>
+        <div class="recurso-icon" style="background:#dbeafe;">📄</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Josiah Macy Jr. Foundation · Academic Medicine 2025</div>
+          <div class="recurso-title">Informe Macy Foundation · Del hype a la realidad</div>
+          <div class="recurso-desc">Una visión completa del panorama global: qué dice la evidencia sobre la IA en educación médica y cómo abordar sus retos. Basado en 455 artículos y 25 entrevistas con innovadores en primera línea.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
           </div>
         </div>
-      </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/BEME_2025/" target="_blank" rel="noopener">
+        <div class="recurso-num">5</div>
+        <div class="recurso-icon" style="background:#fef3c7;">🔬</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">BEME Guide No. 84 · Medical Teacher 2024</div>
+          <div class="recurso-title">Guía BEME · La revisión de alcance más completa</div>
+          <div class="recurso-desc">278 estudios resumidos y mapeados: dónde está realmente la IA en la educación médica, qué funciona, qué no, y el marco FACETS para investigar y reportar con rigor.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
 
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     4. BUCLE Description+Discernment
-═══════════════════════════════ -->
-<section class="section" id="bucle">
-  <div class="container">
-    <div class="section-eyebrow">La sinergia central</div>
-    <h2 class="section-title">El bucle Description ↔ Discernment</h2>
-    <p class="section-lead">Description y Discernment trabajan juntas en un bucle de mejora continua. Describes lo que quieres, disciernes lo que obtienes, y luego ajustas y refinas tu descripción. Es la esencia de la colaboración fluida con la IA.</p>
+<div class="divider"></div>
 
-    <div class="loop-wrap">
-      <div class="loop-diagram">
-        <div class="loop-node blue">
-          <div class="loop-node-letter" style="color:var(--d2);">D</div>
-          <div class="loop-node-title">Description</div>
-          <div class="loop-node-sub">Describir lo que necesito</div>
-        </div>
-        <div class="loop-arrow">⇄</div>
-        <div class="loop-node violet">
-          <div class="loop-node-letter" style="color:var(--d3);">D</div>
-          <div class="loop-node-title">Discernment</div>
-          <div class="loop-node-sub">Evaluar lo que obtengo</div>
-        </div>
-      </div>
-
-      <div class="loop-cols">
-        <div>
-          <div class="loop-col-title" style="color:var(--d2);">Description opera en 3 niveles</div>
-          <div class="loop-items">
-            <div class="loop-item" style="background:#dbeafe;">
-              <div class="loop-item-icon" style="background:rgba(29,78,137,.15);">📦</div>
-              <div><div class="loop-item-title">Producto</div><div class="loop-item-desc">¿Qué quiero en el resultado final? Formato, extensión, audiencia, estilo.</div></div>
-            </div>
-            <div class="loop-item" style="background:#dbeafe;">
-              <div class="loop-item-icon" style="background:rgba(29,78,137,.15);">⚙️</div>
-              <div><div class="loop-item-title">Proceso</div><div class="loop-item-desc">¿Cómo debe abordar la IA mi solicitud? "Piensa paso a paso", "considera múltiples perspectivas".</div></div>
-            </div>
-            <div class="loop-item" style="background:#dbeafe;">
-              <div class="loop-item-icon" style="background:rgba(29,78,137,.15);">🎭</div>
-              <div><div class="loop-item-title">Rendimiento</div><div class="loop-item-desc">¿Cómo quiero que se comporte la IA conmigo? ¿Como editor crítico, tutor socrático, brainstormer?</div></div>
-            </div>
-          </div>
-        </div>
-        <div>
-          <div class="loop-col-title" style="color:var(--d3);">Discernment opera en 3 niveles</div>
-          <div class="loop-items">
-            <div class="loop-item" style="background:#f3e8ff;">
-              <div class="loop-item-icon" style="background:rgba(123,45,139,.15);">📋</div>
-              <div><div class="loop-item-title">Producto</div><div class="loop-item-desc">¿La información es precisa? ¿Las sugerencias ayudan? ¿La IA me mostró algo nuevo?</div></div>
-            </div>
-            <div class="loop-item" style="background:#f3e8ff;">
-              <div class="loop-item-icon" style="background:rgba(123,45,139,.15);">🔍</div>
-              <div><div class="loop-item-title">Proceso</div><div class="loop-item-desc">¿Cómo llegó la IA al resultado? ¿Consideró todos los factores? ¿Fue el razonamiento sólido?</div></div>
-            </div>
-            <div class="loop-item" style="background:#f3e8ff;">
-              <div class="loop-item-icon" style="background:rgba(123,45,139,.15);">🎯</div>
-              <div><div class="loop-item-title">Rendimiento</div><div class="loop-item-desc">¿Fue útil de la forma que necesitaba? ¿Mantuvo el rol pedido? ¿Me desafió cuando era apropiado?</div></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div style="margin-top:20px;padding:16px;background:var(--cream-2);border-radius:var(--r-md);border:1px solid var(--line);">
-        <p style="font-size:14px;color:var(--ink-soft);line-height:1.65;">Este bucle iterativo es donde se desarrolla la verdadera fluidez en IA. Lo que empieza como "ayúdame a pensar en ideas para mi caso clínico" evoluciona hacia un pensamiento más matizado sobre estructura, argumentos y evidencia. El bucle transforma la IA de una herramienta que sigue instrucciones en un socio que te ayuda a pensar y alcanzar mejor tus objetivos.</p>
-      </div>
+<!-- ══════════════════════════
+     CIERRE
+══════════════════════════ -->
+<section class="cierre">
+  <div class="container cierre-inner">
+    <p class="cierre-quote">
+      «El futuro de la educación médica no lo están construyendo quienes tienen las <em>"respuestas"</em>,<br>sino quienes hacen las <em>"preguntas correctas"</em>.»
+    </p>
+    <p class="cierre-attr">EduMed · UVa · Unidad de Educación Médica, Facultad de Medicina, Universidad de Valladolid</p>
+    <div class="cierre-credits">
+      Los recursos de esta página se basan en evidencia científica publicada y están adaptados<br>
+      con fines educativos para estudiantes y profesionales de la medicina.<br>
+      <strong>Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</strong>
     </div>
   </div>
 </section>
 
-<!-- ═══════════════════════════════
-     5. AI COMO SOCIO DE APRENDIZAJE
-═══════════════════════════════ -->
-<section class="section" id="aprendizaje">
-  <div class="container">
-    <div class="section-eyebrow">Aplicación práctica 1</div>
-    <h2 class="section-title">La IA como socio de aprendizaje</h2>
-    <p class="section-lead">Hay una diferencia fundamental entre usar la IA para hacer el trabajo y usarla para hacer el trabajo mejor y aprender realmente. Toca cada tarjeta para explorar cómo aplicar las 4D en el aprendizaje.</p>
-
-    <div class="choice-intro">
-      <span class="choice-progress">Estrategia <span id="learn-cur">1</span> de <span id="learn-tot">5</span></span>
-      <span style="font-size:13px;color:var(--muted);">Toca para ver cómo aplicarlo</span>
-    </div>
-    <div class="choice-stack" id="learnStack">
-
-      <button class="choice-card" data-idx="0" style="--card-tint:#d8f3dc;--card-ink:#2d6a4f;">
-        <div class="choice-inner">
-          <div class="choice-face choice-front">
-            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Delegation en el aprendizaje</span><span class="choice-num">1</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">🎯</div><p class="choice-q">Antes de abrir la IA: ¿qué estoy tratando de aprender?</p></div>
-            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo aplicarlo</span>
-          </div>
-          <div class="choice-face choice-back">
-            <div><span class="choice-back-label">Conciencia del objetivo de aprendizaje</span><p class="choice-back-text">Antes de llamar a la IA, pregúntate: ¿qué estoy intentando aprender? ¿Cuál es el propósito de este trabajo?</p><ul class="choice-back-list"><li>Si el objetivo es mejorar tu escritura argumentativa, no pidas a la IA que escriba tus argumentos — pídele que sea tu compañero de debate</li><li>Si el objetivo es entender un concepto clínico, no pidas la respuesta — pídele que te haga preguntas sobre él</li><li>La IA que usa el modo automatización sin reflexión previa es el mayor enemigo del aprendizaje profundo</li></ul></div>
-            <span class="choice-hint">Toca de nuevo para volver</span>
-          </div>
-        </div>
-      </button>
-
-      <button class="choice-card" data-idx="1" style="--card-tint:#dbeafe;--card-ink:#1d4e89;">
-        <div class="choice-inner">
-          <div class="choice-face choice-front">
-            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Description en el aprendizaje</span><span class="choice-num">2</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">💬</div><p class="choice-q">Describe para aprender, no para obtener respuestas</p></div>
-            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo aplicarlo</span>
-          </div>
-          <div class="choice-face choice-back">
-            <div><span class="choice-back-label">Steering para el aprendizaje</span><p class="choice-back-text">No todos los sistemas de IA están diseñados para el aprendizaje por defecto, pero una buena descripción puede orientar su comportamiento.</p><ul class="choice-back-list"><li>«Actúa como tutor socrático: hazme preguntas que guíen mi razonamiento en lugar de darme la respuesta»</li><li>«Explícame este concepto de fisiopatología como si lo discutieras con un residente de primer año»</li><li>«Cuando yo responda, evalúa mi razonamiento clínico e identifica lagunas, no me des la solución directamente»</li></ul></div>
-            <span class="choice-hint">Toca de nuevo para volver</span>
-          </div>
-        </div>
-      </button>
-
-      <button class="choice-card" data-idx="2" style="--card-tint:#f3e8ff;--card-ink:#7b2d8b;">
-        <div class="choice-inner">
-          <div class="choice-face choice-front">
-            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Discernment en el aprendizaje</span><span class="choice-num">3</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">🔍</div><p class="choice-q">¿Estás aprendiendo de verdad o solo siguiendo la corriente?</p></div>
-            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo aplicarlo</span>
-          </div>
-          <div class="choice-face choice-back">
-            <div><span class="choice-back-label">El test del aprendizaje real</span><p class="choice-back-text">El discernimiento en el aprendizaje va más allá de verificar errores: implica ser honesto sobre si la interacción te está acercando a tu objetivo.</p><ul class="choice-back-list"><li>¿Puedes explicar lo que aprendiste a otra persona?</li><li>¿Podrías resolver un problema similar sin la IA?</li><li>¿Entiendes por qué algo funciona, no solo que funciona?</li><li>Si la respuesta a estas preguntas es "no", la IA te está sustituyendo, no aumentando</li></ul></div>
-            <span class="choice-hint">Toca de nuevo para volver</span>
-          </div>
-        </div>
-      </button>
-
-      <button class="choice-card" data-idx="3" style="--card-tint:#fee2e2;--card-ink:#9c3322;">
-        <div class="choice-inner">
-          <div class="choice-face choice-front">
-            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">Diligence en el aprendizaje</span><span class="choice-num">4</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">✅</div><p class="choice-q">Integridad académica: usa la IA que tu institución permite</p></div>
-            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver cómo aplicarlo</span>
-          </div>
-          <div class="choice-face choice-back">
-            <div><span class="choice-back-label">Responsabilidad en el aprendizaje</span><p class="choice-back-text">La diligencia en el aprendizaje tiene tres dimensiones prácticas.</p><ul class="choice-back-list"><li><strong>Creación:</strong> usa los sistemas de IA que tu institución permite y sigue sus políticas. Estas políticas suelen estar diseñadas pensando en tu aprendizaje.</li><li><strong>Transparencia:</strong> documenta cómo interactuaste con la IA. Es una habilidad en sí misma y te ayuda a reflexionar sobre tu proceso.</li><li><strong>Despliegue:</strong> verifica siempre la información de la IA en fuentes primarias. Eres responsable de lo que presentas.</li></ul></div>
-            <span class="choice-hint">Toca de nuevo para volver</span>
-          </div>
-        </div>
-      </button>
-
-      <button class="choice-card" data-idx="4" style="--card-tint:#fef3c7;--card-ink:#b45309;">
-        <div class="choice-inner">
-          <div class="choice-face choice-front">
-            <div><div style="display:flex;justify-content:space-between;align-items:flex-start;"><span class="choice-eyebrow">La lucha productiva</span><span class="choice-num">5</span></div><div style="font-size:2.5rem;margin:10px 0 8px;">💪</div><p class="choice-q">La frustración de estar atascado es tu cerebro construyendo conexiones nuevas</p></div>
-            <span class="choice-hint"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>Toca para ver más</span>
-          </div>
-          <div class="choice-face choice-back">
-            <div><span class="choice-back-label">El valor del esfuerzo</span><p class="choice-back-text">No es el camino fácil, pero es el camino que realmente te prepara para el futuro.</p><ul class="choice-back-list"><li>El momento en que te sientes bloqueado es literalmente tu cerebro construyendo nuevas rutas cognitivas</li><li>La IA puede ayudarte a deshacer esos nudos de una forma que te haga aprender</li><li>Imagínate en un examen sin IA, en una entrevista clínica, o tomando una decisión con consecuencias reales para un paciente — la fluidez con IA empieza con saber cuándo no depender de ella</li><li>Confía en ti mismo: sabes cuándo algo es comprensión genuina versus seguir la corriente</li></ul></div>
-            <span class="choice-hint">Toca de nuevo para volver</span>
-          </div>
-        </div>
-      </button>
-
-    </div>
-    <div class="choice-controls">
-      <button class="choice-ctrl" id="learnPrev"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4L6 9l5 5"/></svg></button>
-      <button class="choice-ctrl flip" id="learnFlip"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M3 9a6 6 0 1 0 6-6"/><path d="M3 4v5h5"/></svg> Girar</button>
-      <button class="choice-ctrl" id="learnNext"><svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l5 5-5 5"/></svg></button>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════
-     6. AI EN ORIENTACIÓN PROFESIONAL
-═══════════════════════════════ -->
-<section class="section" id="carrera">
-  <div class="container">
-    <div class="section-eyebrow">Aplicación práctica 2</div>
-    <h2 class="section-title">La IA en la planificación de carrera</h2>
-    <p class="section-lead">La clave no es que la IA genere tu CV por ti — eso produce contenido genérico que los reclutadores detectan inmediatamente. La IA fluida en la búsqueda de empleo te ayuda a desarrollar <em>tu</em> estrategia de carrera.</p>
-    <div class="career-grid">
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--d1-l);">🗺️</div>
-        <div><div class="career-title">Exploración de rutas profesionales</div><div class="career-desc">Preguntar a la IA: "¿Qué roles emergentes en medicina de precisión combinan bioinformática con práctica clínica?" o "¿Qué carreras usan habilidades similares a la medicina pero con mayor flexibilidad horaria?" Conecta tu trasfondo con oportunidades que no habrías considerado.</div><span class="career-badge" style="background:var(--d1-l);color:var(--d1);">Delegation</span></div>
-      </div>
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--d2-l);">🔎</div>
-        <div><div class="career-title">Análisis de brechas de habilidades</div><div class="career-desc">"Quiero ser especialista en salud digital. ¿Qué habilidades buscan realmente los empleadores frente a lo que enseñan los programas?" La IA puede investigar en profundidad y sintetizar lo que tú tardarías días en encontrar.</div><span class="career-badge" style="background:var(--d2-l);color:var(--d2);">Description</span></div>
-      </div>
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--m-aug-l);">🧑‍💼</div>
-        <div><div class="career-title">Desarrollo de habilidades con IA como coach</div><div class="career-desc">"Soy residente de cardiología y necesito mejorar mis habilidades de comunicación con pacientes sobre pronósticos difíciles. Créame escenarios de práctica con pacientes complejos y dame feedback específico." La IA como entrenador, no como sustituto.</div><span class="career-badge" style="background:var(--m-aug-l);color:var(--m-aug);">Aumentación</span></div>
-      </div>
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--d3-l);">🎤</div>
-        <div><div class="career-title">Preparación para entrevistas</div><div class="career-desc">Pedir a la IA que simule ser un entrevistador de un hospital o programa específico y te lance preguntas desafiantes sobre casos clínicos o situaciones éticas. La IA puede desafiarte con preguntas inesperadas que los entrevistadores reales usarán.</div><span class="career-badge" style="background:var(--d3-l);color:var(--d3);">Discernment</span></div>
-      </div>
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--d4-l);">📝</div>
-        <div><div class="career-title">Materiales de candidatura auténticos</div><div class="career-desc">La IA puede ayudarte a identificar tus habilidades transferibles, sugerir ángulos únicos para tu carta de presentación o pulir tu CV — pero el contenido debe ser tuyo. Tu experiencia clínica, tus valores, tus decisiones son lo que no puede replicar ningún modelo.</div><span class="career-badge" style="background:var(--d4-l);color:var(--d4);">Diligence</span></div>
-      </div>
-      <div class="career-item">
-        <div class="career-icon" style="background:var(--cream-2);">🌟</div>
-        <div><div class="career-title">La fluidez en IA ES una habilidad de carrera</div><div class="career-desc">No la ocultes: la fluidez con IA se está convirtiendo en una competencia profesional valiosa. Los empleadores quieren personas que sepan trabajar con IA de forma efectiva — exactamente lo que estás aprendiendo aquí. Añádelo a tu CV.</div><span class="career-badge" style="background:var(--cream-2);color:var(--muted);">Competencia transversal</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════
-     7. HUMAN IN THE LOOP
-═══════════════════════════════ -->
-<section class="section" id="hitl">
-  <div class="container">
-    <div class="section-eyebrow">Compromiso personal</div>
-    <h2 class="section-title">Ser el "human in the loop"</h2>
-    <p class="section-lead">En toda interacción con IA, el humano es quien toma las decisiones y lleva el timón. No es un término técnico abstracto: es una actitud que se cultiva activamente.</p>
-    <div class="hitl-list">
-
-      <div class="hitl-item">
-        <div class="hitl-num" style="color:var(--d1);-webkit-text-fill-color:var(--d1);">01</div>
-        <div class="hitl-content">
-          <div class="hitl-title">Tú decides qué preguntar y evalúas si la respuesta tiene sentido</div>
-          <div class="hitl-desc">No eres un receptor pasivo de lo que genera la IA. Tú decides qué preguntar, evalúas si lo que obtienes es bueno, decides si usarlo, y eres quien se hace responsable del resultado final. Esto no es opcional: es el núcleo de la fluidez.</div>
-          <span class="hitl-tag">🎯 Delegation + Discernment</span>
-        </div>
-      </div>
-
-      <div class="hitl-item">
-        <div class="hitl-num" style="color:var(--d2);-webkit-text-fill-color:var(--d2);">02</div>
-        <div class="hitl-content">
-          <div class="hitl-title">Escribe tu compromiso personal con el uso de la IA</div>
-          <div class="hitl-desc">Reflexiona sobre: cuándo involucrarás la IA y cuándo no, cómo quieres usar la IA en tu aprendizaje, cuándo y cómo declararás la ayuda de IA, y cómo mantendrás tus habilidades afiladas incluso con IA disponible. Que sea tu norte, no lo que suena bien.</div>
-          <span class="hitl-tag">✍️ Diligence en práctica</span>
-        </div>
-      </div>
-
-      <div class="hitl-item">
-        <div class="hitl-num" style="color:var(--d3);-webkit-text-fill-color:var(--d3);">03</div>
-        <div class="hitl-content">
-          <div class="hitl-title">Reflexiona continuamente sobre tu práctica</div>
-          <div class="hitl-desc">Los mejores usuarios de IA se hacen preguntas difíciles: ¿está cómo me relaciono con la IA ayudándome a crecer? ¿Estoy desarrollando las habilidades que necesito para mi futuro o solo completando tareas? ¿Estoy siendo honesto sobre el papel de la IA en mi trabajo? ¿Uso la IA de formas alineadas con mis valores?</div>
-          <span class="hitl-tag">🔍 Discernment continuo</span>
-        </div>
-      </div>
-
-      <div class="hitl-item">
-        <div class="hitl-num" style="color:var(--d4);-webkit-text-fill-color:var(--d4);">04</div>
-        <div class="hitl-content">
-          <div class="hitl-title">Tu humanidad es irreemplazable</div>
-          <div class="hitl-desc">Tus talentos específicos, tus experiencias vitales, tu conocimiento clínico, la forma en que ves las cosas, tus relaciones con los pacientes y los colegas — todo esto da forma a cómo entiendes y respondes al mundo de maneras que son completamente tuyas. La IA puede ayudarte a ser más efectivo, pero no puede reemplazar el juicio, la intuición y el cuidado humanos que aportas a cada interacción clínica.</div>
-          <span class="hitl-tag">❤️ La dimensión humana</span>
-        </div>
-      </div>
-
-      <div class="hitl-item">
-        <div class="hitl-num" style="color:var(--d1);-webkit-text-fill-color:var(--d1);">05</div>
-        <div class="hitl-content">
-          <div class="hitl-title">La fluidez en IA es un viaje, no un destino</div>
-          <div class="hitl-desc">A medida que avances en tu carrera médica, encontrarás aplicaciones de IA que todavía no existen. Surgirán nuevos sistemas prácticamente de la noche a la mañana. Pero si has construido una sólida fluidez en IA — si puedes delegar con criterio, describir con claridad, pensar críticamente sobre lo que recibes y actuar con diligencia — estarás preparado para lo que venga.</div>
-          <span class="hitl-tag">🚀 Competencia para el futuro</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</section>
-
-<!-- ═══════════════════════════════
-     8. REFERENCIA
-═══════════════════════════════ -->
-<section class="section" id="referencia">
-  <div class="container">
-    <div class="section-eyebrow">Fuente original</div>
-    <h2 class="section-title">Referencias y licencia</h2>
-    <p class="section-lead">Este recurso educativo está basado íntegramente en los materiales del programa <em>AI Fluency for Students</em> de Anthropic Academy.</p>
-    <div class="refs-block">
-      <div class="ref-item">
-        <div class="ref-num" style="font-size:10px;">4D</div>
-        <div class="ref-body">
-          <p class="ref-cite"><strong>Dakan, R., Feller, J., &amp; Anthropic.</strong> (2025). <em>Framework for AI Fluency</em> (Version 1.5). Released under the CC BY-NC-SA 4.0 license.</p>
-          <a class="ref-doi" href="https://www.anthropic.com/education" target="_blank" rel="noopener">
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
-            Anthropic Academy
-          </a>
-          <div class="cc-badge">
-            <span style="font-size:16px;">🔓</span>
-            <span>Publicado bajo licencia <strong>CC BY-NC-SA 4.0</strong> — Copyright 2025 Rick Dakan, Joseph Feller y Anthropic. Libre para uso educativo no comercial con atribución.</span>
-          </div>
-          <div style="margin-top:20px;display:flex;flex-direction:column;gap:10px;">
-            <div style="font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;">Cursos completos en Anthropic Academy</div>
-            <a href="https://anthropic.skilljar.com/ai-fluency-for-students" target="_blank" rel="noopener" class="ref-doi" style="display:inline-flex;width:fit-content;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
-              AI Fluency for Students
-            </a>
-            <a href="https://anthropic.skilljar.com/ai-fluency-for-educators" target="_blank" rel="noopener" class="ref-doi" style="display:inline-flex;width:fit-content;">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
-              AI Fluency for Educators
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
 <footer class="footer">
   <div class="container">
     <div class="footer-row">
-      <div><strong>EduMed · UVa</strong> — Unidad de Educación Médica, Facultad de Medicina, Universidad de Valladolid</div>
-      <div>Basado en Dakan, Feller &amp; Anthropic (2025) · AI Fluency Framework v1.5 · CC BY-NC-SA 4.0</div>
+      <div>EduMed · UVa — Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</div>
+      <div>IA en Educación Médica · 2026</div>
     </div>
   </div>
 </footer>
 
 <script>
-function scrollToSection(id){const el=document.getElementById(id);if(el)el.scrollIntoView({behavior:'smooth',block:'start'});}
-
-// Pestañas modos
-function switchMode(btn,paneId){
-  document.querySelectorAll('.mode-tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.mode-tab-pane').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(paneId).classList.add('active');
-  const btns=Array.from(document.querySelectorAll('.mode-tab-btn'));
-  const idx=btns.indexOf(btn);
-  const body=document.getElementById('modesTabsBody');
-  body.style.borderRadius=idx===0?'0 var(--r-lg) var(--r-lg) var(--r-lg)':(idx===btns.length-1?'var(--r-lg) 0 var(--r-lg) var(--r-lg)':'var(--r-lg)');
-}
-
-// Pestañas 4D
-function switchD(btn,paneId){
-  document.querySelectorAll('.d-tab-btn').forEach(b=>b.classList.remove('active'));
-  document.querySelectorAll('.d-tab-pane').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(paneId).classList.add('active');
-  const btns=Array.from(document.querySelectorAll('.d-tab-btn'));
-  const idx=btns.indexOf(btn);
-  const body=document.getElementById('dTabsBody');
-  const last=btns.length-1;
-  body.style.borderRadius=idx===0?'0 var(--r-lg) var(--r-lg) var(--r-lg)':(idx===last?'var(--r-lg) 0 var(--r-lg) var(--r-lg)':'var(--r-lg)');
-}
-
-// Flashcards aprendizaje
-(function(){
-  const stack=document.getElementById('learnStack');
-  if(!stack)return;
-  const cards=Array.from(stack.querySelectorAll('.choice-card'));
-  let cur=0;
-  function update(){
-    cards.forEach(c=>c.classList.remove('visible','flipped'));
-    cards[cur].classList.add('visible');
-    document.getElementById('learn-cur').textContent=cur+1;
-    document.getElementById('learn-tot').textContent=cards.length;
+function toggleColectivo(id) {
+  const block = document.getElementById(id);
+  const wasOpen = block.classList.contains('open');
+  // Cierra todos
+  document.querySelectorAll('.colectivo-block').forEach(b => b.classList.remove('open'));
+  if (!wasOpen) {
+    block.classList.add('open');
+    // Espera a que el cierre del anterior libere espacio antes de hacer scroll
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const top = block.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
   }
-  cards.forEach(c=>c.addEventListener('click',()=>c.classList.toggle('flipped')));
-  document.getElementById('learnPrev').addEventListener('click',()=>{cur=(cur-1+cards.length)%cards.length;update();});
-  document.getElementById('learnNext').addEventListener('click',()=>{cur=(cur+1)%cards.length;update();});
-  document.getElementById('learnFlip').addEventListener('click',()=>cards[cur].classList.toggle('flipped'));
-  update();
-})();
+}
 
-// Nav activa
-const secs=document.querySelectorAll('section[id]');
-const pills=document.querySelectorAll('.nav-pill');
-secs.forEach(s=>new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)pills.forEach(b=>{const oc=b.getAttribute('onclick')||'';b.classList.toggle('active',oc.includes("'"+e.target.id+"'"));});});
-},{rootMargin:'-30% 0px -60% 0px'}).observe(s));
+function openColectivo(id) {
+  setTimeout(() => {
+    const block = document.getElementById(id);
+    if (block) {
+      document.querySelectorAll('.colectivo-block').forEach(b => b.classList.remove('open'));
+      block.classList.add('open');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const top = block.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+    }
+  }, 80);
+}
+
+// Abrir el bloque si se llega con #hash
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#','');
+  if (['alumnos','profesores','instituciones'].includes(hash)) {
+    openColectivo(hash);
+  }
+});
 </script>
 </body>
 </html>
