@@ -1,1 +1,697 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glosario de IA clínica y razonamiento diagnóstico · EduMed UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uva-blue:      #003973;
+      --uva-blue-soft: #1d4f8a;
+      --uva-red:       #c60046;
+      --ink:           #1a1f2e;
+      --ink-soft:      #3d4554;
+      --muted:         #6b7486;
+      --cream:         #faf7f2;
+      --cream-2:       #f3ede3;
+      --paper:         #ffffff;
+      --line:          #e8e1d4;
+      --line-strong:   #d9cfbb;
+      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
+      --e-orange:      #b45309;   --e-orange-l: #fef3c7;
+      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
+      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
+      --e-green:       #166534;   --e-green-l:  #dcfce7;
+      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
+      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+      --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --max: 960px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
 
+    /* ── Barra EduMed ── */
+    .edumed-bar { position: sticky; top: 0; z-index: 100; background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+    .edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
+    .edumed-back:hover { background: #fff; transform: translateX(-1px); }
+    .edumed-back svg { width: 14px; height: 14px; }
+
+    /* ── Hero ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 52px 0 44px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--uva-red); }
+    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); margin-bottom: 14px; }
+    .hero-title em { font-style: italic; color: var(--uva-blue); }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 680px; margin-bottom: 32px; line-height: 1.55; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-badge { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow-sm); }
+    .hero-badge-icon { font-size: 20px; }
+    .hero-badge-text { display: flex; flex-direction: column; }
+    .hero-badge-text span:first-child { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .hero-badge-text span:last-child { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+    /* ── Barra de búsqueda y filtros ── */
+    .toolbar { background: var(--cream); border-bottom: 1px solid var(--line); padding: 16px 0; position: sticky; top: 68px; z-index: 90; }
+    .toolbar-inner { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .search-wrap { position: relative; flex: 1; min-width: 200px; }
+    .search-input { width: 100%; padding: 10px 16px 10px 42px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--paper); font-family: "Inter", sans-serif; font-size: 14px; color: var(--ink); outline: none; transition: border-color .15s, box-shadow .15s; }
+    .search-input:focus { border-color: var(--uva-blue); box-shadow: 0 0 0 3px rgba(0,57,115,.08); }
+    .search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); color: var(--muted); font-size: 16px; pointer-events: none; }
+    .letter-filters { display: flex; flex-wrap: wrap; gap: 4px; }
+    .letter-btn { appearance: none; cursor: pointer; width: 32px; height: 32px; border-radius: var(--r-sm); border: 1px solid var(--line); background: var(--paper); font-family: "Fraunces", serif; font-size: 0.95rem; font-weight: 700; color: var(--muted); transition: all .15s; display: flex; align-items: center; justify-content: center; }
+    .letter-btn:hover { background: var(--cream-2); color: var(--ink); }
+    .letter-btn.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); }
+    .letter-btn.all { width: auto; padding: 0 12px; font-family: "Inter", sans-serif; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+    .count-badge { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+    /* ── Main content ── */
+    main { padding: 32px 0 80px; }
+
+    /* ── Letter group ── */
+    .letter-group { margin-bottom: 32px; }
+    .letter-heading { font-family: "Fraunces", serif; font-size: 2.5rem; font-weight: 700; font-style: italic; color: var(--uva-blue); opacity: .25; line-height: 1; margin-bottom: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+
+    /* ── Term accordion ── */
+    .term-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: box-shadow .2s; margin-bottom: 8px; }
+    .term-item.open { box-shadow: var(--shadow-md); border-color: var(--line-strong); }
+    .term-item.hidden { display: none; }
+
+    .term-trigger { width: 100%; border: 0; background: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 16px 20px; text-align: left; font-family: "Inter", sans-serif; transition: background .15s; }
+    .term-trigger:hover { background: var(--cream); }
+    .term-item.open .term-trigger { background: var(--cream-2); }
+
+    .term-cat-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .term-text { flex: 1; min-width: 0; }
+    .term-name { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); display: block; line-height: 1.2; }
+    .term-sub { font-size: 12px; color: var(--muted); display: block; margin-top: 3px; font-style: italic; }
+    .term-chevron { width: 26px; height: 26px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s, background .2s; }
+    .term-chevron svg { width: 12px; height: 12px; color: var(--muted); }
+    .term-item.open .term-chevron { transform: rotate(180deg); background: var(--uva-blue); border-color: var(--uva-blue); }
+    .term-item.open .term-chevron svg { color: #fff; }
+
+    .term-body { display: none; padding: 0 20px 18px 20px; }
+    .term-item.open .term-body { display: block; }
+    .term-def { font-size: 14px; color: var(--ink-soft); line-height: 1.7; padding-top: 4px; border-top: 1px solid var(--line); padding-top: 14px; }
+
+    /* ── Category dot colors ── */
+    .cat-fallo    { background: var(--e-red); }
+    .cat-estrategia { background: var(--e-indigo); }
+    .cat-sesgo    { background: var(--e-orange); }
+    .cat-flujo    { background: var(--e-teal); }
+    .cat-tecno    { background: var(--e-violet); }
+    .cat-concepto { background: var(--uva-blue); }
+    .cat-etica    { background: var(--e-green); }
+
+    /* ── Legend ── */
+    .legend { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 24px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px; }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+    /* ── No results ── */
+    .no-results { text-align: center; padding: 48px 20px; color: var(--muted); font-size: 15px; display: none; }
+    .no-results.visible { display: block; }
+
+    /* ── Footer ── */
+    .footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .edumed-bar-inner { padding: 10px 14px; }
+      .edumed-wordmark .w1 { font-size: 15px; }
+      .edumed-back { padding: 7px 10px; font-size: 12px; }
+      .hero { padding: 36px 0 28px; }
+      .toolbar { top: 60px; }
+      .letter-btn { width: 28px; height: 28px; font-size: 0.85rem; }
+    }
+    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA EDUMED ── -->
+  <div class="edumed-bar">
+    <div class="edumed-bar-inner">
+      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+        <div class="edumed-wordmark">
+          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+        </div>
+      </a>
+      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+        Volver a DDx_IA
+      </a>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="container">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span>Curso IA y razonamiento clínico · EduMed UVa</span>
+      </div>
+      <h1 class="hero-title">Glosario de<br><em>IA clínica y razonamiento diagnóstico</em></h1>
+      <p class="hero-subtitle">27 términos clave ordenados alfabéticamente. Pulsa cualquier entrada para ver su definición. Usa la búsqueda o los filtros de letra para navegar.</p>
+      <div class="hero-meta">
+        <div class="hero-badge"><div class="hero-badge-icon">📖</div><div class="hero-badge-text"><span>Términos</span><span>27 entradas</span></div></div>
+        <div class="hero-badge"><div class="hero-badge-icon">🔤</div><div class="hero-badge-text"><span>Letras</span><span>A · C · D · E · F · G · I · M · P · R · S · T · V</span></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── TOOLBAR ── -->
+  <div class="toolbar">
+    <div class="container">
+      <div class="toolbar-inner">
+        <div class="search-wrap">
+          <span class="search-icon">🔍</span>
+          <input class="search-input" type="search" id="searchInput" placeholder="Buscar término o definición…" autocomplete="off">
+        </div>
+        <div class="letter-filters" id="letterFilters">
+          <button class="letter-btn all active" onclick="filterLetter('ALL')">Todas</button>
+          <button class="letter-btn" onclick="filterLetter('A')">A</button>
+          <button class="letter-btn" onclick="filterLetter('C')">C</button>
+          <button class="letter-btn" onclick="filterLetter('D')">D</button>
+          <button class="letter-btn" onclick="filterLetter('E')">E</button>
+          <button class="letter-btn" onclick="filterLetter('F')">F</button>
+          <button class="letter-btn" onclick="filterLetter('G')">G</button>
+          <button class="letter-btn" onclick="filterLetter('I')">I</button>
+          <button class="letter-btn" onclick="filterLetter('M')">M</button>
+          <button class="letter-btn" onclick="filterLetter('P')">P</button>
+          <button class="letter-btn" onclick="filterLetter('R')">R</button>
+          <button class="letter-btn" onclick="filterLetter('S')">S</button>
+          <button class="letter-btn" onclick="filterLetter('T')">T</button>
+          <button class="letter-btn" onclick="filterLetter('V')">V</button>
+        </div>
+        <span class="count-badge" id="countBadge">27 términos</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── MAIN ── -->
+  <main>
+    <div class="container">
+
+      <div class="legend">
+        <div class="legend-item"><div class="legend-dot cat-fallo"></div>Modo de fallo</div>
+        <div class="legend-item"><div class="legend-dot cat-sesgo"></div>Sesgo cognitivo</div>
+        <div class="legend-item"><div class="legend-dot cat-estrategia"></div>Estrategia / prompt</div>
+        <div class="legend-item"><div class="legend-dot cat-flujo"></div>Flujo de trabajo</div>
+        <div class="legend-item"><div class="legend-dot cat-tecno"></div>Tecnología / arquitectura</div>
+        <div class="legend-item"><div class="legend-dot cat-concepto"></div>Concepto clínico-cognitivo</div>
+        <div class="legend-item"><div class="legend-dot cat-etica"></div>Ética / gobernanza</div>
+      </div>
+
+      <div id="noResults" class="no-results">No se han encontrado términos que coincidan con tu búsqueda.</div>
+
+      <!-- A -->
+      <div class="letter-group" data-letter="A">
+        <div class="letter-heading">A</div>
+
+        <div class="term-item" data-term="alucinación alucinacion fallo modelo falso inventado bibliografía">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-fallo"></div>
+            <div class="term-text">
+              <span class="term-name">Alucinación</span>
+              <span class="term-sub">Modo de fallo del modelo</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Generación de información falsa, inventada o sin sustento, como síntomas inexistentes en el paciente o citas bibliográficas falsas, presentada con tono de autoridad y coherencia gramatical. Es el fallo más peligroso de los LLM en contextos clínicos porque su aspecto convincente reduce la vigilancia del usuario.</div></div>
+        </div>
+      </div>
+
+      <!-- C -->
+      <div class="letter-group" data-letter="C">
+        <div class="letter-heading">C</div>
+
+        <div class="term-item" data-term="cadena pensamiento cot razonamiento paso a paso auditable diagnóstico">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-estrategia"></div>
+            <div class="term-text">
+              <span class="term-name">Cadena de Pensamiento (CoT)</span>
+              <span class="term-sub">Estrategia de interacción</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Estrategia que obliga al modelo a razonar paso a paso, resumir hallazgos, identificar síndromes y evaluar pros y contras antes de emitir un diagnóstico final. Vuelve su lógica más auditable y suele mejorar la precisión en casos complejos o atípicos.</div></div>
+        </div>
+
+        <div class="term-item" data-term="calibración confianza precisión modelo calibrado seguro">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-concepto"></div>
+            <div class="term-text">
+              <span class="term-name">Calibración</span>
+              <span class="term-sub">Relación entre confianza y precisión</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Grado de ajuste entre la confianza que expresa un sistema y su precisión real. Un modelo mal calibrado puede mostrarse muy seguro cuando se equivoca o parecer dudoso cuando acierta. En clínica, una mala calibración es especialmente peligrosa porque puede llevar al médico a aceptar o rechazar salidas por razones erróneas.</div></div>
+        </div>
+
+        <div class="term-item" data-term="caja blanca negra transparencia opaco razonamiento interpretable">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-concepto"></div>
+            <div class="term-text">
+              <span class="term-name">Caja blanca vs. caja negra</span>
+              <span class="term-sub">Transparencia del razonamiento</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Distinción entre sistemas cuyos pasos y criterios pueden revisarse con claridad (caja blanca) y sistemas cuyo proceso interno resulta opaco para el usuario (caja negra). Ayuda a pensar hasta qué punto una herramienta puede ser realmente supervisada y auditada por el clínico.</div></div>
+        </div>
+      </div>
+
+      <!-- D -->
+      <div class="letter-group" data-letter="D">
+        <div class="letter-heading">D</div>
+
+        <div class="term-item" data-term="deuda cognitiva descarga cognitiva deskilling atrofia habilidades razonamiento delegación">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-etica"></div>
+            <div class="term-text">
+              <span class="term-name">Deuda Cognitiva / Descarga Cognitiva</span>
+              <span class="term-sub">Riesgo formativo y clínico</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Atrofia de las habilidades de razonamiento clínico, la memoria y el pensamiento crítico en el médico o estudiante causada por la delegación prematura del esfuerzo diagnóstico a la máquina. Es uno de los riesgos más importantes del uso irreflexivo de IA en formación médica.</div></div>
+        </div>
+
+        <div class="term-item" data-term="desplazamiento responsabilidad liability shift médico legal">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-etica"></div>
+            <div class="term-text">
+              <span class="term-name">Desplazamiento de responsabilidad clínica</span>
+              <span class="term-sub">Liability shift</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Riesgo de difuminar quién responde por una decisión clínica cuando interviene una herramienta de IA. Aunque la IA participe en el proceso, la validación crítica y la responsabilidad profesional no desaparecen: recaen sobre el clínico que acepta y aplica la recomendación.</div></div>
+        </div>
+      </div>
+
+      <!-- E -->
+      <div class="letter-group" data-letter="E">
+        <div class="letter-heading">E</div>
+
+        <div class="term-item" data-term="efecto einstellung inflexibilidad cognitiva patrones atípicos heurística rigidez">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-concepto"></div>
+            <div class="term-text">
+              <span class="term-name">Efecto Einstellung</span>
+              <span class="term-sub">Inflexibilidad cognitiva</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Fijación del pensamiento debida a patrones estadísticos aprendidos durante el entrenamiento que provoca que el LLM falle o razone rígidamente ante casos clínicos atípicos que exigen abandonar heurísticas comunes. El equivalente en IA del cierre prematuro humano.</div></div>
+        </div>
+
+        <div class="term-item" data-term="equipo rojo red team adversarial crítico hipótesis fricción epistémica">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-estrategia"></div>
+            <div class="term-text">
+              <span class="term-name">Equipo Rojo (Red Team Partner)</span>
+              <span class="term-sub">Estrategia adversarial</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Instrucción que convierte al LLM en un revisor crítico adversarial. Se le pide que cuestione las hipótesis del médico, señale los datos que no encajan y proponga peores escenarios alternativos para generar fricción epistémica y evitar el cierre prematuro.</div></div>
+        </div>
+
+        <div class="term-item" data-term="explicabilidad xai explainable ai interpretable auditar comprensible">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-tecno"></div>
+            <div class="term-text">
+              <span class="term-name">Explicabilidad (XAI)</span>
+              <span class="term-sub">Explainable AI</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Conjunto de métodos orientados a hacer más comprensible cómo llega una IA a una salida. No equivale a exactitud, pero ayuda a revisar si la respuesta es interpretable y si puede ser auditada por el clínico. Los métodos de explicabilidad tienen limitaciones conocidas y no garantizan que el razonamiento visible sea el real.</div></div>
+        </div>
+      </div>
+
+      <!-- F -->
+      <div class="letter-group" data-letter="F">
+        <div class="letter-heading">F</div>
+
+        <div class="term-item" data-term="fine tuning ajuste fino reentrenar modelo adaptar especializado sesgos">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-tecno"></div>
+            <div class="term-text">
+              <span class="term-name">Fine-tuning (ajuste fino)</span>
+              <span class="term-sub">Adaptación de modelos</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Proceso de reentrenar un modelo ya existente con un conjunto de datos más específico para adaptarlo a una tarea, dominio o estilo concretos. Puede aumentar la especialización, pero también introducir sesgos si los datos de ajuste fino son pobres o poco representativos.</div></div>
+        </div>
+      </div>
+
+      <!-- G -->
+      <div class="letter-group" data-letter="G">
+        <div class="letter-heading">G</div>
+
+        <div class="term-item" data-term="generación aumentada recuperación rag pubmed guías evidencia alucinaciones fiabilidad">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-tecno"></div>
+            <div class="term-text">
+              <span class="term-name">Generación Aumentada por Recuperación (RAG)</span>
+              <span class="term-sub">Arquitectura tecnológica</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Arquitectura que conecta a un LLM con bases de datos externas y verificadas, como PubMed, guías clínicas o la historia clínica del paciente, para buscar evidencia actualizada antes de generar una respuesta. Aumenta la fiabilidad y reduce drásticamente las alucinaciones en comparación con los LLM generalistas.</div></div>
+        </div>
+      </div>
+
+      <!-- I -->
+      <div class="letter-group" data-letter="I">
+        <div class="letter-heading">I</div>
+
+        <div class="term-item" data-term="ingeniería prompts estructurado diseñar optimizar instrucciones clínicas">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-estrategia"></div>
+            <div class="term-text">
+              <span class="term-name">Ingeniería de Prompts</span>
+              <span class="term-sub">Proceso estructurado</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Proceso estructurado de diseñar, refinar y optimizar las instrucciones dadas al LLM para guiar su proceso cognitivo y mejorar la precisión y la relevancia de sus respuestas clínicas. Incluye la elección del tipo de prompt, la definición del rol, el contexto clínico y el formato de salida.</div></div>
+        </div>
+
+        <div class="term-item" data-term="instrucción directa zero shot prompting rápido simple factual">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-estrategia"></div>
+            <div class="term-text">
+              <span class="term-name">Instrucción Directa</span>
+              <span class="term-sub">Zero-shot prompting</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Forma de prompting que consiste en formular una petición abierta solicitando un diagnóstico sin ofrecer una estructura previa. Es rápida e intuitiva, pero también la más vulnerable a respuestas genéricas, superficiales o confirmatorias. Adecuada para consultas factuales de bajo riesgo.</div></div>
+        </div>
+
+        <div class="term-item" data-term="ia primero ai first flujo diagnóstico modelo genera hipótesis primero riesgo">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-flujo"></div>
+            <div class="term-text">
+              <span class="term-name">IA-primero (AI-first)</span>
+              <span class="term-sub">Flujo de trabajo diagnóstico</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Estrategia en la que el modelo genera la primera lista de diagnósticos a partir de los datos crudos antes de que el médico establezca su hipótesis. Puede ser útil para ampliar perspectivas en casos atípicos, pero aumenta el riesgo de sesgo de automatización, especialmente en estudiantes o usuarios poco entrenados.</div></div>
+        </div>
+
+        <div class="term-item" data-term="ilusión fluidez apariencia razonamiento elocuencia coherencia exactitud trampa">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-sesgo"></div>
+            <div class="term-text">
+              <span class="term-name">Ilusión de Fluidez</span>
+              <span class="term-sub">Apariencia de razonamiento</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Trampa cognitiva en la que se confunde la excelente elocuencia, coherencia y estructura de un texto generado por la IA con una verdadera exactitud científica. Una respuesta bien redactada puede contener errores graves, alucinaciones o sesgos que pasan desapercibidos precisamente porque el texto parece tan autorizado.</div></div>
+        </div>
+      </div>
+
+      <!-- M -->
+      <div class="letter-group" data-letter="M">
+        <div class="letter-heading">M</div>
+
+        <div class="term-item" data-term="médico bucle human in the loop supervisión responsabilidad autonomía seguro">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-flujo"></div>
+            <div class="term-text">
+              <span class="term-name">Médico en el bucle (Human-in-the-Loop)</span>
+              <span class="term-sub">Modelo de uso seguro</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Arquitectura de trabajo bioéticamente respaldada donde el clínico mantiene la responsabilidad y la autonomía. La IA propone, organiza o cuestiona, pero el médico introduce el caso, revisa la salida, contrasta los errores y toma la decisión final. Es el modelo recomendado tanto en docencia como en práctica clínica.</div></div>
+        </div>
+
+        <div class="term-item" data-term="médico primero human first protocolo sandwich flujo recomendado diferencial primero">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-flujo"></div>
+            <div class="term-text">
+              <span class="term-name">Médico-primero (Human-first / Protocolo Sándwich)</span>
+              <span class="term-sub">Flujo de trabajo recomendado</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Flujo de trabajo seguro en el que el médico elabora y documenta su propio diagnóstico diferencial antes de consultar a la IA. Así protege su esfuerzo cognitivo, reduce el sesgo de automatización y usa la IA como ampliador o revisor, no como punto de partida del razonamiento.</div></div>
+        </div>
+
+        <div class="term-item" data-term="llm modelo lenguaje gran escala texto patrones estadísticos predicción palabras">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-tecno"></div>
+            <div class="term-text">
+              <span class="term-name">Modelo de Lenguaje de Gran Escala (LLM)</span>
+              <span class="term-sub">Tecnología fundamental</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Tipo de inteligencia artificial generativa entrenada con volúmenes masivos de texto que reconoce patrones estadísticos y lingüísticos para predecir palabras y generar respuestas coherentes. No razona causalmente como un humano, sino que produce las continuaciones de texto más probables dada su experiencia de entrenamiento.</div></div>
+        </div>
+      </div>
+
+      <!-- P -->
+      <div class="letter-group" data-letter="P">
+        <div class="letter-heading">P</div>
+
+        <div class="term-item" data-term="privacidad gobernanza datos rgpd normativa ética protección paciente">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-etica"></div>
+            <div class="term-text">
+              <span class="term-name">Privacidad y gobernanza de datos</span>
+              <span class="term-sub">Marco ético y normativo</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Conjunto de normas y medidas que regulan cómo se recogen, almacenan, comparten y protegen los datos clínicos. En el contexto europeo, el RGPD es el marco principal. En el uso de LLM en medicina, implica que nunca deben introducirse datos identificativos del paciente en herramientas externas no certificadas.</div></div>
+        </div>
+      </div>
+
+      <!-- R -->
+      <div class="letter-group" data-letter="R">
+        <div class="letter-heading">R</div>
+
+        <div class="term-item" data-term="razonamiento clínico caja blanca negra proceso diagnóstico pasos revisable opaco">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-concepto"></div>
+            <div class="term-text">
+              <span class="term-name">Razonamiento clínico de caja blanca vs. caja negra</span>
+              <span class="term-sub">Modelo conceptual</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Forma de distinguir entre procesos diagnósticos cuyas premisas, pasos y relaciones pueden revisarse con claridad y procesos que ofrecen una conclusión sin explicar el camino. Aplicado a la IA: un LLM con CoT activo se aproxima más a la caja blanca; un LLM generalista sin estructura de razonamiento explícito se comporta más como caja negra.</div></div>
+        </div>
+      </div>
+
+      <!-- S -->
+      <div class="letter-group" data-letter="S">
+        <div class="letter-heading">S</div>
+
+        <div class="term-item" data-term="sesgo anclaje anchoring bias hipótesis prematura fijación primera impresión">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-sesgo"></div>
+            <div class="term-text">
+              <span class="term-name">Sesgo de Anclaje</span>
+              <span class="term-sub">Anchoring Bias</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Fenómeno cognitivo donde el médico se aferra prematuramente a la primera hipótesis diagnóstica generada, con frecuencia sugerida por la IA, ignorando datos posteriores que la contradicen. Se amplifica cuando el modelo adopta una posición muy segura desde el inicio.</div></div>
+        </div>
+
+        <div class="term-item" data-term="sesgo aquiescencia acquiescence confirmar hipótesis usuario complacer amplificar">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-sesgo"></div>
+            <div class="term-text">
+              <span class="term-name">Sesgo de Aquiescencia</span>
+              <span class="term-sub">Acquiescence Problem</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Tendencia del LLM, diseñado para complacer al usuario, a confirmar de manera pasiva la hipótesis inicial del médico, amplificando sus sesgos en lugar de corregirlos. Hace que el modelo sea especialmente peligroso cuando se usa sin estructura crítica y el clínico ya tiene una hipótesis fuerte.</div></div>
+        </div>
+
+        <div class="term-item" data-term="sesgo automatización automation bias confiar ciegamente sistema automatizado recomendaciones">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-sesgo"></div>
+            <div class="term-text">
+              <span class="term-name">Sesgo de Automatización</span>
+              <span class="term-sub">Automation Bias</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Tendencia de los humanos, incluidos médicos experimentados, a confiar ciegamente en la sugerencia de un sistema automatizado, aceptando recomendaciones de la IA sin someterlas a un análisis crítico. Se agrava con la fatiga decisional, la presión asistencial y la interfaz de uso rápido.</div></div>
+        </div>
+
+        <div class="term-item" data-term="sensibilidad prompt variación salida instrucción fraseo pequeños cambios">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-concepto"></div>
+            <div class="term-text">
+              <span class="term-name">Sensibilidad al prompt</span>
+              <span class="term-sub">Variación de la salida según la instrucción</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Fenómeno por el que pequeños cambios en el orden, el fraseo o la estructura de una pregunta pueden modificar de forma importante la respuesta del modelo, incluso con los mismos datos clínicos de fondo. Implica que el razonamiento del LLM no es tan estable como parece y que dos médicos pueden recibir diferenciales distintos del mismo caso.</div></div>
+        </div>
+      </div>
+
+      <!-- T -->
+      <div class="letter-group" data-letter="T">
+        <div class="letter-heading">T</div>
+
+        <div class="term-item" data-term="trazabilidad evidencia fuente documento guía artículo auditar respuesta">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-etica"></div>
+            <div class="term-text">
+              <span class="term-name">Trazabilidad de la evidencia</span>
+              <span class="term-sub">Capacidad de ver la fuente</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Capacidad de identificar de qué documento, guía, artículo o base procede una afirmación generada por un sistema de IA. Es clave para auditar respuestas de alto impacto clínico. Los LLM generalistas no garantizan trazabilidad; los sistemas con RAG intentan proveerla enlazando cada afirmación a una fuente recuperada.</div></div>
+        </div>
+
+        <div class="term-item" data-term="tutor socrático pedagógico preguntas poner a prueba razonamiento fisiopatología">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-estrategia"></div>
+            <div class="term-text">
+              <span class="term-name">Tutor Socrático</span>
+              <span class="term-sub">Rol pedagógico del LLM</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Instrucción que asigna a la IA un rol pedagógico donde no entrega diagnósticos directos, sino que formula preguntas para poner a prueba el razonamiento del estudiante y guiarlo hacia la comprensión fisiopatológica. Combate la ilusión de fluidez y obliga al médico en formación a justificar cada hipótesis.</div></div>
+        </div>
+      </div>
+
+      <!-- V -->
+      <div class="letter-group" data-letter="V">
+        <div class="letter-heading">V</div>
+
+        <div class="term-item" data-term="ventana contexto límite información procesable texto largo complejo tokens">
+          <button class="term-trigger" onclick="toggleTerm(this)">
+            <div class="term-cat-dot cat-tecno"></div>
+            <div class="term-text">
+              <span class="term-name">Ventana de contexto</span>
+              <span class="term-sub">Límite de información procesable</span>
+            </div>
+            <div class="term-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="term-body"><div class="term-def">Cantidad máxima de texto o información que el modelo puede manejar de forma efectiva en una interacción. Cuando un caso es muy largo o complejo, parte de la información puede quedar fuera del alcance activo del modelo, con el riesgo de que datos relevantes sean ignorados en la respuesta.</div></div>
+        </div>
+      </div>
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ── Toggle term ──
+    function toggleTerm(btn) {
+      const item = btn.closest('.term-item');
+      const wasOpen = item.classList.contains('open');
+      // Close all
+      document.querySelectorAll('.term-item.open').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) {
+        item.classList.add('open');
+        setTimeout(() => {
+          const top = item.getBoundingClientRect().top + window.scrollY - 140;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // ── Letter filter ──
+    function filterLetter(letter) {
+      document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+      const activeBtn = letter === 'ALL'
+        ? document.querySelector('.letter-btn.all')
+        : Array.from(document.querySelectorAll('.letter-btn')).find(b => b.textContent.trim() === letter);
+      if (activeBtn) activeBtn.classList.add('active');
+
+      document.querySelectorAll('.letter-group').forEach(g => {
+        g.style.display = (letter === 'ALL' || g.dataset.letter === letter) ? '' : 'none';
+      });
+      updateCount();
+    }
+
+    // ── Search ──
+    document.getElementById('searchInput').addEventListener('input', function() {
+      const q = this.value.toLowerCase().trim();
+
+      // Reset letter filter visually
+      document.querySelectorAll('.letter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector('.letter-btn.all').classList.add('active');
+      document.querySelectorAll('.letter-group').forEach(g => g.style.display = '');
+
+      if (!q) {
+        document.querySelectorAll('.term-item').forEach(i => i.classList.remove('hidden'));
+      } else {
+        document.querySelectorAll('.term-item').forEach(item => {
+          const searchText = (item.dataset.term || '') + ' ' + item.textContent.toLowerCase();
+          item.classList.toggle('hidden', !searchText.includes(q));
+        });
+        // Hide empty letter groups
+        document.querySelectorAll('.letter-group').forEach(g => {
+          const visible = Array.from(g.querySelectorAll('.term-item')).some(i => !i.classList.contains('hidden'));
+          g.style.display = visible ? '' : 'none';
+        });
+      }
+      updateCount();
+    });
+
+    // ── Count badge ──
+    function updateCount() {
+      const visible = document.querySelectorAll('.term-item:not(.hidden)').length;
+      // Also consider letter-group visibility
+      let count = 0;
+      document.querySelectorAll('.letter-group').forEach(g => {
+        if (g.style.display !== 'none') {
+          count += Array.from(g.querySelectorAll('.term-item')).filter(i => !i.classList.contains('hidden')).length;
+        }
+      });
+      const badge = document.getElementById('countBadge');
+      badge.textContent = count === 27 ? '27 términos' : `${count} de 27 términos`;
+      document.getElementById('noResults').classList.toggle('visible', count === 0);
+    }
+  </script>
+</body>
+</html>
