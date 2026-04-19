@@ -1,1 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA en Educación Médica · EduMed · UVa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --uva-blue:      #003973;
+  --uva-red:       #c60046;
+  --ink:           #1a1f2e;
+  --ink-soft:      #3d4554;
+  --muted:         #6b7486;
+  --cream:         #faf7f2;
+  --cream-2:       #f3ede3;
+  --paper:         #ffffff;
+  --line:          #e8e1d4;
+  --line-strong:   #d9cfbb;
+  --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+  --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+  --shadow-lg: 0 8px 28px rgba(0,57,115,.10), 0 30px 80px rgba(26,31,46,.10);
+  --r-sm:10px; --r-md:16px; --r-lg:22px; --r-xl:28px; --max:960px;
+  /* colectivos */
+  --c-alumnos:    #1d4e89;  --c-alumnos-l:  #dbeafe;
+  --c-profes:     #166534;  --c-profes-l:   #dcfce7;
+  --c-inst:       #7c2d12;  --c-inst-l:     #fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;}
+.container{width:min(100% - 32px,var(--max));margin:0 auto;}
 
+/* ── BARRA ── */
+.edumed-bar{position:sticky;top:0;z-index:100;background:#f5c518;border-bottom:1px solid #d9a800;box-shadow:0 1px 0 rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06);}
+.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;padding:12px 20px;}
+.edumed-brand{display:flex;align-items:center;gap:14px;color:#1a1f2e;text-decoration:none;}
+.edumed-wordmark{display:flex;flex-direction:column;line-height:1.1;}
+.edumed-wordmark .w1{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#1a1f2e;}
+.edumed-wordmark .w1 .sep{opacity:.45;margin:0 4px;font-weight:500;}
+.edumed-wordmark .w2{font-weight:600;font-size:10.5px;letter-spacing:.08em;color:#1a1f2e;opacity:.8;margin-top:3px;}
+
+/* ── HERO ── */
+.hero{padding:80px 0 64px;position:relative;overflow:hidden;}
+.hero::before{
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 90% 10%, rgba(29,78,137,.07) 0%,transparent 55%),
+    radial-gradient(ellipse at 5% 85%, rgba(22,101,52,.06) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(124,45,18,.04) 0%,transparent 70%);
+  pointer-events:none;
+}
+.hero-inner{position:relative;z-index:1;}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line-strong);border-radius:999px;padding:6px 16px;margin-bottom:28px;}
+.hero-kicker-dot{width:7px;height:7px;border-radius:50%;background:var(--uva-red);}
+.hero-kicker span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.hero-title{font-family:"Fraunces",serif;font-size:clamp(2.2rem,6vw,3.8rem);font-weight:700;letter-spacing:-.035em;line-height:1.05;color:var(--ink);margin-bottom:20px;max-width:720px;}
+.hero-title em{font-style:italic;color:var(--uva-blue);}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.2rem);color:var(--ink-soft);max-width:580px;line-height:1.6;margin-bottom:40px;}
+.hero-colectivos{display:flex;flex-wrap:wrap;gap:10px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:var(--r-md);font-size:13px;font-weight:700;border:1px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .18s;text-decoration:none;}
+.hero-badge:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.hb-alumnos{background:var(--c-alumnos-l);color:var(--c-alumnos);border-color:#93c5fd;}
+.hb-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
+.hb-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
+.hero-badge-icon{font-size:18px;}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--line);margin:0;}
+
+/* ── SECCIÓN COLECTIVOS ── */
+.colectivos-section{padding:64px 0;}
+.colectivos-intro{text-align:center;margin-bottom:48px;}
+.colectivos-intro p{font-size:15px;color:var(--muted);max-width:560px;margin:10px auto 0;line-height:1.65;}
+.colectivos-intro-title{font-family:"Fraunces",serif;font-size:clamp(1.4rem,3vw,2rem);font-weight:600;letter-spacing:-.02em;color:var(--ink);}
+
+.colectivo-block{margin-bottom:12px;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--line);background:var(--paper);box-shadow:var(--shadow-sm);transition:box-shadow .2s;}
+.colectivo-block.open{box-shadow:var(--shadow-lg);}
+.colectivo-trigger{width:100%;border:0;background:none;cursor:pointer;display:flex;align-items:center;gap:18px;padding:22px 28px;text-align:left;transition:background .15s;}
+.colectivo-trigger:hover{background:var(--cream);}
+.colectivo-icon-wrap{width:52px;height:52px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:26px;transition:transform .3s;}
+.colectivo-block.open .colectivo-icon-wrap{transform:scale(1.08);}
+.colectivo-heading{flex:1;}
+.colectivo-eyebrow{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;margin-bottom:3px;}
+.colectivo-name{font-family:"Fraunces",serif;font-size:1.4rem;font-weight:600;color:var(--ink);}
+.colectivo-hint{font-size:12px;color:var(--muted);margin-top:2px;}
+.colectivo-chevron{width:36px;height:36px;border-radius:50%;border:1px solid var(--line);background:var(--cream-2);display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .35s,background .2s;}
+.colectivo-chevron svg{width:15px;height:15px;color:var(--muted);}
+.colectivo-block.open .colectivo-chevron{transform:rotate(180deg);}
+
+.colectivo-body{display:none;padding:0 28px 32px;}
+.colectivo-block.open .colectivo-body{display:block;}
+.colectivo-body-intro{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:24px;padding:14px 18px;border-radius:var(--r-md);border-left:3px solid transparent;}
+.colectivo-questions{display:flex;flex-direction:column;gap:14px;}
+.question-item{display:flex;gap:14px;align-items:flex-start;}
+.question-mark{flex-shrink:0;width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;margin-top:3px;}
+.question-text{font-family:"Fraunces",serif;font-size:clamp(1rem,2.5vw,1.15rem);font-style:italic;font-weight:400;line-height:1.45;color:var(--ink);}
+.question-text strong{font-style:normal;font-weight:700;}
+
+/* autoevaluación metacognitiva */
+.meta-box{margin-top:24px;border-radius:var(--r-lg);padding:20px 22px;border:1px solid transparent;}
+.meta-box-title{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px;}
+.meta-questions{display:flex;flex-direction:column;gap:8px;}
+.meta-q{font-size:14px;color:var(--ink-soft);line-height:1.5;padding-left:16px;position:relative;}
+.meta-q::before{content:"·";position:absolute;left:0;font-weight:700;font-size:18px;line-height:1.1;}
+
+/* ── SECCIÓN RECURSOS ── */
+.recursos-section{padding:64px 0 80px;background:var(--cream);}
+.recursos-intro{margin-bottom:36px;}
+.recursos-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);margin-bottom:10px;}
+.recursos-eyebrow::before{content:"";width:20px;height:2px;background:var(--uva-red);border-radius:1px;}
+.recursos-title{font-family:"Fraunces",serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;letter-spacing:-.025em;color:var(--ink);margin-bottom:12px;}
+.recursos-lead{font-size:15px;color:var(--ink-soft);max-width:640px;line-height:1.6;}
+
+.recursos-list{display:flex;flex-direction:column;gap:12px;}
+.recurso-card{display:flex;gap:20px;align-items:center;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,border-color .2s;}
+.recurso-card:hover{transform:translateX(6px);box-shadow:var(--shadow-md);border-color:var(--uva-blue);}
+.recurso-num{font-family:"Fraunces",serif;font-size:2.2rem;font-weight:700;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;opacity:.2;color:var(--uva-blue);}
+.recurso-icon{width:48px;height:48px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.recurso-content{flex:1;}
+.recurso-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.recurso-title{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.recurso-desc{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+.recurso-arrow{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--cream-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;}
+.recurso-card:hover .recurso-arrow{background:var(--uva-blue);border-color:var(--uva-blue);}
+.recurso-arrow svg{width:14px;height:14px;color:var(--muted);transition:color .18s;}
+.recurso-card:hover .recurso-arrow svg{color:#fff;}
+
+.recurso-audience{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.aud-badge{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid transparent;}
+.aud-alumnos{background:var(--c-alumnos-l);color:var(--c-alumnos);border-color:#93c5fd;}
+.aud-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
+.aud-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
+
+/* ── CIERRE ── */
+.cierre{padding:72px 0 80px;text-align:center;position:relative;overflow:hidden;}
+.cierre::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(0,57,115,.04) 0%,transparent 70%);pointer-events:none;}
+.cierre-inner{position:relative;z-index:1;}
+.cierre-quote{font-family:"Fraunces",serif;font-size:clamp(1.3rem,4vw,2.2rem);font-weight:500;font-style:italic;letter-spacing:-.02em;line-height:1.25;color:var(--ink);max-width:680px;margin:0 auto 12px;}
+.cierre-quote em{font-style:normal;color:var(--uva-blue);}
+.cierre-attr{font-size:13px;color:var(--muted);margin-bottom:36px;}
+.cierre-credits{font-size:13px;color:var(--muted);line-height:1.7;}
+.cierre-credits strong{color:var(--ink-soft);}
+
+/* ── FOOTER ── */
+.footer{border-top:1px solid var(--line);padding:24px 0 32px;font-size:12px;color:var(--muted);}
+.footer-row{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;}
+
+/* ── ANIMACIONES ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.hero-inner{animation:fadeUp .5s ease both;}
+.colectivos-intro{animation:fadeUp .5s .1s ease both;}
+
+@media(max-width:640px){
+  .hero{padding:56px 0 48px;}
+  .colectivo-trigger{padding:18px 20px;}
+  .colectivo-body{padding:0 20px 24px;}
+  .recurso-card{flex-wrap:wrap;gap:12px;}
+  .recurso-num{display:none;}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA EDUMED (sin botón derecho — esta página ES la referencia) -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">UNIDAD DE EDUCACIÓN MÉDICA · FACULTAD DE MEDICINA</span>
+      </div>
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-kicker"><div class="hero-kicker-dot"></div><span>IA en Educación Médica</span></div>
+    <h1 class="hero-title">La IA ha llegado<br>a la medicina.<br><em>La pregunta no es<br>si usarla, sino cómo.</em></h1>
+    <p class="hero-sub">Esta página es para quienes se lo están preguntando. Para los que quieren ir más allá de la prohibición o la adopción acrítica, y construir una relación madura, ética y pedagógicamente sólida con la inteligencia artificial generativa.</p>
+    <div class="hero-colectivos">
+      <a class="hero-badge hb-alumnos" href="#alumnos" onclick="openColectivo('alumnos')">
+        <span class="hero-badge-icon">🎓</span> Soy alumno
+      </a>
+      <a class="hero-badge hb-profes" href="#profesores" onclick="openColectivo('profesores')">
+        <span class="hero-badge-icon">🧑‍🏫</span> Soy docente
+      </a>
+      <a class="hero-badge hb-inst" href="#instituciones" onclick="openColectivo('instituciones')">
+        <span class="hero-badge-icon">🏛️</span> Soy responsable institucional
+      </a>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     COLECTIVOS
+══════════════════════════ -->
+<section class="colectivos-section">
+  <div class="container">
+    <div class="colectivos-intro">
+      <div class="colectivos-intro-title">Antes de buscar respuestas,<br>párate a hacer las preguntas correctas</div>
+      <p>La literatura científica sobre IA en educación médica ya es extensa. Pero antes de explorarla, estos son los interrogantes que cada colectivo debería plantearse.</p>
+    </div>
+
+    <!-- ALUMNOS -->
+    <div class="colectivo-block" id="alumnos">
+      <button class="colectivo-trigger" onclick="toggleColectivo('alumnos')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-alumnos-l);">🎓</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-alumnos);">Para el alumnado</div>
+          <div class="colectivo-name">Si eres estudiante de medicina</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-alumnos-l);border-left-color:var(--c-alumnos);">
+          Los riesgos reales no están en la IA, sino en su uso pasivo: la descarga cognitiva, la ilusión de conocimiento y la pérdida de autoría. Pero la IA usada bien puede ser el mejor tutor que hayas tenido. La diferencia la marca la pregunta que te hagas antes de abrir la herramienta.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">¿Cómo puedo usar la IA como un <strong>tutor socrático o un abogado del diablo</strong> que me obligue a razonar, en lugar de pedirle respuestas directas que atrofien mi pensamiento clínico?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">Si la IA me redacta resúmenes perfectos o historias clínicas, <strong>¿cómo evito caer en la «ilusión de conocimiento»</strong> y me aseguro de que realmente estoy asimilando la información y no solo delegando el esfuerzo?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text"><strong>¿Cómo mantengo mi propia voz, mi autoría intelectual y mi empatía humana</strong> hacia el paciente si me acostumbro a que una máquina edite y homogeneice todos mis textos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-alumnos-l);color:var(--c-alumnos);">?</div>
+            <div class="question-text">Sabiendo que las herramientas pueden generar «alucinaciones» con apariencia de rigor científico, <strong>¿qué estrategias personales de verificación debo adoptar</strong> para no poner en riesgo a un futuro paciente?</div>
+          </div>
+        </div>
+        <div class="meta-box" style="background:var(--c-alumnos-l);border-color:#93c5fd;">
+          <div class="meta-box-title" style="color:var(--c-alumnos);">Tres preguntas para hacerte al terminar cualquier tarea asistida por IA</div>
+          <div class="meta-questions">
+            <div class="meta-q">¿Qué he aprendido realmente con esta tarea, más allá del producto entregado?</div>
+            <div class="meta-q">¿Qué haría de forma diferente si tuviera que repetir la actividad?</div>
+            <div class="meta-q">¿Sería capaz de explicar y defender cada parte del contenido sin consultar la IA? Si la respuesta es no, la colaboración no ha contribuido a tu aprendizaje.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROFESORES -->
+    <div class="colectivo-block" id="profesores">
+      <button class="colectivo-trigger" onclick="toggleColectivo('profesores')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-profes-l);">🧑‍🏫</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-profes);">Para el profesorado</div>
+          <div class="colectivo-name">Si eres docente o educador médico</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-profes-l);border-left-color:var(--c-profes);">
+          La tentación de prohibir es comprensible pero ineficaz. La IA ya está en el aula. El reto docente ya no es detectar si se usó, sino diseñar experiencias de aprendizaje donde usarla pasivamente no sirva de nada.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Sabiendo que los detectores de IA no son fiables, <strong>¿cómo rediseño mis métodos de evaluación para calificar el «proceso» de aprendizaje</strong> —borradores, historiales de prompts, defensas orales— en lugar del documento final?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text"><strong>¿Cómo integro la IA como un «andamiaje» en mis clases</strong> —inspiración, guía, interlocutor— sin robarles a los alumnos la «lucha productiva» que necesitan para construir esquemas mentales profundos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text"><strong>¿Cómo enseño alfabetización en IA</strong> para que mis alumnos sepan distinguir cuándo deben automatizar una tarea y cuándo deben colaborar activamente con la tecnología para aumentar sus propias capacidades?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Al encargar un trabajo, <strong>¿cuál es el propósito educativo y qué competencias de razonamiento, transversales o clínicas pretendo desarrollar</strong> en el estudiante? ¿Tiene sentido esa tarea en un mundo con IA?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-profes-l);color:var(--c-profes);">?</div>
+            <div class="question-text">Ante la rápida adopción tecnológica, <strong>¿debemos innovar primero o validar primero</strong> el uso de estas herramientas? ¿Cuál será el impacto a largo plazo en las habilidades de los futuros médicos?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- INSTITUCIONES -->
+    <div class="colectivo-block" id="instituciones">
+      <button class="colectivo-trigger" onclick="toggleColectivo('instituciones')">
+        <div class="colectivo-icon-wrap" style="background:var(--c-inst-l);">🏛️</div>
+        <div class="colectivo-heading">
+          <div class="colectivo-eyebrow" style="color:var(--c-inst);">Para las instituciones</div>
+          <div class="colectivo-name">Si eres responsable académico o institucional</div>
+          <div class="colectivo-hint">Toca para ver algunas de las preguntas que podrías hacerte</div>
+        </div>
+        <div class="colectivo-chevron">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg>
+        </div>
+      </button>
+      <div class="colectivo-body">
+        <div class="colectivo-body-intro" style="background:var(--c-inst-l);border-left-color:var(--c-inst);">
+          Las instituciones tienen la doble responsabilidad de proteger las competencias fundamentales de sus graduados y garantizar que la adopción de la IA no amplíe las brechas de desigualdad existentes. La gobernanza llega tarde cuando reacciona; llega a tiempo cuando anticipa.
+        </div>
+        <div class="colectivo-questions">
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text"><strong>¿Cuáles son las competencias clínicas innegociables</strong> que debemos garantizar que cada graduado domine de forma autónoma, incluso cuando los sistemas de IA no estén disponibles?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">En lugar de la simple prohibición, <strong>¿cómo construimos un marco de gobernanza institucional</strong> con normas claras sobre el uso apropiado, la privacidad y la supervisión de la IA en todo el currículo?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Ante la aparición de herramientas de pago y estudiantes con distintos niveles de habilidad digital, <strong>¿qué medidas proactivas tomamos para cerrar la brecha de recursos</strong> y garantizar la equidad educativa?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Al utilizar el rastro de datos de estudiantes y pacientes para analíticas de aprendizaje, <strong>¿cómo protegemos la privacidad y la propiedad real de sus datos</strong>? ¿Tienen los alumnos derecho a reclamar la propiedad de sus datos académicos?</div>
+          </div>
+          <div class="question-item">
+            <div class="question-mark" style="background:var(--c-inst-l);color:var(--c-inst);">?</div>
+            <div class="question-text">Si el uso de datos de estudiantes incrementa el valor y los ingresos de la institución, <strong>¿tenemos el derecho ético de utilizarlos sin restitución</strong>, o deberían los alumnos recibir algún tipo de recompensa por ello?</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     RECURSOS
+══════════════════════════ -->
+<section class="recursos-section">
+  <div class="container">
+    <div class="recursos-intro">
+      <div class="recursos-eyebrow">Cinco recursos para profundizar</div>
+      <h2 class="recursos-title">Algunas herramientas que pueden<br>ayudarte a reflexionar</h2>
+      <p class="recursos-lead">Hay muchas más, pero estos recursos están seleccionados por su rigor y su utilidad práctica. No es necesario leerlos todos: elige el que más conecta con las preguntas que te has planteado.</p>
+    </div>
+
+    <div class="recursos-list">
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/ocho_roles_ia/" target="_blank" rel="noopener">
+        <div class="recurso-num">1</div>
+        <div class="recurso-icon" style="background:#ede9fe;">🎭</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Mollick & Mollick · Ocho roles pedagógicos</div>
+          <div class="recurso-title">Los ocho roles de la IA en el aula</div>
+          <div class="recurso-desc">Ideal para alumnos que quieran descubrir otras formas de usar la IA que mejoren su rendimiento sin perder su papel protagonista: tutor socrático, mentor, entrenador, compañero de estudio, abogado del diablo y más.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/diez_recomendaciones_CyL/" target="_blank" rel="noopener">
+        <div class="recurso-num">2</div>
+        <div class="recurso-icon" style="background:#fce7f3;">📋</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">UVa · USAL · RevEspEduMed 2026</div>
+          <div class="recurso-title">10 recomendaciones para escribir con IA</div>
+          <div class="recurso-desc">Para alumnos e instituciones: cómo dejar de usar la IA pasivamente y convertirla en un asistente que potencia tu aprendizaje sin sustituirte. Incluye checklist interactivo y orientaciones para el profesorado.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/AI_Fluency/" target="_blank" rel="noopener">
+        <div class="recurso-num">3</div>
+        <div class="recurso-icon" style="background:#d8f3dc;">🔷</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Anthropic Academy · Marco de competencias</div>
+          <div class="recurso-title">AI Fluency · Las 4 competencias esenciales</div>
+          <div class="recurso-desc">Para desarrollar las competencias que hacen que la IA trabaje contigo, no por ti. De la delegación a la aumentación: qué significa colaborar <em>con</em> la IA en lugar de dejar que trabaje <em>en tu lugar</em>.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/Macy_Foundation_2025/" target="_blank" rel="noopener">
+        <div class="recurso-num">4</div>
+        <div class="recurso-icon" style="background:#dbeafe;">📄</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Josiah Macy Jr. Foundation · Academic Medicine 2025</div>
+          <div class="recurso-title">Informe Macy Foundation · Del hype a la realidad</div>
+          <div class="recurso-desc">Una visión completa del panorama global: qué dice la evidencia sobre la IA en educación médica y cómo abordar sus retos. Basado en 455 artículos y 25 entrevistas con innovadores en primera línea.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/BEME_2025/" target="_blank" rel="noopener">
+        <div class="recurso-num">5</div>
+        <div class="recurso-icon" style="background:#fef3c7;">🔬</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">BEME Guide No. 84 · Medical Teacher 2024</div>
+          <div class="recurso-title">Guía BEME · La revisión de alcance más completa</div>
+          <div class="recurso-desc">278 estudios resumidos y mapeados: dónde está realmente la IA en la educación médica, qué funciona, qué no, y el marco FACETS para investigar y reportar con rigor.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     CIERRE
+══════════════════════════ -->
+<section class="cierre">
+  <div class="container cierre-inner">
+    <p class="cierre-quote">
+      «El futuro de la educación médica no lo están construyendo quienes tienen las <em>"respuestas"</em>,<br>sino quienes hacen las <em>"preguntas correctas"</em>.»
+    </p>
+    <p class="cierre-attr">EduMed · UVa · Unidad de Educación Médica, Facultad de Medicina, Universidad de Valladolid</p>
+    <div class="cierre-credits">
+      Los recursos de esta página se basan en evidencia científica publicada y están adaptados<br>
+      con fines educativos para estudiantes y profesionales de la medicina.<br>
+      <strong>Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</strong>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <div>EduMed · UVa — Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</div>
+      <div>IA en Educación Médica · 2026</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleColectivo(id) {
+  const block = document.getElementById(id);
+  const wasOpen = block.classList.contains('open');
+  // Cierra todos
+  document.querySelectorAll('.colectivo-block').forEach(b => b.classList.remove('open'));
+  if (!wasOpen) {
+    block.classList.add('open');
+    // Espera a que el cierre del anterior libere espacio antes de hacer scroll
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const top = block.getBoundingClientRect().top + window.scrollY - 90;
+        window.scrollTo({ top, behavior: 'smooth' });
+      });
+    });
+  }
+}
+
+function openColectivo(id) {
+  setTimeout(() => {
+    const block = document.getElementById(id);
+    if (block) {
+      document.querySelectorAll('.colectivo-block').forEach(b => b.classList.remove('open'));
+      block.classList.add('open');
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const top = block.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top, behavior: 'smooth' });
+        });
+      });
+    }
+  }, 80);
+}
+
+// Abrir el bloque si se llega con #hash
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#','');
+  if (['alumnos','profesores','instituciones'].includes(hash)) {
+    openColectivo(hash);
+  }
+});
+</script>
+</body>
+</html>
