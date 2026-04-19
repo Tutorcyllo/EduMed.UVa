@@ -318,16 +318,22 @@ body {
 .acc-item.open .acc-body { display: block; }
 
 /* Contenido visual dentro de los acordeones */
-.domain-lead { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 20px; padding-top: 6px; border-top: 1px solid var(--line); }
-.use-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+.domain-lead { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 16px; padding-top: 6px; border-top: 1px solid var(--line); }
+.use-cards { display: flex; flex-direction: column; gap: 8px; }
 .use-card {
-  border-radius: var(--r-md); padding: 16px;
+  display: flex; gap: 10px; align-items: flex-start;
+  padding: 12px 14px; border-radius: var(--r-sm);
   border: 1px solid transparent; transition: transform 0.2s, box-shadow 0.2s;
 }
-.use-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-sm); }
-.use-card-icon { font-size: 26px; margin-bottom: 8px; display: block; }
-.use-card-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-.use-card-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.45; }
+.use-card:hover { transform: translateX(3px); box-shadow: var(--shadow-sm); }
+.use-card-icon {
+  width: 28px; height: 28px; border-radius: 6px; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; margin-top: 1px;
+}
+.use-card-body { flex: 1; }
+.use-card-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 2px; }
+.use-card-desc { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
 
 /* ============================================================
    LIMITACIONES — pestañas
@@ -781,34 +787,28 @@ body {
           <p class="domain-lead">La IA optimiza el proceso de revisión holística frente al creciente volumen de solicitudes, automatizando tareas repetitivas y prediciendo resultados académicos con mayor equidad.</p>
           <div class="use-cards">
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">📊</span>
-              <div class="use-card-title">Modelado predictivo</div>
-              <div class="use-card-desc">Algoritmos ML que predicen la probabilidad de matriculación, éxito académico o match en residencias, basándose en el expediente del candidato.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">📊</div>
+              <div class="use-card-body"><div class="use-card-title">Modelado predictivo</div><div class="use-card-desc">Algoritmos ML que predicen la probabilidad de matriculación, éxito académico o match en residencias, basándose en el expediente del candidato.</div></div>
             </div>
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">🔍</span>
-              <div class="use-card-title">Filtrado automatizado</div>
-              <div class="use-card-desc">Listas preliminares de clasificación de aspirantes que replican la selección del profesorado, reduciendo la carga de trabajo de los comités.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">🔍</div>
+              <div class="use-card-body"><div class="use-card-title">Filtrado automatizado</div><div class="use-card-desc">Listas preliminares de clasificación de aspirantes que replican la selección del profesorado, reduciendo la carga de trabajo de los comités.</div></div>
             </div>
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">💬</span>
-              <div class="use-card-title">Chatbots de orientación</div>
-              <div class="use-card-desc">LLMs que organizan sesiones virtuales de preguntas y respuestas para guiar a los aspirantes durante el proceso de solicitud y reclutamiento.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">💬</div>
+              <div class="use-card-body"><div class="use-card-title">Chatbots de orientación</div><div class="use-card-desc">LLMs que organizan sesiones virtuales de preguntas y respuestas para guiar a los aspirantes durante el proceso de solicitud y reclutamiento.</div></div>
             </div>
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">⚖️</span>
-              <div class="use-card-title">Detección de sesgos</div>
-              <div class="use-card-desc">Análisis de lenguaje en cartas de recomendación para detectar sesgos de género o inequidades históricas en los procesos de selección.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">⚖️</div>
+              <div class="use-card-body"><div class="use-card-title">Detección de sesgos</div><div class="use-card-desc">Análisis de lenguaje en cartas de recomendación para detectar sesgos de género o inequidades históricas en los procesos de selección.</div></div>
             </div>
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">📝</span>
-              <div class="use-card-title">Revisión de ensayos (NLP)</div>
-              <div class="use-card-desc">Procesamiento del lenguaje natural aplicado a declaraciones personales y ensayos para facilitar la revisión holística a gran escala.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">📝</div>
+              <div class="use-card-body"><div class="use-card-title">Revisión de ensayos (NLP)</div><div class="use-card-desc">Procesamiento del lenguaje natural aplicado a declaraciones personales y ensayos para facilitar la revisión holística a gran escala.</div></div>
             </div>
             <div class="use-card" style="background:#e0f2f1; border-color:#99d6d4;">
-              <span class="use-card-icon">🗺️</span>
-              <div class="use-card-title">Auditoría curricular</div>
-              <div class="use-card-desc">Mapeo automatizado de materiales educativos para evaluar la diversidad representada y la completitud del plan de estudios en los programas.</div>
+              <div class="use-card-icon" style="background:rgba(13,110,110,0.15);">🗺️</div>
+              <div class="use-card-body"><div class="use-card-title">Auditoría curricular</div><div class="use-card-desc">Mapeo automatizado de materiales educativos para evaluar la diversidad representada y la completitud del plan de estudios en los programas.</div></div>
             </div>
           </div>
         </div>
@@ -830,34 +830,28 @@ body {
           <p class="domain-lead">En el ámbito preclínico, la IA gestiona la expansión exponencial del conocimiento médico y facilita entornos de práctica seguros. Los innovadores destacan su capacidad para trasladar el foco de la memorización al razonamiento clínico avanzado.</p>
           <div class="use-cards">
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">🤖</span>
-              <div class="use-card-title">Tutor virtual (IA)</div>
-              <div class="use-card-desc">LLMs que actúan como tutores socrático-adaptativos: diagnostican lagunas de conocimiento y personalizan los siguientes pasos de aprendizaje de cada estudiante.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">🤖</div>
+              <div class="use-card-body"><div class="use-card-title">Tutor virtual (IA)</div><div class="use-card-desc">LLMs que actúan como tutores socrático-adaptativos: diagnostican lagunas de conocimiento y personalizan los siguientes pasos de aprendizaje de cada estudiante.</div></div>
             </div>
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">🧑‍⚕️</span>
-              <div class="use-card-title">Paciente virtual</div>
-              <div class="use-card-desc">Simulaciones basadas en IA que reproducen casos clínicos para practicar anamnesis, razonamiento diagnóstico y toma de decisiones sin riesgo real.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">🧑‍⚕️</div>
+              <div class="use-card-body"><div class="use-card-title">Paciente virtual</div><div class="use-card-desc">Simulaciones basadas en IA que reproducen casos clínicos para practicar anamnesis, razonamiento diagnóstico y toma de decisiones sin riesgo real.</div></div>
             </div>
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">🎨</span>
-              <div class="use-card-title">Diseño curricular con IA</div>
-              <div class="use-card-desc">Herramientas para gestionar y actualizar el currículo ante la expansión del conocimiento médico, priorizando los contenidos más relevantes.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">🎨</div>
+              <div class="use-card-body"><div class="use-card-title">Diseño curricular con IA</div><div class="use-card-desc">Herramientas para gestionar y actualizar el currículo ante la expansión del conocimiento médico, priorizando los contenidos más relevantes.</div></div>
             </div>
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">👁️</span>
-              <div class="use-card-title">Aprendizaje visual</div>
-              <div class="use-card-desc">Herramientas de visión artificial para entrenar el reconocimiento de patologías en imágenes: glomerulopatías, neuroanatomía, melanomas, radiografías de cadera.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">👁️</div>
+              <div class="use-card-body"><div class="use-card-title">Aprendizaje visual</div><div class="use-card-desc">Herramientas de visión artificial para entrenar el reconocimiento de patologías en imágenes: glomerulopatías, neuroanatomía, melanomas, radiografías de cadera.</div></div>
             </div>
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">🧠</span>
-              <div class="use-card-title">Aprendizaje activo (CBME)</div>
-              <div class="use-card-desc">Soporte para formatos de aprendizaje activo, facilitando la transición de la memorización pasiva al razonamiento clínico complejo y basado en competencias.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">🧠</div>
+              <div class="use-card-body"><div class="use-card-title">Aprendizaje activo (CBME)</div><div class="use-card-desc">Soporte para formatos de aprendizaje activo, facilitando la transición de la memorización pasiva al razonamiento clínico complejo y basado en competencias.</div></div>
             </div>
             <div class="use-card" style="background:#fef9e7; border-color:#fde68a;">
-              <span class="use-card-icon">📡</span>
-              <div class="use-card-title">Enseñanza centralizada</div>
-              <div class="use-card-desc">Plataformas que permiten centralizar la docencia de alta calidad y distribuirla a múltiples sedes o instituciones, democratizando el acceso.</div>
+              <div class="use-card-icon" style="background:rgba(180,83,9,0.1);">📡</div>
+              <div class="use-card-body"><div class="use-card-title">Enseñanza centralizada</div><div class="use-card-desc">Plataformas que permiten centralizar la docencia de alta calidad y distribuirla a múltiples sedes o instituciones, democratizando el acceso.</div></div>
             </div>
           </div>
         </div>
@@ -879,34 +873,28 @@ body {
           <p class="domain-lead">En el entorno clínico, la IA apoya los procesos diagnósticos y amplifica las capacidades interpretativas del estudiante. El currículo clínico debe incorporar la competencia en IA como requisito fundamental para los futuros médicos.</p>
           <div class="use-cards">
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">🔬</span>
-              <div class="use-card-title">Apoyo al diagnóstico</div>
-              <div class="use-card-desc">Sistemas de ayuda a la decisión clínica (CDS) que asisten en el diagnóstico diferencial y la interpretación de resultados, entrenando al estudiante a validar la IA.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">🔬</div>
+              <div class="use-card-body"><div class="use-card-title">Apoyo al diagnóstico</div><div class="use-card-desc">Sistemas de ayuda a la decisión clínica (CDS) que asisten en el diagnóstico diferencial y la interpretación de resultados, entrenando al estudiante a validar la IA.</div></div>
             </div>
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">🩻</span>
-              <div class="use-card-title">Interpretación de imagen</div>
-              <div class="use-card-desc">IA aplicada a radiología, anatomía patológica y otras especialidades para aprender a identificar hallazgos con supervisión tecnológica.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">🩻</div>
+              <div class="use-card-body"><div class="use-card-title">Interpretación de imagen</div><div class="use-card-desc">IA aplicada a radiología, anatomía patológica y otras especialidades para aprender a identificar hallazgos con supervisión tecnológica.</div></div>
             </div>
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">🧑‍💼</span>
-              <div class="use-card-title">Paciente estandarizado virtual</div>
-              <div class="use-card-desc">Simulaciones avanzadas de IA que complementan o sustituyen a pacientes estandarizados humanos para practicar habilidades de comunicación clínica.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">🧑‍💼</div>
+              <div class="use-card-body"><div class="use-card-title">Paciente estandarizado virtual</div><div class="use-card-desc">Simulaciones avanzadas de IA que complementan o sustituyen a pacientes estandarizados humanos para practicar habilidades de comunicación clínica.</div></div>
             </div>
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">📋</span>
-              <div class="use-card-title">Descarga cognitiva (offloading)</div>
-              <div class="use-card-desc">Automatización de tareas administrativas (notas, documentación, registros) que liberan tiempo del residente para el aprendizaje clínico de mayor valor.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">📋</div>
+              <div class="use-card-body"><div class="use-card-title">Descarga cognitiva (offloading)</div><div class="use-card-desc">Automatización de tareas administrativas (notas, documentación, registros) que liberan tiempo del residente para el aprendizaje clínico de mayor valor.</div></div>
             </div>
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">📌</span>
-              <div class="use-card-title">Guía procedimental</div>
-              <div class="use-card-desc">Herramientas que ofrecen instrucciones paso a paso para habilidades procedimentales, facilitando el aprendizaje de técnicas con supervisión IA.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">📌</div>
+              <div class="use-card-body"><div class="use-card-title">Guía procedimental</div><div class="use-card-desc">Herramientas que ofrecen instrucciones paso a paso para habilidades procedimentales, facilitando el aprendizaje de técnicas con supervisión IA.</div></div>
             </div>
             <div class="use-card" style="background:#fdf2f8; border-color:#f9a8d4;">
-              <span class="use-card-icon">🔗</span>
-              <div class="use-card-title">Competencia en IA</div>
-              <div class="use-card-desc">El entorno clínico exige incorporar marcos de competencia y alfabetización en IA para que los futuros médicos sean usuarios críticos y responsables.</div>
+              <div class="use-card-icon" style="background:rgba(157,23,77,0.1);">🔗</div>
+              <div class="use-card-body"><div class="use-card-title">Competencia en IA</div><div class="use-card-desc">El entorno clínico exige incorporar marcos de competencia y alfabetización en IA para que los futuros médicos sean usuarios críticos y responsables.</div></div>
             </div>
           </div>
         </div>
@@ -928,34 +916,28 @@ body {
           <p class="domain-lead">La IA tiene el potencial de transformar la evaluación médica, haciéndola más eficiente, continua y personalizada, aunque requiere validación rigurosa antes de su implementación en decisiones de alto impacto.</p>
           <div class="use-cards">
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">✅</span>
-              <div class="use-card-title">Calificación automatizada</div>
-              <div class="use-card-desc">IA que evalúa respuestas abiertas, notas clínicas y tareas narrativas, reduciendo la carga del profesorado y ofreciendo feedback inmediato.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">✅</div>
+              <div class="use-card-body"><div class="use-card-title">Calificación automatizada</div><div class="use-card-desc">IA que evalúa respuestas abiertas, notas clínicas y tareas narrativas, reduciendo la carga del profesorado y ofreciendo feedback inmediato.</div></div>
             </div>
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">📈</span>
-              <div class="use-card-title">Analítica predictiva</div>
-              <div class="use-card-desc">Modelos que predicen la trayectoria académica del estudiante, detectan señales de alarma temprana e identifican necesidades de intervención.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">📈</div>
+              <div class="use-card-body"><div class="use-card-title">Analítica predictiva</div><div class="use-card-desc">Modelos que predicen la trayectoria académica del estudiante, detectan señales de alarma temprana e identifican necesidades de intervención.</div></div>
             </div>
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">💡</span>
-              <div class="use-card-title">Retroalimentación personalizada</div>
-              <div class="use-card-desc">Feedback adaptado a las necesidades específicas de cada estudiante, oportuno y dirigido, que antes requería inversión masiva de tiempo del tutor.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">💡</div>
+              <div class="use-card-body"><div class="use-card-title">Retroalimentación personalizada</div><div class="use-card-desc">Feedback adaptado a las necesidades específicas de cada estudiante, oportuno y dirigido, que antes requería inversión masiva de tiempo del tutor.</div></div>
             </div>
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">🏆</span>
-              <div class="use-card-title">Exámenes de certificación</div>
-              <div class="use-card-desc">Sistemas que predicen el rendimiento en exámenes de habilitación y evalúan el desempeño clínico en entornos reales mediante datos integrados.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">🏆</div>
+              <div class="use-card-body"><div class="use-card-title">Exámenes de certificación</div><div class="use-card-desc">Sistemas que predicen el rendimiento en exámenes de habilitación y evalúan el desempeño clínico en entornos reales mediante datos integrados.</div></div>
             </div>
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">🎛️</span>
-              <div class="use-card-title">Evaluación de habilidades</div>
-              <div class="use-card-desc">Evaluación continua de competencias mediante la integración de datos de rendimiento clínico, notas de supervisor y métricas de desempeño procedural.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">🎛️</div>
+              <div class="use-card-body"><div class="use-card-title">Evaluación de habilidades</div><div class="use-card-desc">Evaluación continua de competencias mediante la integración de datos de rendimiento clínico, notas de supervisor y métricas de desempeño procedural.</div></div>
             </div>
             <div class="use-card" style="background:#f5f3ff; border-color:#c4b5fd;">
-              <span class="use-card-icon">🔄</span>
-              <div class="use-card-title">Integridad académica</div>
-              <div class="use-card-desc">Herramientas para detectar uso indebido de IA en evaluaciones y para rediseñar las pruebas hacia un paradigma donde la IA es parte del proceso.</div>
+              <div class="use-card-icon" style="background:rgba(55,48,163,0.1);">🔄</div>
+              <div class="use-card-body"><div class="use-card-title">Integridad académica</div><div class="use-card-desc">Herramientas para detectar uso indebido de IA en evaluaciones y para rediseñar las pruebas hacia un paradigma donde la IA es parte del proceso.</div></div>
             </div>
           </div>
         </div>
@@ -977,34 +959,28 @@ body {
           <p class="domain-lead">La IA aporta nuevas perspectivas para evaluar programas educativos a gran escala, analizar trayectorias de facultad y estudiantes, e identificar inequidades sistémicas que antes pasaban desapercibidas.</p>
           <div class="use-cards">
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">🗃️</span>
-              <div class="use-card-title">Auditoría curricular</div>
-              <div class="use-card-desc">Procesamiento de todos los materiales, cursos y rotaciones clínicas para evaluar completitud del plan de estudios y representación de la diversidad.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">🗃️</div>
+              <div class="use-card-body"><div class="use-card-title">Auditoría curricular</div><div class="use-card-desc">Procesamiento de todos los materiales, cursos y rotaciones clínicas para evaluar completitud del plan de estudios y representación de la diversidad.</div></div>
             </div>
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">⚖️</span>
-              <div class="use-card-title">Detección de inequidad</div>
-              <div class="use-card-desc">Análisis de texto masivo para cuantificar el grado de compromiso real de los programas con la diversidad e identificar sesgos en los procesos de selección.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">⚖️</div>
+              <div class="use-card-body"><div class="use-card-title">Detección de inequidad</div><div class="use-card-desc">Análisis de texto masivo para cuantificar el grado de compromiso real de los programas con la diversidad e identificar sesgos en los procesos de selección.</div></div>
             </div>
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">🧑‍🏫</span>
-              <div class="use-card-title">Trayectorias de facultad</div>
-              <div class="use-card-desc">Modelado predictivo de éxito académico y detección temprana de riesgo de <em>burnout</em> en el cuerpo docente, basado en datos demográficos y de rendimiento.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">🧑‍🏫</div>
+              <div class="use-card-body"><div class="use-card-title">Trayectorias de facultad</div><div class="use-card-desc">Modelado predictivo de éxito académico y detección temprana de riesgo de <em>burnout</em> en el cuerpo docente, basado en datos demográficos y de rendimiento.</div></div>
             </div>
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">🔎</span>
-              <div class="use-card-title">Análisis cualitativo a escala</div>
-              <div class="use-card-desc">IA que acelera la exploración de literatura científica, la codificación de textos y el análisis temático de datos cualitativos en investigación educativa.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">🔎</div>
+              <div class="use-card-body"><div class="use-card-title">Análisis cualitativo a escala</div><div class="use-card-desc">IA que acelera la exploración de literatura científica, la codificación de textos y el análisis temático de datos cualitativos en investigación educativa.</div></div>
             </div>
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">🌐</span>
-              <div class="use-card-title">Asignación de recursos</div>
-              <div class="use-card-desc">Análisis de métricas de rendimiento de estudiantes y facultad para guiar la distribución equitativa de recursos educativos a nivel institucional.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">🌐</div>
+              <div class="use-card-body"><div class="use-card-title">Asignación de recursos</div><div class="use-card-desc">Análisis de métricas de rendimiento de estudiantes y facultad para guiar la distribución equitativa de recursos educativos a nivel institucional.</div></div>
             </div>
             <div class="use-card" style="background:#f0fdf4; border-color:#86efac;">
-              <span class="use-card-icon">💬</span>
-              <div class="use-card-title">Percepción de stakeholders</div>
-              <div class="use-card-desc">Análisis de lenguaje masivo para detectar discrepancias entre lo que perciben estudiantes y lo que esperan los profesores en el entorno educativo.</div>
+              <div class="use-card-icon" style="background:rgba(22,101,52,0.1);">💬</div>
+              <div class="use-card-body"><div class="use-card-title">Percepción de stakeholders</div><div class="use-card-desc">Análisis de lenguaje masivo para detectar discrepancias entre lo que perciben estudiantes y lo que esperan los profesores en el entorno educativo.</div></div>
             </div>
           </div>
         </div>
