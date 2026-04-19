@@ -1,1 +1,1304 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IA en Educación Médica · Guía BEME N.º 84</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   VARIABLES Y RESET
+   ============================================================ */
+:root {
+  --uva-blue:       #003973;
+  --uva-blue-soft:  #1d4f8a;
+  --uva-red:        #c60046;
+  --ink:            #1a1f2e;
+  --ink-soft:       #3d4554;
+  --muted:          #6b7486;
+  --muted-2:        #9099aa;
+  --cream:          #faf7f2;
+  --cream-2:        #f3ede3;
+  --paper:          #ffffff;
+  --line:           #e8e1d4;
+  --line-strong:    #d9cfbb;
+  --shadow-sm: 0 1px 2px rgba(26,31,46,0.04), 0 2px 8px rgba(26,31,46,0.04);
+  --shadow-md: 0 2px 6px rgba(26,31,46,0.05), 0 12px 32px rgba(26,31,46,0.08);
+  --shadow-lg: 0 8px 28px rgba(0,57,115,0.12), 0 30px 80px rgba(26,31,46,0.12);
+  --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+  --max: 960px;
+  /* BEME palette */
+  --beme-teal:        #0d6e6e;
+  --beme-teal-light:  #e0f2f1;
+  --beme-amber:       #b45309;
+  --beme-amber-light: #fef3c7;
+  --beme-rose:        #9d174d;
+  --beme-rose-light:  #fce7f3;
+  --beme-indigo:      #3730a3;
+  --beme-indigo-light:#ede9fe;
+  --beme-green:       #166534;
+  --beme-green-light: #dcfce7;
+  --beme-violet:      #6d28d9;
+  --beme-violet-light:#f5f3ff;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: "Inter", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+.container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
 
+/* ============================================================
+   BARRA EDUMED
+   ============================================================ */
+.edumed-bar { position: sticky; top: 0; z-index: 100; background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 4px 14px rgba(0,0,0,0.06); }
+.edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+.edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+.edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+.edumed-wordmark .w1 { font-family: "Inter", sans-serif; font-weight: 800; font-size: 18px; letter-spacing: -0.01em; color: #1a1f2e; }
+.edumed-wordmark .w1 .sep { opacity: 0.45; margin: 0 4px; font-weight: 500; }
+.edumed-wordmark .w2 { font-family: "Inter", sans-serif; font-weight: 600; font-size: 10.5px; letter-spacing: 0.08em; color: #1a1f2e; opacity: 0.8; margin-top: 3px; }
+.edumed-back { display: inline-flex; align-items: center; gap: 6px; font-family: "Inter", sans-serif; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,0.55); border: 1px solid rgba(26,31,46,0.15); transition: background 0.15s, transform 0.15s; white-space: nowrap; }
+.edumed-back:hover { background: #fff; transform: translateX(-1px); }
+.edumed-back svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 56px 0 48px; position: relative; overflow: hidden; }
+.hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse at 80% 20%, rgba(0,57,115,0.05) 0%, transparent 60%), radial-gradient(ellipse at 10% 90%, rgba(13,110,110,0.05) 0%, transparent 50%); pointer-events: none; }
+.hero-inner { position: relative; z-index: 1; }
+.hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+.hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--beme-teal); }
+.hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.1; color: var(--ink); margin-bottom: 12px; }
+.hero-title em { font-style: italic; color: var(--uva-blue); }
+.hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.15rem); color: var(--ink-soft); max-width: 600px; margin-bottom: 36px; line-height: 1.5; }
+.hero-meta { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+.hero-badge { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow-sm); }
+.hero-badge-icon { font-size: 22px; }
+.hero-badge-text { display: flex; flex-direction: column; }
+.hero-badge-text span:first-child { font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+.hero-badge-text span:last-child { font-size: 14px; font-weight: 600; color: var(--ink); }
+
+/* ============================================================
+   NAV PILLS
+   ============================================================ */
+.nav-sticky { background: var(--cream); border-bottom: 1px solid var(--line); position: sticky; top: 68px; z-index: 90; }
+.nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 16px 0; }
+.nav-pill { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); transition: all 0.18s; cursor: pointer; font-family: "Inter", sans-serif; appearance: none; }
+.nav-pill:hover, .nav-pill.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.nav-pill span { font-size: 15px; }
+
+/* ============================================================
+   SECCIONES
+   ============================================================ */
+.section { padding: 56px 0; }
+.section + .section { border-top: 1px solid var(--line); }
+.section-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
+.section-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
+.section-title { font-family: "Fraunces", serif; font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 600; letter-spacing: -0.025em; line-height: 1.15; color: var(--ink); margin-bottom: 16px; }
+.section-lead { font-size: 16px; color: var(--ink-soft); max-width: 720px; line-height: 1.65; margin-bottom: 36px; }
+
+/* ============================================================
+   ABOUT — cards de aportación
+   ============================================================ */
+.about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; margin-bottom: 32px; }
+.about-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; box-shadow: var(--shadow-sm); transition: box-shadow 0.2s, transform 0.2s; }
+.about-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.about-card-icon { width: 46px; height: 46px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px; }
+.about-card-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.about-card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+/* Metodología — línea de tiempo */
+.method-timeline {
+  display: flex; align-items: stretch; gap: 0;
+  margin-top: 8px; overflow-x: auto; padding-bottom: 4px;
+}
+.method-step {
+  flex: 1; min-width: 150px;
+  display: flex; flex-direction: column; align-items: center;
+  position: relative;
+}
+.method-step:not(:last-child)::after {
+  content: "";
+  position: absolute; right: -1px; top: 32px;
+  width: 2px; height: calc(100% - 32px);
+  display: none; /* oculto en desktop — usamos el conector horizontal */
+}
+.method-connector {
+  display: flex; align-items: center; padding-top: 20px; flex-shrink: 0;
+}
+.method-connector svg { width: 20px; height: 20px; color: var(--line-strong); }
+
+.method-step-bubble {
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--uva-blue); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-family: "Fraunces", serif; font-size: 1.3rem; font-weight: 700;
+  font-style: italic; flex-shrink: 0; box-shadow: var(--shadow-sm);
+  margin-bottom: 12px;
+}
+.method-step-card {
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: var(--r-md); padding: 14px 12px; text-align: center;
+  box-shadow: var(--shadow-sm); width: 100%;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.method-step-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.method-step-title { font-size: 12px; font-weight: 700; color: var(--ink); margin-bottom: 4px; line-height: 1.3; }
+.method-step-desc { font-size: 11px; color: var(--muted); line-height: 1.45; }
+.method-step-tag {
+  display: inline-block; margin-top: 8px;
+  font-size: 10px; font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--uva-blue);
+  background: #e8f0f8; border-radius: 999px; padding: 2px 8px;
+}
+@media (max-width: 700px) {
+  .method-timeline { flex-direction: column; gap: 8px; }
+  .method-connector { display: none; }
+  .method-step { flex-direction: row; gap: 12px; align-items: flex-start; min-width: 0; }
+  .method-step-bubble { margin-bottom: 0; flex-shrink: 0; width: 38px; height: 38px; font-size: 1rem; }
+  .method-step-card { text-align: left; }
+}
+
+/* ============================================================
+   ACORDEONES DE CASOS DE USO
+   ============================================================ */
+.accordion-group { display: flex; flex-direction: column; gap: 8px; }
+.acc-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: box-shadow 0.2s; }
+.acc-item.open { box-shadow: var(--shadow-md); }
+.acc-trigger { width: 100%; border: 0; background: none; cursor: pointer; display: flex; align-items: center; gap: 16px; padding: 18px 22px; text-align: left; transition: background 0.15s; }
+.acc-trigger:hover { background: var(--cream); }
+.acc-icon-wrap { width: 44px; height: 44px; border-radius: var(--r-sm); flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 22px; }
+.acc-heading { flex: 1; }
+.acc-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+.acc-label { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); }
+.acc-chevron { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform 0.3s, background 0.2s; }
+.acc-chevron svg { width: 14px; height: 14px; color: var(--muted); transition: color 0.2s; }
+.acc-item.open .acc-chevron { transform: rotate(180deg); background: var(--uva-blue); border-color: var(--uva-blue); }
+.acc-item.open .acc-chevron svg { color: #fff; }
+.acc-body { display: none; padding: 0 22px 22px; }
+.acc-item.open .acc-body { display: block; }
+.acc-lead { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 16px; padding-top: 6px; border-top: 1px solid var(--line); }
+.use-list { display: flex; flex-direction: column; gap: 8px; }
+.use-item { display: flex; gap: 10px; align-items: flex-start; padding: 12px 14px; border-radius: var(--r-sm); border: 1px solid transparent; }
+.use-item-dot { width: 24px; height: 24px; border-radius: 6px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; margin-top: 1px; }
+.use-item-text { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+
+/* ============================================================
+   MARCO FACETS — pestañas
+   ============================================================ */
+.facets-intro { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px 28px; margin-bottom: 24px; box-shadow: var(--shadow-sm); }
+.facets-intro p { font-size: 15px; color: var(--ink-soft); line-height: 1.65; }
+.facets-intro strong { color: var(--ink); }
+
+.facets-tabs-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+.facets-tab-btn {
+  appearance: none; cursor: pointer;
+  display: flex; align-items: center; gap: 8px;
+  padding: 10px 16px; font-family: "Inter", sans-serif;
+  font-size: 13px; font-weight: 700; color: var(--muted);
+  background: var(--cream-2); border: 1px solid var(--line);
+  border-bottom: none; border-radius: var(--r-md) var(--r-md) 0 0;
+  transition: color 0.18s, background 0.18s;
+  position: relative; bottom: -1px;
+}
+.facets-tab-btn:hover { color: var(--ink); background: var(--paper); }
+
+/* Activo: cada letra tiene su propio color */
+.facets-tab-btn.active[data-pane="facets-F"] { background: var(--beme-teal-light);   border-color: #99d6d4; color: var(--beme-teal);   z-index:1; }
+.facets-tab-btn.active[data-pane="facets-A"] { background: var(--beme-amber-light);  border-color: #fcd34d; color: var(--beme-amber);  z-index:1; }
+.facets-tab-btn.active[data-pane="facets-C"] { background: var(--beme-rose-light);   border-color: #f9a8d4; color: var(--beme-rose);   z-index:1; }
+.facets-tab-btn.active[data-pane="facets-E"] { background: var(--beme-indigo-light); border-color: #c4b5fd; color: var(--beme-indigo); z-index:1; }
+.facets-tab-btn.active[data-pane="facets-T"] { background: var(--beme-green-light);  border-color: #86efac; color: var(--beme-green);  z-index:1; }
+.facets-tab-btn.active[data-pane="facets-S"] { background: var(--beme-violet-light); border-color: #d8b4fe; color: var(--beme-violet); z-index:1; }
+
+.facets-letter { width: 28px; height: 28px; border-radius: 6px; font-size: 14px; font-weight: 800; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; font-family: "Fraunces", serif; }
+
+.facets-tabs-body { border: 1px solid var(--line); border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; }
+.facets-tab-pane { display: none; padding: 28px; }
+.facets-tab-pane.active { display: block; }
+
+/* Fondo coloreado por pestaña activa */
+#facets-F { background: var(--beme-teal-light); }
+#facets-A { background: var(--beme-amber-light); }
+#facets-C { background: var(--beme-rose-light); }
+#facets-E { background: var(--beme-indigo-light); }
+#facets-T { background: var(--beme-green-light); }
+#facets-S { background: var(--beme-violet-light); }
+.facets-pane-letter { font-family: "Fraunces", serif; font-size: 4rem; font-weight: 700; font-style: italic; line-height: 1; opacity: 0.12; float: right; margin: 0 0 8px 16px; }
+.facets-pane-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
+.facets-pane-title { font-family: "Fraunces", serif; font-size: 1.3rem; font-weight: 600; color: var(--ink); margin-bottom: 10px; }
+.facets-pane-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 14px; }
+.facets-examples { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.facets-example { font-size: 12px; font-weight: 600; color: var(--ink-soft); background: rgba(255,255,255,0.65); border: 1px solid rgba(0,0,0,0.08); border-radius: 999px; padding: 4px 12px; }
+.facets-examples-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); width: 100%; margin-bottom: 4px; }
+
+/* Pestañas de ejemplos FACETS */
+.facets-ex-tabs { margin-top: 32px; }
+.facets-ex-nav { display: flex; gap: 4px; border-bottom: 2px solid var(--line); margin-bottom: 0; }
+.facets-ex-btn { appearance: none; border: 0; background: none; cursor: pointer; padding: 10px 20px; font-family: "Inter", sans-serif; font-size: 14px; font-weight: 600; color: var(--muted); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: color 0.18s, border-color 0.18s; }
+.facets-ex-btn:hover { color: var(--ink); }
+.facets-ex-btn.active { color: var(--uva-blue); border-bottom-color: var(--uva-blue); }
+.facets-ex-body { border: 1px solid var(--line); border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg); background: var(--paper); overflow: hidden; }
+.facets-ex-pane { display: none; padding: 24px; }
+.facets-ex-pane.active { display: block; }
+.facets-ex-title { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 600; color: var(--ink); margin-bottom: 16px; }
+.facets-row { display: flex; gap: 12px; align-items: flex-start; margin-bottom: 10px; }
+.facets-row-letter { width: 32px; height: 32px; border-radius: 8px; font-weight: 800; font-size: 14px; font-family: "Fraunces", serif; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.facets-row-content { flex: 1; }
+.facets-row-key { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 2px; }
+.facets-row-val { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+.facets-row-val strong { color: var(--ink); }
+
+/* ============================================================
+   CHOQUE CULTURAL — flashcards
+   ============================================================ */
+.choice-intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+.choice-progress { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.choice-stack { position: relative; height: 360px; max-width: 460px; margin: 0 auto; perspective: 1400px; }
+.choice-card { position: absolute; inset: 0; appearance: none; border: 0; background: transparent; padding: 0; border-radius: var(--r-xl); cursor: pointer; transform-style: preserve-3d; display: none; }
+.choice-card.visible { display: block; }
+.choice-inner { position: absolute; inset: 0; border-radius: var(--r-xl); transform-style: preserve-3d; transition: transform 0.65s cubic-bezier(0.2,0.8,0.2,1); }
+.choice-card.flipped .choice-inner { transform: rotateY(180deg); }
+.choice-face { position: absolute; inset: 0; border-radius: var(--r-xl); padding: 26px 24px; display: flex; flex-direction: column; justify-content: space-between; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: var(--shadow-md); overflow: hidden; }
+.choice-front { background: var(--paper); border: 1px solid var(--line); }
+.choice-back { background: var(--card-tint, #e8f0f8); transform: rotateY(180deg); text-align: left; }
+.choice-eyebrow { font: 700 11px "Inter", sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--uva-red); }
+.choice-num { font-family: "Fraunces", serif; font-size: 52px; font-weight: 400; line-height: 1; color: var(--card-ink, var(--uva-blue)); font-style: italic; opacity: 0.22; }
+.choice-q { font-family: "Fraunces", serif; font-size: clamp(1.15rem, 3.5vw, 1.5rem); font-weight: 600; letter-spacing: -0.015em; line-height: 1.25; color: var(--ink); margin: 10px 0 0; text-align: left; }
+.choice-hint { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 12px; }
+.choice-hint svg { width: 13px; height: 13px; }
+.choice-back-label { font: 700 11px "Inter", sans-serif; letter-spacing: 0.12em; text-transform: uppercase; color: var(--card-ink, var(--uva-blue)); display: block; margin-bottom: 8px; }
+.choice-back-text { font-size: 14px; color: var(--ink); line-height: 1.6; }
+.choice-controls { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+.choice-ctrl { appearance: none; background: var(--paper); border: 1px solid var(--line); width: 48px; height: 48px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); transition: all 0.18s; box-shadow: var(--shadow-sm); }
+.choice-ctrl:hover { background: var(--uva-blue); color: white; border-color: var(--uva-blue); transform: translateY(-2px); }
+.choice-ctrl svg { width: 18px; height: 18px; }
+.choice-ctrl.flip { width: auto; padding: 0 18px; border-radius: 999px; font: 600 13px "Inter", sans-serif; gap: 6px; }
+
+/* ============================================================
+   DESAFÍOS ÉTICOS — hoja de ruta
+   ============================================================ */
+.ethics-list { display: flex; flex-direction: column; gap: 16px; }
+.ethics-item { display: flex; gap: 20px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 24px; box-shadow: var(--shadow-sm); transition: box-shadow 0.2s, transform 0.2s; }
+.ethics-item:hover { box-shadow: var(--shadow-md); transform: translateX(4px); }
+.ethics-num { font-family: "Fraunces", serif; font-size: 3rem; font-weight: 700; font-style: italic; line-height: 1; flex-shrink: 0; width: 60px; text-align: center; }
+.ethics-content { flex: 1; }
+.ethics-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+.ethics-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.6; }
+.ethics-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--cream-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-top: 10px; }
+
+/* ============================================================
+   REFERENCIAS
+   ============================================================ */
+.refs-block { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 28px 32px; box-shadow: var(--shadow-sm); }
+.ref-item { display: flex; gap: 14px; align-items: flex-start; }
+.ref-num { width: 28px; height: 28px; border-radius: 6px; background: var(--uva-blue); color: #fff; font-size: 12px; font-weight: 700; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ref-body { flex: 1; }
+.ref-cite { font-size: 14px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 8px; }
+.ref-cite strong { color: var(--ink); }
+.ref-doi { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--uva-blue); text-decoration: none; font-family: "JetBrains Mono", monospace; padding: 4px 10px; background: var(--beme-indigo-light); border-radius: 6px; transition: background 0.15s; }
+.ref-doi:hover { background: #ddd6fe; }
+.ref-doi svg { width: 12px; height: 12px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+.footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
+
+/* ============================================================
+   UTILIDADES
+   ============================================================ */
+@media (max-width: 640px) {
+  .about-grid { grid-template-columns: 1fr; }
+  .method-strip { grid-template-columns: repeat(2, 1fr); }
+  .ethics-item { flex-direction: column; gap: 8px; }
+  .ethics-num { width: auto; font-size: 2rem; }
+  .facets-tabs-nav { gap: 2px; }
+  .facets-tab-btn { padding: 8px 10px; font-size: 12px; }
+}
+@keyframes fadeUp { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+.section { animation: fadeUp 0.4s ease both; }
+</style>
+</head>
+<body>
+
+<!-- BARRA EDUMED -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">UNIDAD DE EDUCACIÓN MÉDICA · FACULTAD DE MEDICINA</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+      <span class="edumed-back-label">IA en EduMed</span>
+    </a>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container hero-inner">
+    <div class="hero-tag">
+      <div class="hero-tag-dot"></div>
+      <span>BEME Guide No. 84 · Medical Teacher 2024</span>
+    </div>
+    <h1 class="hero-title">
+      IA en Educación Médica:<br>
+      <em>una revisión de alcance</em>
+    </h1>
+    <p class="hero-subtitle">
+      Mapeo exhaustivo del panorama actual de la inteligencia artificial en todo el continuo de la formación médica, con herramientas novedosas para investigadores y educadores.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-badge">
+        <div class="hero-badge-icon">📄</div>
+        <div class="hero-badge-text">
+          <span>Publicado en</span>
+          <span>Medical Teacher, 2024</span>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">🔬</div>
+        <div class="hero-badge-text">
+          <span>Basado en</span>
+          <span>278 publicaciones globales</span>
+        </div>
+      </div>
+      <div class="hero-badge">
+        <div class="hero-badge-icon">🌍</div>
+        <div class="hero-badge-text">
+          <span>Metodología</span>
+          <span>Scoping Review · PRISMA-ScR</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NAVEGACIÓN -->
+<div class="nav-sticky">
+  <div class="container">
+    <div class="nav-pills">
+      <button class="nav-pill" onclick="scrollToSection('sobre')"><span>📋</span> Sobre el documento</button>
+      <button class="nav-pill" onclick="scrollToSection('casos')"><span>🎯</span> Casos de uso</button>
+      <button class="nav-pill" onclick="scrollToSection('facets')"><span>🔬</span> Marco FACETS</button>
+      <button class="nav-pill" onclick="scrollToSection('choque')"><span>🌀</span> Choque cultural</button>
+      <button class="nav-pill" onclick="scrollToSection('etica')"><span>⚖️</span> Desafíos éticos</button>
+      <button class="nav-pill" onclick="scrollToSection('referencias')"><span>📚</span> Referencias</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     SECCIÓN 1: SOBRE EL DOCUMENTO
+     ============================================================ -->
+<section class="section" id="sobre">
+  <div class="container">
+    <div class="section-eyebrow">Sobre el artículo</div>
+    <h2 class="section-title">¿Qué aporta y cómo está estructurado?</h2>
+    <p class="section-lead">
+      La <strong>Guía BEME N.º 84</strong> sintetiza y mapea exhaustivamente el panorama actual de la IA en todo el continuo de la educación médica —pregrado, posgrado y desarrollo profesional continuo— reuniendo hallazgos de 278 publicaciones globales bajo los estándares PRISMA-ScR.
+    </p>
+
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-card-icon" style="background: var(--beme-teal-light);">🗺️</div>
+        <div class="about-card-title">Mapa completo del campo</div>
+        <div class="about-card-desc">Documenta casos de uso reales de la IA en admisiones, enseñanza, evaluación, razonamiento clínico y automatización de registros, demostrando que la IA ya opera en la formación médica actual.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background: var(--beme-amber-light);">🔧</div>
+        <div class="about-card-title">El marco FACETS</div>
+        <div class="about-card-desc">Propone una herramienta novedosa para estandarizar el reporte de estudios de IA en educación médica, facilitando la comparación y síntesis de futuras investigaciones.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background: var(--beme-rose-light);">🌀</div>
+        <div class="about-card-title">Análisis de madurez institucional</div>
+        <div class="about-card-desc">Aplica la teoría del "choque cultural" de Oberg para explicar en qué fase de asimilación de la IA se encuentran las instituciones médicas, desde el idealismo hasta la integración genuina.</div>
+      </div>
+      <div class="about-card">
+        <div class="about-card-icon" style="background: var(--beme-indigo-light);">⚖️</div>
+        <div class="about-card-title">Hoja de ruta ética y curricular</div>
+        <div class="about-card-desc">Sintetiza el consenso de la literatura sobre cómo enseñar IA: sesgos algorítmicos, equidad, privacidad de datos y preservación del juicio clínico frente a la "falsa seguridad" de la automatización.</div>
+      </div>
+    </div>
+
+    <!-- Metodología -->
+    <h3 style="font-family:'Fraunces',serif; font-size:1.2rem; font-weight:600; color:var(--ink); margin-bottom:16px;">Metodología en 5 etapas</h3>
+    <div class="method-timeline">
+
+      <div class="method-step">
+        <div class="method-step-bubble">1</div>
+        <div class="method-step-card">
+          <div class="method-step-title">Pregunta de investigación</div>
+          <div class="method-step-desc">Definición del alcance y objetivos de la revisión</div>
+          <span class="method-step-tag">Protocolo</span>
+        </div>
+      </div>
+
+      <div class="method-connector">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 5l5 5-5 5"/></svg>
+      </div>
+
+      <div class="method-step">
+        <div class="method-step-bubble">2</div>
+        <div class="method-step-card">
+          <div class="method-step-title">Búsqueda en bases de datos</div>
+          <div class="method-step-desc">Sin restricciones de idioma · 278 artículos incluidos</div>
+          <span class="method-step-tag">PRISMA-ScR</span>
+        </div>
+      </div>
+
+      <div class="method-connector">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 5l5 5-5 5"/></svg>
+      </div>
+
+      <div class="method-step">
+        <div class="method-step-bubble">3</div>
+        <div class="method-step-card">
+          <div class="method-step-title">Selección por pares</div>
+          <div class="method-step-desc">Parejas de investigadores para cribado y extracción independiente</div>
+          <span class="method-step-tag">Fiabilidad</span>
+        </div>
+      </div>
+
+      <div class="method-connector">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 5l5 5-5 5"/></svg>
+      </div>
+
+      <div class="method-step">
+        <div class="method-step-bubble">4</div>
+        <div class="method-step-card">
+          <div class="method-step-title">Extracción de datos</div>
+          <div class="method-step-desc">191 innovaciones + 87 perspectivas clasificadas</div>
+          <span class="method-step-tag">Categorización</span>
+        </div>
+      </div>
+
+      <div class="method-connector">
+        <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 10h12M12 5l5 5-5 5"/></svg>
+      </div>
+
+      <div class="method-step">
+        <div class="method-step-bubble">5</div>
+        <div class="method-step-card">
+          <div class="method-step-title">Síntesis y graficación</div>
+          <div class="method-step-desc">Marco FACETS + modelo de choque cultural de Oberg</div>
+          <span class="method-step-tag">Marco FACETS</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCIÓN 2: CASOS DE USO REALES (ACORDEONES)
+     ============================================================ -->
+<section class="section" id="casos">
+  <div class="container">
+    <div class="section-eyebrow">Evidencia empírica</div>
+    <h2 class="section-title">Casos de uso reales documentados</h2>
+    <p class="section-lead">
+      El artículo analiza 191 publicaciones empíricas agrupadas en siete áreas temáticas. Despliega cada categoría para explorar los casos concretos documentados en la literatura.
+    </p>
+
+    <div class="accordion-group">
+
+      <!-- 1. ADMISIONES -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-teal-light);">🎓</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-teal);">Área 1</div>
+            <div class="acc-label">Admisión y Selección de Estudiantes</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">La IA optimiza procesos de selección ante volúmenes crecientes de solicitudes, equilibrando eficiencia y equidad en decisiones de alto impacto.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:var(--beme-teal-light); border-color:#99d6d4;">
+              <div class="use-item-dot" style="background:rgba(13,110,110,0.15);">💬</div>
+              <div class="use-item-text"><strong>Chatbots de reclutamiento:</strong> IA que organiza sesiones virtuales de preguntas y respuestas durante el reclutamiento de aspirantes, mejorando la accesibilidad informativa.</div>
+            </div>
+            <div class="use-item" style="background:var(--beme-teal-light); border-color:#99d6d4;">
+              <div class="use-item-dot" style="background:rgba(13,110,110,0.15);">📊</div>
+              <div class="use-item-text"><strong>Modelado predictivo:</strong> Algoritmos de ML para clasificar evaluaciones de rendimiento y predecir qué candidatos tienen más probabilidades de ser aceptados o lograr el match en residencias.</div>
+            </div>
+            <div class="use-item" style="background:var(--beme-teal-light); border-color:#99d6d4;">
+              <div class="use-item-dot" style="background:rgba(13,110,110,0.15);">🔍</div>
+              <div class="use-item-text"><strong>Análisis de sentimientos:</strong> Revisión de cartas de recomendación mediante NLP para detectar sesgos de género históricos en procesos de selección quirúrgica.</div>
+            </div>
+            <div class="use-item" style="background:var(--beme-teal-light); border-color:#99d6d4;">
+              <div class="use-item-dot" style="background:rgba(13,110,110,0.15);">⚖️</div>
+              <div class="use-item-text"><strong>Filtrado equitativo:</strong> IA que evalúa y filtra grandes volúmenes de solicitudes actuando como sistema de apoyo a la revisión humana, buscando mitigar sesgos sistemáticos.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. ENSEÑANZA -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-amber-light);">📚</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-amber);">Área 2</div>
+            <div class="acc-label">Enseñanza e Instrucción Asistida</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">La IA enriquece los entornos de enseñanza con experiencias personalizadas, simulaciones avanzadas e instrucción adaptativa en tiempo real.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#fef9e7; border-color:#fde68a;">
+              <div class="use-item-dot" style="background:rgba(180,83,9,0.1);">👁️</div>
+              <div class="use-item-text"><strong>Entrenamiento visual:</strong> Herramientas para identificar patologías en imágenes: glomerulopatías, estructuras neuroanatómicas, melanomas, retinopatía diabética y fracturas de cadera en radiografías.</div>
+            </div>
+            <div class="use-item" style="background:#fef9e7; border-color:#fde68a;">
+              <div class="use-item-dot" style="background:rgba(180,83,9,0.1);">🫀</div>
+              <div class="use-item-text"><strong>Guía ecográfica en tiempo real:</strong> Sistemas IA para guiar la adquisición de vistas ecocardiográficas óptimas con ultrasonido en el punto de atención (POCUS).</div>
+            </div>
+            <div class="use-item" style="background:#fef9e7; border-color:#fde68a;">
+              <div class="use-item-dot" style="background:rgba(180,83,9,0.1);">🤖</div>
+              <div class="use-item-text"><strong>Chatbots interactivos:</strong> Instrucción en anatomía, capacitación en comunicación de malas noticias y generación de resúmenes de procedimientos quirúrgicos.</div>
+            </div>
+            <div class="use-item" style="background:#fef9e7; border-color:#fde68a;">
+              <div class="use-item-dot" style="background:rgba(180,83,9,0.1);">🧠</div>
+              <div class="use-item-text"><strong>Tutoría inteligente adaptativa:</strong> NLP para ofrecer instrucción "justo a tiempo" al evaluar pacientes geriátricos o realizar triajes en oftalmología, adaptándose al nivel del estudiante.</div>
+            </div>
+            <div class="use-item" style="background:#fef9e7; border-color:#fde68a;">
+              <div class="use-item-dot" style="background:rgba(180,83,9,0.1);">🩺</div>
+              <div class="use-item-text"><strong>Simulación enriquecida:</strong> Pacientes estandarizados robóticos, medición de la carga cognitiva mediante ECG y respuesta galvánica analizadas por IA, y generación algorítmica de imágenes dermatológicas.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. EVALUACIÓN -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-rose-light);">📊</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-rose);">Área 3</div>
+            <div class="acc-label">Evaluación del Aprendizaje</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">La IA automatiza y enriquece la evaluación, ofreciendo métricas más objetivas, feedback oportuno y predicciones del rendimiento académico futuro.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">🔪</div>
+              <div class="use-item-text"><strong>Evaluación de habilidades quirúrgicas:</strong> ML y analíticas de video en la nube para evaluar cirugía robótica, mínimamente invasiva y neurocirugía, sustituyendo a observadores humanos.</div>
+            </div>
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">🧩</div>
+              <div class="use-item-text"><strong>Curvas de aprendizaje:</strong> Algoritmos con datos visuales, cinestésicos o EEG para predecir curvas de aprendizaje y distinguir entre cirujanos novatos y expertos de forma objetiva.</div>
+            </div>
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">📝</div>
+              <div class="use-item-text"><strong>Análisis narrativo:</strong> NLP para evaluar cualitativamente a los alumnos a partir de comentarios de profesores, escritos reflexivos y respuestas cortas orientadas a medir profesionalismo.</div>
+            </div>
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">🎭</div>
+              <div class="use-item-text"><strong>OSCEs virtuales:</strong> Simuladores de Pacientes Virtuales y Exámenes Clínicos Objetivos Estructurados en formato digital con sistemas de calificación automatizados.</div>
+            </div>
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">❓</div>
+              <div class="use-item-text"><strong>Generación automática de MCQs:</strong> Creación de preguntas de opción múltiple mediante Deep Learning y LLMs para construir bancos de preguntas de evaluación a gran escala.</div>
+            </div>
+            <div class="use-item" style="background:#fdf2f8; border-color:#f9a8d4;">
+              <div class="use-item-dot" style="background:rgba(157,23,77,0.1);">📈</div>
+              <div class="use-item-text"><strong>Analítica predictiva:</strong> Modelos que prevén el rendimiento en exámenes de alto riesgo, permitiendo identificar estudiantes en riesgo de forma anticipada.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. RAZONAMIENTO CLÍNICO -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-indigo-light);">🧠</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-indigo);">Área 4</div>
+            <div class="acc-label">Desarrollo y Evaluación del Razonamiento Clínico</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">La IA crea entornos para practicar el pensamiento diagnóstico con feedback inmediato, y automatiza la generación de casos clínicos complejos.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#f5f3ff; border-color:#c4b5fd;">
+              <div class="use-item-dot" style="background:rgba(55,48,163,0.1);">🧑‍⚕️</div>
+              <div class="use-item-text"><strong>Avatares virtuales de pacientes:</strong> Entornos dinámicos donde los alumnos practican la recopilación de información, la generación de hipótesis y la justificación diagnóstica con feedback en tiempo real.</div>
+            </div>
+            <div class="use-item" style="background:#f5f3ff; border-color:#c4b5fd;">
+              <div class="use-item-dot" style="background:rgba(55,48,163,0.1);">📚</div>
+              <div class="use-item-text"><strong>Bibliotecas de casos masivas:</strong> NLP para extraer datos de registros hospitalarios y revistas médicas y automatizar la creación de bibliotecas de casos clínicos de gran variedad.</div>
+            </div>
+            <div class="use-item" style="background:#f5f3ff; border-color:#c4b5fd;">
+              <div class="use-item-dot" style="background:rgba(55,48,163,0.1);">📋</div>
+              <div class="use-item-text"><strong>Evaluación de notas clínicas:</strong> ML para revisar las notas clínicas de estudiantes y residentes (notas de admisión, diarios post-OSCE) y evaluar estadísticamente su capacidad de razonamiento.</div>
+            </div>
+            <div class="use-item" style="background:#f5f3ff; border-color:#c4b5fd;">
+              <div class="use-item-dot" style="background:rgba(55,48,163,0.1);">💡</div>
+              <div class="use-item-text"><strong>Apoyo a la toma de decisiones:</strong> LLMs utilizados como herramientas de soporte a la toma de decisiones clínicas para médicos residentes y jóvenes en formación.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. AUTOMATIZACIÓN DE REGISTROS -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-green-light);">📋</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-green);">Área 5</div>
+            <div class="acc-label">Automatización de Registros Clínicos y Bitácoras</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">La IA reduce la carga administrativa de residentes y estudiantes, automatizando el registro de experiencias clínicas y liberando tiempo para el aprendizaje de mayor valor.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#f0fdf4; border-color:#86efac;">
+              <div class="use-item-dot" style="background:rgba(22,101,52,0.1);">🗂️</div>
+              <div class="use-item-text"><strong>Mapeo automático de conceptos:</strong> NLP que identifica conceptos en notas clínicas de residentes y los mapea automáticamente con problemas clínicos centrales del currículo.</div>
+            </div>
+            <div class="use-item" style="background:#f0fdf4; border-color:#86efac;">
+              <div class="use-item-dot" style="background:rgba(22,101,52,0.1);">🧠</div>
+              <div class="use-item-text"><strong>Rastreo de casos en neurología:</strong> Seguimiento automático de experiencias clínicas que multiplica la cantidad de casos correctamente registrados en residencias de alta complejidad.</div>
+            </div>
+            <div class="use-item" style="background:#f0fdf4; border-color:#86efac;">
+              <div class="use-item-dot" style="background:rgba(22,101,52,0.1);">📊</div>
+              <div class="use-item-text"><strong>Dashboards diagnósticos:</strong> Paneles de control que contabilizan clases de diagnósticos automáticamente a partir de impresiones de imágenes médicas dictadas por residentes.</div>
+            </div>
+            <div class="use-item" style="background:#f0fdf4; border-color:#86efac;">
+              <div class="use-item-dot" style="background:rgba(22,101,52,0.1);">✍️</div>
+              <div class="use-item-text"><strong>Sugerencias proactivas de registro:</strong> Redes neuronales profundas que sugieren a los residentes los datos precisos que necesitan registrar en sus historiales y bitácoras quirúrgicas.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. CONOCIMIENTO Y ACTITUDES -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:var(--beme-violet-light);">💬</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:var(--beme-violet);">Área 6</div>
+            <div class="acc-label">Conocimiento y Actitudes de los Usuarios frente a la IA</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">Una parte significativa de la literatura analiza cómo perciben la IA estudiantes, residentes y facultativos, revelando brechas de conocimiento y actitudes que el currículo debe abordar.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#faf5ff; border-color:#d8b4fe;">
+              <div class="use-item-dot" style="background:rgba(109,40,217,0.1);">📋</div>
+              <div class="use-item-text"><strong>Encuestas de percepción:</strong> Estudios sobre el nivel de conocimiento de la IA en estudiantes de medicina, residentes y médicos en activo, identificando lagunas formativas específicas.</div>
+            </div>
+            <div class="use-item" style="background:#faf5ff; border-color:#d8b4fe;">
+              <div class="use-item-dot" style="background:rgba(109,40,217,0.1);">🤔</div>
+              <div class="use-item-text"><strong>Actitudes hacia la IA clínica:</strong> Análisis de la predisposición de los profesionales a integrar herramientas de IA en la práctica, incluyendo preocupaciones sobre responsabilidad y confianza.</div>
+            </div>
+            <div class="use-item" style="background:#faf5ff; border-color:#d8b4fe;">
+              <div class="use-item-dot" style="background:rgba(109,40,217,0.1);">🎓</div>
+              <div class="use-item-text"><strong>Necesidades curriculares percibidas:</strong> Identificación de qué competencias en IA consideran necesarias los propios estudiantes y educadores para el ejercicio médico futuro.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. LLMs EN EXÁMENES -->
+      <div class="acc-item">
+        <button class="acc-trigger" onclick="toggleAcc(this)">
+          <div class="acc-icon-wrap" style="background:#fef3c7;">🤖</div>
+          <div class="acc-heading">
+            <div class="acc-eyebrow" style="color:#92400e;">Área 7</div>
+            <div class="acc-label">Rendimiento de LLMs en Exámenes Médicos</div>
+          </div>
+          <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </button>
+        <div class="acc-body">
+          <p class="acc-lead">Un área emergente y de enorme impacto curricular: la evaluación del rendimiento de modelos como ChatGPT en exámenes de certificación y pruebas clínicas estandarizadas.</p>
+          <div class="use-list">
+            <div class="use-item" style="background:#fffbeb; border-color:#fcd34d;">
+              <div class="use-item-dot" style="background:rgba(146,64,14,0.1);">📝</div>
+              <div class="use-item-text"><strong>ChatGPT en el USMLE:</strong> Múltiples estudios documentan que ChatGPT supera el umbral de aprobación del examen de licenciatura médica estadounidense, planteando preguntas sobre la validez de las evaluaciones actuales.</div>
+            </div>
+            <div class="use-item" style="background:#fffbeb; border-color:#fcd34d;">
+              <div class="use-item-dot" style="background:rgba(146,64,14,0.1);">🏥</div>
+              <div class="use-item-text"><strong>Razonamiento clínico de LLMs:</strong> Evaluación de la capacidad de los grandes modelos de lenguaje para generar diagnósticos diferenciales y planes de tratamiento en casos clínicos complejos.</div>
+            </div>
+            <div class="use-item" style="background:#fffbeb; border-color:#fcd34d;">
+              <div class="use-item-dot" style="background:rgba(146,64,14,0.1);">⚠️</div>
+              <div class="use-item-text"><strong>Implicaciones para la evaluación:</strong> El rendimiento de los LLMs obliga a rediseñar las evaluaciones médicas hacia formatos que midan procesos cognitivos que la IA no puede replicar, como el juicio clínico contextualizado.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /accordion-group -->
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCIÓN 3: MARCO FACETS
+     ============================================================ -->
+<section class="section" id="facets">
+  <div class="container">
+    <div class="section-eyebrow">Herramienta de investigación</div>
+    <h2 class="section-title">El marco FACETS</h2>
+    <p class="section-lead">Propuesta novedosa de los autores para estandarizar el reporte de estudios de IA en educación médica. Selecciona cada letra para conocer su significado y utilidad.</p>
+
+    <div class="facets-intro">
+      <p>El marco <strong>FACETS</strong> guía a los investigadores para reportar todos los elementos de una intervención de IA de forma cohesiva en una sola publicación. Facilita la comparación entre estudios y la realización de revisiones sistemáticas futuras. <strong>Solo aplica a innovaciones y casos de uso reales</strong>, no a artículos de perspectiva ni encuestas de actitudes.</p>
+    </div>
+
+    <!-- Pestañas FACETS -->
+    <div class="facets-tabs-nav" id="facetsNav">
+      <button class="facets-tab-btn active" data-pane="facets-F" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#e0f2f1; color:#0d6e6e;">F</span> Form
+      </button>
+      <button class="facets-tab-btn" data-pane="facets-A" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#fef3c7; color:#b45309;">A</span> use Case
+      </button>
+      <button class="facets-tab-btn" data-pane="facets-C" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#fce7f3; color:#9d174d;">C</span> Context
+      </button>
+      <button class="facets-tab-btn" data-pane="facets-E" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#ede9fe; color:#3730a3;">E</span> Education
+      </button>
+      <button class="facets-tab-btn" data-pane="facets-T" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#dcfce7; color:#166534;">T</span> Technology
+      </button>
+      <button class="facets-tab-btn" data-pane="facets-S" onclick="switchFacets(this)">
+        <span class="facets-letter" style="background:#f5f3ff; color:#6d28d9;">S</span> SAMR
+      </button>
+    </div>
+    <div class="facets-tabs-body">
+
+      <div class="facets-tab-pane active" id="facets-F">
+        <div class="facets-pane-letter" style="color:#0d6e6e;">F</div>
+        <div class="facets-pane-tag" style="background:var(--beme-teal-light); color:var(--beme-teal);">Form of AI · Forma de la IA</div>
+        <div class="facets-pane-title">¿Qué tipo de inteligencia artificial se utiliza?</div>
+        <p class="facets-pane-desc">Define la categoría o familia tecnológica del sistema de IA empleado en el estudio. Este elemento permite agrupar investigaciones por tecnología subyacente e identificar qué tipos de IA están siendo más explorados en cada dominio educativo.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Ejemplos documentados</div>
+          <span class="facets-example">Aprendizaje Automático (ML)</span>
+          <span class="facets-example">Aprendizaje Profundo (Deep Learning)</span>
+          <span class="facets-example">Procesamiento de Lenguaje Natural (NLP)</span>
+          <span class="facets-example">Minería de Datos (Data Mining)</span>
+          <span class="facets-example">Grandes Modelos de Lenguaje (LLM)</span>
+          <span class="facets-example">Visión Artificial (Computer Vision)</span>
+        </div>
+      </div>
+
+      <div class="facets-tab-pane" id="facets-A">
+        <div class="facets-pane-letter" style="color:#b45309;">A</div>
+        <div class="facets-pane-tag" style="background:var(--beme-amber-light); color:var(--beme-amber);">AI Use Case · Caso de uso</div>
+        <div class="facets-pane-title">¿Cuál es el producto o resultado final de la IA?</div>
+        <p class="facets-pane-desc">Describe la innovación concreta, la salida o el producto que genera el sistema de IA. No describe la tecnología sino lo que esa tecnología produce para el usuario final —estudiante, docente o institución—. Es el "para qué sirve" de la herramienta.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Ejemplos documentados</div>
+          <span class="facets-example">Simulador de Paciente Virtual</span>
+          <span class="facets-example">Plataforma de aprendizaje personalizado</span>
+          <span class="facets-example">Sistema de orientación clínica</span>
+          <span class="facets-example">Tutor inteligente</span>
+          <span class="facets-example">Generador automático de MCQs</span>
+          <span class="facets-example">Analítica de rendimiento quirúrgico</span>
+        </div>
+      </div>
+
+      <div class="facets-tab-pane" id="facets-C">
+        <div class="facets-pane-letter" style="color:#9d174d;">C</div>
+        <div class="facets-pane-tag" style="background:var(--beme-rose-light); color:var(--beme-rose);">Context · Contexto</div>
+        <div class="facets-pane-title">¿Dónde y con quién se aplica la IA?</div>
+        <p class="facets-pane-desc">Especifica el entorno educativo donde se implementa la intervención: la etapa del continuo formativo (pregrado UME, posgrado GME o desarrollo profesional continuo CPD), el área o especialidad médica, y el grupo de estudiantes o profesionales evaluados.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Ejemplos documentados</div>
+          <span class="facets-example">Pregrado (UME) · rotaciones clínicas</span>
+          <span class="facets-example">Posgrado (GME) · Cirugía</span>
+          <span class="facets-example">Posgrado · Neurología</span>
+          <span class="facets-example">Desarrollo profesional continuo (CPD)</span>
+          <span class="facets-example">Atención primaria · Oftalmología</span>
+        </div>
+      </div>
+
+      <div class="facets-tab-pane" id="facets-E">
+        <div class="facets-pane-letter" style="color:#3730a3;">E</div>
+        <div class="facets-pane-tag" style="background:var(--beme-indigo-light); color:var(--beme-indigo);">Education Focus · Enfoque educativo</div>
+        <div class="facets-pane-title">¿Qué área de la educación médica aborda?</div>
+        <p class="facets-pane-desc">Delimita el proceso educativo específico que la IA busca apoyar o transformar. Este elemento conecta la intervención tecnológica con los objetivos pedagógicos del programa formativo, permitiendo agrupar estudios por finalidad educativa.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Ejemplos documentados</div>
+          <span class="facets-example">Selección y admisión</span>
+          <span class="facets-example">Desarrollo curricular</span>
+          <span class="facets-example">Enseñanza (Teaching)</span>
+          <span class="facets-example">Evaluación (Assessment)</span>
+          <span class="facets-example">Razonamiento clínico</span>
+          <span class="facets-example">Feedback y retroalimentación</span>
+        </div>
+      </div>
+
+      <div class="facets-tab-pane" id="facets-T">
+        <div class="facets-pane-letter" style="color:#166534;">T</div>
+        <div class="facets-pane-tag" style="background:var(--beme-green-light); color:var(--beme-green);">Technology · Tecnología específica</div>
+        <div class="facets-pane-title">¿Qué herramienta o sistema concreto se emplea?</div>
+        <p class="facets-pane-desc">Nombra de forma exacta el modelo de lenguaje, el software, el sistema o el lenguaje de programación que implementa la IA en el estudio. La especificidad es clave: permite la reproducibilidad y la comparación directa entre estudios que usan la misma herramienta.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Ejemplos documentados</div>
+          <span class="facets-example">ChatGPT / GPT-4</span>
+          <span class="facets-example">CIRCSIM-Tutor</span>
+          <span class="facets-example">Software de analítica de video en la nube</span>
+          <span class="facets-example">Sistema de visión artificial personalizado</span>
+          <span class="facets-example">Plataforma de tutoría inteligente específica</span>
+        </div>
+      </div>
+
+      <div class="facets-tab-pane" id="facets-S">
+        <div class="facets-pane-letter" style="color:#6d28d9;">S</div>
+        <div class="facets-pane-tag" style="background:var(--beme-violet-light); color:var(--beme-violet);">SAMR · Nivel de integración tecnológica</div>
+        <div class="facets-pane-title">¿En qué nivel integra la IA el proceso educativo?</div>
+        <p class="facets-pane-desc">Utiliza el marco SAMR (Puentedura) para situar la intervención en uno de cuatro niveles crecientes de transformación pedagógica. Permite valorar si la IA simplemente reemplaza una tarea existente o redefine completamente lo que es posible enseñar o evaluar.</p>
+        <div class="facets-examples">
+          <div class="facets-examples-label">Los 4 niveles SAMR</div>
+          <span class="facets-example">🔁 Sustitución — reemplaza sin cambio funcional</span>
+          <span class="facets-example">⬆️ Aumento — mejora con funcionalidad nueva</span>
+          <span class="facets-example">🔄 Modificación — rediseña la tarea</span>
+          <span class="facets-example">🚀 Redefinición — crea tareas imposibles antes</span>
+        </div>
+      </div>
+
+    </div><!-- /facets-tabs-body -->
+
+    <!-- Ejemplos prácticos de FACETS -->
+    <div class="facets-ex-tabs">
+      <h3 style="font-family:'Fraunces',serif; font-size:1.15rem; font-weight:600; color:var(--ink); margin-bottom:16px;">Ejemplos prácticos de aplicación</h3>
+      <div class="facets-ex-nav">
+        <button class="facets-ex-btn active" onclick="switchFacetsEx(this, 'ex-1')">Ejemplo 1 · Razonamiento clínico</button>
+        <button class="facets-ex-btn" onclick="switchFacetsEx(this, 'ex-2')">Ejemplo 2 · Habilidades quirúrgicas</button>
+      </div>
+      <div class="facets-ex-body">
+
+        <div class="facets-ex-pane active" id="ex-1">
+          <div class="facets-ex-title">Sistema interactivo de entrevista a avatar digital para practicar diagnósticos</div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#e0f2f1; color:#0d6e6e;">F</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Form of AI</div>
+              <div class="facets-row-val"><strong>Procesamiento de Lenguaje Natural (NLP)</strong> — permite que la máquina comprenda las preguntas del estudiante y formule las respuestas del avatar.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#fef3c7; color:#b45309;">A</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">AI Use Case</div>
+              <div class="facets-row-val"><strong>Simulador de Paciente Virtual</strong> — un entorno dinámico con avatar que reacciona en tiempo real a las preguntas del estudiante.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#fce7f3; color:#9d174d;">C</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Context</div>
+              <div class="facets-row-val"><strong>Pregrado (UME)</strong> — estudiantes de medicina durante sus rotaciones clínicas.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#ede9fe; color:#3730a3;">E</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Education Focus</div>
+              <div class="facets-row-val"><strong>Enseñanza y Evaluación</strong> — desarrollar y medir la recopilación de información, la generación de hipótesis y la justificación diagnóstica.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#dcfce7; color:#166534;">T</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Technology</div>
+              <div class="facets-row-val"><strong>ChatGPT / CIRCSIM-Tutor</strong> — el sistema de NLP específico que impulsa la conversación con el avatar.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#f5f3ff; color:#6d28d9;">S</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">SAMR</div>
+              <div class="facets-row-val"><strong>Redefinición</strong> — crea bibliotecas masivas de casos y práctica interactiva ilimitada con feedback en tiempo real: imposible logística y económicamente solo con actores humanos.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="facets-ex-pane" id="ex-2">
+          <div class="facets-ex-title">Evaluación automatizada de habilidades quirúrgicas en cirugía mínimamente invasiva</div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#e0f2f1; color:#0d6e6e;">F</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Form of AI</div>
+              <div class="facets-row-val"><strong>Aprendizaje Profundo (Deep Learning)</strong> — modelos que procesan vídeo quirúrgico para analizar los movimientos del residente en tiempo real.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#fef3c7; color:#b45309;">A</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">AI Use Case</div>
+              <div class="facets-row-val"><strong>Analítica de rendimiento</strong> — panel que dictamina el nivel de pericia (novato o experto) basándose en los movimientos registrados durante la intervención.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#fce7f3; color:#9d174d;">C</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Context</div>
+              <div class="facets-row-val"><strong>Posgrado (GME) · Cirugía</strong> — residentes de cirugía en entorno de cirugía robótica o mínimamente invasiva.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#ede9fe; color:#3730a3;">E</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Education Focus</div>
+              <div class="facets-row-val"><strong>Evaluación</strong> — medir y cuantificar objetivamente el dominio de habilidades psicomotoras quirúrgicas.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#dcfce7; color:#166534;">T</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">Technology</div>
+              <div class="facets-row-val"><strong>Software de analítica de vídeo en la nube</strong> — el sistema algorítmico específico que procesa y clasifica los movimientos del residente.</div>
+            </div>
+          </div>
+          <div class="facets-row">
+            <div class="facets-row-letter" style="background:#f5f3ff; color:#6d28d9;">S</div>
+            <div class="facets-row-content">
+              <div class="facets-row-key">SAMR</div>
+              <div class="facets-row-val"><strong>Sustitución</strong> — la IA sustituye directamente al cirujano instructor que tradicionalmente debía estar presente observando y calificando cada movimiento.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div><!-- /facets-ex-tabs -->
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCIÓN 4: CHOQUE CULTURAL — FLASHCARDS
+     ============================================================ -->
+<section class="section" id="choque">
+  <div class="container">
+    <div class="section-eyebrow">Teoría de Oberg aplicada a la IA</div>
+    <h2 class="section-title">El choque cultural en la integración de la IA</h2>
+    <p class="section-lead">
+      Los autores aplican la teoría del <em>choque cultural</em> de Oberg para explicar la respuesta emocional y conductual de los educadores médicos ante la IA. El proceso es individual y no siempre lineal. Toca cada tarjeta para explorar cada fase.
+    </p>
+
+    <div class="choice-intro">
+      <span class="choice-progress">Fase <span id="cc-current">1</span> de <span id="cc-total">4</span></span>
+      <span style="font-size:13px; color:var(--muted);">Toca la tarjeta para ver la descripción</span>
+    </div>
+
+    <div class="choice-stack" id="ccStack">
+
+      <!-- FASE 1: LUNA DE MIEL -->
+      <button class="choice-card" data-idx="0" style="--card-tint:#fef9c3; --card-ink:#854d0e;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="choice-eyebrow">Fase 1 de 4</span>
+                <span class="choice-num">01</span>
+              </div>
+              <div style="font-size:3rem;margin:10px 0 8px;">🌅</div>
+              <p class="choice-q">Luna de miel<br><em style="font-size:0.85em;opacity:0.7;">Honeymoon</em></p>
+            </div>
+            <span class="choice-hint">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Toca para ver la descripción
+            </span>
+          </div>
+          <div class="choice-face choice-back">
+            <div>
+              <span class="choice-back-label">Fascinación e idealismo</span>
+              <p class="choice-back-text">Se caracteriza por una mezcla de <strong>fascinación e idealismo</strong>. En esta etapa inicial, los autores de estudios suelen proyectar una visión sumamente optimista sobre el potencial de la IA, pero frecuentemente sin explorar a fondo los retos y las consideraciones éticas que conlleva.<br><br>Es la fase del <em>"la IA lo resolverá todo"</em>: publicaciones entusiastas, promesas de revolución y adopción acrítica de nuevas herramientas.</p>
+            </div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <!-- FASE 2: FRUSTRACIÓN -->
+      <button class="choice-card" data-idx="1" style="--card-tint:#fee2e2; --card-ink:#991b1b;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="choice-eyebrow">Fase 2 de 4</span>
+                <span class="choice-num">02</span>
+              </div>
+              <div style="font-size:3rem;margin:10px 0 8px;">😤</div>
+              <p class="choice-q">Frustración<br><em style="font-size:0.85em;opacity:0.7;">Frustration</em></p>
+            </div>
+            <span class="choice-hint">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Toca para ver la descripción
+            </span>
+          </div>
+          <div class="choice-face choice-back">
+            <div>
+              <span class="choice-back-label">Miedo y agobio</span>
+              <p class="choice-back-text">Ocurre cuando los individuos se sienten <strong>abrumados, temerosos por la falta de comprensión</strong> o sienten que no encajan en el nuevo panorama.<br><br>Esta fase a menudo convive con la luna de miel, creando una dualidad donde el asombro por las capacidades de la IA choca directamente con la aprensión de que la tecnología reduzca la necesidad de los métodos tradicionales de enseñanza y evaluación. Es la fase del <em>"¿reemplazará la IA mi trabajo?"</em>.</p>
+            </div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <!-- FASE 3: ADAPTACIÓN -->
+      <button class="choice-card" data-idx="2" style="--card-tint:#dbeafe; --card-ink:#1e40af;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="choice-eyebrow">Fase 3 de 4</span>
+                <span class="choice-num">03</span>
+              </div>
+              <div style="font-size:3rem;margin:10px 0 8px;">🔧</div>
+              <p class="choice-q">Adaptación<br><em style="font-size:0.85em;opacity:0.7;">Adaptation</em></p>
+            </div>
+            <span class="choice-hint">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Toca para ver la descripción
+            </span>
+          </div>
+          <div class="choice-face choice-back">
+            <div>
+              <span class="choice-back-label">Búsqueda de usos prácticos</span>
+              <p class="choice-back-text">A medida que decanta la frustración, los educadores comienzan a encontrar <strong>maneras prácticas y efectivas de incorporar las herramientas de IA</strong>. Esta etapa se enfoca en crear casos de uso pragmáticos.<br><br>Marca una transición desde el escepticismo y el impacto inicial hacia una integración más equilibrada y funcional en las tareas cotidianas: <em>"¿Cómo puedo usar esto en mi asignatura?"</em>.</p>
+            </div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+      <!-- FASE 4: ACEPTACIÓN -->
+      <button class="choice-card" data-idx="3" style="--card-tint:#dcfce7; --card-ink:#166534;">
+        <div class="choice-inner">
+          <div class="choice-face choice-front">
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                <span class="choice-eyebrow">Fase 4 de 4</span>
+                <span class="choice-num">04</span>
+              </div>
+              <div style="font-size:3rem;margin:10px 0 8px;">🌱</div>
+              <p class="choice-q">Aceptación<br><em style="font-size:0.85em;opacity:0.7;">Acceptance</em></p>
+            </div>
+            <span class="choice-hint">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10"/></svg>
+              Toca para ver la descripción
+            </span>
+          </div>
+          <div class="choice-face choice-back">
+            <div>
+              <span class="choice-back-label">Integración genuina y ética</span>
+              <p class="choice-back-text">Es la fase de madurez total, donde la IA deja de verse como una fuerza disruptiva y externa para convertirse en una <strong>parte integral del diseño educativo</strong>.<br><br>Los educadores que llegan aquí asimilan la tecnología con pensamiento crítico, combinando la creatividad con un entendimiento profundo del potencial, las limitaciones y la ética de la IA. Es la fase del educador que enseña <em>con</em> la IA y enseña <em>sobre</em> la IA simultáneamente.</p>
+            </div>
+            <span class="choice-hint">Toca de nuevo para volver</span>
+          </div>
+        </div>
+      </button>
+
+    </div><!-- /ccStack -->
+
+    <div class="choice-controls">
+      <button class="choice-ctrl" id="ccPrev" title="Anterior">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M11 4L6 9l5 5"/></svg>
+      </button>
+      <button class="choice-ctrl flip" id="ccFlip">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;"><path d="M3 9a6 6 0 1 0 6-6"/><path d="M3 4v5h5"/></svg>
+        Girar
+      </button>
+      <button class="choice-ctrl" id="ccNext" title="Siguiente">
+        <svg viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M7 4l5 5-5 5"/></svg>
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCIÓN 5: DESAFÍOS ÉTICOS
+     ============================================================ -->
+<section class="section" id="etica">
+  <div class="container">
+    <div class="section-eyebrow">Hoja de ruta ética y curricular</div>
+    <h2 class="section-title">Desafíos éticos para el futuro</h2>
+    <p class="section-lead">
+      La literatura sintetizada en la BEME 84 señala cuatro pilares éticos y curriculares urgentes que el currículo médico debe integrar para preparar a los futuros médicos ante una práctica clínica mediada por IA.
+    </p>
+
+    <div class="ethics-list">
+
+      <div class="ethics-item">
+        <div class="ethics-num" style="color:#b45309; -webkit-text-fill-color:#b45309;">01</div>
+        <div class="ethics-content">
+          <div class="ethics-title">Sesgos algorítmicos y equidad en salud</div>
+          <div class="ethics-desc">Los futuros clínicos deben comprender los sesgos inherentes en la IA aplicada a la salud, especialmente los causados por el entrenamiento con conjuntos de datos no representativos. Sin atención, la IA puede exacerbar disparidades y desigualdades en la atención médica. El currículo debe enseñar a reflexionar críticamente sobre los sesgos ocultos en las herramientas tecnológicas y la práctica clínica, y a diseñar sistemas que promuevan activamente la justicia y la equidad.</div>
+          <span class="ethics-tag">⚖️ Equidad · Sesgos · Justicia</span>
+        </div>
+      </div>
+
+      <div class="ethics-item">
+        <div class="ethics-num" style="color:#9d174d; -webkit-text-fill-color:#9d174d;">02</div>
+        <div class="ethics-content">
+          <div class="ethics-title">Privacidad de datos y consentimiento informado</div>
+          <div class="ethics-desc">El uso de la IA en medicina exige una comprensión sólida de la privacidad de los datos, el manejo ético de la información del paciente y las dimensiones legales de la tecnología. Dado el gran número de bases de datos disponibles, la "desanonimización" (reidentificación) de datos de pacientes es altamente posible al cruzar información. Los estudiantes deben aprender a obtener consentimiento informado de forma transparente y discutir con los pacientes las implicaciones de la participación de la IA en sus decisiones de cuidado.</div>
+          <span class="ethics-tag">🔒 Privacidad · Consentimiento · Legal</span>
+        </div>
+      </div>
+
+      <div class="ethics-item">
+        <div class="ethics-num" style="color:#3730a3; -webkit-text-fill-color:#3730a3;">03</div>
+        <div class="ethics-content">
+          <div class="ethics-title">Preservación del juicio humano y la "falsa seguridad"</div>
+          <div class="ethics-desc">Frente a la ilusión de infalibilidad de las máquinas, los clínicos deben ser cautelosos con el <em>sesgo de automatización</em>: la dependencia excesiva de la IA puede llevar a cometer errores médicos al aceptar sin criterio sus recomendaciones. La formación debe centrarse en preservar el razonamiento clínico, las habilidades de evaluación y las interacciones humanas que la IA no puede replicar, promoviendo un sistema de "inteligencia híbrida" donde el médico mantiene siempre la responsabilidad final.</div>
+          <span class="ethics-tag">🧠 Juicio clínico · Deskilling · Autonomía</span>
+        </div>
+      </div>
+
+      <div class="ethics-item">
+        <div class="ethics-num" style="color:#166534; -webkit-text-fill-color:#166534;">04</div>
+        <div class="ethics-content">
+          <div class="ethics-title">Atención compasiva y prevención de la deshumanización</div>
+          <div class="ethics-desc">La educación ética debe garantizar que la IA complemente, y nunca reemplace, el papel del médico en la prestación de una atención compasiva. El elemento humano en la sanidad es irremplazable: los educadores médicos tienen la responsabilidad de asegurar que la tecnología mejore la relación médico-paciente, respete la autonomía del enfermo y prevenga la deshumanización del cuidado clínico. Los currículos deben demostrar mediante casos y modelos a seguir que la compasión y el juicio ético seguirán siendo el núcleo de la profesión.</div>
+          <span class="ethics-tag">❤️ Compasión · Relación médico-paciente · Humanismo</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     SECCIÓN 6: REFERENCIAS
+     ============================================================ -->
+<section class="section" id="referencias">
+  <div class="container">
+    <div class="section-eyebrow">Fuente original</div>
+    <h2 class="section-title">Referencia bibliográfica</h2>
+    <p class="section-lead">Este recurso educativo está basado íntegramente en la Guía BEME N.º 84, publicada en <em>Medical Teacher</em> en 2024.</p>
+
+    <div class="refs-block">
+      <div class="ref-item">
+        <div class="ref-num">84</div>
+        <div class="ref-body">
+          <p class="ref-cite">
+            <strong>Gordon, M., Daniel, M., Ajiboye, A., Uraiby, H., Xu, N. Y., Bartlett, R., Hanson, J., Haas, M., Spadafore, M., Grafton-Clarke, C., Gasiea, R. Y., Michie, C., Corral, J., Kwan, B., Dolmans, D., &amp; Thammasitboon, S.</strong> (2024). A scoping review of artificial intelligence in medical education: BEME Guide No. 84. <em>Medical Teacher</em>, <em>46</em>(4), 446–470.
+          </p>
+          <a class="ref-doi" href="https://doi.org/10.1080/0142159X.2024.2314198" target="_blank" rel="noopener">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 3H3a1 1 0 00-1 1v9a1 1 0 001 1h9a1 1 0 001-1v-3M10 2h4v4M14 2L8 8"/></svg>
+            doi:10.1080/0142159X.2024.2314198
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <div><strong>EduMed · UVa</strong> — Unidad de Educación Médica, Facultad de Medicina, Universidad de Valladolid</div>
+      <div>Recurso educativo basado en Gordon et al. (2024) · <em>Medical Teacher</em> · BEME Guide No. 84</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// Scroll suave
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// Acordeones de casos de uso
+function toggleAcc(btn) {
+  const item = btn.closest('.acc-item');
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+
+// Pestañas FACETS
+function switchFacets(btn) {
+  const allBtns = document.querySelectorAll('.facets-tab-btn');
+  const allPanes = document.querySelectorAll('.facets-tab-pane');
+  allBtns.forEach(b => b.classList.remove('active'));
+  allPanes.forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(btn.dataset.pane).classList.add('active');
+  // Ajusta border-radius del contenedor según posición de la pestaña activa
+  const btnsArr = Array.from(allBtns);
+  const idx = btnsArr.indexOf(btn);
+  const body = document.querySelector('.facets-tabs-body');
+  const last = btnsArr.length - 1;
+  if (idx === 0) {
+    body.style.borderRadius = '0 var(--r-lg) var(--r-lg) var(--r-lg)';
+  } else if (idx === last) {
+    body.style.borderRadius = 'var(--r-lg) 0 var(--r-lg) var(--r-lg)';
+  } else {
+    body.style.borderRadius = 'var(--r-lg)';
+  }
+}
+
+// Pestañas ejemplos FACETS
+function switchFacetsEx(btn, paneId) {
+  document.querySelectorAll('.facets-ex-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.facets-ex-pane').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(paneId).classList.add('active');
+}
+
+// Flashcards choque cultural
+(function() {
+  const stack = document.getElementById('ccStack');
+  if (!stack) return;
+  const cards = Array.from(stack.querySelectorAll('.choice-card'));
+  const total = cards.length;
+  let current = 0;
+  function updateStack() {
+    cards.forEach(c => c.classList.remove('visible', 'flipped'));
+    cards[current].classList.add('visible');
+    document.getElementById('cc-current').textContent = current + 1;
+    document.getElementById('cc-total').textContent = total;
+  }
+  cards.forEach(card => card.addEventListener('click', () => card.classList.toggle('flipped')));
+  document.getElementById('ccPrev').addEventListener('click', () => { current = (current - 1 + total) % total; updateStack(); });
+  document.getElementById('ccNext').addEventListener('click', () => { current = (current + 1) % total; updateStack(); });
+  document.getElementById('ccFlip').addEventListener('click', () => cards[current].classList.toggle('flipped'));
+  updateStack();
+})();
+
+// Navegación activa según scroll
+const sections = document.querySelectorAll('section[id]');
+const navBtns = document.querySelectorAll('.nav-pill');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navBtns.forEach(btn => {
+        const onclick = btn.getAttribute('onclick') || '';
+        btn.classList.toggle('active', onclick.includes("'" + entry.target.id + "'"));
+      });
+    }
+  });
+}, { rootMargin: '-30% 0px -60% 0px' });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
