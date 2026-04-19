@@ -1126,13 +1126,52 @@ const SCENARIOS = [
     ctx: "Tu tutor te ha pedido cifras actualizadas con referencias verificables para la sección de introducción.",
     options: [
       { text: "«¿Cuál es la incidencia de sepsis en UCI en España? Dame los datos con referencias»", isActive: false },
-      { text: "Busco en PubMed «sepsis incidence Spain ICU» y filtro por los últimos 5 años. Uso la IAgen para sintetizar los artículos que encuentro", isActive: true }
+      { text: "Pido a la IAgen que me ayude a diseñar una estrategia de búsqueda, y luego la ejecuto yo en PubMed y EMBASE para encontrar los artículos reales", isActive: true }
     ],
-    activeLabel: "✓ Fuentes primarias + IAgen para sintetizar",
+    activeLabel: "✓ Diseñador de estrategias de búsqueda",
     passiveLabel: "✗ IAgen como buscador",
-    explainCorrect: "La IAgen puede alucinar referencias o mezclar datos de distintos contextos. PubMed garantiza trazabilidad. La IAgen es útil después, para procesar artículos reales que tú has encontrado y verificado.",
-    explainWrong: "La IAgen puede generar cifras plausibles pero incorrectas, atribuirlas a estudios inexistentes o mezclar datos de diferentes países. Tu tutor notará la falta de trazabilidad al intentar localizar las fuentes.",
-    contrast: "Busca primero en PubMed, EMBASE u OpenEvidence. Una vez que tienes artículos reales, pide a la IAgen que te ayude a sintetizarlos y organizarlos."
+    explainCorrect: "La IAgen es excelente para ayudarte a construir ecuaciones de búsqueda, identificar términos MeSH o plantear la estrategia. Pero la búsqueda real en PubMed o EMBASE la ejecutas tú, garantizando trazabilidad y autenticidad de las fuentes.",
+    explainWrong: "La IAgen puede generar cifras plausibles pero incorrectas, atribuirlas a estudios inexistentes o mezclar datos de diferentes países. En medicina basada en la evidencia, las 'alucinaciones' de referencias tienen consecuencias reales.",
+    contrast: "Pide a la IAgen que te ayude a diseñar la estrategia de búsqueda (términos, filtros, bases de datos). Luego ejecuta tú la búsqueda en PubMed o EMBASE y trae los artículos reales."
+  },
+  {
+    q: "Tienes que redactar la nota evolutiva de un paciente. Introduces los datos clínicos y analíticos en la IAgen. ¿Qué le pides?",
+    ctx: "Estás en rotación clínica. El residente te ha pedido que documentes la evolución del paciente.",
+    options: [
+      { text: "«Con estos datos clínicos y analíticos, redacta la nota evolutiva completa del paciente»", isActive: false },
+      { text: "«He escrito esta nota evolutiva. Identifica omisiones de datos clave o sesgos de lenguaje que debería corregir»", isActive: true }
+    ],
+    activeLabel: "✓ Tutor clínico",
+    passiveLabel: "✗ Delegación de la documentación clínica",
+    explainCorrect: "Escribir tú la nota primero desarrolla tu capacidad de síntesis clínica y el relato humanizado del paciente. Luego la IAgen actúa como revisor que detecta lo que te falta, sin sustituir tu juicio clínico ni tu voz.",
+    explainWrong: "Delegar la redacción de la nota clínica genera dependencia y erosiona la capacidad de síntesis clínica. Además, introduce datos identificativos del paciente en sistemas de IA externos, con graves implicaciones de privacidad.",
+    contrast: "Escribe tú la nota evolutiva primero. Luego compártela con la IAgen para que identifique omisiones clínicas importantes o sesgos de lenguaje que deberías corregir."
+  },
+  {
+    q: "Tienes un artículo largo de fisiopatología que debes revisar antes de mañana. ¿Cómo usas la IAgen?",
+    ctx: "El artículo es denso, tiene 18 páginas y el examen incluirá preguntas sobre sus conceptos clave.",
+    options: [
+      { text: "«Resume este artículo destacando los puntos más importantes para el examen»", isActive: false },
+      { text: "«Actúa como tutor. Voy a leerte el artículo por secciones y quiero que me hagas preguntas sobre cada una para comprobar si he entendido bien los conceptos»", isActive: true }
+    ],
+    activeLabel: "✓ Dialogar con el texto",
+    passiveLabel: "✗ IAgen como resumidor",
+    explainCorrect: "Interactuar activamente con el texto — respondiendo preguntas, formulando tus propias síntesis — activa el procesamiento profundo. La IAgen como interlocutor te obliga a recuperar y elaborar la información, lo que consolida el aprendizaje.",
+    explainWrong: "Leer el resumen generado por la IAgen produce ilusión de competencia: crees que entiendes el artículo porque reconoces la información, pero no has procesado activamente los conceptos. En el examen, esa diferencia importa.",
+    contrast: "Lee el artículo tú mismo por secciones. Usa la IAgen para hacerte preguntas sobre lo que acabas de leer, o para generar infografías y esquemas que consoliden lo aprendido."
+  },
+  {
+    q: "Acabas de escribir la discusión de tu trabajo de investigación. Quieres mejorarla antes de entregarlo. ¿Qué le pides a la IAgen?",
+    ctx: "Es un trabajo de fin de máster. La sección de discusión es donde demuestras tu capacidad de razonamiento crítico.",
+    options: [
+      { text: "«Corrige este texto mejorando el estilo, la coherencia y la argumentación»", isActive: false },
+      { text: "«Aquí está mi argumento principal. Tu objetivo es encontrar debilidades reales en mi razonamiento, no confirmar lo que ya pienso. Sé riguroso»", isActive: true }
+    ],
+    activeLabel: "✓ Abogado del diablo",
+    passiveLabel: "✗ Corrección delegada",
+    explainCorrect: "Pedir a la IAgen que cuestione activamente tus argumentos te obliga a valorar críticamente las objeciones, identificar debilidades reales y reforzar tu razonamiento. Fomenta la autonomía y el pensamiento crítico, no la dependencia.",
+    explainWrong: "Pedir una corrección sin criterios específicos suele producir mejoras superficiales de estilo, o peor: la IAgen valida tu argumento aunque tenga fallos reales (sesgo de complacencia o sycophancy). El texto mejora en apariencia pero no en rigor.",
+    contrast: "Instruye explícitamente a la IAgen para que sea crítica: «Encuentra debilidades reales en mi argumento. No te preocupes por ser demasiado duro». Ojo: muchos modelos tienden a ser complacientes, así que verifica si sus objeciones son genuinas."
   },
   {
     q: "Empiezas un trabajo de análisis de un artículo científico. No sabes por dónde comenzar. ¿Qué haces?",
@@ -1146,19 +1185,6 @@ const SCENARIOS = [
     explainCorrect: "Escribir primero activa tu memoria y tu razonamiento. El momento 'eureka' solo ocurre si tú eres el generador de ideas. Pedir un ejemplo de otro artículo es andamiaje legítimo: te muestra el camino sin hacer tu trabajo.",
     explainWrong: "Delegar el esquema a la IAgen atrofia tu capacidad de estructurar el pensamiento, que es exactamente lo que el profesor evalúa. El esquema resultante será genérico y no reflejará tu comprensión del artículo concreto.",
     contrast: "Escribe primero tus ideas en papel, aunque sean desordenadas. Si te bloqueas, pide a la IAgen un ejemplo de análisis de otro artículo como modelo, no como plantilla de tu trabajo."
-  },
-  {
-    q: "Terminas un ensayo clínico sobre adherencia al tratamiento. Quieres mejorar la calidad antes de entregarlo. ¿Cómo lo haces?",
-    ctx: "Ya tienes un borrador completo escrito por ti. Quieres mejorar la claridad y la estructura sin perder tu voz personal.",
-    options: [
-      { text: "«Reescribe este ensayo mejorando el estilo, la coherencia y la estructura. Hazlo más profesional»", isActive: false },
-      { text: "«Tengo este borrador mío. ¿Qué partes son menos claras? Sugiere mejoras concretas manteniendo mi estilo y señala qué cambiarías y por qué»", isActive: true }
-    ],
-    activeLabel: "✓ Edición aumentada",
-    passiveLabel: "✗ Reescritura delegada",
-    explainCorrect: "Pedir feedback específico sobre tu borrador mantiene tu voz y autoría. La IAgen actúa como corrector inteligente que señala problemas, pero tú decides qué aceptar y cómo reformularlo. Es co-creación, no sustitución.",
-    explainWrong: "Pedir que la IAgen reescriba tu trabajo produce un texto que ya no es tuyo. Aunque suene mejor, has perdido tu voz y tu capacidad de defender el texto. Si tu profesor te pregunta sobre una frase concreta, puede que no puedas explicarla.",
-    contrast: "Comparte tu borrador y pide señalamientos específicos con justificación. Tú reformulas con tus propias palabras las partes que decidas mejorar."
   }
 ];
 
