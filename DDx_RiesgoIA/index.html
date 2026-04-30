@@ -136,6 +136,7 @@
     /* ── Callout box (resumen/verde) ── */
     .callout { border-radius: var(--r-md); padding: 16px 20px; font-size: 13px; line-height: 1.65; margin-top: 16px; }
     .callout-teal { background: var(--e-teal-l); border: 1px solid #99d6d4; color: var(--e-teal); }
+    .callout-red  { background: var(--e-red-l);  border: 1px solid #fbcfe8; color: var(--e-red); }
     .callout-title { font-weight: 700; margin-bottom: 5px; font-size: 13px; }
 
     /* ── Ethics list (verificación) ── */
@@ -337,7 +338,7 @@
     <div class="container">
       <div class="section-eyebrow">Fallos del modelo</div>
       <h2 class="section-title">2. Limitaciones de la propia IA</h2>
-      <p class="section-lead">Estas limitaciones aparecen incluso cuando el usuario pregunta de forma razonable. Son fallos que derivan de cómo el modelo ha sido entrenado, de su conocimiento congelado y de su forma probabilística de generar texto.</p>
+      <p class="section-lead">Estas limitaciones aparecen incluso cuando el usuario pregunta de forma razonable. Son fallos que derivan de cómo el modelo ha sido entrenado, de su conocimiento congelado, de su forma probabilística de generar texto y de los riesgos estructurales de usarlo en entornos clínicos.</p>
 
       <div class="acc-group">
 
@@ -433,14 +434,58 @@
               <div class="detail-row"><strong>Cómo detectarla.</strong> Si el mismo paciente recibe respuestas muy distintas tras pequeños cambios en el prompt, la salida debe interpretarse con cautela. La variación no siempre indica riqueza analítica; a veces indica volatilidad.</div>
               <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Conviene usar estructuras de consulta consistentes y estandarizadas para reducir la variabilidad arbitraria.</div>
             </div>
-            <div class="callout callout-teal" style="margin-top:14px;">
-              <div class="callout-title">🔎 Filtro operativo de las 5 limitaciones</div>
-              Cuando una respuesta parece muy útil, revisa siempre: <strong>¿ha inventado algo? · ¿está reproduciendo un sesgo? · ¿puede estar desactualizada? · ¿está ignorando un dato excluyente? · ¿cambiaría si el caso estuviera formulado de otra manera?</strong>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">6</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Riesgo para la seguridad y privacidad de los datos</span>
+              <span class="acc-sublabel">Lo que introduces en el prompt puede ser registrado por el sistema</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="detail-rows">
+              <div class="detail-row"><strong>Qué significa.</strong> Los LLM de uso general son servicios externos que procesan y pueden registrar o usar para entrenamiento el texto que reciben. Cualquier dato identificativo del paciente que se incluya en el prompt queda potencialmente expuesto a infraestructuras fuera del control del clínico.</div>
+              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Introducir nombre, fecha de nacimiento, número de historia, dirección o cualquier otro dato identificativo en un LLM no certificado puede vulnerar el RGPD y comprometer la confidencialidad del paciente. La ley no distingue entre un error intencionado y uno por desconocimiento.</div>
+              <div class="detail-row"><strong>Cómo detectarla.</strong> Si un caso que vas a consultar contiene información que identificaría al paciente incluso sin su nombre explícito (combinación de datos poco frecuentes, localización, fecha de ingreso…), el riesgo está presente aunque no sea obvio.</div>
+              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Usa siempre datos anonimizados: sexo, grupo de edad y datos clínicos pertinentes son suficientes para construir un prompt útil. Si el caso es sensible o se trata de información institucional, usa únicamente herramientas validadas por tu organización o LLM de empresa con contrato de confidencialidad (HIPAA/GDPR-compliant).</div>
+            </div>
+            <div class="callout callout-red" style="margin-top:14px;">
+              <div class="callout-title">Nunca incluyas datos identificativos en un prompt</div>
+              Nombre, fecha de nacimiento, número de historia clínica, dirección o teléfono no deben aparecer jamás. Para razonar con un LLM basta con edad aproximada, sexo y datos clínicos relevantes.
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item">
+          <button class="acc-trigger" onclick="toggleAcc(this)">
+            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">7</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Opacidad causal: no sabemos cómo llega a su respuesta</span>
+              <span class="acc-sublabel">El razonamiento interno del modelo no es auditable</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <div class="detail-rows">
+              <div class="detail-row"><strong>Qué significa.</strong> Un LLM no razona causalmente como un médico: genera texto prediciendo qué palabras son estadísticamente probables en ese contexto. El proceso interno que lleva a una respuesta no es transparente ni auditable, incluso cuando el modelo escribe una cadena de razonamiento visible.</div>
+              <div class="detail-row"><strong>Por qué importa en clínica.</strong> La explicación que ofrece el modelo no es necesariamente el proceso real que produjo esa salida: puede ser una racionalización post hoc. Esto limita la capacidad de detectar errores de razonamiento desde dentro de la respuesta y obliga a evaluarla desde fuera, con criterio clínico propio.</div>
+              <div class="detail-row"><strong>Cómo detectarla.</strong> Si la respuesta suena coherente pero no puedes rastrear en los datos del caso el motivo concreto de cada afirmación, estás ante un comportamiento de caja negra. Preguntar al modelo "¿por qué llegas a esa conclusión?" no garantiza una explicación real: el modelo producirá una respuesta plausible, no necesariamente verdadera.</div>
+              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Trata cada salida como una hipótesis externa que debe contrastarse con tu propio razonamiento y con los datos objetivos del caso. La opacidad del modelo refuerza la necesidad del <em>human-in-the-loop</em>: el clínico como último auditor.</div>
             </div>
           </div>
         </div>
 
       </div>
+
+      <div class="callout callout-teal" style="margin-top:8px;">
+        <div class="callout-title">🔎 Filtro operativo de las 7 limitaciones</div>
+        Cuando una respuesta parece muy útil, revisa siempre: <strong>¿ha inventado algo? · ¿está reproduciendo un sesgo? · ¿puede estar desactualizada? · ¿está ignorando un dato excluyente? · ¿cambiaría si el caso estuviera formulado de otra manera? · ¿has incluido datos que identifican al paciente? · ¿puedes auditar de verdad el razonamiento que presenta?</strong>
+      </div>
+
     </div>
   </section>
 
