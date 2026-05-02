@@ -134,6 +134,86 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
 .aud-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
 .aud-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
 
+/* ── APLICACIONES DE ALUMNOS ── */
+.alumnos-apps-section {
+  padding: 64px 0;
+  background: linear-gradient(135deg, #1d4e89 0%, #003973 100%);
+  position: relative; overflow: hidden;
+}
+.alumnos-apps-section::before {
+  content: "";position:absolute;inset:0;
+  background: radial-gradient(ellipse at 90% 50%, rgba(255,255,255,.06) 0%, transparent 60%),
+              radial-gradient(ellipse at 10% 20%, rgba(255,255,255,.04) 0%, transparent 50%);
+  pointer-events:none;
+}
+.alumnos-apps-inner {
+  position: relative; z-index: 1;
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 48px; align-items: center;
+}
+.alumnos-apps-kicker {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: rgba(245,197,24,.18); border: 1px solid rgba(245,197,24,.35);
+  border-radius: 999px; padding: 7px 16px;
+  margin-bottom: 20px;
+}
+.alumnos-apps-kicker-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #f5c518; flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(245,197,24,.35);
+}
+.alumnos-apps-kicker span {
+  font-size: 12px; font-weight: 700; letter-spacing: .1em;
+  text-transform: uppercase; color: #f5c518;
+}
+.alumnos-apps-title {
+  font-family: "Fraunces", serif;
+  font-size: clamp(1.6rem, 3.5vw, 2.4rem);
+  font-weight: 600; letter-spacing: -.025em; line-height: 1.15;
+  color: #fff; margin-bottom: 18px;
+}
+.alumnos-apps-desc {
+  font-size: 15px; color: rgba(255,255,255,.75);
+  line-height: 1.65; max-width: 540px; margin-bottom: 12px;
+}
+.alumnos-apps-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  margin-top: 12px;
+  background: #f5c518; color: #1a1f2e;
+  font: 700 14px "Inter", sans-serif;
+  padding: 12px 24px; border-radius: 999px;
+  text-decoration: none;
+  transition: background .18s, transform .18s, box-shadow .18s;
+  box-shadow: 0 4px 16px rgba(0,0,0,.2);
+}
+.alumnos-apps-btn:hover {
+  background: #ffd700; transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0,0,0,.25);
+}
+.alumnos-apps-btn svg { width: 14px; height: 14px; }
+
+.alumnos-apps-right {
+  display: flex; flex-direction: column; gap: 12px; flex-shrink: 0;
+}
+.alumnos-apps-card {
+  display: flex; align-items: center; gap: 14px;
+  background: rgba(255,255,255,.1);
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: var(--r-md); padding: 14px 20px;
+  backdrop-filter: blur(8px);
+  transition: background .18s, transform .18s;
+  min-width: 240px;
+}
+.alumnos-apps-card:hover { background: rgba(255,255,255,.16); transform: translateX(-4px); }
+.alumnos-apps-card-icon { font-size: 24px; flex-shrink: 0; }
+.alumnos-apps-card-label { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.3; }
+
+@media (max-width: 720px) {
+  .alumnos-apps-inner { grid-template-columns: 1fr; gap: 32px; }
+  .alumnos-apps-right { flex-direction: row; flex-wrap: wrap; }
+  .alumnos-apps-card  { min-width: 0; flex: 1 1 140px; }
+}
+
 /* ── CIERRE ── */
 .cierre{padding:72px 0 80px;text-align:center;position:relative;overflow:hidden;}
 .cierre::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(0,57,115,.04) 0%,transparent 70%);pointer-events:none;}
@@ -183,7 +263,7 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
   <div class="container hero-inner">
     <div class="hero-kicker"><div class="hero-kicker-dot"></div><span>IA en Educación Médica</span></div>
     <h1 class="hero-title">La IA ha llegado<br>a la medicina.<br><em>La pregunta no es<br>si usarla, sino cómo.</em></h1>
-    <p class="hero-sub">Esta página es para quienes se lo están preguntando. Para los que quieren ir más allá de la prohibición o la adopción acrítica, y construir una relación madura, ética y pedagógicamente sólida con la inteligencia artificial generativa.</p>
+    <p class="hero-sub">Esta página es para quienes se lo están preguntando. Para los que quieren ir más allá de la prohibición o la adopción acrítica, y construir una relación profesional, ética y pedagógicamente sólida con la inteligencia artificial generativa.</p>
     <div class="hero-colectivos">
       <a class="hero-badge hb-alumnos" href="#alumnos" onclick="openColectivo('alumnos')">
         <span class="hero-badge-icon">🎓</span> Soy alumno
@@ -206,8 +286,8 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
 <section class="colectivos-section">
   <div class="container">
     <div class="colectivos-intro">
-      <div class="colectivos-intro-title">Antes de buscar respuestas,<br>párate a hacer las preguntas correctas</div>
-      <p>La literatura científica sobre IA en educación médica ya es extensa. Pero antes de explorarla, estos son los interrogantes que cada colectivo debería plantearse.</p>
+      <div class="colectivos-intro-title">Antes de comenzar a buscar respuestas, párate a hacer las preguntas que más te van a ayudar a integrar la IA en tu día a día</div>
+      <p>La literatura científica sobre IA en educación médica ya es extensa. Pero antes de explorarla, estos son algunos de los interrogantes que cada colectivo debería plantearse.</p>
     </div>
 
     <!-- ALUMNOS -->
@@ -434,6 +514,45 @@ body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);lin
         <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
       </a>
 
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     APLICACIONES DE ALUMNOS
+══════════════════════════ -->
+<section class="alumnos-apps-section">
+  <div class="container">
+    <div class="alumnos-apps-inner">
+      <div class="alumnos-apps-left">
+        <div class="alumnos-apps-kicker">
+          <span class="alumnos-apps-kicker-dot"></span>
+          <span>Creado por alumnos · Facultad de Medicina UVa</span>
+        </div>
+        <h2 class="alumnos-apps-title">Lo que están construyendo los alumnos</h2>
+        <p class="alumnos-apps-desc">Los propios estudiantes de la Facultad de Medicina de la Universidad de Valladolid están desarrollando aplicaciones basadas en IA para mejorar el estudio, las prácticas clínicas y otras actividades de la educación médica. Este es su recopilatorio.</p>
+        <p class="alumnos-apps-desc">No son recursos académicos ni documentos institucionales: son herramientas reales, hechas por estudiantes de medicina, para estudiantes de medicina.</p>
+        <a class="alumnos-apps-btn" href="https://tutorcyllo.github.io/EduMed.UVa/Alumnos_aplicaciones/" target="_blank" rel="noopener">
+          Ver las aplicaciones
+          <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M2 7h10M7 2l5 5-5 5"/></svg>
+        </a>
+      </div>
+      <div class="alumnos-apps-right">
+        <div class="alumnos-apps-card">
+          <div class="alumnos-apps-card-icon">🛠️</div>
+          <div class="alumnos-apps-card-label">Herramientas para el estudio</div>
+        </div>
+        <div class="alumnos-apps-card">
+          <div class="alumnos-apps-card-icon">🩺</div>
+          <div class="alumnos-apps-card-label">Apoyo en prácticas clínicas</div>
+        </div>
+        <div class="alumnos-apps-card">
+          <div class="alumnos-apps-card-icon">✨</div>
+          <div class="alumnos-apps-card-label">Ideas que siguen creciendo</div>
+        </div>
+      </div>
     </div>
   </div>
 </section>
