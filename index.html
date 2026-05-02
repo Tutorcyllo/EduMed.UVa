@@ -25,26 +25,26 @@
   --shadow-lg:   0 8px 24px rgba(0,0,0,0.13);
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Figtree', sans-serif; background: var(--gray-100); color: var(--gray-900); min-height: 100vh; }
+body { font-family: 'Figtree', sans-serif; background: #F3F4F6; color: #111318; min-height: 100vh; }
 
 /* HEADER */
-header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
+header { background: #F5C518; border-bottom: 2px solid #D4A000; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .header-brand { display: flex; align-items: center; gap: 12px; }
 .header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
-.badge { background: var(--gray-900); color: var(--yellow); font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
+.badge { background: #111318; color: #F5C518; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
 
 /* HERO */
-.hero { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep); padding: 40px 36px 36px; }
+.hero { background: #F5C518; border-bottom: 2px solid #D4A000; padding: 40px 36px 36px; }
 .hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 40px; }
 .hero-text { flex: 1; min-width: 0; }
-.hero-headline { font-family: 'Figtree', sans-serif; font-size: 2.75rem; font-weight: 800; color: var(--gray-900); line-height: 1.1; letter-spacing: -0.3px; margin-bottom: 10px; }
-.hero-sub { font-size: 0.9rem; color: var(--gray-700); font-weight: 500; margin-bottom: 20px; line-height: 1.65; }
+.hero-headline { font-size: 2.75rem; font-weight: 800; color: #111318; line-height: 1.1; letter-spacing: -0.3px; margin-bottom: 10px; }
+.hero-sub { font-size: 0.9rem; color: #3D4451; font-weight: 500; margin-bottom: 20px; line-height: 1.65; }
 .hero-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.stat-pill { background: var(--gray-900); color: var(--yellow); font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 100px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
-.stat-pill:hover { background: var(--gray-700); transform: translateY(-2px); }
-.hero-grados { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: var(--gray-700); line-height: 1.6; }
-.hero-grados strong { color: var(--gray-900); font-weight: 700; }
+.stat-pill { background: #111318; color: #F5C518; font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 100px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
+.stat-pill:hover { background: #3D4451; transform: translateY(-2px); }
+.hero-grados { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: #3D4451; line-height: 1.6; }
+.hero-grados strong { color: #111318; font-weight: 700; }
 .hero-img-wrap { flex-shrink: 0; width: 260px; }
 .hero-img { display: block; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18)); border-radius: 12px; }
 
@@ -52,13 +52,13 @@ header { background: var(--yellow); border-bottom: 2px solid var(--yellow-deep);
 main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
 /* SECTION BLOCKS */
-.section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
+.section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
 .section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; }
-.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: var(--shadow-sm); }
-.section-num  { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
-.section-title { font-family: 'Figtree', sans-serif; font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
-.section-desc  { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
-.section-body  { padding: 16px 20px; }
+.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+.section-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
+.section-title { font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
+.section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
+.section-body { padding: 16px 20px; }
 
 .sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; color: #F5C518; }
 .sec-1 .section-body   { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; }
@@ -74,56 +74,27 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .sec-quien .section-header { background: #D4A000; border-bottom: 2px solid #b38900; }
 .sec-quien .section-body   { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; }
 
-/* ACCORDION */
+/* ACCORDION — light */
 .accordion { display: flex; flex-direction: column; gap: 6px; }
-
 .acc-item { border-radius: 8px; overflow: hidden; }
-
-/* row = clickable header */
-.acc-row {
-  display: flex; align-items: center; gap: 12px;
-  padding: 14px 16px; cursor: pointer;
-  background: #ffffff; border: 1.5px solid #E5E7EB;
-  border-radius: 8px;
-  transition: background 0.15s;
-  user-select: none;
-}
-.acc-row:hover { background: var(--yellow-pale); }
-.acc-row.open  { border-radius: 8px 8px 0 0; border-bottom-color: transparent; background: var(--yellow-pale); }
-
+.acc-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 8px; transition: background 0.15s; user-select: none; }
+.acc-row:hover { background: #FFFDE7; }
+.acc-row.open  { border-radius: 8px 8px 0 0; border-bottom-color: transparent; background: #FFFDE7; }
+.acc-row.pending { background: #F3F4F6; cursor: default; opacity: 0.7; }
+.acc-row.pending:hover { background: #F3F4F6; }
 .acc-icon  { font-size: 1.4rem; flex-shrink: 0; }
-.acc-title { font-size: 0.9rem; font-weight: 700; color: var(--gray-900); flex: 1; line-height: 1.3; }
-.acc-tag   { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; background: var(--yellow-pale); color: var(--yellow-deep); border: 1px solid var(--yellow-mid); white-space: nowrap; flex-shrink: 0; }
+.acc-title { font-size: 0.9rem; font-weight: 700; color: #111318; flex: 1; line-height: 1.3; }
+.acc-tag   { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; background: #FFFDE7; color: #D4A000; border: 1px solid #FEF0A0; white-space: nowrap; flex-shrink: 0; }
 .acc-pending-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; background: #E5E7EB; color: #6B7280; border: 1px solid #D1D5DB; white-space: nowrap; flex-shrink: 0; }
-.acc-chevron { font-size: 0.8rem; color: var(--gray-500); flex-shrink: 0; transition: transform 0.2s; }
+.acc-chevron { font-size: 0.8rem; color: #6B7280; flex-shrink: 0; transition: transform 0.2s; }
 .acc-row.open .acc-chevron { transform: rotate(180deg); }
-
-/* pending row */
-.acc-row.pending { background: var(--gray-100); cursor: default; opacity: 0.7; }
-.acc-row.pending:hover { background: var(--gray-100); }
-.acc-row.pending .acc-title { color: var(--gray-500); }
-
-/* body = expandable content */
-.acc-body {
-  display: none;
-  padding: 16px 20px;
-  background: #ffffff;
-  border: 1.5px solid #E5E7EB;
-  border-top: none;
-  border-radius: 0 0 8px 8px;
-}
+.acc-body { display: none; padding: 16px 20px; background: #ffffff; border: 1.5px solid #E5E7EB; border-top: none; border-radius: 0 0 8px 8px; }
 .acc-body.open { display: block; }
-.acc-desc { font-size: 0.85rem; color: var(--gray-500); line-height: 1.65; margin-bottom: 14px; }
-.acc-cta {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: var(--gray-900); color: var(--yellow);
-  font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700;
-  padding: 8px 18px; border-radius: 100px; text-decoration: none;
-  transition: background 0.15s, transform 0.15s;
-}
-.acc-cta:hover { background: var(--gray-700); transform: translateY(-1px); }
+.acc-desc { font-size: 0.85rem; color: #6B7280; line-height: 1.65; margin-bottom: 14px; }
+.acc-cta { display: inline-flex; align-items: center; gap: 6px; background: #111318; color: #F5C518; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
+.acc-cta:hover { background: #3D4451; transform: translateY(-1px); }
 
-/* dark accordion (IAgen) */
+/* ACCORDION — dark (IAgen) */
 .acc-dark .acc-row         { background: #52596e; border-color: #636b80; }
 .acc-dark .acc-row:hover   { background: #5e6678; }
 .acc-dark .acc-row.open    { background: #5e6678; border-bottom-color: transparent; }
@@ -137,6 +108,20 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .acc-dark .acc-cta         { background: #F5C518; color: #111318; }
 .acc-dark .acc-cta:hover   { background: #D4A000; }
 
+/* REPOSITORIO ALUMNADO — special */
+.acc-repo { margin-top: 6px; border-radius: 8px; overflow: hidden; border: 2px solid #F5C518; }
+.acc-repo-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #1e2535; user-select: none; }
+.acc-repo-row:hover { background: #252d42; }
+.acc-repo-title { flex: 1; font-size: 0.9rem; font-weight: 700; color: #F5C518; line-height: 1.3; }
+.acc-repo-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; background: #F5C518; color: #111318; white-space: nowrap; flex-shrink: 0; }
+.acc-repo-chevron { color: #F5C518; font-size: 0.8rem; flex-shrink: 0; transition: transform 0.2s; }
+.acc-repo-row.open .acc-repo-chevron { transform: rotate(180deg); }
+.acc-repo-body { display: none; padding: 16px 20px; background: #1e2535; border-top: 2px solid #F5C518; }
+.acc-repo-body.open { display: block; }
+.acc-repo-desc { font-size: 0.85rem; color: #ffffff; line-height: 1.65; margin-bottom: 14px; }
+.acc-repo-cta { display: inline-flex; align-items: center; gap: 6px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+.acc-repo-cta:hover { background: #D4A000; }
+
 /* FOLDER TABS */
 .folder-tabs { border-radius: 10px; overflow: hidden; border: 2px solid #D4A000; }
 .folder-tab-bar { display: flex; }
@@ -147,28 +132,12 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .folder-content { padding: 18px 20px; background: #ffffff; font-size: 0.88rem; color: #3D4451; line-height: 1.7; border-top: 2px solid #D4A000; min-height: 80px; }
 .folder-content strong { color: #111318; }
 
-/* QUIEN TABS */
-.quien-tabs { display: flex; gap: 6px; margin-bottom: 16px; flex-wrap: wrap; }
-.quien-tab { font-family: 'Figtree', sans-serif; font-size: 0.82rem; font-weight: 700; padding: 8px 16px; border-radius: 100px; border: 2px solid #D4A000; background: transparent; color: #D4A000; cursor: pointer; transition: background 0.15s, color 0.15s; }
-.quien-tab:hover { background: #FEF0A0; }
-.quien-tab.active { background: #D4A000; color: #111318; }
-.quien-panel { display: none; font-size: 0.88rem; color: #3D4451; line-height: 1.7; padding: 4px 2px; }
-.quien-panel.active { display: block; }
-.quien-panel strong { color: #111318; }
-
-/* FOR WHOM */
-.valid-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
-.valid-item { background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 8px; padding: 14px 16px; }
-.valid-icon  { font-size: 1.3rem; margin-bottom: 6px; }
-.valid-title { font-size: 0.82rem; font-weight: 700; color: #111318; margin-bottom: 4px; }
-.valid-desc  { font-size: 0.78rem; color: #3D4451; line-height: 1.55; }
-
 /* CONTACT */
-.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); }
-.contact-text  { flex: 1; }
+.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.10); }
+.contact-text { flex: 1; }
 .contact-title { font-size: 1.1rem; font-weight: 800; color: #F5C518; margin-bottom: 8px; }
 .contact-desc  { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
-.contact-btn   { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; box-shadow: var(--shadow-md); flex-shrink: 0; }
+.contact-btn { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; flex-shrink: 0; }
 .contact-btn:hover { background: #D4A000; transform: translateY(-2px); }
 
 /* FOOTER */
@@ -178,13 +147,12 @@ footer a { color: #3D4451; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
 /* BACK TOP */
-.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
+.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.10); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
 .back-top.visible { opacity: 1; pointer-events: auto; }
 .back-top:hover { background: #3D4451; transform: translateY(-2px); }
 
 /* RESPONSIVE */
 @media (max-width: 1024px) {
-  .valid-grid { grid-template-columns: repeat(2, 1fr); }
   .hero-img-wrap { width: 200px; }
 }
 @media (max-width: 768px) {
@@ -195,7 +163,6 @@ footer a:hover { text-decoration: underline; }
   .hero-img-wrap { display: none; }
   .hero-headline { font-size: 1.8rem; }
   main { padding: 24px 16px 60px; }
-  .valid-grid { grid-template-columns: 1fr; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
   .section-block { margin-bottom: 32px; }
@@ -213,14 +180,13 @@ footer a:hover { text-decoration: underline; }
 <header>
   <div class="header-inner">
     <div class="header-brand">
-      <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png"
-           alt="Logo Facultad de Medicina UVa" class="header-logo">
+      <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png" alt="Logo Facultad de Medicina UVa" class="header-logo">
       <div>
         <div style="font-family:'Figtree',sans-serif;font-size:1.05rem;font-weight:800;">EduMed · UVa</div>
         <div style="font-family:'Figtree',sans-serif;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Unidad de Educación Médica · Facultad de Medicina</div>
       </div>
     </div>
-    <div class="badge">Actualizado en marzo de 2026</div>
+    <div class="badge">Actualizado en mayo de 2026</div>
   </div>
 </header>
 
@@ -241,10 +207,7 @@ footer a:hover { text-decoration: underline; }
       </div>
     </div>
     <div class="hero-img-wrap">
-      <img class="hero-img"
-        src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png"
-        alt="Innovando en educación médica"
-        onerror="this.style.display='none'">
+      <img class="hero-img" src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png" alt="Innovando en educación médica" onerror="this.style.display='none'">
     </div>
   </div>
 </div>
@@ -412,7 +375,7 @@ footer a:hover { text-decoration: underline; }
         <div class="section-desc" style="color:#F5C518;opacity:1;">Inteligencia artificial generativa en la docencia médica</div>
       </div>
     </div>
-    <div class="section-body" style="background:#111318;border:1.5px solid #222;border-top:none;">
+    <div class="section-body">
       <div class="accordion acc-dark">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -461,6 +424,19 @@ footer a:hover { text-decoration: underline; }
             <p class="acc-desc">El razonamiento clínico y el diagnóstico en prompts. Una reflexión sobre automatización, aumentación y el papel del médico en el bucle de decisión con IA.</p>
             <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" target="_blank" rel="noopener">Ver recurso →</a>
           </div>
+        </div>
+      </div>
+      <!-- Repositorio alumnado — elemento especial fuera del acc-dark -->
+      <div class="acc-repo">
+        <div class="acc-repo-row" onclick="toggleRepo(this)">
+          <span style="font-size:1.4rem;flex-shrink:0;">⭐</span>
+          <span class="acc-repo-title">Repositorio de herramientas IA creadas por el alumnado de la Facultad</span>
+          <span class="acc-repo-tag">Alumnado crea</span>
+          <span class="acc-repo-chevron">▼</span>
+        </div>
+        <div class="acc-repo-body">
+          <p class="acc-repo-desc">Aplicaciones y herramientas basadas en IAgen desarrolladas por alumnos de la Facultad de Medicina a iniciativa propia para mejorar el estudio, la práctica clínica y el día a día de la educación médica.</p>
+          <a class="acc-repo-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Alumnos_aplicaciones/" target="_blank" rel="noopener">Ver repositorio →</a>
         </div>
       </div>
     </div>
@@ -512,10 +488,10 @@ footer a:hover { text-decoration: underline; }
       <div class="section-icon" style="background:#ffffff;">👩‍🏫</div>
       <div>
         <div class="section-title" style="color:#111318;">¿Para quién es EduMed.UVa?</div>
-        <div class="section-desc" style="color:#111318;opacity:0.75;">Dirigido al profesorado de todos los grados de la Facultad y a la comunidad docente médica nacional e internacional</div>
+        <div class="section-desc" style="color:#111318;opacity:0.75;">Dirigido al profesorado y al alumnado de todos los grados de la Facultad, y a la comunidad docente médica nacional e internacional</div>
       </div>
     </div>
-    <div class="section-body" style="background:#FFFDE7;border:1.5px solid #FEF0A0;border-top:none;padding:20px;">
+    <div class="section-body" style="padding:20px;">
       <div class="folder-tabs">
         <div class="folder-tab-bar">
           <div class="folder-tab active" id="ftab-1">🏫 Profesorado</div>
@@ -535,22 +511,34 @@ footer a:hover { text-decoration: underline; }
       <div class="contact-title">💬 ¿Tienes una opinión o sugerencia?</div>
       <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
     </div>
-    <a class="contact-btn" href="mailto:luis.corral@uva.es?subject=Opinión%20sobre%20EduMed.UVa&body=Hola%20TutorCyLlo%2C%0A%0AMe%20gustaría%20compartir%20mi%20opinión%20sobre%20EduMed.UVa%3A%0A%0A">
-      ✉️ Escribe a TutorCyLlo
-    </a>
+    <a class="contact-btn" href="mailto:luis.corral@uva.es?subject=Opinión%20sobre%20EduMed.UVa&body=Hola%20TutorCyLlo%2C%0A%0AMe%20gustaría%20compartir%20mi%20opinión%20sobre%20EduMed.UVa%3A%0A%0A">✉️ Escribe a TutorCyLlo</a>
   </div>
 
 </main>
 
 <footer>
-  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span id="fecha-footer">Actualizado en marzo de 2026</span><br>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span id="fecha-footer">Actualizado en mayo de 2026</span><br>
   <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a>
 </footer>
 
 <button class="back-top" id="backTop">↑</button>
 
 <script>
-// Tabs "Para quién"
+function toggleAcc(row) {
+  if (row.classList.contains('pending')) return;
+  const body = row.nextElementSibling;
+  const isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+function toggleRepo(row) {
+  const body = row.nextElementSibling;
+  const isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
 const tabContents = {
   'ftab-1': 'Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
   'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
@@ -564,37 +552,6 @@ document.querySelectorAll('.folder-tab').forEach(tab => {
   });
 });
 
-function quienTab(name) {
-  ['profesorado','uso','masalla'].forEach(t => {
-    document.getElementById('panel-' + t).style.display = t === name ? 'block' : 'none';
-    const btn = document.getElementById('btn-' + t);
-    btn.style.background = t === name ? '#D4A000' : '#FFFDE7';
-    btn.style.color = t === name ? '#111318' : '#D4A000';
-  });
-}
-
-function switchTab(btn, panelId) {
-  const body = btn.closest('.section-body');
-  body.querySelectorAll('.quien-tab').forEach(t => t.classList.remove('active'));
-  ['tab-profesorado','tab-uso','tab-masalla'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.style.display = 'none';
-  });
-  btn.classList.add('active');
-  const panel = document.getElementById(panelId);
-  if (panel) panel.style.display = 'block';
-}
-
-// Acordeón
-function toggleAcc(row) {
-  if (row.classList.contains('pending')) return;
-  const body = row.nextElementSibling;
-  const isOpen = row.classList.contains('open');
-  row.classList.toggle('open', !isOpen);
-  body.classList.toggle('open', !isOpen);
-}
-
-// Back to top
 document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
 window.addEventListener('scroll', () => {
   document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
