@@ -1,1 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyectos de estudiantes · EduMed UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uva-blue:      #003973;
+      --uva-blue-soft: #1d4f8a;
+      --uva-red:       #c60046;
+      --ink:           #1a1f2e;
+      --ink-soft:      #3d4554;
+      --muted:         #6b7486;
+      --cream:         #faf7f2;
+      --cream-2:       #f3ede3;
+      --paper:         #ffffff;
+      --line:          #e8e1d4;
+      --line-strong:   #d9cfbb;
+      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
+      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
+      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
+      --e-green:       #166534;   --e-green-l:  #dcfce7;
+      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+      --shadow-lg: 0 8px 28px rgba(0,57,115,.14), 0 30px 80px rgba(26,31,46,.12);
+      --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --max: 960px;
+    }
 
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+
+    /* ── Barra EduMed ── */
+    .edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+    .edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
+    .edumed-back:hover { background: #fff; transform: translateX(-1px); }
+    .edumed-back svg { width: 14px; height: 14px; }
+
+    /* ── Hero ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 68px 0 56px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(198,0,70,.05) 0%, transparent 70%); pointer-events: none; }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 16px; margin-bottom: 28px; }
+    .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--uva-red); animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; transform:scale(1); } 50% { opacity:.5; transform:scale(1.3); } }
+    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 6vw, 3.4rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 18px; }
+    .hero-title em { font-style: italic; color: var(--uva-red); }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 580px; margin: 0 auto 36px; line-height: 1.6; }
+    .hero-stat { display: flex; justify-content: center; gap: 32px; flex-wrap: wrap; }
+    .stat { text-align: center; }
+    .stat-num { font-family: "Fraunces", serif; font-size: 2.2rem; font-weight: 700; font-style: italic; color: var(--uva-blue); line-height: 1; }
+    .stat-label { font-size: 12px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+
+    /* ── Categoría ── */
+    .category { padding: 56px 0 32px; }
+    .category + .category { border-top: 1px solid var(--line); }
+
+    .category-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+    .category-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
+    .category-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
+    .category-title { font-family: "Fraunces", serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); line-height: 1.1; }
+    .category-count { font-size: 13px; color: var(--muted); font-weight: 500; white-space: nowrap; padding-bottom: 4px; }
+
+    /* ── Project cards grid ── */
+    .projects-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 16px; }
+
+    /* ── Project card ── */
+    .project-card { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: box-shadow .25s, transform .25s, border-color .25s; isolation: isolate; }
+    .project-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-5px); border-color: var(--line-strong); }
+
+    .project-preview { padding: 36px 28px 28px; display: flex; flex-direction: column; justify-content: flex-end; min-height: 200px; position: relative; overflow: hidden; border-radius: calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px) 0 0; }
+    .project-preview-letter { position: absolute; top: -12px; right: -4px; font-family: "Fraunces", serif; font-size: 9rem; font-weight: 700; font-style: italic; line-height: 1; opacity: .12; color: #fff; pointer-events: none; user-select: none; }
+    .project-icon { font-size: 2.8rem; margin-bottom: 14px; filter: drop-shadow(0 4px 12px rgba(0,0,0,.2)); }
+    .project-preview-name { font-family: "Fraunces", serif; font-size: 1.5rem; font-weight: 700; color: #fff; line-height: 1.1; margin-bottom: 6px; }
+    .project-preview-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; background: rgba(255,255,255,.2); color: rgba(255,255,255,.9); padding: 4px 10px; border-radius: 3px; line-height: 1.4; }
+
+    .project-body { padding: 20px 22px 18px; flex: 1; display: flex; flex-direction: column; border-bottom: 1px solid var(--line); }
+    .project-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.65; flex: 1; margin-bottom: 14px; }
+    .project-topics { display: flex; flex-wrap: wrap; gap: 5px; }
+    .project-topic { font-size: 11px; font-weight: 600; letter-spacing: .03em; padding: 4px 10px; border-radius: 3px; background: var(--cream-2); border: 1px solid var(--line-strong); color: var(--ink-soft); line-height: 1.4; }
+
+    .project-author { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 22px 13px; background: var(--cream); border-top: 1px solid var(--line); border-radius: 0 0 calc(var(--r-xl) - 2px) calc(var(--r-xl) - 2px); text-decoration: none; }
+    .project-author:hover { background: var(--cream-2); }
+    .project-author-text { display: flex; flex-direction: column; gap: 2px; }
+    .project-author-name { font-size: 12px; font-weight: 700; color: var(--ink); }
+    .project-author-role { font-size: 11px; color: var(--muted); }
+    .project-author-arrow { font-size: 12px; font-weight: 700; color: var(--uva-blue); flex-shrink: 0; }
+
+    .project-card.placeholder { border-style: dashed; border-color: var(--line-strong); background: transparent; cursor: default; pointer-events: none; opacity: .5; }
+    .project-card.placeholder:hover { transform: none; box-shadow: none; }
+    .placeholder-body { padding: 60px 24px; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 10px; }
+    .placeholder-icon { font-size: 2rem; opacity: .35; }
+    .placeholder-text { font-size: 13px; color: var(--muted); line-height: 1.5; }
+
+    /* ── Callout ── */
+    .callout-wrap { padding: 0 0 72px; }
+    .callout-box { background: var(--uva-blue); border-radius: var(--r-xl); padding: 36px 44px; display: flex; align-items: center; gap: 28px; }
+    .callout-text { flex: 1; }
+    .callout-title { font-family: "Fraunces", serif; font-size: 1.3rem; font-weight: 600; color: #fff; margin-bottom: 6px; line-height: 1.2; }
+    .callout-desc { font-size: 14px; color: rgba(255,255,255,.7); line-height: 1.6; }
+    .callout-desc a { color: #f5c518; font-weight: 600; }
+    .callout-icon { font-size: 3.5rem; flex-shrink: 0; opacity: .75; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--line); padding: 24px 0 36px; font-size: 13px; color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 40px; }
+      .hero-stat { gap: 20px; }
+      .category { padding: 40px 0 24px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .callout-box { flex-direction: column; padding: 28px 24px; text-align: center; }
+      .edumed-nav-buttons { gap: 6px; }
+      .edumed-back { font-size: 12px; padding: 6px 10px; }
+    }
+    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA EDUMED ── -->
+  <div class="edumed-bar">
+    <div class="edumed-bar-inner">
+      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+        <div class="edumed-wordmark">
+          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+        </div>
+      </a>
+
+      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M10 3L5 8l5 5"/>
+        </svg>
+        IA en EduMed
+      </a>
+
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span>Proyectos activos · EduMed UVa</span>
+      </div>
+      <h1 class="hero-title">Creado por<br><em>estudiantes de medicina</em></h1>
+      <p class="hero-subtitle">Aplicaciones y herramientas desarrolladas por alumnos de la Facultad de Medicina de Valladolid para el entrenamiento clínico y el aprendizaje de la medicina.</p>
+      <div class="hero-stat">
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Aplicaciones activas</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Categorías</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Equipos autores</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════
+       CATEGORÍA 1: ENTRENAMIENTO DIAGNÓSTICO
+  ══════════════════════ -->
+  <section class="category" id="entrenamiento">
+    <div class="container">
+
+      <div class="category-header">
+        <div>
+          <div class="category-eyebrow">Categoría</div>
+          <h2 class="category-title">Entrenamiento diagnóstico</h2>
+        </div>
+        <span class="category-count">1 aplicación</span>
+      </div>
+
+      <div class="projects-grid">
+
+        <a class="project-card" href="https://diagnostik-o.com/" target="_blank" rel="noopener noreferrer">
+          <div class="project-preview" style="background: linear-gradient(135deg, #0a5a5a 0%, #1d4f8a 100%);">
+            <div class="project-preview-letter">Dx</div>
+            <div class="project-icon">🩺</div>
+            <div class="project-preview-name">Diagnóstik-o</div>
+            <span class="project-preview-tag">Entrenamiento diagnóstico</span>
+          </div>
+          <div class="project-body">
+            <div class="project-desc">Plataforma de entrenamiento en razonamiento clínico y diagnóstico diferencial. Presenta casos clínicos para que el estudiante construya su propio diferencial antes de ver la solución.</div>
+            <div class="project-topics">
+              <span class="project-topic">Diagnóstico diferencial</span>
+              <span class="project-topic">Casos clínicos</span>
+              <span class="project-topic">Autoevaluación</span>
+            </div>
+          </div>
+          <a class="project-author" href="https://www.linkedin.com/in/%C3%A1lvar-escudero-gago-1711b3356/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            <div class="project-author-text">
+              <span class="project-author-name">Álvar Escudero Gago</span>
+              <span class="project-author-role">Estudiante de Medicina · UVa</span>
+            </div>
+            <span class="project-author-arrow">LinkedIn →</span>
+          </a>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════
+       CATEGORÍA 2: AYUDAS PARA EL ESTUDIO
+  ══════════════════════ -->
+  <section class="category" id="estudio">
+    <div class="container">
+
+      <div class="category-header">
+        <div>
+          <div class="category-eyebrow">Categoría</div>
+          <h2 class="category-title">Ayudas para el estudio</h2>
+        </div>
+        <span class="category-count">1 aplicación</span>
+      </div>
+
+      <div class="projects-grid">
+
+        <a class="project-card" href="https://www.bilern.com/" target="_blank" rel="noopener noreferrer">
+          <div class="project-preview" style="background: linear-gradient(135deg, #7c3a00 0%, #4c1d95 100%);">
+            <div class="project-preview-letter">Bi</div>
+            <div class="project-icon">📚</div>
+            <div class="project-preview-name">BiLern</div>
+            <span class="project-preview-tag">Ayudas para el estudio</span>
+          </div>
+          <div class="project-body">
+            <div class="project-desc">Plataforma de apoyo al estudio para estudiantes de medicina y ciencias de la salud. Organiza el contenido, facilita la revisión activa y ayuda a consolidar el aprendizaje a largo plazo.</div>
+            <div class="project-topics">
+              <span class="project-topic">Estudio activo</span>
+              <span class="project-topic">Organización</span>
+              <span class="project-topic">Ciencias de la salud</span>
+            </div>
+          </div>
+          <a class="project-author" href="https://www.linkedin.com/company/bilern/" target="_blank" rel="noopener noreferrer" onclick="event.stopPropagation()">
+            <div class="project-author-text">
+              <span class="project-author-name">Equipo BiLern</span>
+              <span class="project-author-role">Estudiantes de Medicina · UVa</span>
+            </div>
+            <span class="project-author-arrow">LinkedIn →</span>
+          </a>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── CALLOUT ── -->
+  <div class="callout-wrap">
+    <div class="container">
+      <div class="callout-box">
+        <div class="callout-text">
+          <div class="callout-title">¿Has desarrollado algo que pueda ayudar a otros estudiantes?</div>
+          <div class="callout-desc">Si has creado una herramienta, aplicación o recurso relacionado con la medicina y el aprendizaje clínico, puedes proponer su inclusión aquí. Escríbenos a través de <a href="https://tutorcyllo.github.io/EduMed.UVa/">EduMed UVa</a>.</div>
+        </div>
+        <div class="callout-icon">🚀</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span>Escaparate de proyectos estudiantiles · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← EduMed UVa</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
