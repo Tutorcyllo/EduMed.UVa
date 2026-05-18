@@ -9,9 +9,9 @@
 <style>
 :root {
   --yellow:      #F5C518;
+  --yellow-deep: #D4A000;
   --yellow-mid:  #FEF0A0;
   --yellow-pale: #FFFDE7;
-  --yellow-deep: #D4A000;
   --gray-900:    #111318;
   --gray-700:    #3D4451;
   --gray-500:    #6B7280;
@@ -28,7 +28,7 @@
 body { font-family: 'Figtree', sans-serif; background: #F3F4F6; color: #111318; min-height: 100vh; }
 
 /* HEADER */
-header { background: #F5C518; border-bottom: 2px solid #D4A000; position: sticky; top: 0; z-index: 100; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+header { background: #F5C518; border-bottom: 2px solid #D4A000; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
 .header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
 .header-brand { display: flex; align-items: center; gap: 12px; }
 .header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
@@ -51,30 +51,55 @@ header { background: #F5C518; border-bottom: 2px solid #D4A000; position: sticky
 /* MAIN */
 main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 
-/* SECTION BLOCKS */
-.section-block { margin-bottom: 44px; border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-.section-header { display: flex; align-items: center; gap: 14px; padding: 20px 24px; }
-.section-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
-.section-num { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
-.section-title { font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
-.section-desc { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
-.section-body { padding: 16px 20px; }
+/* TOP-LEVEL SECTION ACCORDION */
+.sec-acc { margin-bottom: 12px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
 
-.sec-1 .section-header { background: #111318; border-bottom: 2px solid #000; color: #F5C518; }
-.sec-1 .section-body   { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; }
-.sec-2 .section-header { background: #3D4A5C; border-bottom: 2px solid #2a3447; color: #F5C518; }
-.sec-2 .section-body   { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; }
-.sec-3 .section-header { background: #4B5263; border-bottom: 2px solid #3a4052; color: #F5C518; }
-.sec-3 .section-body   { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; }
-.sec-4 .section-header { background: #000000; border-bottom: 2px solid #F5C518; color: #ffffff; }
-.sec-4 .section-header .section-icon { background: #F5C518; }
-.sec-4 .section-body   { background: #111318; border: 1.5px solid #222; border-top: none; }
-.sec-5 .section-header { background: #6B7280; border-bottom: 2px solid #555c6a; color: #F5C518; }
-.sec-5 .section-body   { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; }
-.sec-quien .section-header { background: #D4A000; border-bottom: 2px solid #b38900; }
-.sec-quien .section-body   { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; }
+.sec-acc-row {
+  display: flex; align-items: center; gap: 14px;
+  padding: 20px 24px; cursor: pointer; user-select: none;
+  transition: filter 0.15s;
+}
+.sec-acc-row:hover { filter: brightness(1.08); }
 
-/* ACCORDION — light */
+.sec-acc-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: var(--shadow-sm); }
+.sec-acc-info { flex: 1; min-width: 0; }
+.sec-acc-num   { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
+.sec-acc-title { font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
+.sec-acc-desc  { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
+.sec-acc-chevron { font-size: 1rem; flex-shrink: 0; transition: transform 0.25s; opacity: 0.8; }
+.sec-acc-row.open .sec-acc-chevron { transform: rotate(180deg); }
+
+.sec-acc-body { display: none; padding: 16px 20px; }
+.sec-acc-body.open { display: block; }
+
+/* Section colors */
+.s1 .sec-acc-row { background: #111318; color: #F5C518; border-bottom: none; }
+.s1 .sec-acc-body { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s2 .sec-acc-row { background: #3D4A5C; color: #F5C518; }
+.s2 .sec-acc-body { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s3 .sec-acc-row { background: #4B5263; color: #F5C518; }
+.s3 .sec-acc-body { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s4 .sec-acc-row { background: #5C4033; color: #F5C518; }
+.s4 .sec-acc-body { background: #EFEBE9; border: 1.5px solid #D7CCC8; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s5 .sec-acc-row { background: #000000; color: #ffffff; border-bottom: 2px solid #F5C518; }
+.s5 .sec-acc-row .sec-acc-icon { background: #F5C518; }
+.s5 .sec-acc-row .sec-acc-num  { color: #F5C518; }
+.s5 .sec-acc-row .sec-acc-desc { color: #F5C518; opacity: 1; }
+.s5 .sec-acc-body { background: #111318; border: 1.5px solid #222; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s6 .sec-acc-row { background: #6B7280; color: #F5C518; }
+.s6 .sec-acc-body { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; border-radius: 0 0 14px 14px; }
+
+.s-quien .sec-acc-row { background: #D4A000; color: #111318; }
+.s-quien .sec-acc-row .sec-acc-num { color: #111318; }
+.s-quien .sec-acc-row .sec-acc-desc { color: #111318; }
+.s-quien .sec-acc-body { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; border-radius: 0 0 14px 14px; }
+
+/* INNER ACCORDION (recursos) */
 .accordion { display: flex; flex-direction: column; gap: 6px; }
 .acc-item { border-radius: 8px; overflow: hidden; }
 .acc-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 8px; transition: background 0.15s; user-select: none; }
@@ -91,10 +116,10 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .acc-body { display: none; padding: 16px 20px; background: #ffffff; border: 1.5px solid #E5E7EB; border-top: none; border-radius: 0 0 8px 8px; }
 .acc-body.open { display: block; }
 .acc-desc { font-size: 0.85rem; color: #6B7280; line-height: 1.65; margin-bottom: 14px; }
-.acc-cta { display: inline-flex; align-items: center; gap: 6px; background: #111318; color: #F5C518; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
-.acc-cta:hover { background: #3D4451; transform: translateY(-1px); }
+.acc-cta { display: inline-flex; align-items: center; gap: 6px; background: #111318; color: #F5C518; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+.acc-cta:hover { background: #3D4451; }
 
-/* ACCORDION — dark (IAgen) */
+/* DARK inner accordion (IAgen) */
 .acc-dark .acc-row         { background: #52596e; border-color: #636b80; }
 .acc-dark .acc-row:hover   { background: #5e6678; }
 .acc-dark .acc-row.open    { background: #5e6678; border-bottom-color: transparent; }
@@ -108,7 +133,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .acc-dark .acc-cta         { background: #F5C518; color: #111318; }
 .acc-dark .acc-cta:hover   { background: #D4A000; }
 
-/* REPOSITORIO ALUMNADO — special */
+/* REPO ALUMNADO */
 .acc-repo { margin-top: 6px; border-radius: 8px; overflow: hidden; border: 2px solid #F5C518; }
 .acc-repo-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #1e2535; user-select: none; }
 .acc-repo-row:hover { background: #252d42; }
@@ -119,7 +144,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .acc-repo-body { display: none; padding: 16px 20px; background: #1e2535; border-top: 2px solid #F5C518; }
 .acc-repo-body.open { display: block; }
 .acc-repo-desc { font-size: 0.85rem; color: #ffffff; line-height: 1.65; margin-bottom: 14px; }
-.acc-repo-cta { display: inline-flex; align-items: center; gap: 6px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
+.acc-repo-cta { display: inline-flex; align-items: center; gap: 6px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; }
 .acc-repo-cta:hover { background: #D4A000; }
 
 /* FOLDER TABS */
@@ -133,7 +158,7 @@ main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
 .folder-content strong { color: #111318; }
 
 /* CONTACT */
-.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: 0 4px 12px rgba(0,0,0,0.10); }
+.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); margin-top: 24px; }
 .contact-text { flex: 1; }
 .contact-title { font-size: 1.1rem; font-weight: 800; color: #F5C518; margin-bottom: 8px; }
 .contact-desc  { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
@@ -147,14 +172,12 @@ footer a { color: #3D4451; text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
 /* BACK TOP */
-.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(0,0,0,0.10); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
+.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
 .back-top.visible { opacity: 1; pointer-events: auto; }
 .back-top:hover { background: #3D4451; transform: translateY(-2px); }
 
 /* RESPONSIVE */
-@media (max-width: 1024px) {
-  .hero-img-wrap { width: 200px; }
-}
+@media (max-width: 1024px) { .hero-img-wrap { width: 200px; } }
 @media (max-width: 768px) {
   .header-inner { padding: 0 16px; height: 60px; }
   .badge { display: none; }
@@ -163,11 +186,10 @@ footer a:hover { text-decoration: underline; }
   .hero-img-wrap { display: none; }
   .hero-headline { font-size: 1.8rem; }
   main { padding: 24px 16px 60px; }
+  .sec-acc-title { font-size: 1.5rem; }
+  .sec-acc-row { padding: 16px 18px; }
   .contact-block { flex-direction: column; gap: 20px; }
   .contact-btn { width: 100%; justify-content: center; }
-  .section-block { margin-bottom: 32px; }
-  .section-title { font-size: 1.5rem; }
-  .section-header { padding: 16px 18px; }
   .acc-row { flex-wrap: wrap; }
   .acc-title { order: 1; width: calc(100% - 60px); }
   .acc-tag, .acc-pending-tag { order: 2; margin-left: 52px; margin-top: 6px; }
@@ -199,6 +221,7 @@ footer a:hover { text-decoration: underline; }
         <a class="stat-pill" href="#sec-cuadernos">📓 Cuadernos Docentes</a>
         <a class="stat-pill" href="#sec-basicos">🧱 Básicos</a>
         <a class="stat-pill" href="#sec-evaluacion">📋 Evaluación</a>
+        <a class="stat-pill" href="#sec-lecturas">📚 Lecturas</a>
         <a class="stat-pill" href="#sec-iagen">🤖 IA en el Aula</a>
         <a class="stat-pill" href="#sec-innovacion">🔬 Innovación</a>
       </div>
@@ -215,16 +238,17 @@ footer a:hover { text-decoration: underline; }
 <main>
 
   <!-- 1. CUADERNOS -->
-  <div class="section-block sec-1" id="sec-cuadernos">
-    <div class="section-header">
-      <div class="section-icon">📓</div>
-      <div>
-        <div class="section-num">Sección 01</div>
-        <div class="section-title">Cuadernos Docentes</div>
-        <div class="section-desc">Colección EduMed.UVa · 2 cuadernos disponibles</div>
+  <div class="sec-acc s1" id="sec-cuadernos">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">📓</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num">Sección 01</div>
+        <div class="sec-acc-title">Cuadernos Docentes</div>
+        <div class="sec-acc-desc">Colección EduMed.UVa · 2 cuadernos disponibles</div>
       </div>
+      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="section-body">
+    <div class="sec-acc-body">
       <div class="accordion">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -262,16 +286,17 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- 2. BÁSICOS -->
-  <div class="section-block sec-2" id="sec-basicos">
-    <div class="section-header">
-      <div class="section-icon">🧱</div>
-      <div>
-        <div class="section-num">Sección 02</div>
-        <div class="section-title">Básicos en educación médica explicados para principiantes</div>
-        <div class="section-desc">Los fundamentos que todo docente debería conocer</div>
+  <div class="sec-acc s2" id="sec-basicos">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">🧱</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num">Sección 02</div>
+        <div class="sec-acc-title">Básicos en educación médica explicados para principiantes</div>
+        <div class="sec-acc-desc">Los fundamentos que todo docente debería conocer</div>
       </div>
+      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="section-body">
+    <div class="sec-acc-body">
       <div class="accordion">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -314,16 +339,17 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- 3. EVALUACIÓN -->
-  <div class="section-block sec-3" id="sec-evaluacion">
-    <div class="section-header">
-      <div class="section-icon">📋</div>
-      <div>
-        <div class="section-num">Sección 03</div>
-        <div class="section-title">Evaluando la evaluación</div>
-        <div class="section-desc">Herramientas para diseñar una evaluación más justa y eficaz</div>
+  <div class="sec-acc s3" id="sec-evaluacion">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">📋</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num">Sección 03</div>
+        <div class="sec-acc-title">Evaluando la evaluación</div>
+        <div class="sec-acc-desc">Herramientas para diseñar una evaluación más justa y eficaz</div>
       </div>
+      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="section-body">
+    <div class="sec-acc-body">
       <div class="accordion">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -365,17 +391,47 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <!-- 4. IAGEN -->
-  <div class="section-block sec-4" id="sec-iagen">
-    <div class="section-header">
-      <div class="section-icon" style="background:#F5C518;">🤖</div>
-      <div>
-        <div class="section-num" style="color:#F5C518;">Sección 04</div>
-        <div class="section-title" style="color:#ffffff;">El reto de la IAgen</div>
-        <div class="section-desc" style="color:#F5C518;opacity:1;">Inteligencia artificial generativa en la docencia médica</div>
+  <!-- 4. LECTURAS -->
+  <div class="sec-acc s4" id="sec-lecturas">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">📚</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num">Sección 04</div>
+        <div class="sec-acc-title">Lecturas para docentes</div>
+        <div class="sec-acc-desc">Libros que acercan la investigación sobre el aprendizaje al aula</div>
+      </div>
+      <span class="sec-acc-chevron">▼</span>
+    </div>
+    <div class="sec-acc-body">
+      <div class="accordion">
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-icon">📖</div>
+            <div class="acc-title">Docencia pequeña. Lecciones cotidianas de las ciencias del aprendizaje — James M. Lang</div>
+            <span class="acc-tag">Lectura recomendada</span>
+            <span class="acc-chevron">▼</span>
+          </div>
+          <div class="acc-body">
+            <p class="acc-desc">Estrategias sencillas y respaldadas por la investigación para ajustar tu docencia a cómo aprenden realmente tus estudiantes — sin grandes cambios, con resultados visibles.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/docencia_pequena/" target="_blank" rel="noopener">Ver recurso →</a>
+          </div>
+        </div>
       </div>
     </div>
-    <div class="section-body">
+  </div>
+
+  <!-- 5. IAGEN -->
+  <div class="sec-acc s5" id="sec-iagen">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon" style="background:#F5C518;">🤖</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num" style="color:#F5C518;">Sección 05</div>
+        <div class="sec-acc-title" style="color:#ffffff;">El reto de la IAgen</div>
+        <div class="sec-acc-desc" style="color:#F5C518;opacity:1;">Inteligencia artificial generativa en la docencia médica</div>
+      </div>
+      <span class="sec-acc-chevron" style="color:#F5C518;">▼</span>
+    </div>
+    <div class="sec-acc-body">
       <div class="accordion acc-dark">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -426,7 +482,6 @@ footer a:hover { text-decoration: underline; }
           </div>
         </div>
       </div>
-      <!-- Repositorio alumnado — elemento especial fuera del acc-dark -->
       <div class="acc-repo">
         <div class="acc-repo-row" onclick="toggleRepo(this)">
           <span style="font-size:1.4rem;flex-shrink:0;">⭐</span>
@@ -442,17 +497,18 @@ footer a:hover { text-decoration: underline; }
     </div>
   </div>
 
-  <!-- 5. REPOSITORIOS -->
-  <div class="section-block sec-5" id="sec-innovacion">
-    <div class="section-header">
-      <div class="section-icon">🔬</div>
-      <div>
-        <div class="section-num">Sección 05</div>
-        <div class="section-title">Repositorios de iniciativas innovadoras</div>
-        <div class="section-desc">Comparte y descubre experiencias de innovación docente en medicina</div>
+  <!-- 6. REPOSITORIOS -->
+  <div class="sec-acc s6" id="sec-innovacion">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">🔬</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-num">Sección 06</div>
+        <div class="sec-acc-title">Repositorios de iniciativas innovadoras</div>
+        <div class="sec-acc-desc">Comparte y descubre experiencias de innovación docente en medicina</div>
       </div>
+      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="section-body">
+    <div class="sec-acc-body">
       <div class="accordion">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
@@ -483,15 +539,16 @@ footer a:hover { text-decoration: underline; }
   </div>
 
   <!-- PARA QUIÉN -->
-  <div class="section-block sec-quien">
-    <div class="section-header" style="background:#D4A000;border-bottom:2px solid #b38900;">
-      <div class="section-icon" style="background:#ffffff;">👩‍🏫</div>
-      <div>
-        <div class="section-title" style="color:#111318;">¿Para quién es EduMed.UVa?</div>
-        <div class="section-desc" style="color:#111318;opacity:0.75;">Dirigido al profesorado y al alumnado de todos los grados de la Facultad, y a la comunidad docente médica nacional e internacional</div>
+  <div class="sec-acc s-quien">
+    <div class="sec-acc-row" onclick="toggleSec(this)">
+      <div class="sec-acc-icon">👩‍🏫</div>
+      <div class="sec-acc-info">
+        <div class="sec-acc-title">¿Para quién es EduMed.UVa?</div>
+        <div class="sec-acc-desc">Dirigido al profesorado y al alumnado de todos los grados de la Facultad, y a la comunidad docente médica nacional e internacional</div>
       </div>
+      <span class="sec-acc-chevron" style="color:#111318;">▼</span>
     </div>
-    <div class="section-body" style="padding:20px;">
+    <div class="sec-acc-body" style="padding:20px;">
       <div class="folder-tabs">
         <div class="folder-tab-bar">
           <div class="folder-tab active" id="ftab-1">🏫 Profesorado</div>
@@ -499,7 +556,7 @@ footer a:hover { text-decoration: underline; }
           <div class="folder-tab" id="ftab-3">🌍 Más allá de la UVa</div>
         </div>
         <div class="folder-content" id="folder-content">
-          Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>
+          Todo el profesorado y el alumnado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>
         </div>
       </div>
     </div>
@@ -509,7 +566,7 @@ footer a:hover { text-decoration: underline; }
   <div class="contact-block">
     <div class="contact-text">
       <div class="contact-title">💬 ¿Tienes una opinión o sugerencia?</div>
-      <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
+      <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos.</div>
     </div>
     <a class="contact-btn" href="mailto:luis.corral@uva.es?subject=Opinión%20sobre%20EduMed.UVa&body=Hola%20TutorCyLlo%2C%0A%0AMe%20gustaría%20compartir%20mi%20opinión%20sobre%20EduMed.UVa%3A%0A%0A">✉️ Escribe a TutorCyLlo</a>
   </div>
@@ -517,13 +574,20 @@ footer a:hover { text-decoration: underline; }
 </main>
 
 <footer>
-  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span id="fecha-footer">Actualizado en mayo de 2026</span><br>
+  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span>Actualizado en mayo de 2026</span><br>
   <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a>
 </footer>
 
 <button class="back-top" id="backTop">↑</button>
 
 <script>
+function toggleSec(row) {
+  const body = row.nextElementSibling;
+  const isOpen = row.classList.contains('open');
+  row.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
 function toggleAcc(row) {
   if (row.classList.contains('pending')) return;
   const body = row.nextElementSibling;
@@ -540,8 +604,8 @@ function toggleRepo(row) {
 }
 
 const tabContents = {
-  'ftab-1': 'Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
-  'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
+  'ftab-1': 'Todo el profesorado y el alumnado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
+  'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente o estudiante de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
   'ftab-3': 'Docentes de otras facultades de medicina y ciencias de la salud <strong>en español</strong> interesados en compartir y aprender de experiencias innovadoras a nivel nacional e internacional.'
 };
 document.querySelectorAll('.folder-tab').forEach(tab => {
