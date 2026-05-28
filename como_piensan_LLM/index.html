@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>IA en Medicina · EduMed·UVa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+/* ── TOKENS ─────────────────────────────────────── */
+:root{
+  --bg:#f7f3ee; --bg-deep:#f0ebe3; --surface:#ffffff;
+  --ink:#2c2317; --ink-soft:#5a4a3a; --ink-mute:#9a8a7a;
+  --line:#e8e0d6; --line-strong:#d0c4b4;
+  --accent:#8B4A2A; --accent-deep:#6b3318; --accent-light:#f5ede8; --accent-mid:#c07050;
+  --sage:#3d6b52; --sage-light:#eaf2ec;
+  --yellow:#f5c518; --yellow-dark:#d9a800;
+  --serif:"Source Serif 4",Georgia,serif;
+  --sans:"DM Sans",-apple-system,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --radius:14px; --radius-sm:8px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-top:95px}
+button{font:inherit;cursor:pointer}
+input{font:inherit}
+a{color:var(--accent-deep);text-underline-offset:3px}
+
+/* ── ANIMATIONS ─────────────────────────────────── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{50%{opacity:0}}
+@keyframes popIn{from{transform:scale(.8);opacity:0}to{transform:scale(1);opacity:1}}
+.fade-up{animation:fadeUp .3s ease}
+
+.edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); position: fixed; top: 0; left: 0; right: 0; z-index: 100; }
+.edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+.edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+.edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+.edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+.edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+.edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+.edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
+.edumed-back:hover { background: #fff; transform: translateX(-1px); }
+.edumed-back svg { width: 14px; height: 14px; }
+@media (max-width: 540px) { .edumed-wordmark .w2 { display: none; } .edumed-back { padding: 7px 10px; font-size: 12px; } }
+
+/* ── MAIN NAV ────────────────────────────────────── */
+.main-nav{background:var(--surface);border-bottom:1px solid var(--line);
+  display:flex;justify-content:center;position:fixed;top:47px;left:0;right:0;z-index:90;
+  box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.main-nav-inner{display:flex;max-width:1000px;width:100%}
+.nav-tab{flex:1;max-width:320px;padding:14px 16px;border:none;border-bottom:2px solid transparent;
+  background:transparent;font-family:var(--sans);font-size:14px;font-weight:600;
+  color:#999;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
+  transition:color .2s,border-color .2s}
+.nav-tab.active{color:var(--accent);border-bottom-color:var(--accent)}
+.nav-tab .num{font-family:var(--mono);font-size:11px;padding:2px 8px;border-radius:999px;
+  background:var(--bg-deep);color:#aaa;transition:background .2s,color .2s}
+.nav-tab.active .num{background:var(--accent-light);color:var(--accent)}
+
+/* ── PAGES ───────────────────────────────────────── */
+.page{display:none}.page.active{display:block}
+
+/* ── HERO ────────────────────────────────────────── */
+.hero{max-width:1000px;margin:0 auto;padding:60px 32px 44px}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--ink-mute)}
+.hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(28px,4vw,46px);
+  line-height:1.08;letter-spacing:-.02em;margin-bottom:16px}
+.hero-title em{font-style:italic;color:var(--accent)}
+.hero-lead{font-family:var(--serif);font-size:18px;line-height:1.65;color:var(--ink-soft);max-width:62ch}
+
+/* ── SHELL ───────────────────────────────────────── */
+.shell{max-width:1000px;margin:0 auto;padding:0 32px 100px}
+@media(max-width:680px){.shell{padding:0 18px 80px}.hero{padding:40px 18px 32px}}
+
+/* ── SECTION HEADER ──────────────────────────────── */
+.section-header{text-align:center;margin-bottom:28px}
+.section-header h2{font-family:var(--serif);font-weight:400;font-size:clamp(22px,2.8vw,30px);
+  color:var(--ink);margin-bottom:8px}
+.section-header p{color:var(--ink-mute);font-size:14px;max-width:54ch;margin:0 auto}
+.sep{border:none;border-top:1px solid var(--line);margin:48px 0}
+
+/* ── ERA BANDS ───────────────────────────────────── */
+.era-bands{display:flex;margin-bottom:0;border-radius:10px 10px 0 0;overflow:hidden;border:1px solid var(--line);border-bottom:none}
+.era-band{flex:1;padding:10px 14px;text-align:center;position:relative}
+.era-band-num{font-family:var(--mono);font-size:10px;font-weight:500;opacity:.7;margin-bottom:3px}
+.era-band-label{font-size:12px;font-weight:700;line-height:1.25}
+.era-band-period{font-size:10px;opacity:.65;margin-top:3px}
+.era-band::after{content:"";position:absolute;right:0;top:20%;height:60%;width:1px;background:rgba(255,255,255,.3)}
+.era-band:last-child::after{display:none}
+.era-1{background:#6b4f8a;color:#fff}
+.era-2{background:#2471a3;color:#fff}
+.era-3{background:#148f77;color:#fff}
+.era-4{background:#8B4A2A;color:#fff}
+
+/* ── TIMELINE ────────────────────────────────────── */
+.tl-scroller{overflow-x:auto;padding:10px 0 18px;cursor:grab;
+  scrollbar-width:thin;scrollbar-color:var(--line) transparent;
+  background:var(--surface);border:1px solid var(--line);border-top:none;border-radius:0 0 10px 10px;margin-bottom:4px}
+.tl-scroller:active{cursor:grabbing}
+.tl-row{display:flex;align-items:flex-start;min-width:max-content;padding:0 16px;position:relative}
+.tl-row::before{content:"";position:absolute;top:17px;left:40px;right:40px;height:2px;
+  background:linear-gradient(90deg,var(--accent-light),var(--accent),var(--accent-light));z-index:0}
+.tl-item{display:flex;flex-direction:column;align-items:center;width:155px;
+  flex-shrink:0;cursor:pointer;position:relative;z-index:1;padding-top:2px}
+.tl-dot{width:14px;height:14px;border-radius:50%;background:var(--surface);
+  border:2px solid var(--line-strong);margin-bottom:10px;
+  transition:background .2s,border-color .2s,transform .2s}
+.tl-dot.era-1{border-color:#9b7abf}
+.tl-dot.era-2{border-color:#5499c9}
+.tl-dot.era-3{border-color:#45b39d}
+.tl-dot.era-4{border-color:#c07050}
+.tl-item:hover .tl-dot.era-1,.tl-item.active .tl-dot.era-1{background:#6b4f8a;border-color:#6b4f8a}
+.tl-item:hover .tl-dot.era-2,.tl-item.active .tl-dot.era-2{background:#2471a3;border-color:#2471a3}
+.tl-item:hover .tl-dot.era-3,.tl-item.active .tl-dot.era-3{background:#148f77;border-color:#148f77}
+.tl-item:hover .tl-dot.era-4,.tl-item.active .tl-dot.era-4{background:#8B4A2A;border-color:#8B4A2A}
+.tl-item:hover .tl-dot,.tl-item.active .tl-dot{background:var(--accent);border-color:var(--accent-deep);transform:scale(1.45)}
+.tl-year{font-family:var(--mono);font-size:11px;color:var(--accent);margin-bottom:3px}
+.tl-name{font-size:12px;font-weight:600;color:var(--ink);text-align:center;max-width:130px;line-height:1.3}
+.tl-item.active .tl-name{color:var(--accent)}
+.tl-panel{display:none;background:var(--surface);border:1px solid var(--line);
+  border-radius:var(--radius);padding:28px 32px;margin-top:4px}
+.tl-panel.open{display:block}
+.tl-panel-era{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.tl-panel h3{font-family:var(--serif);font-weight:400;font-size:24px;color:var(--ink);
+  margin-bottom:14px;line-height:1.15}
+.tl-panel p{color:var(--ink-soft);line-height:1.7;margin-bottom:10px}
+.tl-example{background:var(--accent-light);border-left:3px solid var(--accent);
+  padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px;color:var(--ink-soft)}
+.tl-example strong{display:block;font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--accent);margin-bottom:6px}
+.tl-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.tag{font-size:12px;font-weight:500;padding:4px 12px;border-radius:999px;
+  background:var(--accent-light);color:var(--accent)}
+
+/* ── STEPS NAV ───────────────────────────────────── */
+.steps-nav{display:flex;border:1px solid var(--line);border-radius:var(--radius);
+  overflow:hidden;background:var(--surface);margin-bottom:28px}
+.step-btn{flex:1;padding:12px 6px;border:none;border-right:1px solid var(--line);
+  background:transparent;font-family:var(--sans);font-size:12px;font-weight:600;color:#999;
+  cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:5px;
+  transition:background .15s,color .15s}
+.step-btn:last-child{border-right:none}
+.step-btn .s-icon{font-size:18px}
+.step-btn.active{background:var(--accent-light);color:var(--accent)}
+.step-btn:hover:not(.active){background:var(--bg-deep);color:var(--ink)}
+.step-content{display:none}.step-content.active{display:block}
+
+/* ── VIZ BOX ─────────────────────────────────────── */
+.viz-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:12px}
+.viz-header{display:flex;align-items:center;gap:12px;padding:16px 24px;
+  border-bottom:1px solid var(--line);background:var(--bg-deep)}
+.viz-num{width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;
+  font-family:var(--mono);font-size:12px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.viz-title{font-weight:700;font-size:15px;color:var(--ink)}
+.viz-sub{font-size:12px;color:var(--ink-mute);margin-top:2px}
+.viz-body{padding:26px 28px}
+
+/* ── STEP 0 – PROMPT ─────────────────────────────── */
+.prompt-example{background:var(--bg-deep);border-radius:10px;padding:20px;margin-bottom:18px;border-left:3px solid var(--accent)}
+.prompt-example-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.prompt-example-text{font-family:var(--serif);font-size:18px;line-height:1.65;color:var(--ink)}
+.prompt-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:580px){.prompt-grid{grid-template-columns:1fr}}
+.prompt-card{border-radius:10px;padding:16px}
+.prompt-card-title{font-size:12px;font-weight:700;margin-bottom:8px}
+.prompt-card ul{font-size:13px;line-height:1.8;padding-left:18px}
+.prompt-card.good{background:var(--sage-light)}.prompt-card.good .prompt-card-title{color:var(--sage)}
+.prompt-card.bad{background:var(--accent-light)}.prompt-card.bad .prompt-card-title{color:var(--accent)}
+
+/* ── STEP 1 – TOKENIZACIÓN ───────────────────────── */
+.tok-input-wrap{display:flex;gap:10px;margin-bottom:16px}
+.tok-input{flex:1;padding:10px 16px;border:1.5px solid var(--line);border-radius:999px;
+  background:var(--bg-deep);color:var(--ink);font-size:14px;outline:none;transition:border-color .15s}
+.tok-input:focus{border-color:var(--accent)}
+.btn-run{padding:10px 20px;border-radius:999px;background:var(--accent);color:#fff;
+  border:none;font-size:14px;font-weight:600;transition:background .15s;white-space:nowrap}
+.btn-run:hover{background:var(--accent-deep)}
+.btn-sage{background:var(--sage)}.btn-sage:hover{background:#2d5040}
+.btn-mute{background:#aaa}.btn-mute:hover{background:#888}
+.token-display{display:flex;flex-wrap:wrap;gap:8px;min-height:50px;padding:14px;
+  background:var(--bg-deep);border-radius:10px;margin-bottom:12px;align-items:flex-start}
+.token-display .hint{color:#bbb;font-style:italic;font-size:13px;align-self:center}
+.tok-pill{display:flex;flex-direction:column;align-items:center;padding:6px 12px;
+  border-radius:8px;animation:popIn .22s ease}
+.tok-pill .tok-t{font-family:var(--mono);font-size:13px;font-weight:500}
+.tok-pill .tok-n{font-size:10px;opacity:.6;margin-top:2px}
+
+/* ── STEP 2 – VECTORES ───────────────────────────── */
+#vecCanvas{width:100%;height:300px;border-radius:10px;display:block;cursor:crosshair}
+
+/* ── STEP 3 – ATENCIÓN ───────────────────────────── */
+.attn-btns{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.attn-btn{padding:8px 18px;border-radius:999px;border:1.5px solid var(--line);
+  background:transparent;color:#999;font-size:13px;font-weight:600;transition:all .15s}
+.attn-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.attn-sentence{font-family:var(--serif);font-size:20px;line-height:1.8;margin-bottom:18px}
+.attn-w{display:inline-block;padding:2px 6px;border-radius:6px;margin:0 2px;transition:background .2s,color .2s}
+.attn-w.focus{background:var(--accent);color:#fff;font-weight:600}
+.attn-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.attn-bar-label{font-family:var(--mono);font-size:12px;color:var(--ink-mute);min-width:90px;text-align:right}
+.attn-bar-bg{flex:1;height:10px;border-radius:999px;background:var(--bg-deep);overflow:hidden}
+.attn-bar-fill{height:100%;border-radius:999px;background:var(--accent);transition:width .5s cubic-bezier(.4,0,.2,1)}
+.attn-bar-pct{font-family:var(--mono);font-size:12px;color:var(--ink-mute);min-width:36px}
+.attn-note{background:var(--accent-light);border-radius:10px;padding:14px 18px;margin-top:16px;font-size:14px;color:var(--ink-soft);line-height:1.65}
+.attn-note strong{color:var(--accent);display:block;margin-bottom:4px}
+
+/* ── STEP 4 – TRANSFORMER ────────────────────────── */
+.tf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:18px}
+@media(max-width:600px){.tf-grid{grid-template-columns:repeat(2,1fr)}}
+.tf-node{background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;
+  padding:16px 12px;text-align:center;cursor:pointer;transition:all .2s}
+.tf-node:hover{border-color:var(--accent);transform:translateY(-3px)}
+.tf-node.active{background:var(--accent-light);border-color:var(--accent);transform:translateY(-3px)}
+.tf-icon{font-size:24px;margin-bottom:8px}
+.tf-label{font-size:12px;font-weight:700;color:var(--ink)}
+.tf-sub{font-size:11px;color:var(--ink-mute);margin-top:3px}
+.tf-explain{display:none;background:var(--accent-light);border-left:3px solid var(--accent);
+  padding:16px 20px;border-radius:0 10px 10px 0}
+.tf-explain.open{display:block}
+.tf-explain strong{color:var(--accent);display:block;margin-bottom:6px;font-size:14px}
+.tf-explain p{font-size:14px;color:var(--ink-soft);line-height:1.68}
+
+/* ── STEP 5 – RESPUESTA ──────────────────────────── */
+.gen-btns{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.output-box{font-family:var(--serif);font-size:18px;line-height:1.8;
+  padding:18px 20px;background:var(--bg-deep);border-radius:10px;margin-bottom:18px;min-height:80px;color:var(--ink)}
+.cursor{display:inline-block;width:2px;height:1.1em;background:var(--accent);
+  vertical-align:text-bottom;animation:blink 1s step-end infinite}
+.cycle-wrap{background:var(--bg-deep);border-radius:10px;padding:16px 20px}
+.cycle-label{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:12px}
+.cycle-pills{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:13px;color:var(--ink-soft)}
+.cpill{padding:4px 12px;border-radius:999px;font-weight:600}
+.cpill.light{background:var(--accent-light);color:var(--accent)}
+.cpill.dark{background:var(--accent);color:#fff}
+
+/* ── RISKS ───────────────────────────────────────── */
+.filter-btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:24px}
+.filter-btn{padding:8px 18px;border-radius:999px;border:1.5px solid var(--line);
+  background:transparent;color:#999;font-size:13px;font-weight:600;transition:all .15s}
+.filter-btn.active{background:var(--accent);border-color:var(--accent);color:#fff}
+.risk-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:18px;margin-bottom:22px}
+.risk-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:24px;cursor:pointer;transition:border-color .2s,box-shadow .2s,background .2s}
+.risk-card:hover{border-color:var(--accent-mid);box-shadow:0 4px 20px rgba(0,0,0,.07)}
+.risk-card.active{background:var(--accent-light);border-color:var(--accent)}
+.risk-icon{font-size:30px;margin-bottom:10px}
+.risk-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.risk-card h3{font-family:var(--serif);font-weight:500;font-size:18px;color:var(--ink);margin-bottom:8px;line-height:1.25}
+.risk-card p{font-size:13px;color:var(--ink-mute);line-height:1.6}
+.risk-detail{display:none;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);
+  padding:32px 36px;margin-bottom:28px}
+.risk-detail.open{display:block}
+.risk-detail .rd-type{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.risk-detail h2{font-family:var(--serif);font-weight:400;font-size:26px;color:var(--ink);margin-bottom:16px;line-height:1.15}
+.risk-detail .rd-body{color:var(--ink-soft);line-height:1.7;margin-bottom:14px}
+.risk-detail .example-box{background:var(--bg-deep);border-left:3px solid var(--accent);
+  padding:14px 18px;border-radius:0 8px 8px 0;margin-bottom:12px}
+.risk-detail .example-box strong{font-size:11px;text-transform:uppercase;letter-spacing:.06em;
+  color:var(--accent);display:block;margin-bottom:8px}
+.risk-detail .example-box p{font-size:14px;color:var(--ink-soft);line-height:1.65;white-space:pre-line}
+
+/* ── CHECKLIST ───────────────────────────────────── */
+.checklist-box{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:32px 36px}
+.checklist-box .cl-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px}
+.checklist-box h3{font-family:var(--serif);font-weight:400;font-size:22px;color:var(--ink);margin-bottom:18px}
+.cl-item{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid var(--bg-deep)}
+.cl-item:last-child{border-bottom:none}
+.cl-check{color:var(--sage);font-weight:700;flex-shrink:0;margin-top:1px}
+.cl-item span{font-size:15px;color:var(--ink-soft);line-height:1.55}
+
+/* ── FOOTER ──────────────────────────────────────── */
+.page-footer{border-top:1px solid var(--line);padding:28px 32px;max-width:1000px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;color:var(--ink-mute);font-size:13px;flex-wrap:wrap;gap:8px}
+
+/* ── UTILITY ─────────────────────────────────────── */
+.info-note{font-size:13px;color:var(--ink-mute);line-height:1.65;margin-top:12px}
+.info-note strong{color:var(--ink-soft)}
+</style>
+</head>
+<body>
+
+<!-- BARRA INSTITUCIONAL -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+      IA en EduMed
+    </a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="main-nav">
+  <div class="main-nav-inner">
+    <button class="nav-tab active" id="tab-piensa" onclick="switchPage('piensa')">
+      <span class="num">01</span>🧠 Cómo piensa un LLM
+    </button>
+    <button class="nav-tab" id="tab-riesgos" onclick="switchPage('riesgos')">
+      <span class="num">02</span>⚠️ Riesgos y limitaciones de los LLM
+    </button>
+  </div>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 1 — CÓMO PIENSA UN LLM
+     ═══════════════════════════════════════════════ -->
+<div class="page active" id="page-piensa">
+
+  <div class="hero">
+    <p class="eyebrow">01 · Fundamentos de IA</p>
+    <h1 class="hero-title">¿Qué es la IA y cómo <em>"piensa"?</em></h1>
+    <p class="hero-lead">De los sistemas expertos de los años 60 a los grandes modelos de lenguaje: una guía interactiva para entender las herramientas que ya están en la consulta.</p>
+  </div>
+
+  <div class="shell">
+
+    <!-- TIMELINE -->
+    <div class="section-header">
+      <h2>Historia: cuatro eras de la inteligencia artificial</h2>
+      <p>Pulsa cada hito para explorar qué ocurrió, cómo aprendía la IA y por qué importa hoy en medicina.</p>
+    </div>
+
+    <!-- ERA BANDS -->
+    <div class="era-bands">
+      <div class="era-band era-1">
+        <div class="era-band-num">Etapa 1</div>
+        <div class="era-band-label">IA basada en conocimiento</div>
+        <div class="era-band-period">Años 60 – 1995</div>
+      </div>
+      <div class="era-band era-2">
+        <div class="era-band-num">Etapa 2</div>
+        <div class="era-band-label">IA basada en datos</div>
+        <div class="era-band-period">Desde 1995</div>
+      </div>
+      <div class="era-band era-3">
+        <div class="era-band-num">Etapa 3</div>
+        <div class="era-band-label">Deep Learning</div>
+        <div class="era-band-period">Desde 2012</div>
+      </div>
+      <div class="era-band era-4">
+        <div class="era-band-num">Etapa 4</div>
+        <div class="era-band-label">IA Generativa y LLMs</div>
+        <div class="era-band-period">Últimos años</div>
+      </div>
+    </div>
+
+    <div class="tl-scroller" id="tlScroller">
+      <div class="tl-row" id="tlRow"></div>
+    </div>
+    <div class="tl-panel fade-up" id="tlPanel"></div>
+
+    <!-- ERA SUMMARY CARDS -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-top:20px;margin-bottom:0">
+      <div style="background:#f3eef8;border-left:3px solid #6b4f8a;border-radius:0 10px 10px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#6b4f8a;margin-bottom:6px">Etapa 1 · Años 60–1995</div>
+        <div style="font-weight:700;font-size:13px;color:#2c2317;margin-bottom:6px">IA basada en conocimiento</div>
+        <div style="font-size:12px;color:#5a4a3a;line-height:1.6"><strong>Idea:</strong> Reglas lógicas SI→ENTONCES<br><strong>Límite:</strong> Rigidez y dependencia del experto</div>
+      </div>
+      <div style="background:#eaf3fa;border-left:3px solid #2471a3;border-radius:0 10px 10px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#2471a3;margin-bottom:6px">Etapa 2 · Desde 1995</div>
+        <div style="font-weight:700;font-size:13px;color:#2c2317;margin-bottom:6px">IA basada en datos</div>
+        <div style="font-size:12px;color:#5a4a3a;line-height:1.6"><strong>Idea:</strong> Aprende patrones desde ejemplos<br><strong>Límite:</strong> Dependencia de datos de calidad</div>
+      </div>
+      <div style="background:#eaf7f4;border-left:3px solid #148f77;border-radius:0 10px 10px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#148f77;margin-bottom:6px">Etapa 3 · Desde 2012</div>
+        <div style="font-weight:700;font-size:13px;color:#2c2317;margin-bottom:6px">Deep Learning</div>
+        <div style="font-size:12px;color:#5a4a3a;line-height:1.6"><strong>Idea:</strong> Capas de representación desde datos masivos<br><strong>Límite:</strong> Caja negra y coste computacional</div>
+      </div>
+      <div style="background:#f5ede8;border-left:3px solid #8B4A2A;border-radius:0 10px 10px 0;padding:14px 16px">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#8B4A2A;margin-bottom:6px">Etapa 4 · Últimos años</div>
+        <div style="font-weight:700;font-size:13px;color:#2c2317;margin-bottom:6px">IA Generativa y LLMs</div>
+        <div style="font-size:12px;color:#5a4a3a;line-height:1.6"><strong>Idea:</strong> Genera contenido nuevo, conversa<br><strong>Límite:</strong> Alucinaciones, sesgos, verificación</div>
+      </div>
+    </div>
+
+    <hr class="sep" style="margin-top:36px"/>
+
+    <!-- COMO PIENSA -->
+    <div class="section-header" style="margin-top:48px">
+      <h2>Cómo procesa tu pregunta un LLM</h2>
+      <p>Cada vez que pulsas Enviar, ocurren seis pasos en milisegundos. Explóralos uno a uno.</p>
+    </div>
+
+    <div class="steps-nav" id="stepsNav">
+      <button class="step-btn active" onclick="setStep(0)"><span class="s-icon">✍️</span>Prompt</button>
+      <button class="step-btn" onclick="setStep(1)"><span class="s-icon">🧩</span>Tokenización</button>
+      <button class="step-btn" onclick="setStep(2)"><span class="s-icon">📍</span>Vectores</button>
+      <button class="step-btn" onclick="setStep(3)"><span class="s-icon">🔗</span>Atención</button>
+      <button class="step-btn" onclick="setStep(4)"><span class="s-icon">⚙️</span>Transformer</button>
+      <button class="step-btn" onclick="setStep(5)"><span class="s-icon">💬</span>Respuesta</button>
+    </div>
+
+    <!-- STEP 0 -->
+    <div class="step-content active" id="step-0">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">1</div>
+          <div><div class="viz-title">El Prompt — la pregunta médica</div><div class="viz-sub">Punto de entrada del sistema</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:20px">Todo empieza con texto plano. El modelo no "entiende" el lenguaje como un humano, pero está entrenado para predecir estadísticamente qué texto debería seguir al tuyo.</p>
+          <div class="prompt-example">
+            <div class="prompt-example-label">Prompt de ejemplo</div>
+            <div class="prompt-example-text">"Paciente de 58 años con dolor torácico opresivo de 2 horas y diaforesis. ¿Cuál es el diagnóstico más probable?"</div>
+          </div>
+          <div class="prompt-grid">
+            <div class="prompt-card good">
+              <div class="prompt-card-title">✓ Un buen prompt incluye</div>
+              <ul><li>Datos demográficos del paciente</li><li>Síntomas con tiempo de evolución</li><li>Pregunta clara y específica</li><li>Contexto clínico relevante</li></ul>
+            </div>
+            <div class="prompt-card bad">
+              <div class="prompt-card-title">⚠ Un prompt vago genera</div>
+              <ul><li>Respuestas genéricas y poco útiles</li><li>Mayor riesgo de alucinaciones</li><li>Necesidad de más aclaraciones</li><li>Sesgos no deseados</li></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div class="step-content" id="step-1">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">2</div>
+          <div><div class="viz-title">Tokenización — de palabras a números</div><div class="viz-sub">El modelo no lee letras; lee identificadores numéricos</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:18px">El primer paso es romper el texto en <strong>tokens</strong>: palabras completas, sílabas o caracteres. Cada token recibe un número único. Prueba con texto médico:</p>
+          <div class="tok-input-wrap">
+            <input type="text" id="tokInput" class="tok-input" value="Paciente presenta taquicardia severa" placeholder="Escribe texto médico…"/>
+            <button class="btn-run" onclick="doTokenize()">Tokenizar ▶</button>
+          </div>
+          <div class="token-display" id="tokDisplay"><span class="hint">Los tokens aparecerán aquí…</span></div>
+          <p class="info-note"><strong>¿Por qué importa?</strong> El español y los términos médicos suelen necesitar más tokens por palabra que el inglés. Esto afecta al coste, la velocidad y los límites de contexto del modelo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div class="step-content" id="step-2">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">3</div>
+          <div><div class="viz-title">Vectores — el mapa espacial del significado</div><div class="viz-sub">Cada concepto es un punto en un espacio de cientos de dimensiones</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:16px">Cada token se transforma en un <strong>vector</strong>: una lista de números que representa su significado. Los términos usados en contextos similares aparecen <em>cerca</em> en este espacio matemático. El mapa muestra esto en 2D (en realidad son 768–4096 dimensiones).</p>
+          <canvas id="vecCanvas"></canvas>
+          <p class="info-note" style="text-align:center;margin-top:10px">Pasa el cursor sobre los puntos para explorar los clusters semánticos.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 3 -->
+    <div class="step-content" id="step-3">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">4</div>
+          <div><div class="viz-title">Mecanismo de Atención — el contexto importa</div><div class="viz-sub">La misma palabra puede significar cosas distintas según la frase</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:16px">El <em>attention mechanism</em> (Vaswani et al., 2017) permite ponderar qué otras palabras son más relevantes para entender cada palabra. Pulsa una frase para ver cómo cambia el significado de <strong>"ALTA"</strong>:</p>
+          <div class="attn-btns">
+            <button class="attn-btn active" id="attn-btn-0" onclick="setAttn(0)">Frase 1: alta médica</button>
+            <button class="attn-btn" id="attn-btn-1" onclick="setAttn(1)">Frase 2: fiebre alta</button>
+          </div>
+          <div class="attn-sentence" id="attnSentence"></div>
+          <div style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:12px">
+            Peso de atención → <span id="attnMeaning" style="color:var(--accent)"></span>
+          </div>
+          <div id="attnBars"></div>
+          <div class="attn-note">
+            <strong>Conclusión clave</strong>
+            El modelo no tiene una única representación de "alta" memorizada. La calcula dinámicamente en cada frase, pesando el contexto completo. Por eso entiende que <em>alta</em> significa <em>discharge</em> o <em>high</em> según el entorno.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 4 -->
+    <div class="step-content" id="step-4">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">5</div>
+          <div><div class="viz-title">Transformer — la arquitectura que lo hace posible</div><div class="viz-sub">Pulsa cada bloque para entender su función</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:22px">El Transformer (2017) es la arquitectura de GPT-4, Gemini, Claude… Procesa toda la secuencia a la vez usando capas apiladas. Pulsa cada componente:</p>
+          <div class="tf-grid" id="tfGrid"></div>
+          <div class="tf-explain" id="tfExplain">
+            <strong id="tfExpTitle"></strong>
+            <p id="tfExpBody"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STEP 5 -->
+    <div class="step-content" id="step-5">
+      <div class="viz-box">
+        <div class="viz-header">
+          <div class="viz-num">6</div>
+          <div><div class="viz-title">Generación de Respuesta — de probabilidades a texto</div><div class="viz-sub">El modelo elige el siguiente token más probable, una y otra vez</div></div>
+        </div>
+        <div class="viz-body">
+          <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:18px">El modelo no "sabe" la respuesta. En cada paso elige el token más probable dado todo el contexto previo, lo añade y repite. Es generación <em>autoregresiva</em>.</p>
+          <div class="gen-btns">
+            <button class="btn-run" onclick="startGen('antibiotico')">▶ Respuesta clínica (antibiótico)</button>
+            <button class="btn-run btn-sage" onclick="startGen('iam')">▶ Diagnóstico SCA</button>
+            <button class="btn-run btn-mute" onclick="stopGen()">■ Detener</button>
+          </div>
+          <div class="output-box" id="outputBox"><span style="color:#bbb;font-style:italic;font-size:16px">Pulsa un botón para ver la generación token a token…</span></div>
+          <div class="cycle-wrap">
+            <div class="cycle-label">Ciclo completo del procesamiento</div>
+            <div class="cycle-pills">
+              <span class="cpill light">Prompt</span><span>→</span>
+              <span class="cpill light">Tokens</span><span>→</span>
+              <span class="cpill light">Vectores</span><span>→</span>
+              <span class="cpill light">Atención</span><span>→</span>
+              <span class="cpill light">Transformer</span><span>→</span>
+              <span class="cpill dark">Respuesta</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /shell -->
+</div><!-- /page-piensa -->
+
+
+<!-- ═══════════════════════════════════════════════
+     PÁGINA 2 — RIESGOS
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="page-riesgos">
+
+  <div class="hero">
+    <p class="eyebrow">02 · Uso Responsable</p>
+    <h1 class="hero-title">Riesgos y limitaciones de los LLM</h1>
+    <p class="hero-lead">Lo que todo clínico debe saber antes de integrar un LLM en su práctica. Pulsa cada riesgo para explorar el detalle.</p>
+  </div>
+
+  <div class="shell">
+    <div class="filter-btns">
+      <button class="filter-btn active" onclick="filterRisk('all',this)">Todos</button>
+      <button class="filter-btn" onclick="filterRisk('tech',this)">Tecnológicos</button>
+      <button class="filter-btn" onclick="filterRisk('cog',this)">Cognitivos</button>
+      <button class="filter-btn" onclick="filterRisk('sys',this)">Sistémicos</button>
+    </div>
+
+    <div class="risk-grid" id="riskGrid"></div>
+    <div class="risk-detail fade-up" id="riskDetail"></div>
+
+    <div class="checklist-box">
+      <div class="cl-eyebrow">Checklist · Antes de usar una respuesta de IA</div>
+      <h3>Revisión Crítica</h3>
+      <div id="checklistItems"></div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="page-footer">
+  <span>EduMed · UVa — Unidad de Educación Médica · Facultad de Medicina</span>
+  <span>Material docente · IA en Medicina · 2025</span>
+</footer>
+
+
+<script>
+/* ══════════════════════════════════════════════════
+   DATA
+══════════════════════════════════════════════════ */
+const TL = [
+  { year:"1943", eraClass:"era-1", name:"Neurona artificial", era:"Era Simbólica (1943–1956)",
+    title:"El primer modelo de neurona artificial",
+    body:"McCulloch y Pitts propusieron el primer modelo matemático de una neurona biológica. Una unidad que recibe señales, las suma y produce una salida. Es el ladrillo fundamental de toda la IA moderna.",
+    body2:"En medicina, el concepto de 'regla' computacional llevaría después a los primeros sistemas expertos: si el paciente tiene fiebre Y tos Y infiltrado pulmonar → neumonía.",
+    tags:["McCulloch & Pitts","Neurona lógica","Fundamentos"],
+    example:"Como un árbol de decisión en papel: si A y B entonces C. Fiable, pero rígido. No aprende de casos nuevos." },
+  { year:"1950", eraClass:"era-1", name:"Test de Turing", era:"Era Simbólica",
+    title:"¿Puede una máquina pensar?",
+    body:"Alan Turing propuso la 'prueba de imitación': si un humano no puede distinguir en una conversación escrita si habla con una máquina o con una persona, la máquina puede considerarse inteligente. Un estándar que sigue siendo relevante.",
+    body2:"Para la medicina, la pregunta de Turing resuena hoy con fuerza: ¿puede un LLM responder como un clínico experto? ¿Debería importarnos si 'entiende' o solo si responde bien?",
+    tags:["Alan Turing","Imitation Game","Inteligencia","Filosofía IA"],
+    example:"El test de Turing no mide comprensión interna, sino comportamiento externo. Muchos LLMs modernos lo superan en conversación general, pero fracasan ante razonamiento médico profundo." },
+  { year:"1956", eraClass:"era-1", name:"Nace la 'IA'", era:"Era Simbólica",
+    title:"Conferencia de Dartmouth",
+    body:"John McCarthy acuñó el término 'Artificial Intelligence'. La promesa: máquinas que razonasen como humanos usando lógica formal y reglas explícitas. También nació el lenguaje Lisp, primer lenguaje diseñado para IA, basado en recursividad y procesamiento de listas.",
+    body2:"El problema era que mucho conocimiento médico es tácito, contextual e imposible de enumerar con reglas.",
+    tags:["Dartmouth","McCarthy","Lisp","Razonamiento simbólico"],
+    example:"Un internista sabe que 'el paciente no tiene buen aspecto' sin poder reducirlo a una regla. La IA simbólica no podía capturar ese conocimiento implícito." },
+  { year:"1966", eraClass:"era-1", name:"ELIZA", era:"Era Simbólica",
+    title:"El primer chatbot conversacional",
+    body:"Joseph Weizenbaum (MIT) creó ELIZA, diseñado para simular a un psicoterapeuta usando procesamiento de lenguaje natural rudimentario. Sus respuestas eran patrones de sustitución, pero muchos usuarios creían que realmente les entendía.",
+    body2:"ELIZA anticipó un fenómeno que vemos hoy con los LLMs: la tendencia humana a atribuir comprensión y empatía a sistemas que simplemente devuelven texto plausible.",
+    tags:["Weizenbaum","MIT","NLP","Efecto ELIZA"],
+    example:"Pacientes llegaron a confiar sus problemas personales a ELIZA. Weizenbaum quedó tan perturbado por esta reacción que escribió un libro advirtiendo sobre los límites de la IA." },
+  { year:"1972", eraClass:"era-1", name:"MYCIN", era:"Era Simbólica",
+    title:"El primer sistema experto médico",
+    body:"MYCIN (Stanford) diagnosticaba infecciones bacterianas y recomendaba antibióticos usando ~600 reglas IF-THEN codificadas por expertos. En pruebas controladas superó a médicos residentes.",
+    body2:"Nunca se implantó clínicamente: requería mainframes, era incompatible con los sistemas hospitalarios y los médicos no confiaban en una 'caja negra'. Una lección que sigue vigente.",
+    tags:["Stanford","Sistema experto","Antibióticos","Prolog"],
+    example:"La excelencia técnica no basta. La confianza del clínico y la integración en el flujo asistencial son condiciones necesarias para que una herramienta de IA se use realmente." },
+  { year:"1980s", eraClass:"era-1", name:"Auge y caída", era:"Era Simbólica — Crisis",
+    title:"El auge de los Sistemas Expertos y el primer Invierno de la IA",
+    body:"Hubo un gran auge de sistemas expertos diseñados para dar consejos en contextos específicos de negocio y medicina. Pero el entusiasmo se enfrió cuando demostraron ser demasiado rígidos, costosos de mantener y difíciles de adaptar a conocimiento nuevo.",
+    body2:"El lenguaje Prolog, basado en 'programación en lógica', intentó superar estas limitaciones con inferencias sobre reglas en lugar de recursividad, pero los problemas de fondo persistían.",
+    tags:["Sistemas expertos","Prolog","Invierno IA","Rigidez"],
+    example:"Un sistema experto de cardiología de 1985 no podía actualizarse cuando cambiaban las guías clínicas sin reescribir cientos de reglas a mano. Los LLMs modernos se reentrenan con nuevos datos." },
+  { year:"1997", eraClass:"era-2", name:"Deep Blue", era:"Era del Machine Learning",
+    title:"Una máquina vence al campeón mundial de ajedrez",
+    body:"Deep Blue (IBM) derrotó a Garri Kaspárov, el mejor jugador del mundo. Evaluaba 200 millones de posiciones por segundo. Fue un hito que hasta entonces se consideraba imposible para una máquina dada la creatividad y estrategia que requiere el ajedrez.",
+    body2:"En medicina, los modelos de Machine Learning empezaban a predecir riesgo de reingreso, mortalidad postquirúrgica y complicaciones cardiovasculares con mayor precisión que las escalas clásicas.",
+    tags:["IBM","Deep Blue","Kaspárov","ML clínico"],
+    example:"Ganar al ajedrez requería cálculo bruto, no comprensión. La medicina requiere algo más difícil: razonar con datos incompletos, incertidumbre y valores del paciente." },
+  { year:"2011", eraClass:"era-2", name:"IBM Watson", era:"Era del Machine Learning",
+    title:"Watson gana Jeopardy! y promete transformar la medicina",
+    body:"IBM Watson venció a los dos mejores campeones históricos de Jeopardy!, demostrando una capacidad sin precedentes para entender juegos de palabras, ambigüedades y referencias culturales del lenguaje humano en tiempo real.",
+    body2:"IBM anunció que Watson transformaría la oncología. La realidad fue más modesta: los proyectos con el MD Anderson Cancer Center y otros hospitales se cancelaron tras años de trabajo y cientos de millones de dólares. Una advertencia sobre el hype de la IA en medicina.",
+    tags:["IBM Watson","Jeopardy","Oncología","Lección del hype"],
+    example:"Watson en oncología recomendaba tratamientos que los oncólogos consideraban incorrectos o inapropiados para su contexto. Los datos de entrenamiento eran de un solo hospital americano." },
+  { year:"2012", eraClass:"era-3", name:"AlexNet", era:"Era del Deep Learning",
+    title:"Las redes profundas conquistan la visión artificial",
+    body:"AlexNet ganó ImageNet 2012 con un margen de error 10 puntos inferior al segundo. Las CNN aprendían patrones visuales directamente de píxeles, sin que nadie programase qué es un borde o una textura.",
+    body2:"En diagnóstico por imagen el impacto fue inmediato: retinografías, mamografías y TAC analizados con sensibilidad comparable a radiólogos expertos.",
+    tags:["CNN","Visión artificial","GPU","Imagen médica"],
+    example:"Google Health (2019): una CNN detectó cáncer de mama con menor tasa de falsos negativos que radiólogos en el estudio de validación de Nature." },
+  { year:"2017", eraClass:"era-4", name:"Transformer", era:"Era Generativa — El punto de inflexión",
+    title:"«Attention Is All You Need»",
+    body:"Vaswani et al. (Google) publicaron la arquitectura Transformer. El mecanismo de atención permite relacionar cualquier parte del texto con cualquier otra simultáneamente, sin procesar secuencialmente. Escalable. Paralelizable. Revolucionario.",
+    body2:"GPT-1 (2018), BERT (2018), GPT-3 (2020)… La escala se disparó y capacidades emergentes como el razonamiento clínico aparecieron sin ser programadas.",
+    tags:["Google Brain","Self-attention","Escalado","Capacidades emergentes"],
+    example:"Un Transformer puede resumir un historial de 40 páginas, estructurar notas SOAP, traducir jerga entre especialidades y responder preguntas sobre guías clínicas en lenguaje natural." },
+  { year:"2022", eraClass:"era-4", name:"IA Generativa", era:"Era Generativa — Adopción masiva",
+    title:"ChatGPT y el punto de inflexión masivo",
+    body:"ChatGPT alcanzó 100 millones de usuarios en dos meses, el producto de mayor crecimiento de la historia. Los LLMs pasaron de herramientas de investigadores a estar en el teléfono de cada médico de guardia. Marcó el auge de los modelos fundacionales capaces de generar texto, imágenes, código y resúmenes.",
+    body2:"La pregunta dejó de ser '¿funcionará la IA en medicina?' para ser '¿cómo la usamos de forma segura y crítica?'",
+    tags:["ChatGPT","OpenAI","Modelos fundacionales","IA generativa"],
+    example:"Médicos que usan ChatGPT para redactar informes de alta o buscar interacciones farmacológicas. Sin formación, sin protocolo, sin supervisión. El reto es la alfabetización crítica, no el acceso." },
+  { year:"2025", eraClass:"era-4", name:"IA Agéntica", era:"Presente — El año de los agentes",
+    title:"IA que actúa, no solo responde",
+    body:"Se considera el 'año de los agentes': sistemas de IA que tienen autonomía para planificar, usar herramientas externas (búsqueda, calendarios, historiales), tomar decisiones encadenadas y cumplir objetivos complejos sin intervención humana en cada paso.",
+    body2:"En medicina: agentes que monitorizan pacientes, redactan informes, coordinan derivaciones y alertan sobre interacciones. El debate ético sobre supervisión, responsabilidad y autonomía se vuelve urgente.",
+    tags:["Agentes IA","Autonomía","Herramientas","Med-PaLM 2","RAG"],
+    example:"Un agente médico podría revisar el historial, contrastar con guías actualizadas, redactar la nota clínica y proponer el plan de seguimiento. ¿Quién firma? ¿Quién es responsable?" },
+  { year:"Futuro", eraClass:"era-4", name:"AGI y ASI", era:"Horizonte — Lo que viene",
+    title:"Inteligencia General y Superinteligencia Artificial",
+    body:"El siguiente gran paso teórico es la AGI (Artificial General Intelligence): una IA que iguale o supere la inteligencia humana en cualquier dominio, no solo en tareas específicas. Más allá estaría la ASI (Artificial Superintelligence), que excedería ampliamente las capacidades humanas.",
+    body2:"Nadie sabe cuándo ni si llegará. Lo que sí sabemos: las decisiones que tomemos ahora sobre transparencia, equidad, supervisión clínica y formación de profesionales de la salud moldearán cómo esa IA, si llega, nos afectará.",
+    tags:["AGI","ASI","Futuro","Ética","Regulación"],
+    example:"La pregunta no es solo '¿cuándo llegará la AGI?' sino '¿qué sistemas de valores, supervisión y regulación tenemos que construir antes de que llegue?' Como docentes de medicina, formáis a quienes tendrán que responderla." },
+];
+
+const ATTN = [
+  { words:["El","médico","procedió","a","dar","el","ALTA","al","paciente","recuperado"], focus:6,
+    meaning:'"ALTA" = discharge (alta hospitalaria)',
+    weights:[0.02,0.65,0.05,0.01,0.03,0.01,1,0.01,0.08,0.30] },
+  { words:["El","paciente","ingresó","con","fiebre","ALTA","persistente"], focus:5,
+    meaning:'"ALTA" = high (temperatura elevada)',
+    weights:[0.01,0.08,0.05,0.01,0.70,1,0.28] },
+];
+
+const TF_NODES = [
+  { icon:"📥", label:"Input Embedding", sub:"Texto → Vectores",
+    desc:"Convierte cada token en un vector de alta dimensión (512–4096 números). Añade información de posición para que el modelo sepa el orden de las palabras, algo que la atención por sí sola no preserva." },
+  { icon:"🔍", label:"Multi-Head Attention", sub:"¿Qué importa aquí?",
+    desc:"El corazón del Transformer. Cada 'cabeza' aprende a relacionar tokens desde una perspectiva diferente: gramática, correferencias, semántica. Se ejecutan en paralelo y sus resultados se fusionan." },
+  { icon:"⚡", label:"Feed-Forward", sub:"Transformación no lineal",
+    desc:"Después de la atención, cada token pasa por una red densa. Es donde el modelo parece 'almacenar' conocimiento factual, como las asociaciones entre síntomas y diagnósticos aprendidas del texto médico." },
+  { icon:"🔁", label:"×N Capas", sub:"Apiladas en profundidad",
+    desc:"GPT-3 tiene 96 capas. Las tempranas capturan patrones sintácticos; las profundas, razonamiento semántico complejo. La profundidad es lo que permite matices como la ambigüedad diagnóstica." },
+  { icon:"📊", label:"Softmax", sub:"Distribución de probabilidad",
+    desc:"La última capa proyecta los vectores sobre el vocabulario completo (~50.000 tokens) y aplica softmax para convertirlos en probabilidades. El modelo elige el token más probable." },
+  { icon:"📤", label:"Output Token", sub:"El siguiente token",
+    desc:"El token elegido se añade al contexto y todo el proceso se repite. Una respuesta de 200 palabras implica ~250 pasadas completas por el Transformer." },
+];
+
+const RISKS = [
+  { id:"r1", cat:"tech", icon:"🎭", type:"Tecnológico", title:"Alucinaciones",
+    summary:"El modelo inventa referencias y dosis con apariencia de coherencia académica.",
+    detail:"Los LLMs predicen el siguiente token estadísticamente probable, no la verdad. Cuando no tienen datos suficientes, inventan con la misma fluidez que cuando saben. El peligro: las alucinaciones son difíciles de detectar sin conocimiento experto.",
+    example:'"Según Harison et al. (NEJM 2023), el tratamiento es administrar 500 mg de metotrexato IV diario." → Referencia inexistente. Dosis letal inventada. Sugerida con total seguridad clínica.' },
+  { id:"r2", cat:"sys", icon:"⚖️", type:"Sistémico", title:"Sesgos algorítmicos",
+    summary:"Desigualdades en datos de entrenamiento generan asimetrías diagnósticas según demografía.",
+    detail:"Los modelos aprenden de datos históricos que reflejan desigualdades estructurales. Ante los mismos síntomas, pueden generar diagnósticos diferenciales más exhaustivos para perfiles demográficos mayoritarios en sus datos de entrenamiento.",
+    example:"Mismos síntomas clínicos:\n• Paciente A (perfil mayoritario) → Diagnóstico diferencial exhaustivo\n• Paciente B (minoría / bajo nivel socioeconómico) → Diagnóstico superficial o descartado" },
+  { id:"r3", cat:"tech", icon:"📅", type:"Tecnológico", title:"Conocimiento obsoleto",
+    summary:"La fecha de corte de entrenamiento deja fuera guías clínicas recientes y nuevos fármacos.",
+    detail:"Todo LLM tiene un knowledge cutoff. En medicina, donde las guías se actualizan, los fármacos se aprueban o retiran y emergen epidemias, esta limitación es crítica. Las soluciones como RAG existen pero no están disponibles en todos los entornos.",
+    example:"Un modelo entrenado hasta 2023 desconoce guías de 2024-2025, alertas recientes de la AEMPS, o nuevos fármacos aprobados por la EMA." },
+  { id:"r4", cat:"cog", icon:"🔒", type:"Cognitivo", title:"Diagnóstico prematuro",
+    summary:"El modelo prefiere forzar un diagnóstico antes que admitir incertidumbre o pedir más datos.",
+    detail:"A diferencia de un clínico experto que dice 'necesito más información', el LLM tiende a dar respuestas definitivas. El framing del prompt importa: la misma clínica formulada de distinta manera puede llevar a diagnósticos completamente diferentes.",
+    example:"Encuadre A (síntomas respiratorios) → Infección pulmonar\nEncuadre B (síntomas sistémicos) → Enfermedad autoinmune\nMisma clínica. Distinto prompt. Distinto diagnóstico." },
+  { id:"r5", cat:"cog", icon:"🤝", type:"Cognitivo", title:"Sesgo de automatización",
+    summary:"El clínico apaga su juicio crítico y otorga peso desproporcionado a la propuesta de la IA.",
+    detail:"Cuando un sistema automatizado responde, los humanos reducimos la vigilancia crítica (automation bias). En medicina puede significar ignorar datos clínicos discordantes porque 'la IA no lo consideró relevante'. El razonamiento propio queda desplazado.",
+    example:"Flujo correcto: Datos → Razonamiento propio → IA como segunda opinión → Decisión\nFlujo de riesgo: Datos → IA → Decisión directa (filtro crítico omitido)" },
+  { id:"r6", cat:"cog", icon:"🪞", type:"Cognitivo", title:"Cámara de eco diagnóstica",
+    summary:"Si introduces una hipótesis preconcebida, el modelo la valida sin cuestionarla.",
+    detail:"Los LLMs están entrenados para ser útiles y amigables, lo que los hace susceptibles al sesgo de aquiescencia. Si el clínico ya tiene una hipótesis y la introduce en el prompt, el modelo tenderá a validarla en lugar de generar fricción diagnóstica.",
+    example:"1. Médico introduce hipótesis sesgada\n2. Modelo la valida sin cuestionar\n3. Médico siente falsa seguridad y cierra el caso\n→ El sesgo se consolida en cada iteración" },
+  { id:"r7", cat:"tech", icon:"🌊", type:"Tecnológico", title:"Ilusión de fluidez",
+    summary:"Explicaciones perfectamente articuladas que carecen de comprensión fisiopatológica real.",
+    detail:"El mayor riesgo no es que el LLM responda incoherentemente —eso sería fácil de detectar. El riesgo es que responda con fluidez académica perfecta sin comprensión causal real. La 'fluency mask' oculta la ausencia de comprensión.",
+    example:'Visible: "El paciente presenta síntomas compatibles con... La etiología probable es... El mecanismo subyacente involucra..."\nReal: Asociaciones estadísticas sin fisiopatología verdadera. Tono de seguridad: 96% | Soporte de evidencia real: 15%' },
+  { id:"r8", cat:"sys", icon:"🔐", type:"Sistémico", title:"Privacidad y RGPD",
+    summary:"Introducir datos identificables en modelos comerciales compromete la normativa de protección de datos.",
+    detail:"Cuando un clínico introduce datos del paciente en un LLM comercial, esa información puede usarse para reentrenamiento o estar almacenada fuera de la UE. Los datos de salud son categoría especial bajo el RGPD y requieren protección reforzada.",
+    example:"Regla práctica: antes de copiar cualquier texto en un LLM, pregúntate: ¿podría alguien identificar a este paciente? Si la respuesta es sí —o no estás seguro— anonimiza antes de enviar." },
+];
+
+const CHECKLIST = [
+  "¿El modelo ha inventado alguna referencia bibliográfica o dato clínico?",
+  "¿Está reproduciendo un sesgo demográfico o de género?",
+  "¿La información puede estar desactualizada respecto a guías recientes?",
+  "¿Está ignorando algún dato excluyente que tú sí conoces del paciente?",
+  "¿La respuesta cambiaría si reformulases la pregunta de otra manera?",
+  "¿Has verificado las dosis y pautas farmacológicas en una fuente primaria?",
+  "¿Has introducido datos identificativos del paciente en un modelo comercial?",
+];
+
+const TOKEN_COLORS = [
+  {bg:"#fde8d8",c:"#8b3a1a"},{bg:"#d8f0e8",c:"#1a5c3a"},{bg:"#d8e8ff",c:"#1a2e6b"},
+  {bg:"#f0d8f0",c:"#5c1a5c"},{bg:"#fff3c8",c:"#6b4a00"},{bg:"#d8f4f8",c:"#1a5a60"},
+];
+const TOKEN_MAP = {
+  "Paciente":["Pa","cien","te"],"presenta":["pre","sen","ta"],
+  "taquicardia":["taqui","car","dia"],"severa":["se","ve","ra"],
+  "dolor":["do","lor"],"torácico":["to","rá","ci","co"],
+  "fiebre":["fie","bre"],"diagnóstico":["diag","nós","ti","co"],
+  "tratamiento":["tra","ta","mien","to"],"antibiótico":["an","ti","bió","ti","co"],
+  "infección":["in","fec","ción"],"cardíaco":["car","día","co"],
+  "pulmonar":["pul","mo","nar"],"sistólica":["sis","tó","li","ca"],
+};
+
+const VEC_CLUSTERS = [
+  { label:"❤️ Cardiología", color:"#c0392b",
+    words:["Taquicardia","Fibrilación","Arritmia","Sistólica"],
+    pts:[[0.15,0.26],[0.22,0.34],[0.11,0.42],[0.28,0.28]] },
+  { label:"🦴 Traumatología", color:"#2980b9",
+    words:["Fractura","Fémur","Escayola","Ortopedia"],
+    pts:[[0.72,0.22],[0.78,0.30],[0.65,0.32],[0.74,0.40]] },
+  { label:"🦠 Infecciosas", color:"#27ae60",
+    words:["Antibiótico","Bacterias","Infección","Sepsis"],
+    pts:[[0.45,0.65],[0.52,0.72],[0.40,0.70],[0.56,0.62]] },
+  { label:"💊 Farmacología", color:"#d35400",
+    words:["Dosis","Pauta","Fármaco"],
+    pts:[[0.78,0.58],[0.84,0.65],[0.72,0.64]] },
+  { label:"🔬 Diagnóstico", color:"#8e44ad",
+    words:["Diagnóstico","Síntomas","Anamnesis"],
+    pts:[[0.50,0.18],[0.42,0.26],[0.56,0.23]] },
+];
+
+const GEN_SCRIPTS = {
+  antibiotico:["Ante ","la ","sospecha ","de infección ","bacteriana, ","se recomienda ","iniciar ","antibioterapia ","empírica ","previa extracción ","de hemocultivos."],
+  iam:["Los ","hallazgos ","descritos ","—dolor torácico ","opresivo con ","diaforesis— ","son altamente ","sugestivos de ","síndrome ","coronario agudo ","(SCA). ","Solicite ECG ","de 12 derivaciones ","y troponina urgente."],
+};
+
+/* ══════════════════════════════════════════════════
+   NAV
+══════════════════════════════════════════════════ */
+function adjustNavTop() {
+  const bar = document.querySelector('.edumed-bar');
+  const nav = document.querySelector('.main-nav');
+  if (bar && nav) nav.style.top = bar.offsetHeight + 'px';
+}
+window.addEventListener('load', adjustNavTop);
+window.addEventListener('resize', adjustNavTop);
+
+function switchPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  document.getElementById('tab-' + id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* ══════════════════════════════════════════════════
+   TIMELINE
+══════════════════════════════════════════════════ */
+let activeTl = 0;
+
+function buildTimeline() {
+  const row = document.getElementById('tlRow');
+  TL.forEach((item, i) => {
+    const el = document.createElement('div');
+    el.className = 'tl-item' + (i===0?' active':'');
+    el.dataset.i = i;
+    el.innerHTML = `<div class="tl-dot ${item.eraClass||''}"></div><div class="tl-year" style="color:var(--dot-color,var(--accent))">${item.year}</div><div class="tl-name">${item.name}</div>`;
+    el.addEventListener('click', () => openTl(i));
+    row.appendChild(el);
+  });
+
+  // drag-scroll
+  const sc = document.getElementById('tlScroller');
+  let down=false,sx=0,sl=0;
+  sc.addEventListener('mousedown', e=>{down=true;sx=e.pageX-sc.offsetLeft;sl=sc.scrollLeft});
+  sc.addEventListener('mouseleave',()=>down=false);
+  sc.addEventListener('mouseup',()=>down=false);
+  sc.addEventListener('mousemove',e=>{
+    if(!down)return;e.preventDefault();
+    sc.scrollLeft=sl-(e.pageX-sc.offsetLeft-sx)*1.5;
+  });
+
+  openTl(0);
+}
+
+function openTl(i) {
+  activeTl = i;
+  document.querySelectorAll('.tl-item').forEach((el,j) => el.classList.toggle('active',j===i));
+  const d = TL[i];
+  const panel = document.getElementById('tlPanel');
+  panel.innerHTML = `
+    <div class="tl-panel-era">${d.era}</div>
+    <h3>${d.year} — ${d.title}</h3>
+    <p>${d.body}</p>
+    <p>${d.body2}</p>
+    <div class="tl-example"><strong>Analogía / lección clave</strong>${d.example}</div>
+    <div class="tl-tags">${d.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+  `;
+  panel.classList.add('open');
+  panel.style.animation='none';
+  requestAnimationFrame(()=>{ panel.style.animation=''; panel.classList.add('fade-up'); });
+}
+
+/* ══════════════════════════════════════════════════
+   STEPS
+══════════════════════════════════════════════════ */
+let currentStep = 0;
+
+function setStep(n) {
+  document.querySelectorAll('.step-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.step-content').forEach((c,i)=>c.classList.toggle('active',i===n));
+  currentStep = n;
+  if(n===2) initVecCanvas();
+  if(n===3) renderAttn(0);
+  if(n===4) buildTfGrid();
+}
+
+/* ══════════════════════════════════════════════════
+   TOKENIZACIÓN
+══════════════════════════════════════════════════ */
+function doTokenize() {
+  const words = document.getElementById('tokInput').value.trim().split(/\s+/);
+  const display = document.getElementById('tokDisplay');
+  display.innerHTML = '';
+  let id = 100;
+  let ci = 0;
+  words.forEach(w => {
+    const parts = TOKEN_MAP[w] || splitWord(w);
+    parts.forEach(p => {
+      const {bg,c} = TOKEN_COLORS[ci % TOKEN_COLORS.length];
+      const pill = document.createElement('div');
+      pill.className = 'tok-pill';
+      pill.style.cssText = `background:${bg};color:${c}`;
+      pill.innerHTML = `<span class="tok-t">[${p}]</span><span class="tok-n">#${id}</span>`;
+      display.appendChild(pill);
+      id += Math.floor(Math.random()*50)+10;
+      ci++;
+    });
+  });
+}
+
+function splitWord(w) {
+  const res=[];
+  for(let i=0;i<w.length;i+=3) res.push(w.slice(i,i+3));
+  return res.filter(Boolean);
+}
+
+/* ══════════════════════════════════════════════════
+   VECTOR CANVAS
+══════════════════════════════════════════════════ */
+let vecHover = null;
+let vecCanvas, vecCtx;
+
+function initVecCanvas() {
+  vecCanvas = document.getElementById('vecCanvas');
+  if(!vecCanvas) return;
+  vecCtx = vecCanvas.getContext('2d');
+  resizeVec();
+  drawVec();
+  vecCanvas.addEventListener('mousemove', onVecMove);
+  vecCanvas.addEventListener('mouseleave', ()=>{vecHover=null;drawVec();});
+  window.addEventListener('resize', ()=>{resizeVec();drawVec();});
+}
+
+function resizeVec() {
+  const W = vecCanvas.parentElement.clientWidth - 56;
+  const dpr = window.devicePixelRatio||1;
+  vecCanvas.width = W*dpr;
+  vecCanvas.height = 300*dpr;
+  vecCanvas.style.width = W+'px';
+  vecCanvas.style.height = '300px';
+  vecCtx.scale(dpr,dpr);
+}
+
+function onVecMove(e) {
+  const r = vecCanvas.getBoundingClientRect();
+  const W = parseFloat(vecCanvas.style.width), H = parseFloat(vecCanvas.style.height);
+  const mx=e.clientX-r.left, my=e.clientY-r.top;
+  let found=null;
+  outer: for(const cl of VEC_CLUSTERS) {
+    for(let i=0;i<cl.words.length;i++) {
+      const [px,py]=cl.pts[i];
+      const dx=px*W-mx, dy=py*H-my;
+      if(Math.sqrt(dx*dx+dy*dy)<13){found={word:cl.words[i],color:cl.color};break outer;}
+    }
+  }
+  if((found?.word)!==(vecHover?.word)){vecHover=found;drawVec();}
+}
+
+function drawVec() {
+  if(!vecCtx) return;
+  const W = parseFloat(vecCanvas.style.width), H = parseFloat(vecCanvas.style.height);
+  vecCtx.clearRect(0,0,W,H);
+  vecCtx.fillStyle='#f0ebe3'; vecCtx.fillRect(0,0,W,H);
+
+  // grid
+  vecCtx.strokeStyle='rgba(0,0,0,.06)'; vecCtx.lineWidth=1;
+  for(let x=0;x<W;x+=40){vecCtx.beginPath();vecCtx.moveTo(x,0);vecCtx.lineTo(x,H);vecCtx.stroke();}
+  for(let y=0;y<H;y+=40){vecCtx.beginPath();vecCtx.moveTo(0,y);vecCtx.lineTo(W,y);vecCtx.stroke();}
+
+  VEC_CLUSTERS.forEach(cl => {
+    // halo
+    cl.pts.forEach(([px,py])=>{
+      const cx=px*W,cy=py*H;
+      const g=vecCtx.createRadialGradient(cx,cy,0,cx,cy,55);
+      g.addColorStop(0,cl.color+'30'); g.addColorStop(1,'transparent');
+      vecCtx.beginPath();vecCtx.arc(cx,cy,55,0,Math.PI*2);
+      vecCtx.fillStyle=g;vecCtx.fill();
+    });
+    // label
+    const ax=cl.pts.reduce((s,p)=>s+p[0],0)/cl.pts.length;
+    const miny=Math.min(...cl.pts.map(p=>p[1]));
+    vecCtx.font='700 12px DM Sans,sans-serif';
+    vecCtx.fillStyle=cl.color+'bb';
+    vecCtx.fillText(cl.label, ax*W-38, miny*H-14);
+    // dots
+    cl.words.forEach((w,i)=>{
+      const [px,py]=cl.pts[i]; const cx=px*W,cy=py*H;
+      const hov=vecHover?.word===w;
+      vecCtx.beginPath();vecCtx.arc(cx,cy,hov?9:5,0,Math.PI*2);
+      vecCtx.fillStyle=cl.color+(hov?'ff':'cc');vecCtx.fill();
+      vecCtx.strokeStyle='white';vecCtx.lineWidth=1.5;vecCtx.stroke();
+      if(hov){
+        vecCtx.font='700 13px DM Sans,sans-serif';
+        const tw=vecCtx.measureText(w).width;
+        vecCtx.fillStyle='white';
+        vecCtx.beginPath();vecCtx.roundRect(cx+10,cy-17,tw+14,22,4);vecCtx.fill();
+        vecCtx.fillStyle=cl.color;
+        vecCtx.fillText(w,cx+16,cy-1);
+      } else {
+        vecCtx.font='500 11px DM Sans,sans-serif';
+        vecCtx.fillStyle=cl.color+'aa';
+        vecCtx.fillText(w,cx+8,cy+4);
+      }
+    });
+  });
+
+  vecCtx.font='11px JetBrains Mono,monospace';
+  vecCtx.fillStyle='rgba(0,0,0,.2)';
+  vecCtx.fillText('Dimensión 1 →',W-115,H-6);
+  vecCtx.save();vecCtx.translate(14,H/2);vecCtx.rotate(-Math.PI/2);
+  vecCtx.fillText('Dimensión 2 →',0,0);vecCtx.restore();
+}
+
+/* ══════════════════════════════════════════════════
+   ATENCIÓN
+══════════════════════════════════════════════════ */
+let currentAttn = 0;
+
+function setAttn(n) {
+  currentAttn = n;
+  document.querySelectorAll('.attn-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  renderAttn(n);
+}
+
+function renderAttn(n) {
+  const s = ATTN[n];
+  // sentence
+  const sentEl = document.getElementById('attnSentence');
+  sentEl.innerHTML = s.words.map((w,i)=>
+    `<span class="attn-w${i===s.focus?' focus':''}">${w}</span> `
+  ).join('');
+  // meaning
+  document.getElementById('attnMeaning').textContent = s.meaning;
+  // bars
+  const barsEl = document.getElementById('attnBars');
+  const maxW = Math.max(...s.weights.filter((_,i)=>i!==s.focus));
+  barsEl.innerHTML = s.words
+    .map((w,i)=>({w,wt:s.weights[i],i}))
+    .filter(({i})=>i!==s.focus)
+    .sort((a,b)=>b.wt-a.wt)
+    .map(({w,wt})=>`
+      <div class="attn-bar-row">
+        <div class="attn-bar-label">${w}</div>
+        <div class="attn-bar-bg"><div class="attn-bar-fill" style="width:${(wt/maxW*100).toFixed(0)}%"></div></div>
+        <div class="attn-bar-pct">${Math.round(wt*100)}%</div>
+      </div>
+    `).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   TRANSFORMER
+══════════════════════════════════════════════════ */
+let activeTfNode = null;
+
+function buildTfGrid() {
+  const grid = document.getElementById('tfGrid');
+  if(grid.children.length) return;
+  TF_NODES.forEach((n,i)=>{
+    const el = document.createElement('div');
+    el.className='tf-node';
+    el.innerHTML=`<div class="tf-icon">${n.icon}</div><div class="tf-label">${n.label}</div><div class="tf-sub">${n.sub}</div>`;
+    el.addEventListener('click',()=>showTfNode(i,el));
+    grid.appendChild(el);
+  });
+}
+
+function showTfNode(i, el) {
+  document.querySelectorAll('.tf-node').forEach(n=>n.classList.remove('active'));
+  const exp = document.getElementById('tfExplain');
+  if(activeTfNode===i){ activeTfNode=null; exp.classList.remove('open'); return; }
+  activeTfNode=i;
+  el.classList.add('active');
+  document.getElementById('tfExpTitle').textContent = TF_NODES[i].label;
+  document.getElementById('tfExpBody').textContent = TF_NODES[i].desc;
+  exp.classList.add('open');
+}
+
+/* ══════════════════════════════════════════════════
+   GENERACIÓN
+══════════════════════════════════════════════════ */
+let genTimer = null;
+let genRunning = false;
+
+function startGen(key) {
+  stopGen();
+  const script = GEN_SCRIPTS[key];
+  const box = document.getElementById('outputBox');
+  box.innerHTML = '<span class="cursor"></span>';
+  let i=0; genRunning=true;
+  genTimer = setInterval(()=>{
+    if(!genRunning||i>=script.length){clearInterval(genTimer);genRunning=false;
+      box.querySelector('.cursor')?.remove(); return;}
+    const cur = box.querySelector('.cursor');
+    if(cur) cur.insertAdjacentText('beforebegin', script[i]);
+    else box.insertAdjacentText('beforeend', script[i]);
+    i++;
+  },400);
+}
+
+function stopGen(){
+  clearInterval(genTimer); genRunning=false;
+  const cur = document.getElementById('outputBox').querySelector('.cursor');
+  if(cur) cur.remove();
+}
+
+/* ══════════════════════════════════════════════════
+   RISKS
+══════════════════════════════════════════════════ */
+let currentFilter = 'all';
+let openRiskId = null;
+
+function filterRisk(cat, btn) {
+  currentFilter = cat;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  openRiskId = null;
+  renderRisks();
+}
+
+function renderRisks() {
+  const grid = document.getElementById('riskGrid');
+  const detail = document.getElementById('riskDetail');
+  const filtered = RISKS.filter(r=>currentFilter==='all'||r.cat===currentFilter);
+  grid.innerHTML = filtered.map(r=>`
+    <div class="risk-card${openRiskId===r.id?' active':''}" onclick="openRisk('${r.id}')">
+      <div class="risk-icon">${r.icon}</div>
+      <div class="risk-type">${r.type}</div>
+      <h3>${r.title}</h3>
+      <p>${r.summary}</p>
+    </div>
+  `).join('');
+
+  if(openRiskId) {
+    const r = RISKS.find(x=>x.id===openRiskId);
+    if(r) {
+      detail.innerHTML=`
+        <div class="rd-type">${r.type}</div>
+        <h2>${r.icon} ${r.title}</h2>
+        <p class="rd-body">${r.detail}</p>
+        <div class="example-box">
+          <strong>Ejemplo ilustrativo</strong>
+          <p>${r.example}</p>
+        </div>
+      `;
+      detail.classList.add('open');
+      detail.style.animation='none';
+      requestAnimationFrame(()=>{detail.style.animation='';detail.classList.add('fade-up');});
+      setTimeout(()=>detail.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+    }
+  } else {
+    detail.classList.remove('open');
+  }
+}
+
+function openRisk(id) {
+  openRiskId = (openRiskId===id) ? null : id;
+  renderRisks();
+}
+
+/* ══════════════════════════════════════════════════
+   CHECKLIST
+══════════════════════════════════════════════════ */
+function buildChecklist() {
+  document.getElementById('checklistItems').innerHTML = CHECKLIST.map((item,i)=>`
+    <div class="cl-item">
+      <span class="cl-check">✓</span>
+      <span>${item}</span>
+    </div>
+  `).join('');
+}
+
+/* ══════════════════════════════════════════════════
+   INIT
+══════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded', ()=>{
+  buildTimeline();
+  renderRisks();
+  buildChecklist();
+});
+</script>
+</body>
+</html>
