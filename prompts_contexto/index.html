@@ -1,1 +1,1210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Del Prompt al Diseño Pedagógico · EduMed·UVa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,500;1,8..60,400&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --bg:#f7f3ee;--bg-deep:#f0ebe3;--surface:#fff;
+  --ink:#2c2317;--ink-soft:#5a4a3a;--ink-mute:#9a8a7a;
+  --line:#e8e0d6;
+  --accent:#8B4A2A;--accent-deep:#6b3318;--accent-light:#f5ede8;
+  --sage:#3d6b52;--sage-light:#eaf2ec;
+  --c1:#6b4f8a;--c2:#1a5fa8;--c3:#148f77;--c4:#d35400;--c5:#8B4A2A;
+  --serif:"Source Serif 4",Georgia,serif;
+  --sans:"DM Sans",-apple-system,sans-serif;
+  --mono:"JetBrains Mono",monospace;
+  --radius:14px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.55;-webkit-font-smoothing:antialiased;padding-top:95px}
+button{font:inherit;cursor:pointer}
+textarea,input{font:inherit}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideIn{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:translateX(0)}}
 
+/* ── EDUMED BAR ── */
+.edumed-bar{background:#f5c518;border-bottom:1px solid #d9a800;box-shadow:0 1px 0 rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06);position:fixed;top:0;left:0;right:0;z-index:100}
+.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px}
+.edumed-brand{display:flex;align-items:center;gap:14px;color:#1a1f2e;text-decoration:none}
+.edumed-wordmark{display:flex;flex-direction:column;line-height:1.1}
+.edumed-wordmark .w1{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#1a1f2e}
+.edumed-wordmark .w1 .sep{opacity:.45;margin:0 4px;font-weight:500}
+.edumed-wordmark .w2{font-weight:600;font-size:10.5px;letter-spacing:.08em;color:#1a1f2e;opacity:.8;margin-top:3px}
+.edumed-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#1a1f2e;text-decoration:none;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid rgba(26,31,46,.15);transition:background .15s,transform .15s;white-space:nowrap}
+.edumed-back:hover{background:#fff;transform:translateX(-1px)}
+.edumed-back svg{width:14px;height:14px}
+@media(max-width:540px){.edumed-wordmark .w2{display:none}.edumed-back{padding:7px 10px;font-size:12px}}
+
+/* ── TOP NAV ── */
+.top-nav{background:var(--surface);border-bottom:1px solid var(--line);position:fixed;top:47px;left:0;right:0;z-index:90;box-shadow:0 1px 6px rgba(0,0,0,.04)}
+.top-nav-inner{max-width:1100px;margin:0 auto;display:flex;overflow-x:auto;scrollbar-width:none}
+.top-nav-inner::-webkit-scrollbar{display:none}
+.tnav-btn{flex-shrink:0;padding:12px 20px;border:none;border-bottom:3px solid transparent;background:transparent;font-family:var(--sans);font-size:13px;font-weight:600;color:#aaa;cursor:pointer;white-space:nowrap;transition:color .2s,border-color .2s;display:flex;align-items:center;gap:7px}
+.tnav-btn.active{color:var(--accent);border-bottom-color:var(--accent)}
+.tnav-btn:hover:not(.active){color:var(--ink-soft)}
+.tnav-btn .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;opacity:.6}
+.tnav-btn.active .dot{opacity:1}
+
+/* ── PAGES ── */
+.page{display:none}.page.active{display:block}
+.shell{max-width:960px;margin:0 auto;padding:0 32px 100px}
+@media(max-width:680px){.shell{padding:0 18px 80px}}
+
+/* ══════════════════════════════════════
+   LANDING PAGE
+══════════════════════════════════════ */
+
+/* Big hero */
+.landing-hero{max-width:960px;margin:0 auto;padding:64px 32px 0;text-align:center}
+@media(max-width:680px){.landing-hero{padding:40px 18px 0}}
+.landing-kicker{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:20px;display:flex;align-items:center;justify-content:center;gap:10px}
+.landing-kicker::before,.landing-kicker::after{content:"";width:22px;height:1px;background:var(--ink-mute)}
+.landing-title{font-family:var(--serif);font-weight:400;font-size:clamp(30px,5vw,54px);line-height:1.06;letter-spacing:-.025em;color:var(--ink);margin-bottom:20px}
+.landing-title em{font-style:italic;color:var(--accent)}
+.landing-lead{font-family:var(--serif);font-size:clamp(16px,2vw,20px);line-height:1.65;color:var(--ink-soft);max-width:58ch;margin:0 auto 32px}
+
+/* Prompt demo box */
+.prompt-demo{max-width:960px;margin:0 auto;padding:0 32px 48px}
+@media(max-width:680px){.prompt-demo{padding:0 18px 40px}}
+.prompt-bubble-wrap{display:flex;align-items:flex-start;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px 24px;margin-bottom:16px;box-shadow:0 2px 12px rgba(0,0,0,.04)}
+.prompt-bubble-icon{font-size:28px;flex-shrink:0;margin-top:2px}
+.prompt-bubble-body{flex:1}
+.prompt-bubble-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:8px}
+.prompt-bubble-text{font-family:var(--serif);font-size:18px;color:var(--ink);line-height:1.55}
+.prompt-bubble-text.typing::after{content:"▍";animation:blink 1s step-end infinite;color:var(--accent)}
+@keyframes blink{50%{opacity:0}}
+.prompt-response{background:var(--bg-deep);border:1px solid var(--line);border-radius:var(--radius);padding:18px 22px;margin-bottom:24px;font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.7;display:none}
+.prompt-response.visible{display:block;animation:fadeUp .4s ease}
+
+/* The hook */
+.hook-box{max-width:960px;margin:0 auto;padding:0 32px 56px}
+@media(max-width:680px){.hook-box{padding:0 18px 40px}}
+.hook-inner{background:var(--ink);border-radius:20px;padding:40px 48px;text-align:center;position:relative;overflow:hidden}
+@media(max-width:680px){.hook-inner{padding:28px 24px}}
+.hook-inner::before{content:"";position:absolute;top:-60px;right:-60px;width:200px;height:200px;border-radius:50%;background:rgba(255,255,255,.03)}
+.hook-q{font-family:var(--serif);font-size:clamp(20px,3vw,32px);font-style:italic;color:#fff;line-height:1.4;margin-bottom:16px}
+.hook-q em{color:#f5c518;font-style:normal}
+.hook-sub{font-size:15px;color:rgba(255,255,255,.6);line-height:1.6;max-width:50ch;margin:0 auto 28px}
+.hook-btn{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;border-radius:999px;background:#f5c518;color:#1a1f2e;border:none;font-size:15px;font-weight:700;cursor:pointer;transition:transform .15s,opacity .15s}
+.hook-btn:hover{transform:translateY(-2px);opacity:.92}
+.hook-reveal{display:none;margin-top:32px;padding-top:32px;border-top:1px solid rgba(255,255,255,.1)}
+.hook-reveal.open{display:block;animation:fadeUp .4s ease}
+.hook-reveal p{font-family:var(--serif);font-size:17px;color:rgba(255,255,255,.8);line-height:1.7;max-width:56ch;margin:0 auto}
+.hook-reveal strong{color:#f5c518}
+
+/* Journey timeline */
+.journey-section{max-width:960px;margin:0 auto;padding:0 32px 80px}
+@media(max-width:680px){.journey-section{padding:0 18px 60px}}
+.journey-title{text-align:center;font-family:var(--serif);font-weight:400;font-size:clamp(20px,2.6vw,28px);color:var(--ink);margin-bottom:8px}
+.journey-sub{text-align:center;color:var(--ink-mute);font-size:14px;margin-bottom:40px}
+
+/* Horizontal timeline */
+.timeline{position:relative;padding:0 0 0}
+.timeline-line{position:absolute;top:26px;left:4%;right:4%;height:2px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c5));z-index:0;border-radius:999px}
+.timeline-steps{display:flex;justify-content:space-between;position:relative;z-index:1;margin-bottom:0;overflow-x:auto;padding-bottom:4px}
+.tl-step{display:flex;flex-direction:column;align-items:center;cursor:pointer;width:18%;min-width:80px;position:relative}
+.tl-dot{width:52px;height:52px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 12px rgba(0,0,0,.15);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:10px;transition:transform .2s,box-shadow .2s;background:#fff}
+.tl-step:hover .tl-dot{transform:scale(1.12);box-shadow:0 4px 20px rgba(0,0,0,.2)}
+.tl-step.active .tl-dot{transform:scale(1.18);box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.tl-step-num{font-family:var(--mono);font-size:10px;font-weight:600;margin-bottom:4px;letter-spacing:.04em}
+.tl-step-label{font-size:12px;font-weight:700;color:var(--ink);text-align:center;line-height:1.3;max-width:90px}
+.tl-step.active .tl-step-label{font-weight:800}
+.tl-step-q{font-size:11px;color:var(--ink-mute);text-align:center;margin-top:3px;font-style:italic;max-width:90px;line-height:1.3}
+
+/* Detail card below timeline */
+.tl-detail{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-top:28px;display:none}
+.tl-detail.open{display:block;animation:fadeUp .3s ease}
+.tl-detail-bar{height:4px}
+.tl-detail-inner{padding:24px 28px}
+.tl-detail-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;font-weight:600;margin-bottom:8px}
+.tl-detail-title{font-family:var(--serif);font-weight:400;font-size:22px;margin-bottom:6px}
+.tl-detail-q{font-size:13px;font-style:italic;color:var(--ink-mute);margin-bottom:14px}
+.tl-detail-desc{color:var(--ink-soft);line-height:1.7;font-size:15px;margin-bottom:16px}
+.tl-detail-evo{background:var(--bg-deep);border-radius:8px;overflow:hidden;margin-bottom:14px}
+.tl-detail-evo-lbl{padding:8px 14px;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:#fff}
+.tl-detail-evo-txt{padding:12px 16px;font-family:var(--mono);font-size:12px;line-height:1.8;color:var(--ink-soft);white-space:pre-wrap}
+.tl-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:540px){.tl-detail-grid{grid-template-columns:1fr}}
+.tl-info{border-radius:8px;padding:12px 14px;font-size:13px;line-height:1.6}
+.tl-info strong{display:block;font-size:10px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:5px}
+
+/* CTA at bottom of landing */
+.landing-cta{text-align:center;padding:0 32px 80px}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;padding:16px 32px;border-radius:999px;background:var(--accent);color:#fff;border:none;font-size:16px;font-weight:700;cursor:pointer;transition:background .15s,transform .15s;box-shadow:0 4px 20px rgba(139,74,42,.3)}
+.cta-btn:hover{background:var(--accent-deep);transform:translateY(-2px)}
+
+/* ══════════════════════════════════════
+   INNER PAGES — shared styles
+══════════════════════════════════════ */
+.hero{max-width:960px;margin:0 auto;padding:52px 32px 36px}
+@media(max-width:680px){.hero{padding:36px 18px 24px}}
+.eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--ink-mute)}
+.hero-title{font-family:var(--serif);font-weight:400;font-size:clamp(24px,3.8vw,42px);line-height:1.08;letter-spacing:-.02em;margin-bottom:14px}
+.hero-title em{font-style:italic;color:var(--accent)}
+.hero-lead{font-family:var(--serif);font-size:17px;line-height:1.65;color:var(--ink-soft);max-width:60ch}
+
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:22px}
+.sep{border:none;border-top:1px solid var(--line);margin:40px 0}
+.sec-hdr{text-align:center;padding:36px 0 22px}
+.sec-hdr h2{font-family:var(--serif);font-weight:400;font-size:clamp(20px,2.5vw,28px);margin-bottom:8px}
+.sec-hdr p{color:var(--ink-mute);font-size:14px;max-width:52ch;margin:0 auto}
+
+/* Accordion */
+.accord-item{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);margin-bottom:10px;overflow:hidden}
+.accord-item.open{border-color:var(--accent)}
+.accord-btn{width:100%;display:flex;align-items:center;justify-content:space-between;padding:16px 20px;background:transparent;border:none;text-align:left;cursor:pointer;gap:12px}
+.accord-left{display:flex;align-items:center;gap:12px}
+.accord-icon{font-size:20px;flex-shrink:0}
+.accord-title{font-weight:700;font-size:14px;color:var(--ink)}
+.accord-sub{font-size:12px;color:var(--ink-mute);margin-top:2px}
+.accord-arrow{font-size:16px;color:var(--ink-mute);transition:transform .25s;flex-shrink:0}
+.accord-item.open .accord-arrow{transform:rotate(180deg);color:var(--accent)}
+.accord-body{display:none;padding:4px 20px 20px}
+.accord-item.open .accord-body{display:block;animation:fadeUp .2s ease}
+.accord-body p{color:var(--ink-soft);font-size:14px;line-height:1.7;margin-bottom:12px}
+.accord-ex{background:var(--accent-light);border-left:3px solid var(--accent);padding:11px 15px;border-radius:0 8px 8px 0;margin-bottom:10px}
+.accord-ex .ex-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.accord-ex pre{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--ink-soft);white-space:pre-wrap}
+.accord-err{background:#fff8f5;border-left:3px solid #e74c3c;padding:9px 13px;border-radius:0 6px 6px 0;font-size:12px;color:#7a3030}
+
+/* Ctx grid */
+.ctx-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px}
+@media(max-width:580px){.ctx-grid{grid-template-columns:repeat(2,1fr)}}
+.ctx-tile{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 12px;text-align:center;cursor:pointer;transition:all .2s}
+.ctx-tile:hover{border-color:var(--accent);transform:translateY(-2px)}
+.ctx-tile.active{background:var(--accent-light);border-color:var(--accent)}
+
+/* Scenarios */
+.scenario-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:28px}
+
+/* Madurez */
+.mad-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:14px}
+@media(max-width:600px){.mad-strip{grid-template-columns:repeat(3,1fr)}}
+.mad-card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s}
+.mad-card:hover{transform:translateY(-2px);border-color:var(--accent-mid,#c07050)}
+.mad-card.active{background:var(--accent-light);border-color:var(--accent)}
+
+/* Taller */
+.builder-field label{display:block;font-size:12px;font-weight:700;color:var(--ink-soft);margin-bottom:5px}
+.builder-field label em{color:var(--accent);font-style:normal}
+.builder-field input,.builder-field textarea{width:100%;padding:10px 14px;border:1.5px solid var(--line);border-radius:8px;background:var(--bg-deep);color:var(--ink);font-size:13px;outline:none;transition:border-color .15s;resize:vertical}
+.builder-field input:focus,.builder-field textarea:focus{border-color:var(--accent)}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:580px){.grid-2{grid-template-columns:1fr}}
+.output-mono{background:var(--bg-deep);border:1px solid var(--line);border-radius:10px;padding:16px 18px;font-family:var(--mono);font-size:12px;line-height:1.85;color:var(--ink-soft);white-space:pre-wrap;min-height:90px;margin-bottom:12px}
+.output-mono .hi{color:var(--accent);font-weight:600}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 18px;border-radius:999px;border:none;font-size:13px;font-weight:600;cursor:pointer;transition:opacity .15s,transform .15s}
+.btn:hover{opacity:.85;transform:translateY(-1px)}
+.btn-accent{background:var(--accent);color:#fff}
+.btn-sage{background:var(--sage);color:#fff}
+.btn-blue{background:var(--c2);color:#fff}
+.btn-ghost{background:transparent;border:1.5px solid var(--line);color:var(--ink)}
+.btns{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.plantilla-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:12px;margin-bottom:16px}
+.plantilla-card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;cursor:pointer;transition:border-color .2s,transform .15s}
+.plantilla-card:hover{border-color:var(--accent);transform:translateY(-2px)}
+.plantilla-card.active{border-color:var(--accent);background:var(--accent-light)}
+.checklist li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--bg-deep);font-size:14px;color:var(--ink-soft);line-height:1.5}
+.checklist li:last-child{border:none}
+.checklist li::before{content:"✓";color:var(--sage);font-weight:700;flex-shrink:0;margin-top:1px}
+
+/* ── PROMPT BUILDER COMPARATOR ─────────────────── */
+.pbc-wrap{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:28px}
+.pbc-top{display:grid;grid-template-columns:1fr 1fr;min-height:280px}
+@media(max-width:640px){.pbc-top{grid-template-columns:1fr}}
+.pbc-switches{background:var(--bg-deep);border-right:1px solid var(--line);padding:18px 18px;overflow-y:auto;max-height:400px}
+.pbc-switches-title{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:16px}
+.pbc-switch-row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px;cursor:pointer;transition:background .15s;margin-bottom:6px;border:1.5px solid transparent}
+.pbc-switch-row:hover{background:rgba(0,0,0,.03)}
+.pbc-switch-row.on{border-color:var(--sw-color,var(--accent));background:color-mix(in srgb,var(--sw-color,var(--accent)) 8%,transparent)}
+.pbc-toggle{width:36px;height:20px;border-radius:999px;background:#ddd;position:relative;flex-shrink:0;transition:background .2s;border:none;cursor:pointer}
+.pbc-toggle::after{content:"";position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.2)}
+.pbc-switch-row.on .pbc-toggle{background:var(--sw-color,var(--accent))}
+.pbc-switch-row.on .pbc-toggle::after{transform:translateX(16px)}
+.pbc-sw-icon{font-size:16px;flex-shrink:0}
+.pbc-sw-label{font-size:13px;font-weight:600;color:var(--ink)}
+.pbc-sw-sub{font-size:11px;color:var(--ink-mute);margin-top:1px}
+
+.pbc-right{padding:20px 24px;display:flex;flex-direction:column}
+.pbc-right-title{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:12px}
+.pbc-prompt-display{font-family:var(--mono);font-size:12px;line-height:1.9;flex:1;min-height:180px}
+.pbc-chunk{display:inline;border-radius:3px;padding:1px 3px;transition:background .3s,color .3s}
+.pbc-chunk.off{color:var(--ink-mute)}
+.pbc-chunk.on{color:#fff;font-weight:500}
+
+/* Quality meter */
+.pbc-meter-wrap{border-top:1px solid var(--line);padding:16px 24px;display:flex;align-items:center;gap:16px}
+.pbc-meter-label{font-size:12px;font-weight:700;color:var(--ink-soft);white-space:nowrap}
+.pbc-meter-bar{flex:1;height:10px;border-radius:999px;background:var(--bg-deep);overflow:hidden;position:relative}
+.pbc-meter-fill{height:100%;border-radius:999px;transition:width .5s cubic-bezier(.4,0,.2,1),background .5s}
+.pbc-meter-pct{font-family:var(--mono);font-size:12px;font-weight:600;min-width:36px;text-align:right}
+.pbc-meter-verdict{font-size:12px;font-weight:700;min-width:80px;text-align:right}
+
+/* Detail card */
+.pbc-detail{border-top:1px solid var(--line);padding:22px 24px;display:none;animation:fadeUp .25s ease}
+.pbc-detail.open{display:block}
+.pbc-detail-head{display:flex;align-items:center;gap:10px;margin-bottom:10px}
+.pbc-detail-icon{font-size:22px}
+.pbc-detail-name{font-weight:700;font-size:15px;color:var(--ink)}
+.pbc-detail-sub{font-size:12px;color:var(--ink-mute)}
+.pbc-detail-body{font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:12px}
+.pbc-detail-ex{background:var(--bg-deep);border-left:3px solid var(--accent);padding:11px 15px;border-radius:0 8px 8px 0;margin-bottom:10px}
+.pbc-detail-ex .ex-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:5px}
+.pbc-detail-ex pre{font-family:var(--mono);font-size:12px;line-height:1.75;color:var(--ink-soft);white-space:pre-wrap}
+.pbc-detail-err{background:#fff8f5;border-left:3px solid #e74c3c;padding:9px 13px;border-radius:0 6px 6px 0;font-size:12px;color:#7a3030}
+.next-page-cta{background:var(--accent-light);border-radius:var(--radius);padding:22px 24px;text-align:center;margin-top:32px}
+.next-page-cta p{font-family:var(--serif);font-size:16px;color:var(--ink);margin-bottom:14px}
+
+@media(max-width:640px){
+  .pbc-top{grid-template-columns:1fr}
+  .pbc-switches{border-right:none;border-bottom:1px solid var(--line);max-height:none}
+  .tl-detail-grid{grid-template-columns:1fr}
+  .pbc-meter-wrap{flex-wrap:wrap;gap:8px}
+  .pbc-meter-bar{flex:1 1 100%;order:3}
+}
+@media(max-width:480px){
+  .landing-hero{padding:32px 16px 0}
+  .prompt-demo{padding:0 16px 32px}
+  .hook-box{padding:0 16px 32px}
+  .journey-section{padding:0 16px 48px}
+  .landing-cta{padding:0 16px 48px}
+  .tl-step-label{font-size:11px;max-width:72px}
+  .tl-step-q{display:none}
+  .hook-inner{padding:24px 20px}
+  .pbc-switch-row{padding:8px 10px}
+  .pbc-sw-sub{display:none}
+}
+@media(min-width:641px) and (max-width:900px){
+  .pbc-top{grid-template-columns:1fr 1fr}
+  .prog-tile-q{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA INSTITUCIONAL -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+      IA en EduMed
+    </a>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="top-nav">
+  <div class="top-nav-inner" id="topNav"></div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PÁGINA 0 — LANDING
+══════════════════════════════════════ -->
+<div class="page active" id="page-0">
+
+  <!-- Hero -->
+  <div class="landing-hero">
+    <p class="landing-kicker">EduMed · UVa · IA en docencia médica</p>
+    <h1 class="landing-title">Todo empieza con<br><em>un prompt</em></h1>
+    <p class="landing-lead">Cada vez que escribes algo en ChatGPT, Gemini o Claude, estás usando un prompt. Es la instrucción que le das a la IA. Sencillo, ¿verdad?</p>
+  </div>
+
+  <!-- Prompt demo interactivo -->
+  <div class="prompt-demo">
+    <div class="prompt-bubble-wrap">
+      <div class="prompt-bubble-icon">🧑‍⚕️</div>
+      <div class="prompt-bubble-body">
+        <div class="prompt-bubble-label">Tu prompt</div>
+        <div class="prompt-bubble-text" id="demoPromptText"></div>
+      </div>
+    </div>
+    <div class="prompt-response" id="demoResponse">
+      <strong style="display:block;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-mute);margin-bottom:8px">Respuesta de la IA</strong>
+      El lupus eritematoso sistémico (LES) es una enfermedad autoinmune crónica que afecta múltiples órganos. Se caracteriza por la producción de autoanticuerpos, especialmente anti-ADN bicatenario y anti-Sm, que generan depósitos de inmunocomplejos y daño tisular por inflamación…
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+      <button class="btn btn-accent" onclick="runDemo()">▶ Ver cómo funciona un prompt</button>
+      <button class="btn btn-ghost" onclick="resetDemo()">↺ Reiniciar</button>
+    </div>
+  </div>
+
+  <!-- El gancho -->
+  <div class="hook-box">
+    <div class="hook-inner">
+      <p class="hook-q">¿Y si te dijera que con el prompt<em> no es suficiente?</em></p>
+      <p class="hook-sub">La mayoría de docentes se quedan aquí. Escriben una pregunta, reciben una respuesta, y pasan página. Pero hay cinco niveles entre un prompt y una experiencia de aprendizaje real.</p>
+      <button class="hook-btn" onclick="revealHook()">Quiero saber más ↓</button>
+      <div class="hook-reveal" id="hookReveal">
+        <p>No hay que convertirse en ingeniero de software. El camino es <strong>lógico y progresivo</strong>: desde escribir mejor la pregunta, hasta preparar el entorno completo, diseñar el flujo de trabajo, incorporar agentes y, al final, crear experiencias de aprendizaje que realmente funcionen en medicina.</p>
+        <p style="margin-top:16px;color:rgba(255,255,255,.5);font-size:14px">Vamos paso a paso. Pulsa cada etapa aquí abajo para ver de qué va.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Línea temporal de las 5 etapas -->
+  <div class="journey-section">
+    <h2 class="journey-title">Las cinco etapas del camino</h2>
+    <p class="journey-sub">Pulsa cada una para descubrir qué cambia en cada nivel</p>
+
+    <div class="timeline">
+      <div style="position:relative;overflow-x:auto;-webkit-overflow-scrolling:touch;padding-bottom:4px">
+        <div class="timeline-line"></div>
+        <div class="timeline-steps" id="tlSteps"></div>
+      </div>
+    </div>
+    <div class="tl-detail" id="tlDetail"></div>
+  </div>
+
+  <!-- CTA final -->
+  <div class="landing-cta">
+    <p style="font-family:var(--serif);font-size:17px;color:var(--ink-soft);margin-bottom:20px">¿Preparado para empezar? Sigue el orden o salta al nivel que más te interese.</p>
+    <button class="cta-btn" onclick="switchPage(1)">Empezar por el principio: los prompts →</button>
+  </div>
+
+</div><!-- /page-0 -->
+
+
+<!-- ══════════════════════════════════════
+     PÁGINA 1 — PROMPTS
+══════════════════════════════════════ -->
+<div class="page" id="page-1">
+  <div class="hero">
+    <p class="eyebrow" style="color:var(--c1)">Etapa 1 · Ingeniería de prompts</p>
+    <h1 class="hero-title">Anatomía de<em> un buen prompt</em></h1>
+    <p class="hero-lead">Un prompt no es solo una pregunta. Tiene hasta 7 piezas que, bien combinadas, transforman la calidad de lo que recibes. Aquí aprenderás a usarlas.</p>
+  </div>
+  <div class="shell">
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:32px">
+      <div style="padding:20px 22px;background:#fff8f5;border-right:1px solid var(--line)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#c0392b;margin-bottom:10px">❌ Sin ingeniería</div>
+        <div style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);border-left:3px solid #e74c3c;padding-left:12px;margin-bottom:10px">"Hazme una clase sobre lupus."</div>
+        <div style="font-size:12px;color:#9a3030">Sin nivel · Sin objetivo · Sin formato · Sin restricciones</div>
+      </div>
+      <div style="padding:20px 22px;background:#f5fffb">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--sage);margin-bottom:10px">✅ Con ingeniería</div>
+        <div style="font-family:var(--serif);font-size:14px;color:var(--ink-soft);border-left:3px solid var(--sage);padding-left:12px;margin-bottom:10px">"Actúa como profesor de MIR. Sesión 45 min para 5.º sobre LES: sospechar, interpretar y diferencial. Introducción, 3 ideas clave, 2 casos, 5 preguntas. Sin biológicos avanzados."</div>
+        <div style="font-size:12px;color:#1e5030">Rol · Contexto · Tarea · Formato · Criterios · Restricciones</div>
+      </div>
+    </div>
+
+    <div class="sec-hdr" style="padding-top:0">
+      <h2>Las 7 piezas de un buen prompt</h2>
+      <p>Activa cada pieza y observa cómo el prompt crece y mejora en tiempo real</p>
+    </div>
+
+    <div class="pbc-wrap">
+      <!-- Top: switches + live prompt -->
+      <div class="pbc-top">
+        <!-- Left: toggles -->
+        <div class="pbc-switches">
+          <div class="pbc-switches-title">Activa las piezas</div>
+          <div id="pbcSwitches"></div>
+        </div>
+        <!-- Right: live prompt -->
+        <div class="pbc-right">
+          <div class="pbc-right-title">Tu prompt en tiempo real</div>
+          <div class="pbc-prompt-display" id="pbcPrompt"></div>
+        </div>
+      </div>
+      <!-- Quality meter -->
+      <div class="pbc-meter-wrap">
+        <div class="pbc-meter-label">Calidad del prompt</div>
+        <div class="pbc-meter-bar"><div class="pbc-meter-fill" id="pbcFill" style="width:0%"></div></div>
+        <div class="pbc-meter-pct" id="pbcPct">0%</div>
+        <div class="pbc-meter-verdict" id="pbcVerdict" style="color:var(--ink-mute)">Sin estructura</div>
+      </div>
+      <!-- Detail panel -->
+      <div class="pbc-detail" id="pbcDetail"></div>
+    </div>
+
+    <div class="sec-hdr"><h2>Cinco tipos de prompting</h2><p>Distintos objetivos docentes requieren distintos modos de pedir</p></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px;margin-bottom:28px" id="promptTypesGrid"></div>
+
+    <div class="next-page-cta">
+      <p>Con el prompt dominado, surge la pregunta clave: ¿qué pasa cuando la IA no tiene suficiente información para responder bien?</p>
+      <button class="btn btn-accent" onclick="switchPage(2)" style="background:var(--c2)">Etapa 2: Ingeniería de contexto →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PÁGINA 2 — CONTEXTO
+══════════════════════════════════════ -->
+<div class="page" id="page-2">
+  <div class="hero">
+    <p class="eyebrow" style="color:var(--c2)">Etapa 2 · Ingeniería de contexto</p>
+    <h1 class="hero-title">Preparar el terreno<em> antes de preguntar</em></h1>
+    <p class="hero-lead">Un buen contexto es como una buena historia clínica: suficiente, ordenada y orientada a la decisión. La IA no responde mejor porque piense más, sino porque le hemos preparado mejor el terreno.</p>
+  </div>
+  <div class="shell">
+    <!-- Comparativa prompt vs contexto -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+      <div class="card" style="border-left:3px solid var(--c1)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c1);margin-bottom:8px">Ingeniería de prompts</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:6px">¿Cómo se lo pido?</div>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.65">Unidad: la instrucción. Una interacción. Docente como redactor de preguntas.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--c2)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c2);margin-bottom:8px">Ingeniería de contexto</div>
+        <div style="font-weight:700;font-size:15px;margin-bottom:6px">¿Qué necesita saber?</div>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.65">Unidad: el entorno informativo completo. Un flujo de trabajo. Docente como diseñador de situaciones de aprendizaje.</p>
+      </div>
+    </div>
+
+    <!-- Qué ES el contexto — explicación ampliada -->
+    <div class="card" style="border-left:4px solid var(--c2);margin-bottom:28px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c2);margin-bottom:12px">¿Qué es exactamente el contexto?</div>
+      <p style="font-size:15px;color:var(--ink-soft);line-height:1.7;margin-bottom:20px">El contexto es todo lo que <strong>tú le das a la IA antes de que responda</strong>: no solo la pregunta, sino el entorno completo de conocimiento, objetivos y límites en el que debe trabajar. Puedes aportarlo de muchas formas:</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:20px">
+        <div style="background:var(--blue-light,#e8f0fb);border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">📄</div>
+          <div style="font-weight:700;font-size:13px;color:var(--c2);margin-bottom:4px">Documentos</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">Apuntes de la asignatura, guías clínicas, artículos, protocolos, normativa.</div>
+        </div>
+        <div style="background:#f3eef8;border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">🎥</div>
+          <div style="font-weight:700;font-size:13px;color:var(--c1);margin-bottom:4px">Vídeos y transcripciones</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">La transcripción de una clase grabada, una conferencia, un seminario clínico.</div>
+        </div>
+        <div style="background:var(--sage-light);border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">📋</div>
+          <div style="font-weight:700;font-size:13px;color:var(--sage);margin-bottom:4px">Rúbricas y criterios</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">La rúbrica del departamento, los criterios de evaluación del examen MIR, los estándares de competencia.</div>
+        </div>
+        <div style="background:var(--accent-light);border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">💡</div>
+          <div style="font-weight:700;font-size:13px;color:var(--accent);margin-bottom:4px">Ejemplos ya hechos</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">Casos clínicos del año pasado, preguntas tipo test que funcionaron bien, un informe que quieres que imite.</div>
+        </div>
+        <div style="background:#fff8e8;border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">📊</div>
+          <div style="font-weight:700;font-size:13px;color:#b07800;margin-bottom:4px">Datos de los estudiantes</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">Las respuestas que dieron en el examen anterior, sus errores más frecuentes, su nivel de partida.</div>
+        </div>
+        <div style="background:#fdecea;border-radius:10px;padding:14px 16px">
+          <div style="font-size:20px;margin-bottom:6px">🔒</div>
+          <div style="font-weight:700;font-size:13px;color:#c0392b;margin-bottom:4px">Reglas y límites</div>
+          <div style="font-size:12px;color:var(--ink-soft);line-height:1.55">Lo que no debe hacer, las fuentes que no puede usar, los temas que están fuera de alcance en este momento del curso.</div>
+        </div>
+      </div>
+      <div style="background:var(--bg-deep);border-radius:10px;padding:16px 18px;border-left:3px solid var(--c2)">
+        <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c2);margin-bottom:10px">Ejemplo real: sin contexto vs. con contexto</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div>
+            <div style="font-size:11px;font-weight:700;color:#c0392b;margin-bottom:6px">❌ Solo prompt</div>
+            <div style="font-family:var(--mono);font-size:12px;color:var(--ink-mute);line-height:1.7">"Crea 5 preguntas tipo test sobre insuficiencia cardiaca."</div>
+            <div style="font-size:12px;color:#9a3030;margin-top:8px;line-height:1.55">Resultado: preguntas de nivel desconocido, quizás basadas en guías desactualizadas, sin criterios, sin retroalimentación, quizás sobre contenido que los estudiantes aún no han visto.</div>
+          </div>
+          <div>
+            <div style="font-size:11px;font-weight:700;color:var(--c2);margin-bottom:6px">✅ Con contexto</div>
+            <div style="font-family:var(--mono);font-size:12px;color:var(--ink-mute);line-height:1.7">[Apuntes cap. 6] + [Guía ESC 2023] + [Rúbrica del departamento] + [Errores frecuentes del examen anterior] → "Crea 5 preguntas de razonamiento para 3.º que distingan IC con FE reducida y preservada."</div>
+            <div style="font-size:12px;color:#1e5030;margin-top:8px;line-height:1.55">Resultado: preguntas calibradas al nivel exacto del grupo, basadas en las fuentes que usas en clase, con los criterios de calidad ya definidos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec-hdr" style="padding-top:0"><h2>Los 9 componentes del contexto</h2><p>Pulsa cada uno para ver qué es, por qué importa y cómo usarlo en medicina</p></div>
+    <div class="ctx-grid" id="ctxGrid"></div>
+    <div id="ctxDetail" style="display:none;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);padding:20px 26px;margin-bottom:24px;animation:fadeUp .25s ease"></div>
+
+    <div class="card" style="border-left:4px solid #c0392b;margin-bottom:28px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#c0392b;margin-bottom:10px">⚠ El riesgo del contexto basura</div>
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:14px">Más contexto no siempre es mejor. El contexto basura —excesivo, contradictorio, desactualizado o irrelevante— puede arruinar incluso el mejor prompt.</p>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:#fdecea;border-radius:8px;padding:13px 15px;font-size:13px;color:#7a3030"><strong style="display:block;margin-bottom:5px;color:#c0392b">❌ Contexto basura</strong>Guías avanzadas para tareas básicas · Documentos de otro nivel · Objetivos contradictorios · Sin jerarquía</div>
+        <div style="background:var(--sage-light);border-radius:8px;padding:13px 15px;font-size:13px;color:#2d5040"><strong style="display:block;margin-bottom:5px;color:var(--sage)">✓ Contexto útil</strong>Suficiente para la tarea · Ordenado · Alineado con el nivel · Restricciones coherentes</div>
+      </div>
+    </div>
+
+    <div class="next-page-cta">
+      <p>Con el contexto preparado, el siguiente salto es encadenar pasos: flujos de trabajo donde cada respuesta alimenta la siguiente.</p>
+      <button class="btn btn-accent" onclick="switchPage(3)" style="background:var(--c3)">Etapa 3 y 4: Flujos y Agentes →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PÁGINA 3 — FLUJOS Y AGENTES
+══════════════════════════════════════ -->
+<div class="page" id="page-3">
+  <div class="hero">
+    <p class="eyebrow" style="color:var(--c3)">Etapas 3 y 4 · Flujos y Agentes</p>
+    <h1 class="hero-title">Cuando la IA<em> hace más que responder</em></h1>
+    <p class="hero-lead">Un flujo encadena respuestas. Un agente usa herramientas. Estos niveles permiten crear experiencias de aprendizaje que antes eran imposibles para un solo docente.</p>
+  </div>
+  <div class="shell">
+    <!-- FLUJOS -->
+    <div class="card" style="border-left:4px solid var(--c3);margin-bottom:20px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c3);margin-bottom:10px">Etapa 3 · Flujos de trabajo</div>
+      <div style="font-weight:700;font-size:18px;margin-bottom:8px">¿Qué pasos debe seguir?</div>
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:16px">En un flujo, <strong>tú diseñas la secuencia</strong> y le dices a la IA qué hacer en cada paso. Cada respuesta alimenta la siguiente pregunta. Sigues al mando, pero el proceso está encadenado.</p>
+      <div style="background:var(--bg-deep);border-radius:10px;overflow:hidden;margin-bottom:14px">
+        <div style="padding:10px 16px;background:var(--c3);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700">Ejemplo · Práctica de anamnesis con flujo</div>
+        <div style="padding:14px 18px;display:flex;flex-direction:column;gap:10px">
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="background:var(--c3);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:1px">1</span><div><strong>Tú pides:</strong> "Simula un paciente con dolor torácico. Responde solo a lo que pregunte el estudiante."</div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="background:var(--c3);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:1px">2</span><div><strong>Tú pides:</strong> "Ahora da feedback sobre las preguntas que hizo el estudiante y los datos que omitió."</div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="background:var(--c3);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:1px">3</span><div><strong>Tú pides:</strong> "Permite una segunda entrevista donde el estudiante corrija sus errores."</div></div>
+          <div style="display:flex;align-items:flex-start;gap:10px;font-size:13px;color:var(--ink-soft)"><span style="background:var(--c3);color:#fff;border-radius:50%;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:11px;flex-shrink:0;margin-top:1px">4</span><div><strong>Tú pides:</strong> "Pide al estudiante que escriba una reflexión sobre qué cambió en su razonamiento."</div></div>
+        </div>
+      </div>
+      <div style="background:var(--sage-light);border-radius:8px;padding:12px 14px;font-size:13px;color:#2d5040"><strong style="display:block;margin-bottom:4px;color:var(--sage)">La clave del flujo</strong>Tú eres el director del proceso. Defines los pasos, los encadenas y decides cuándo pasar al siguiente. La IA ejecuta cada paso cuando tú se lo pides.</div>
+    </div>
+
+    <!-- AGENTES -->
+    <div class="card" style="border-left:4px solid var(--c4);margin-bottom:28px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c4);margin-bottom:10px">Etapa 4 · Agentes</div>
+      <div style="font-weight:700;font-size:18px;margin-bottom:8px">La IA trabaja sola, tú supervisas</div>
+      <p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:16px">Un agente es una IA que <strong>actúa de forma autónoma</strong>: no espera a que le digas qué hacer en cada paso. Tú le das un objetivo y ella decide cómo alcanzarlo, qué herramientas usar, en qué orden actuar y cómo interpretar los resultados.</p>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px">
+        <div style="background:#fff8e8;border-radius:10px;padding:16px">
+          <div style="font-size:12px;font-weight:700;color:#b07800;margin-bottom:10px">🔀 Flujo — tú diriges</div>
+          <div style="font-size:13px;color:var(--ink-soft);line-height:1.7">Tú le dices: "Haz el paso 1. Ahora el 2. Ahora el 3…"<br><br>La IA espera tu instrucción en cada momento.</div>
+        </div>
+        <div style="background:#fff3e8;border-radius:10px;padding:16px">
+          <div style="font-size:12px;font-weight:700;color:var(--c4);margin-bottom:10px">🤖 Agente — ella decide</div>
+          <div style="font-size:13px;color:var(--ink-soft);line-height:1.7">Tú le dices: "Necesito feedback personalizado para mis 30 estudiantes."<br><br>La IA decide sola cómo leer las respuestas, qué comparar, qué errores detectar y qué proponer.</div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg-deep);border-radius:10px;overflow:hidden;margin-bottom:14px">
+        <div style="padding:10px 16px;background:var(--c4);color:#fff;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700">Ejemplo · Agente de feedback para 30 estudiantes</div>
+        <div style="padding:16px 18px;font-size:13px;color:var(--ink-soft);line-height:1.75">
+          <strong style="color:var(--ink)">Tu instrucción (una sola vez):</strong><br>
+          "Aquí están las respuestas de mis 30 estudiantes al caso clínico de disnea. Analízalas, detecta los errores más frecuentes, clasifícalos por tipo, genera un feedback personalizado para cada estudiante y propón una actividad de refuerzo para cada grupo de error."<br><br>
+          <strong style="color:var(--ink)">Lo que el agente hace solo, sin que tú lo pidas paso a paso:</strong>
+          <ul style="margin-top:8px;padding-left:18px;line-height:1.9">
+            <li>Lee las 30 respuestas</li>
+            <li>Busca en las guías clínicas para verificar qué es correcto</li>
+            <li>Clasifica los errores en categorías</li>
+            <li>Genera un feedback diferente para cada estudiante</li>
+            <li>Diseña tres actividades de refuerzo distintas según el tipo de error</li>
+            <li>Elabora un informe resumen para el docente</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div style="background:var(--sage-light);border-radius:8px;padding:12px 14px;font-size:13px;color:#2d5040"><strong style="display:block;margin-bottom:4px;color:var(--sage)">✓ Lo que hace posible</strong>Escalar la atención personalizada: dar feedback individual a cada estudiante sin multiplicar el trabajo del docente.</div>
+        <div style="background:#fff8f5;border-radius:8px;padding:12px 14px;font-size:13px;color:#7a3030"><strong style="display:block;margin-bottom:4px;color:#c0392b">⚠ Lo que requiere siempre</strong>Supervisión docente. El agente puede equivocarse. Tú validas los resultados antes de que lleguen al estudiante.</div>
+      </div>
+    </div>
+
+    <div class="sec-hdr" style="padding-top:0"><h2>¿Cuándo NO conviene usar IA?</h2><p>La buena integración también implica saber cuándo retirarla</p></div>
+    <div class="scenario-grid" id="scenarioGrid"></div>
+
+    <div class="next-page-cta">
+      <p>El último nivel lo integra todo: no se trata de usar bien la IA, sino de diseñar mejores experiencias de aprendizaje con ella.</p>
+      <button class="btn btn-accent" onclick="switchPage(4)" style="background:var(--c5)">Etapa 5: Diseño pedagógico →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PÁGINA 4 — DISEÑO PEDAGÓGICO
+══════════════════════════════════════ -->
+<div class="page" id="page-4">
+  <div class="hero">
+    <p class="eyebrow" style="color:var(--c5)">Etapa 5 · Diseño pedagógico con IA</p>
+    <h1 class="hero-title">El docente como<em> diseñador de experiencias</em></h1>
+    <p class="hero-lead">No se trata de hablar mejor con la IA, sino de diseñar mejores situaciones de aprendizaje. El docente decide qué hace la IA, qué hace el estudiante, y qué evidencias demuestran que ha habido aprendizaje real.</p>
+  </div>
+  <div class="shell">
+
+    <div class="sec-hdr" style="padding-top:0"><h2>¿En qué nivel de madurez docente estás?</h2><p>Pulsa el que mejor te describe para ver tu riesgo y tu siguiente paso</p></div>
+    <div class="mad-strip" id="madStrip"></div>
+    <div id="madDetail" style="display:none;border:1px solid var(--line);border-radius:var(--radius);padding:22px 26px;background:var(--surface);margin-bottom:28px;animation:fadeUp .25s ease"></div>
+
+    <div class="sep"></div>
+
+    <div class="sec-hdr" style="padding-top:0"><h2>Cinco ideas para llevarte</h2></div>
+    <div style="display:flex;flex-direction:column;gap:12px;margin-bottom:32px" id="msgList"></div>
+
+    <div style="font-family:var(--serif);font-size:clamp(16px,2.2vw,22px);font-style:italic;color:var(--ink);line-height:1.55;border-left:4px solid var(--accent);padding:18px 24px;background:var(--accent-light);border-radius:0 12px 12px 0;margin-bottom:8px">
+      "La buena pregunta ya no es ¿qué prompt escribo? Sino: ¿qué situación de aprendizaje quiero construir y qué papel debe ocupar la IA dentro de ella?"
+    </div>
+    <p style="font-size:13px;color:var(--ink-mute);text-align:right;margin-bottom:36px">— Documento base · EduMed·UVa</p>
+
+    <div class="next-page-cta">
+      <p>Ahora que conoces los cinco niveles, el taller te ayuda a construir tus propios prompts y plantillas de contexto.</p>
+      <button class="btn btn-accent" onclick="switchPage(5)">🛠 Ir al Taller →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PÁGINA 5 — TALLER
+══════════════════════════════════════ -->
+<div class="page" id="page-5">
+  <div class="hero">
+    <p class="eyebrow">Taller práctico</p>
+    <h1 class="hero-title">Construye tu propio<em> prompt y contexto</em></h1>
+    <p class="hero-lead">Rellena los campos, genera tu prompt mejorado y amplíalo con un contexto completo listo para copiar en tu IA favorita.</p>
+  </div>
+  <div class="shell">
+    <div class="card" style="margin-bottom:22px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:14px">🛠 Constructor de Prompt</div>
+      <div class="grid-2" style="margin-bottom:14px">
+        <div class="builder-field"><label><em>Rol</em></label><input id="b-rol" placeholder="Ej: tutor socrático, profesor de Medicina Interna…"/></div>
+        <div class="builder-field"><label><em>Contexto</em> — ¿Para quién?</label><input id="b-ctx" placeholder="Ej: 3.º Medicina, ya estudiaron fisiología CV…"/></div>
+        <div class="builder-field"><label><em>Tarea</em> — ¿Qué debe hacer?</label><input id="b-tarea" placeholder="Ej: genera 3 casos clínicos de disnea para diferencial"/></div>
+        <div class="builder-field"><label><em>Formato</em> — ¿Cómo?</label><input id="b-formato" placeholder="Ej: tabla con 4 columnas, caso clínico, lista…"/></div>
+        <div class="builder-field"><label><em>Criterios</em> de calidad</label><input id="b-criterios" placeholder="Ej: plausible, diagnóstico no evidente, nivel grado…"/></div>
+        <div class="builder-field"><label><em>Restricciones</em></label><input id="b-restrict" placeholder="Ej: no enfermedades raras, no inventar bibliografía…"/></div>
+      </div>
+      <div class="btns">
+        <button class="btn btn-accent" onclick="buildPrompt()">⚡ Generar prompt</button>
+        <button class="btn btn-ghost" onclick="clearBuilder()">Limpiar</button>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--ink-mute);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase">Prompt generado</div>
+      <div class="output-mono" id="builderOutput">Rellena al menos la tarea y pulsa "Generar prompt"…</div>
+      <button class="btn btn-sage" id="copyBtn" onclick="copyPrompt()" style="display:none">📋 Copiar</button>
+    </div>
+
+    <div class="card" style="margin-bottom:22px">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--c2);margin-bottom:14px">🗂 Constructor de Contexto</div>
+      <p style="font-size:13px;color:var(--ink-soft);margin-bottom:14px;line-height:1.65">El contexto va <em>antes</em> del prompt. Rellena los que apliquen:</p>
+      <div class="grid-2" id="ctxBuilderGrid" style="margin-bottom:14px"></div>
+      <div class="btns">
+        <button class="btn btn-blue" onclick="buildCtx()">⚡ Generar contexto</button>
+        <button class="btn btn-ghost" onclick="clearCtx()">Limpiar</button>
+      </div>
+      <div style="font-size:11px;font-weight:700;color:var(--ink-mute);margin-bottom:6px;letter-spacing:.05em;text-transform:uppercase">Plantilla generada</div>
+      <div class="output-mono" id="ctxOutput">Rellena los campos y pulsa "Generar contexto"…</div>
+      <button class="btn btn-sage" id="copyCtxBtn" onclick="copyCtx()" style="display:none">📋 Copiar contexto</button>
+    </div>
+
+    <div class="sec-hdr" style="padding-top:0"><h2>Plantillas listas para usar</h2><p>Selecciona una actividad y copia la plantilla en tu IA</p></div>
+    <div class="plantilla-grid" id="plantillaGrid"></div>
+    <div id="plantillaDetail" style="display:none;border:1px solid var(--line);border-radius:var(--radius);padding:22px;margin-bottom:20px;animation:fadeUp .25s ease"></div>
+
+    <div class="card">
+      <div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:10px">Antes de usar el resultado con estudiantes</div>
+      <h3 style="font-family:var(--serif);font-weight:400;font-size:20px;margin-bottom:14px">Diez preguntas de revisión</h3>
+      <ul class="checklist">
+        <li>¿He definido el nivel del estudiante?</li><li>¿He explicado el objetivo de aprendizaje?</li>
+        <li>¿He aportado el material de referencia necesario?</li><li>¿He indicado el formato de salida deseado?</li>
+        <li>¿He señalado qué no debe hacer la IA?</li><li>¿He pedido que no invente datos ni bibliografía?</li>
+        <li>¿He previsto revisión humana del resultado?</li><li>¿He protegido datos sensibles del paciente?</li>
+        <li>¿He diseñado algo que obligue al estudiante a pensar?</li><li>¿Quedará alguna evidencia del proceso de aprendizaje?</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<footer style="border-top:1px solid var(--line);padding:20px 24px;max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;color:var(--ink-mute);font-size:12px;flex-wrap:wrap;gap:8px">
+  <span>EduMed · UVa — Unidad de Educación Médica · Facultad de Medicina</span>
+  <span>Del Prompt al Diseño Pedagógico · 2026</span>
+</footer>
+
+<script>
+/* ══ DATA ══════════════════════════════════════════════════════ */
+const PAGES=[
+  {label:"Inicio",dot:"#ccc"},
+  {label:"① Prompts",dot:"#6b4f8a"},
+  {label:"② Contexto",dot:"#1a5fa8"},
+  {label:"③④ Flujos & Agentes",dot:"#148f77"},
+  {label:"⑤ Diseño pedagógico",dot:"#d35400"},
+  {label:"🛠 Taller",dot:"#8B4A2A"},
+];
+
+const TL_STEPS=[
+  {color:"#6b4f8a",icon:"✍️",num:"Etapa 1",label:"Ingeniería de prompts",q:"¿Cómo se lo pido?",
+   desc:"El punto de partida. Aprendes a estructurar la instrucción: rol, tarea, formato, criterios y restricciones. Un prompt bien construido cambia radicalmente la calidad de la respuesta.",
+   evo:"Simula un paciente con dolor torácico.",
+   riesgo:"Respuesta genérica o de nivel inadecuado.",
+   mejora:"Añade estructura: rol, contexto, tarea, formato, criterios y restricciones."},
+  {color:"#1a5fa8",icon:"🗂️",num:"Etapa 2",label:"Ingeniería de contexto",q:"¿Qué necesita saber?",
+   desc:"El prompt es la pregunta. El contexto es todo lo que le das a la IA para que pueda responder bien: tus apuntes, las guías clínicas que usas en clase, la rúbrica del departamento, ejemplos de casos anteriores, los errores que cometieron tus estudiantes en el último examen, los límites de lo que puede o no puede hacer. Cuanto mejor preparado esté el contexto, menos alucinará la IA y más útil será su respuesta.",
+   evo:`Simula un paciente con dolor torácico para estudiantes de 3.º. No reveles el diagnóstico. Responde solo a lo que pregunten. Usa lenguaje de paciente. Al final, da feedback sobre la anamnesis.`,
+   riesgo:"Dar demasiado contexto sin orden ni jerarquía: la IA se pierde entre documentos irrelevantes.",
+   mejora:"Aporta lo justo y bien organizado: el material del curso, los objetivos concretos y las restricciones clave."},
+  {color:"#148f77",icon:"🔀",num:"Etapa 3",label:"Flujos de trabajo",q:"¿Qué pasos debe seguir?",
+   desc:"Diseñas una secuencia donde cada respuesta alimenta el siguiente paso. Ya no es una pregunta aislada: es un proceso con lógica pedagógica.",
+   evo:`Paso 1: simulación de anamnesis.
+Paso 2: feedback de la IA.
+Paso 3: segunda entrevista mejorada.
+Paso 4: reflexión escrita del estudiante.`,
+   riesgo:"Automatizar demasiado y eliminar el esfuerzo cognitivo del estudiante.",
+   mejora:"Definir qué hace la IA y qué debe hacer el estudiante solo."},
+  {color:"#d35400",icon:"🤖",num:"Etapa 4",label:"Agentes",q:"¿La IA trabajando sola?",
+   desc:"Un agente no espera a que le digas qué hacer en cada paso. Tú le das un objetivo —'analiza las respuestas de mis 30 estudiantes y genera feedback personalizado para cada uno'— y ella decide sola cómo lograrlo: qué leer primero, qué buscar en las guías, cómo clasificar los errores, qué proponer. Es la diferencia entre dirigir cada movimiento y contratar a alguien que sabe hacer el trabajo.",
+   evo:`Tú dices una vez: "Aquí están las respuestas de mis 30 estudiantes al caso de disnea. Analízalas, detecta errores frecuentes, genera feedback personalizado para cada uno y propón actividades de refuerzo."
+
+El agente hace solo: lee las 30 respuestas → consulta las guías → clasifica los errores → escribe feedback individual → diseña actividades → genera informe para el docente.`,
+   riesgo:"Confiar en el agente sin supervisar sus decisiones: puede equivocarse con apariencia de certeza.",
+   mejora:"Tú defines el objetivo y revisas los resultados. El agente ejecuta. La validación final siempre es tuya."},
+  {color:"#8B4A2A",icon:"🎓",num:"Etapa 5",label:"Diseño pedagógico",q:"¿Qué aprendizaje quiero provocar?",
+   desc:"No se trata de usar bien la IA, sino de diseñar mejores situaciones de aprendizaje. El docente decide qué hace la IA, qué hace el estudiante y qué evidencias demuestran el aprendizaje.",
+   evo:`El docente decide:
+• Qué hace la IA: simular y dar feedback.
+• Qué hace el estudiante: anamnesis y reflexión.
+• Qué valida el docente: trazas, rúbrica, comparación pre/post.
+• Qué evidencias demuestran el aprendizaje: portfolio, cambios en el razonamiento.`,
+   riesgo:"Complejidad del diseño sin evidencias de impacto real.",
+   mejora:"Evaluar si el uso de IA mejora las competencias clínicas del estudiante."},
+];
+
+const ACCORD=[
+  {icon:"🎭",title:"Rol",sub:"¿Qué debe ser la IA?",body:"Indica a la IA qué papel jugar. Transforma radicalmente el comportamiento: profesor que explica ≠ tutor que pregunta ≠ paciente que simula síntomas ≠ revisor crítico que detecta errores.",ex:'«Actúa como tutor socrático. No des la respuesta directamente. Haz preguntas progresivas para que el estudiante razone por qué este paciente con fiebre, soplo y hemocultivos positivos puede tener endocarditis.»',err:"Pensar que el rol es la pieza más importante. Sin contexto y tarea claros, el mejor rol no sirve de nada."},
+  {icon:"🌍",title:"Contexto",sub:"¿Para quién y en qué situación?",body:"El nivel del estudiante, lo que ya sabe y lo que aún no. Sin contexto, la IA elige el nivel por ti —y casi siempre se equivoca. El contexto calibra profundidad, vocabulario y dificultad.",ex:'«Estoy preparando material para estudiantes de 3.º de Medicina. Ya han estudiado fisiología cardiovascular pero aún no han cursado Cardiología clínica. No han visto los criterios de Framingham.»',err:"Omitir el nivel. Sin saber si es un estudiante de primero o un residente, la IA genera contenido de dificultad aleatoria."},
+  {icon:"✅",title:"Tarea",sub:"¿Qué debe hacer exactamente?",body:"El verbo de acción. Resumir, generar, comparar, simular, evaluar, corregir. Verbos vagos producen resultados vagos. Un prompt sin tarea clara es un prompt sin propósito.",ex:'«Genera tres casos clínicos breves para trabajar el diagnóstico diferencial de disnea aguda en urgencias. Cada caso debe tener un diagnóstico diferente.»',err:"Usar 'hazme' sin especificar qué tipo de producto. «Hazme algo sobre el IAM» puede dar lugar a cualquier cosa."},
+  {icon:"📄",title:"Formato",sub:"¿Cómo quieres la respuesta?",body:"Sin formato especificado, la IA elige. A veces bien; a veces recibes 800 palabras en prosa cuando necesitabas una tabla de 5 columnas.",ex:'«Devuelve la respuesta como una tabla con cuatro columnas: caso clínico (2-3 líneas) | dato clave | diagnóstico más probable | pregunta para el estudiante.»',err:"No especificar formato y luego reformatear manualmente. Siempre es más eficiente pedirlo antes."},
+  {icon:"⭐",title:"Criterios",sub:"¿Cómo será una buena respuesta?",body:"Sin criterios, no puedes evaluar si la respuesta es buena o mediocre. Los criterios también guían a la IA para auto-regularse durante la generación.",ex:'«Los casos deben ser clínicamente plausibles, adecuados para grado, con datos suficientes para razonar pero sin dar el diagnóstico en las primeras líneas.»',err:"Aceptar la primera respuesta sin criterios definidos. Sin ellos, la evaluación de calidad queda en manos de la IA."},
+  {icon:"🚫",title:"Restricciones",sub:"¿Qué no debe hacer?",body:"En medicina esto es crítico: no inventar bibliografía, no dar recomendaciones no verificadas, no usar datos reales de pacientes. Las restricciones protegen la seguridad clínica.",ex:'«No incluyas enfermedades raras de prevalencia menor a 1/10.000. No des el diagnóstico antes de que el estudiante razone. No inventes referencias bibliográficas.»',err:"Olvidar las restricciones de seguridad. Una IA sin restricciones puede inventar dosis con apariencia de total certeza clínica."},
+  {icon:"🔄",title:"Iteración",sub:"Revisar, ajustar, mejorar",body:"Un buen prompt rara vez sale perfecto a la primera. La iteración es parte del proceso. Guarda las mejores versiones como plantillas reutilizables para el próximo curso.",ex:'«La tabla es útil, pero los casos son demasiado evidentes. Reescríbelos para obligar a distinguir entre IC, EPOC, anemia y ansiedad, sin que el diagnóstico sea obvio desde la primera frase.»',err:"Aceptar la primera respuesta sin revisión. La IA puede sonar convincente y estar equivocada en clínica."},
+];
+
+const PROMPT_TYPES=[
+  {icon:"🎯",title:"Zero-shot",body:"Pides la tarea sin ejemplos. Útil para tareas sencillas y consultas rápidas.",ex:"«Explica la diferencia entre sensibilidad y especificidad para un estudiante de 3.º.»",uso:"Definiciones, explicaciones breves.",riesgo:"Nivel y profundidad impredecibles."},
+  {icon:"📚",title:"Few-shot",body:"Das 1-3 ejemplos del estilo antes de pedir la tarea. Mantiene consistencia.",ex:"«Quiero preguntas con este modelo: [ejemplo]… Ahora genera 5 más sobre arritmias.»",uso:"Test, casos, rúbricas con estilo definido.",riesgo:"Los ejemplos pueden sesgar la creatividad."},
+  {icon:"🪜",title:"Secuencial",body:"Divides la tarea en pasos sucesivos. Cada respuesta alimenta la siguiente.",ex:"«1. Propón objetivos. 2. Diseña actividades. 3. Crea la rúbrica. 4. Revisa la coherencia.»",uso:"Diseño de sesiones y unidades didácticas.",riesgo:"Requiere más atención en cada paso."},
+  {icon:"🤔",title:"Socrático",body:"La IA no da la respuesta: hace preguntas progresivas. Protege el esfuerzo cognitivo.",ex:"«Actúa como tutor socrático. No des la respuesta final. Guía al estudiante para razonar el diferencial de disnea.»",uso:"Diagnóstico diferencial, preparación de exámenes.",riesgo:"Si el estudiante se bloquea, puede frustrarse."},
+  {icon:"⚔️",title:"Adversarial",body:"La IA actúa como crítico: señala hipótesis prematuras, sesgos y diagnósticos omitidos.",ex:"«Analiza este diferencial como un adjunto crítico. Señala hipótesis prematuras y diagnósticos graves que no debería olvidar.»",uso:"Seguridad clínica y pensamiento crítico.",riesgo:"Puede percibirse como negativo sin encuadre."},
+];
+
+const CTX_ITEMS=[
+  {icon:"📚",label:"Documentos",title:"Material de referencia",body:"Guías, apuntes, artículos. La base de conocimiento de tu tarea. Sin material específico, la IA usa su entrenamiento general, que puede estar desactualizado.",ex:"# Material base\nApuntes Fisiopatología cap. 4 (metabolismo del hierro)\nGuía ESC 2023 insuficiencia cardiaca"},
+  {icon:"🎯",label:"Objetivos",title:"Objetivos de aprendizaje",body:"Qué debe aprender o demostrar el estudiante. Sin objetivo, el contexto carece de dirección.",ex:"# Objetivo\n1. Clasificar una anemia por VCM y reticulocitos\n2. Distinguir déficit de producción, pérdida y hemólisis\n3. Evitar los 3 errores más frecuentes"},
+  {icon:"📏",label:"Reglas",title:"Reglas de comportamiento",body:"Cómo debe comportarse la IA: no revelar el diagnóstico, responder solo a lo preguntado, usar lenguaje de paciente.",ex:"# Reglas\n- No menciones el diagnóstico hasta que el estudiante lo nombre\n- Usa lenguaje de paciente, no de médico\n- Al terminar, da feedback sobre la anamnesis"},
+  {icon:"💡",label:"Ejemplos",title:"Ejemplos del estilo",body:"Un ejemplo vale más que diez instrucciones sobre formato. Muestra a la IA cómo debe ser la salida ideal.",ex:"# Ejemplo\nVarón 45 años, fumador, disnea progresiva 3 semanas y sibilancias. Sin fiebre.\n→ Breve, dato clave implícito, diagnóstico no evidente"},
+  {icon:"🔗",label:"Fuentes",title:"Fuentes válidas",body:"Qué fuentes puede usar. Reduce alucinaciones y da trazabilidad clínica.",ex:"# Fuentes aceptadas\n- Guías ESC, AHA, SEPAR (hasta 2023)\n- Harrison's 21.ª ed.\n- No fuentes no indexadas"},
+  {icon:"🧠",label:"Memoria",title:"Historial relevante",body:"En flujos de varias sesiones: qué se ha hecho ya, qué decidió el estudiante antes.",ex:"# Historial\nEn la sesión anterior el estudiante omitió preguntar por medicación habitual y antecedentes familiares."},
+  {icon:"🛠️",label:"Herramientas",title:"Herramientas disponibles",body:"Si la IA puede buscar, calcular o acceder a bases de datos. En sistemas RAG, especifica qué fuentes están en tiempo real.",ex:"# Herramientas\n- Búsqueda en guías ESC (actualizada 2024)\n- Calculadora de riesgo GRACE\n- Sin acceso a internet general"},
+  {icon:"📊",label:"Evaluación",title:"Criterios de calidad",body:"La rúbrica y los indicadores de calidad. Guía a la IA para auto-regularse.",ex:"# Criterios\n- Plausibilidad clínica real\n- Diagnóstico no evidente pero alcanzable\n- Activa razonamiento diferencial, no solo memoria"},
+  {icon:"🔐",label:"Seguridad",title:"Límites de seguridad",body:"Instrucciones críticas en medicina: no datos reales de pacientes, no recomendaciones no verificadas, no sustituir el juicio clínico.",ex:"# Seguridad\n- No datos identificables de pacientes reales\n- No dar dosis sin indicar verificación en ficha técnica\n- No sustituir la decisión clínica del médico"},
+];
+
+const SCENARIOS=[
+  {icon:"📖",title:"Memorización",desc:"Memorizar criterios diagnósticos.",verdict:"limit",why:"Puede generar flashcards, no sustituir la memorización."},
+  {icon:"🩺",title:"Diagnóstico diferencial",desc:"Formular hipótesis a partir de datos.",verdict:"no",why:"El esfuerzo de razonar el diferencial es la competencia a desarrollar."},
+  {icon:"📝",title:"Redacción de TFG",desc:"Estructurar y redactar un trabajo propio.",verdict:"limit",why:"Puede ayudar con estructura; no redactar el contenido."},
+  {icon:"🗣️",title:"Anamnesis simulada",desc:"Practicar la entrevista clínica.",verdict:"ok",why:"Un paciente virtual bien diseñado es excelente."},
+  {icon:"🎤",title:"Evaluación oral",desc:"Defender un diagnóstico ante el tribunal.",verdict:"no",why:"Mide competencias que deben ejecutarse sin IA."},
+  {icon:"📚",title:"Revisión bibliográfica",desc:"Buscar, leer y sintetizar artículos.",verdict:"limit",why:"Puede identificar artículos; la lectura crítica es del estudiante."},
+];
+
+const MADUREZ=[
+  {icon:"🔍",num:"Nivel 1",label:"Curiosidad",sub:"Prueba prompts sueltos",desc:"Exploras qué puede hacer la IA. A veces funciona, a veces no.",riesgo:"Expectativas desajustadas.",sig:"Aprende la estructura básica: rol, tarea, formato, restricción.",como:"Usa estos 4 elementos en tu próximo prompt."},
+  {icon:"⚙️",num:"Nivel 2",label:"Productividad",sub:"Creas materiales",desc:"Usas la IA para crear materiales. Ves que ahorra tiempo pero copias sin revisar.",riesgo:"Copiar sin verificar la calidad clínica.",sig:"Añadir criterios de calidad y restricciones.",como:"Aplica el checklist de revisión antes de usar el resultado con estudiantes."},
+  {icon:"🗂️",num:"Nivel 3",label:"Contexto",sub:"Preparas el entorno",desc:"Preparas el contexto antes del prompt. El resultado mejora notablemente.",riesgo:"Exceso de contexto que confunde.",sig:"Seleccionar y jerarquizar el contexto.",como:"Prepara un documento de contexto con los 7 componentes mínimos."},
+  {icon:"🔀",num:"Nivel 4",label:"Flujo",sub:"Diseñas secuencias",desc:"Diseñas flujos donde cada respuesta alimenta el siguiente paso.",riesgo:"Automatizar demasiado y eliminar el esfuerzo cognitivo del estudiante.",sig:"Definir qué hace la IA y qué debe hacer el estudiante.",como:"Diseña un flujo de 3 pasos: generación → práctica → feedback."},
+  {icon:"🎓",num:"Nivel 5",label:"Experiencia",sub:"Diseñas aprendizaje",desc:"Combinas simulación, feedback, reflexión y evaluación con evidencias del proceso.",riesgo:"Complejidad sin evidencias de impacto real.",sig:"Evaluar si el uso de IA mejora las competencias con métricas concretas.",como:"Define: qué hace la IA, qué el estudiante, qué validas tú y qué evidencias recoges."},
+];
+
+const MSGS=["La ingeniería de prompts no ha muerto, pero ya no basta.","El rol ayuda, pero no sustituye a un buen contexto.","La IA mejora cuando sabe para quién trabaja, con qué fuentes, con qué límites y con qué objetivo.","En educación médica el contexto debe proteger el razonamiento clínico, la seguridad y la privacidad.","El profesor no desaparece: se convierte en diseñador del entorno donde la IA puede ser útil."];
+
+const CTX_FIELDS=[
+  {id:"cf-pub",label:"Público",tag:"imprescindible",ph:"Ej: Estudiantes de 3.º de Medicina, ya han cursado Fisiopatología"},
+  {id:"cf-obj",label:"Objetivo docente",tag:"imprescindible",ph:"Ej: Al terminar distinguirán IC con FE reducida y preservada"},
+  {id:"cf-mat",label:"Material de referencia",tag:"recomendado",ph:"Ej: Apuntes cap. 4, Guía ESC 2023"},
+  {id:"cf-tar",label:"Tarea para la IA",tag:"imprescindible",ph:"Ej: Genera 3 preguntas tipo test con retroalimentación"},
+  {id:"cf-fmt",label:"Formato de salida",tag:"recomendado",ph:"Ej: Tabla con 5 columnas"},
+  {id:"cf-cri",label:"Criterios de calidad",tag:"recomendado",ph:"Ej: Plausibles, diagnóstico no evidente, nivel de grado"},
+  {id:"cf-res",label:"Restricciones",tag:"imprescindible",ph:"Ej: No enfermedades raras, no inventar referencias"},
+  {id:"cf-seg",label:"Seguridad",tag:"en medicina siempre",ph:"Ej: No datos de pacientes reales, no sustituir juicio clínico"},
+];
+
+const PLANTILLAS=[
+  {icon:"🩺",title:"Paciente virtual",desc:"Simulación de anamnesis",txt:`# ROL\nEres un paciente simulado, no un médico.\n\n# CASO BASE\n[Edad, sexo, síntoma principal, tiempo de evolución, antecedentes]\n\n# OBJETIVO DOCENTE\nEntrenar la entrevista clínica en estudiantes de [curso].\n\n# REGLAS\n- Responde solo a lo que el estudiante pregunte\n- Usa lenguaje de paciente, no de médico\n- No menciones el diagnóstico salvo que el estudiante lo nombre\n- Si usa tecnicismos, pide aclaración\n\n# FEEDBACK AL TERMINAR\nValora: 1) estructura anamnesis 2) datos preguntados 3) datos omitidos 4) comunicación 5) siguiente mejora.`},
+  {icon:"🤔",title:"Tutor socrático",desc:"Guía el razonamiento sin dar la respuesta",txt:`# OBJETIVO\nAyudar al estudiante a comprender [tema] mediante preguntas progresivas.\n\n# NIVEL\nEstudiante de [curso] de Medicina.\n\n# REGLA PRINCIPAL\nNo des respuestas cerradas salvo que el estudiante esté completamente bloqueado.\n\n# SECUENCIA\n1. Pregunta qué sabe el estudiante sobre [concepto base]\n2. Explora la relación entre [A] y [B]\n3. Pregunta por las implicaciones clínicas\n4. Pide una explicación completa con sus palabras\n\n# EVALUACIÓN FINAL\nSíntesis de 100 palabras. Una fortaleza y una mejora concreta.`},
+  {icon:"📝",title:"Preguntas tipo test",desc:"Razonamiento, no memorización",txt:`# PÚBLICO\nEstudiantes de [curso] de Medicina.\n\n# TEMA\n[Especifica el tema exacto]\n\n# OBJETIVO\n[Qué competencia o razonamiento se quiere trabajar]\n\n# TAREA\nCrea [N] preguntas tipo test con 5 opciones y una sola correcta.\n\n# CRITERIOS\n- Deben exigir razonamiento, no memoria literal\n- Los distractores deben ser plausibles\n- Incluye retroalimentación para cada opción\n\n# RESTRICCIONES\n- No incluyas [exclusiones temáticas]\n- No des el diagnóstico en el enunciado`},
+  {icon:"📋",title:"Rúbrica",desc:"Criterios claros y observables",txt:`# TAREA A EVALUAR\n[Describe qué debe hacer el estudiante]\n\n# DIMENSIONES\n1. [Dimensión 1 — ej: razonamiento clínico]\n2. [Dimensión 2 — ej: comunicación]\n3. [Dimensión 3 — ej: seguridad del paciente]\n\n# FORMATO\nTabla: Dimensión | Excelente | Adecuado | Mejorable | Insuficiente\nCada celda: descripción conductual observable, no valorativa.\n\n# RESTRICCIONES\n- No usar términos vagos como "bueno" o "correcto"\n- Cada nivel debe distinguirse por conductas concretas`},
+  {icon:"🎓",title:"Sesión docente",desc:"Guion de clase activa completo",txt:`# ASIGNATURA · CURSO · DURACIÓN\n[Nombre] · [Curso] · [Minutos]\n\n# TEMA\n[Tema específico]\n\n# OBJETIVOS\n1. [Objetivo 1]\n2. [Objetivo 2]\n3. [Objetivo 3]\n\n# ESTRUCTURA\n- [X] min: caso inicial / activación\n- [X] min: marco conceptual\n- [X] min: actividad práctica\n- [X] min: errores frecuentes\n- [X] min: cierre y preguntas\n\n# PRODUCTO\nGuion docente en tabla: tiempo | actividad | pregunta al estudiante | mensaje clave.`},
+  {icon:"💬",title:"Feedback formativo",desc:"Retroalimentación constructiva",txt:`# ROL\nEres un evaluador formativo. Tu objetivo es ayudar a mejorar, no juzgar.\n\n# TAREA EVALUADA\n[Describe qué hizo el estudiante]\n\n# RÚBRICA\n[Pega aquí los criterios de evaluación]\n\n# TRABAJO DEL ESTUDIANTE\n[Pega aquí el texto o descripción]\n\n# INSTRUCCIONES\n1. Señala una fortaleza concreta\n2. Identifica la mejora más importante con ejemplo\n3. Formula una pregunta que invite a reflexionar\n\n# RESTRICCIONES\n- No des una nota ni uses términos valorativos vagos\n- Sé específico: cita partes concretas\n- Tono constructivo`},
+];
+
+/* ══ LANDING DEMO ═══════════════════════════════════════════════ */
+let demoRan=false;
+const demoText="Hazme una clase sobre lupus.";
+
+function runDemo(){
+  if(demoRan)return;
+  demoRan=true;
+  const el=document.getElementById('demoPromptText');
+  el.classList.add('typing');
+  let i=0;
+  const iv=setInterval(()=>{
+    el.textContent=demoText.slice(0,i+1);
+    i++;
+    if(i>=demoText.length){clearInterval(iv);el.classList.remove('typing');
+      setTimeout(()=>document.getElementById('demoResponse').classList.add('visible'),600);}
+  },55);
+}
+function resetDemo(){
+  demoRan=false;
+  document.getElementById('demoPromptText').textContent='';
+  document.getElementById('demoPromptText').classList.remove('typing');
+  document.getElementById('demoResponse').classList.remove('visible');
+}
+
+function revealHook(){
+  const r=document.getElementById('hookReveal');
+  r.classList.add('open');
+  document.querySelector('.hook-btn').style.display='none';
+  setTimeout(()=>r.scrollIntoView({behavior:'smooth',block:'nearest'}),100);
+}
+
+/* ══ TIMELINE ═══════════════════════════════════════════════════ */
+function buildTimeline(){
+  const steps=document.getElementById('tlSteps');
+  TL_STEPS.forEach((s,i)=>{
+    const el=document.createElement('div');
+    el.className='tl-step';
+    el.innerHTML=`<div class="tl-dot" style="background:${s.color}"><span style="font-size:22px">${s.icon}</span></div><div class="tl-step-num" style="color:${s.color}">${s.num}</div><div class="tl-step-label">${s.label}</div><div class="tl-step-q">${s.q}</div>`;
+    el.onclick=()=>openTl(i,el);
+    steps.appendChild(el);
+  });
+}
+
+let activeTl=null;
+function openTl(i,el){
+  document.querySelectorAll('.tl-step').forEach(s=>s.classList.remove('active'));
+  const det=document.getElementById('tlDetail');
+  if(activeTl===i){activeTl=null;det.classList.remove('open');return;}
+  activeTl=i;el.classList.add('active');
+  const s=TL_STEPS[i];
+  det.innerHTML=`
+    <div class="tl-detail-bar" style="background:${s.color}"></div>
+    <div class="tl-detail-inner">
+      <div class="tl-detail-label" style="color:${s.color}">${s.num} · ${s.label}</div>
+      <div class="tl-detail-title">${s.label}</div>
+      <div class="tl-detail-q">${s.q}</div>
+      <p class="tl-detail-desc">${s.desc}</p>
+      <div class="tl-detail-evo">
+        <div class="tl-detail-evo-lbl" style="background:${s.color}">📝 Cómo se ve en la práctica</div>
+        <div class="tl-detail-evo-txt">${s.evo}</div>
+      </div>
+      <div class="tl-detail-grid">
+        <div class="tl-info" style="background:#fff8f5;border:1px solid #fdddd5"><strong style="color:#c0392b">⚠ Riesgo de quedarse aquí</strong>${s.riesgo}</div>
+        <div class="tl-info" style="background:var(--sage-light);border:1px solid #c5e0cc"><strong style="color:var(--sage)">→ Cómo avanzar</strong>${s.mejora}</div>
+      </div>
+    </div>`;
+  det.classList.add('open');
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+/* ══ NAV ══════════════════════════════════════════════════════ */
+function buildNav(){
+  const nav=document.getElementById('topNav');
+  PAGES.forEach((p,i)=>{
+    const btn=document.createElement('button');
+    btn.className='tnav-btn'+(i===0?' active':'');
+    btn.innerHTML=`<span class="dot" style="background:${p.dot}"></span>${p.label}`;
+    btn.onclick=()=>switchPage(i);
+    nav.appendChild(btn);
+  });
+}
+
+function switchPage(n){
+  document.querySelectorAll('.page').forEach((p,i)=>p.classList.toggle('active',i===n));
+  document.querySelectorAll('.tnav-btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  window.scrollTo(0,0);
+}
+
+/* ══ PROMPT BUILDER COMPARATOR ════════════════════════════════ */
+const PBC_PIECES=[
+  {icon:"🎭",title:"Rol",sub:"¿Qué debe ser la IA?",
+   color:"#6b4f8a",
+   chunk:"Actúa como tutor socrático de Medicina Interna. ",
+   body:"Indica a la IA qué papel debe jugar. Transforma el comportamiento por completo: un profesor que explica es muy distinto de un tutor que pregunta, un paciente que simula síntomas o un revisor crítico que detecta errores.",
+   ex:"«Actúa como tutor socrático. No des la respuesta directamente. Haz preguntas progresivas para que el estudiante razone el diagnóstico diferencial de disnea.»",
+   err:"Creer que el rol es la pieza más importante. Sin contexto y tarea claros, el mejor rol no sirve."},
+  {icon:"🌍",title:"Contexto",sub:"¿Para quién y en qué situación?",
+   color:"#1a5fa8",
+   chunk:"Estoy preparando material para estudiantes de 3.º de Medicina que ya conocen la fisiología cardiovascular pero aún no han cursado Cardiología clínica. ",
+   body:"El nivel del estudiante, lo que ya sabe y lo que aún no. Sin contexto la IA elige el nivel por ti —y casi siempre se equivoca. Calibra profundidad, vocabulario y dificultad.",
+   ex:"«Estoy preparando material para estudiantes de 3.º. Ya han estudiado fisiología cardiovascular pero aún no han cursado Cardiología clínica.»",
+   err:"Omitir el nivel. Sin saber si es un estudiante de primero o un residente, la IA genera contenido de dificultad aleatoria."},
+  {icon:"✅",title:"Tarea",sub:"¿Qué debe hacer exactamente?",
+   color:"#148f77",
+   chunk:"Genera tres casos clínicos breves de disnea aguda en urgencias para trabajar el diagnóstico diferencial. ",
+   body:"El verbo de acción. Resumir, generar, comparar, simular, evaluar, corregir. Verbos vagos producen resultados vagos. Un prompt sin tarea clara es un prompt sin propósito.",
+   ex:"«Genera tres casos clínicos breves para trabajar el diagnóstico diferencial de disnea aguda en urgencias. Cada caso debe tener un diagnóstico diferente.»",
+   err:"Usar 'hazme' sin especificar qué tipo de producto. «Hazme algo sobre el IAM» puede dar lugar a cualquier cosa."},
+  {icon:"📄",title:"Formato",sub:"¿Cómo quieres la respuesta?",
+   color:"#d35400",
+   chunk:"Devuelve la respuesta como una tabla con cuatro columnas: caso clínico (2-3 líneas) | dato clave | diagnóstico más probable | pregunta para el estudiante. ",
+   body:"Sin formato especificado la IA elige. A veces bien; a veces recibes 800 palabras en prosa cuando necesitabas una tabla.",
+   ex:"«Devuelve la respuesta como una tabla con cuatro columnas: caso clínico | dato clave | diagnóstico probable | pregunta para el estudiante.»",
+   err:"No especificar formato y reformatear manualmente. Siempre es más eficiente pedirlo antes."},
+  {icon:"⭐",title:"Criterios",sub:"¿Cómo será una buena respuesta?",
+   color:"#0e7490",
+   chunk:"Los casos deben ser clínicamente plausibles, adecuados para grado, con datos suficientes para razonar pero sin dar el diagnóstico en las primeras líneas. ",
+   body:"Sin criterios no puedes evaluar si la respuesta es buena o mediocre. Los criterios también guían a la IA para auto-regularse durante la generación.",
+   ex:"«Los casos deben ser clínicamente plausibles, adecuados para grado, con datos suficientes para razonar pero sin revelar el diagnóstico desde el inicio.»",
+   err:"Aceptar la primera respuesta sin criterios definidos. Sin ellos, la evaluación de calidad queda en manos de la IA."},
+  {icon:"🚫",title:"Restricciones",sub:"¿Qué no debe hacer?",
+   color:"#7d3c98",
+   chunk:"No incluyas enfermedades raras de prevalencia menor a 1/10.000. No des el diagnóstico antes de que el estudiante razone. No inventes referencias bibliográficas. ",
+   body:"En medicina esto es crítico: no inventar bibliografía, no dar recomendaciones no verificadas, no usar datos reales de pacientes. Las restricciones protegen la seguridad clínica.",
+   ex:"«No incluyas enfermedades raras. No des el diagnóstico antes de que el estudiante razone. No inventes referencias bibliográficas.»",
+   err:"Olvidar las restricciones de seguridad. Una IA sin restricciones puede inventar dosis con apariencia de certeza clínica."},
+  {icon:"🔄",title:"Iteración",sub:"Revisar, ajustar, mejorar",
+   color:"#2e86c1",
+   chunk:"[Tras recibir la respuesta] Los casos son demasiado evidentes. Reescríbelos para que el estudiante deba distinguir entre IC, EPOC, anemia y ansiedad sin que el diagnóstico sea obvio desde la primera frase.",
+   body:"Un buen prompt rara vez sale perfecto a la primera. La iteración es parte del proceso, no un fracaso. Guarda las mejores versiones como plantillas reutilizables.",
+   ex:"«Los casos son demasiado evidentes. Reescríbelos para obligar a distinguir entre IC, EPOC, anemia y ansiedad, sin diagnóstico obvio desde la primera frase.»",
+   err:"Aceptar la primera respuesta sin revisión. La IA puede sonar convincente y estar equivocada en clínica."},
+];
+
+const pbcState=new Array(7).fill(false);
+let pbcActiveDetail=null;
+
+const VERDICTS=[
+  {min:0,max:0,label:"Sin estructura",color:"#bbb"},
+  {min:1,max:2,label:"Básico",color:"#e74c3c"},
+  {min:3,max:4,label:"En construcción",color:"#e67e22"},
+  {min:5,max:6,label:"Buen prompt",color:"#f1c40f"},
+  {min:7,max:7,label:"✓ Prompt completo",color:"#27ae60"},
+];
+
+function buildPBC(){
+  const sw=document.getElementById('pbcSwitches');
+  PBC_PIECES.forEach((p,i)=>{
+    const row=document.createElement('div');
+    row.className='pbc-switch-row';
+    row.style.setProperty('--sw-color',p.color);
+    row.innerHTML=`
+      <button class="pbc-toggle" onclick="togglePBC(${i},event)" aria-label="Activar ${p.title}"></button>
+      <span class="pbc-sw-icon">${p.icon}</span>
+      <div style="flex:1;min-width:0">
+        <div class="pbc-sw-label">${p.title}</div>
+        <div class="pbc-sw-sub">${p.sub}</div>
+      </div>`;
+    row.addEventListener('click', e=>{
+      if(e.target.classList.contains('pbc-toggle')) return;
+      showPBCDetail(i);
+    });
+    sw.appendChild(row);
+  });
+  updatePBC();
+}
+
+function togglePBC(i, e){
+  e.stopPropagation();
+  pbcState[i]=!pbcState[i];
+  const rows=document.querySelectorAll('.pbc-switch-row');
+  rows[i].classList.toggle('on', pbcState[i]);
+  updatePBC();
+}
+
+function updatePBC(){
+  // Prompt display
+  const el=document.getElementById('pbcPrompt');
+  el.innerHTML=PBC_PIECES.map((p,i)=>{
+    const on=pbcState[i];
+    return `<span class="pbc-chunk ${on?'on':'off'}" style="${on?'background:'+p.color+';border-radius:3px;padding:1px 4px;':'opacity:.28;'}">${p.chunk}</span>`;
+  }).join('');
+
+  // Meter
+  const count=pbcState.filter(Boolean).length;
+  const pct=Math.round(count/7*100);
+  const fill=document.getElementById('pbcFill');
+  const pctEl=document.getElementById('pbcPct');
+  const verdict=VERDICTS.find(v=>count>=v.min&&count<=v.max)||VERDICTS[0];
+  fill.style.width=pct+'%';
+  fill.style.background=verdict.color;
+  pctEl.textContent=pct+'%';
+  pctEl.style.color=verdict.color;
+  const vEl=document.getElementById('pbcVerdict');
+  vEl.textContent=verdict.label;
+  vEl.style.color=verdict.color;
+}
+
+function showPBCDetail(i){
+  const det=document.getElementById('pbcDetail');
+  if(pbcActiveDetail===i){pbcActiveDetail=null;det.classList.remove('open');return;}
+  pbcActiveDetail=i;
+  const p=PBC_PIECES[i];
+  det.innerHTML=`
+    <div class="pbc-detail-head">
+      <span class="pbc-detail-icon">${p.icon}</span>
+      <div>
+        <div class="pbc-detail-name" style="color:${p.color}">${p.title}</div>
+        <div class="pbc-detail-sub">${p.sub}</div>
+      </div>
+    </div>
+    <div class="pbc-detail-body">${p.body}</div>
+    <div class="pbc-detail-ex"><div class="ex-lbl">Ejemplo médico</div><pre>${p.ex}</pre></div>
+    <div class="pbc-detail-err"><strong style="color:#c0392b">Error frecuente: </strong>${p.err}</div>`;
+  det.classList.add('open');
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+function buildAccord(){ /* replaced by PBC */ }
+function toggleAccord(i){ /* replaced */ }
+
+/* ══ PROMPT TYPES ═════════════════════════════════════════════ */
+function buildPromptTypes(){
+  document.getElementById('promptTypesGrid').innerHTML=PROMPT_TYPES.map(pt=>`
+    <div style="background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px">
+      <div style="font-size:22px;margin-bottom:8px">${pt.icon}</div>
+      <div style="font-weight:700;font-size:14px;margin-bottom:6px">${pt.title}</div>
+      <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin-bottom:12px">${pt.body}</p>
+      <div style="font-family:var(--mono);font-size:11px;background:var(--bg-deep);padding:9px 12px;border-radius:6px;line-height:1.75;color:var(--ink-mute);white-space:pre-wrap;margin-bottom:10px">${pt.ex}</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span style="background:var(--sage-light);color:var(--sage);font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px">✓ ${pt.uso}</span>
+        <span style="background:#fff8f5;color:#c0392b;font-size:11px;font-weight:600;padding:3px 9px;border-radius:999px">⚠ ${pt.riesgo}</span>
+      </div>
+    </div>`).join('');
+}
+
+/* ══ CTX GRID ════════════════════════════════════════════════ */
+function buildCtxGrid(){
+  const g=document.getElementById('ctxGrid');
+  CTX_ITEMS.forEach((t,i)=>{
+    const el=document.createElement('div');
+    el.className='ctx-tile';
+    el.innerHTML=`<div style="font-size:22px;margin-bottom:6px">${t.icon}</div><div style="font-size:12px;font-weight:700;color:var(--ink)">${t.label}</div>`;
+    el.onclick=()=>openCtx(i,el);
+    g.appendChild(el);
+  });
+}
+let activeCtx=null;
+function openCtx(i,el){
+  document.querySelectorAll('.ctx-tile').forEach(t=>t.classList.remove('active'));
+  const det=document.getElementById('ctxDetail');
+  if(activeCtx===i){activeCtx=null;det.style.display='none';return;}
+  activeCtx=i;el.classList.add('active');
+  const t=CTX_ITEMS[i];
+  det.innerHTML=`<div style="font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:8px">${t.icon} ${t.title}</div><p style="font-size:14px;color:var(--ink-soft);line-height:1.7;margin-bottom:14px">${t.body}</p><div style="font-family:var(--mono);font-size:12px;background:var(--bg-deep);padding:14px;border-radius:8px;line-height:1.8;color:var(--ink-mute);white-space:pre-wrap">${t.ex}</div>`;
+  det.style.display='block';
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+/* ══ SCENARIOS ════════════════════════════════════════════════ */
+function buildScenarios(){
+  const g=document.getElementById('scenarioGrid');
+  SCENARIOS.forEach(s=>{
+    const cls=s.verdict==='ok'?{bg:'#eaf7ec',c:'#1e8a3a',lbl:'✓ IA adecuada'}:s.verdict==='limit'?{bg:'#fff8e8',c:'#b07800',lbl:'⚡ IA limitada'}:{bg:'#fdecea',c:'#c0392b',lbl:'✕ No recomendable'};
+    const el=document.createElement('div');
+    el.style.cssText='background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px';
+    el.innerHTML=`<div style="font-size:24px;margin-bottom:7px">${s.icon}</div><h4 style="font-weight:700;font-size:13px;margin-bottom:4px">${s.title}</h4><p style="font-size:12px;color:var(--ink-mute);line-height:1.5;margin-bottom:8px">${s.desc}</p><div style="display:inline-flex;font-size:11px;font-weight:700;padding:3px 9px;border-radius:999px;background:${cls.bg};color:${cls.c}">${cls.lbl}</div><p style="font-size:12px;color:var(--ink-mute);margin-top:7px;line-height:1.45">${s.why}</p>`;
+    g.appendChild(el);
+  });
+}
+
+/* ══ MADUREZ ══════════════════════════════════════════════════ */
+let activeMad=null;
+function buildMadurez(){
+  const g=document.getElementById('madStrip');
+  MADUREZ.forEach((m,i)=>{
+    const el=document.createElement('div');el.className='mad-card';
+    el.innerHTML=`<div style="font-family:var(--mono);font-size:9px;color:var(--ink-mute);margin-bottom:4px">${m.num}</div><div style="font-size:20px;margin-bottom:5px">${m.icon}</div><div style="font-size:11px;font-weight:700;color:var(--ink)">${m.label}</div>`;
+    el.onclick=()=>openMad(i,el);
+    g.appendChild(el);
+  });
+}
+function openMad(i,el){
+  document.querySelectorAll('.mad-card').forEach(c=>c.classList.remove('active'));
+  const det=document.getElementById('madDetail');
+  if(activeMad===i){activeMad=null;det.style.display='none';return;}
+  activeMad=i;el.classList.add('active');
+  const m=MADUREZ[i];
+  det.innerHTML=`<div style="font-weight:700;font-size:17px;margin-bottom:8px">${m.icon} ${m.num}: ${m.label}</div><p style="color:var(--ink-soft);line-height:1.7;margin-bottom:14px;font-size:14px">${m.desc}</p><div style="background:#fff8f5;border-left:3px solid #e74c3c;padding:10px 14px;border-radius:0 8px 8px 0;margin-bottom:12px;font-size:13px;color:#7a3030"><strong style="color:#c0392b">Riesgo: </strong>${m.riesgo}</div><div style="background:var(--sage-light);border-left:3px solid var(--sage);padding:12px 16px;border-radius:0 8px 8px 0;font-size:14px;color:var(--ink-soft)"><strong style="color:var(--sage);display:block;margin-bottom:4px">→ Tu siguiente paso</strong><strong style="font-size:14px;color:var(--ink);display:block;margin-bottom:5px">${m.sig}</strong>${m.como}</div>`;
+  det.style.display='block';
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+/* ══ MSGS ════════════════════════════════════════════════════ */
+function buildMsgs(){
+  document.getElementById('msgList').innerHTML=MSGS.map((m,i)=>`
+    <div style="display:flex;align-items:flex-start;gap:16px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px">
+      <div style="font-family:var(--mono);font-size:17px;font-weight:600;color:#e8d8cc;min-width:26px;flex-shrink:0">${i+1}</div>
+      <div style="font-family:var(--serif);font-size:15px;color:var(--ink-soft);line-height:1.6">${m}</div>
+    </div>`).join('');
+}
+
+/* ══ TALLER ══════════════════════════════════════════════════ */
+function buildPrompt(){
+  const r=id=>document.getElementById(id).value.trim();
+  const tarea=r('b-tarea');
+  if(!tarea){document.getElementById('builderOutput').innerHTML='<span style="color:#c0392b">Define al menos la tarea.</span>';return;}
+  let parts=[];
+  if(r('b-rol'))parts.push('Actúa como '+r('b-rol')+'.');
+  if(r('b-ctx'))parts.push('Contexto: '+r('b-ctx')+'.');
+  parts.push(tarea.endsWith('.')?tarea:tarea+'.');
+  if(r('b-formato'))parts.push('Formato: '+r('b-formato')+'.');
+  if(r('b-criterios'))parts.push('Criterios: '+r('b-criterios')+'.');
+  if(r('b-restrict'))parts.push('Restricciones: '+r('b-restrict')+'.');
+  const out=document.getElementById('builderOutput');
+  out.innerHTML=parts.map(p=>`<span class="hi">${p}</span>`).join('\n\n');
+  out.dataset.plain=parts.join('\n\n');
+  document.getElementById('copyBtn').style.display='inline-flex';
+}
+function clearBuilder(){['b-rol','b-ctx','b-tarea','b-formato','b-criterios','b-restrict'].forEach(id=>document.getElementById(id).value='');document.getElementById('builderOutput').innerHTML='Rellena al menos la tarea y pulsa "Generar prompt"…';document.getElementById('copyBtn').style.display='none';}
+function copyPrompt(){navigator.clipboard.writeText(document.getElementById('builderOutput').dataset.plain||'');document.getElementById('copyBtn').textContent='✓ Copiado';setTimeout(()=>document.getElementById('copyBtn').textContent='📋 Copiar',2000);}
+
+function buildCtxBuilderGrid(){
+  const g=document.getElementById('ctxBuilderGrid');
+  CTX_FIELDS.forEach(f=>{
+    const d=document.createElement('div');d.className='builder-field';
+    d.innerHTML=`<label>${f.label} <span style="font-size:10px;padding:1px 7px;border-radius:999px;background:var(--accent-light);color:var(--accent);font-weight:500;margin-left:4px">${f.tag}</span></label><textarea id="${f.id}" placeholder="${f.ph}" rows="2"></textarea>`;
+    g.appendChild(d);
+  });
+}
+function buildCtx(){
+  const vals=CTX_FIELDS.map(f=>({label:f.label,val:document.getElementById(f.id).value.trim()})).filter(v=>v.val);
+  const out=document.getElementById('ctxOutput');
+  if(!vals.length){out.innerHTML='<span style="color:#c0392b">Rellena al menos un campo.</span>';return;}
+  const text=vals.map(v=>`# ${v.label}\n${v.val}`).join('\n\n');
+  out.textContent=text;out.dataset.plain=text;
+  document.getElementById('copyCtxBtn').style.display='inline-flex';
+}
+function clearCtx(){CTX_FIELDS.forEach(f=>{const el=document.getElementById(f.id);if(el)el.value='';});document.getElementById('ctxOutput').innerHTML='Rellena los campos y pulsa "Generar contexto"…';document.getElementById('copyCtxBtn').style.display='none';}
+function copyCtx(){navigator.clipboard.writeText(document.getElementById('ctxOutput').dataset.plain||'');document.getElementById('copyCtxBtn').textContent='✓ Copiado';setTimeout(()=>document.getElementById('copyCtxBtn').textContent='📋 Copiar contexto',2000);}
+
+let activePlant=null;
+function buildPlantillas(){
+  const g=document.getElementById('plantillaGrid');
+  PLANTILLAS.forEach((p,i)=>{
+    const el=document.createElement('div');el.className='plantilla-card';
+    el.innerHTML=`<div style="font-size:26px;margin-bottom:8px">${p.icon}</div><h4 style="font-weight:700;font-size:14px;margin-bottom:4px">${p.title}</h4><p style="font-size:12px;color:var(--ink-mute)">${p.desc}</p>`;
+    el.onclick=()=>openPlant(i,el);g.appendChild(el);
+  });
+}
+function openPlant(i,el){
+  document.querySelectorAll('.plantilla-card').forEach(c=>c.classList.remove('active'));
+  const det=document.getElementById('plantillaDetail');
+  if(activePlant===i){activePlant=null;det.style.display='none';return;}
+  activePlant=i;el.classList.add('active');
+  const p=PLANTILLAS[i];
+  det.innerHTML=`<div style="font-family:var(--mono);font-size:10px;text-transform:uppercase;letter-spacing:.1em;color:var(--accent);margin-bottom:10px">${p.icon} Plantilla · ${p.title}</div><pre style="font-family:var(--mono);font-size:12px;line-height:1.8;color:var(--ink-soft);white-space:pre-wrap;background:var(--bg-deep);padding:14px;border-radius:8px;margin-bottom:12px">${p.txt}</pre><button class="btn btn-sage" onclick="copyPlant(${i})">📋 Copiar plantilla</button>`;
+  det.style.display='block';
+  setTimeout(()=>det.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+function copyPlant(i){navigator.clipboard.writeText(PLANTILLAS[i].txt);event.target.textContent='✓ Copiado';setTimeout(()=>event.target.textContent='📋 Copiar plantilla',2000);}
+
+/* ══ INIT ════════════════════════════════════════════════════ */
+document.addEventListener('DOMContentLoaded',()=>{
+  buildNav();
+  buildTimeline();
+  buildPBC();
+  buildPromptTypes();
+  buildCtxGrid();
+  buildScenarios();
+  buildMadurez();
+  buildMsgs();
+  buildCtxBuilderGrid();
+  buildPlantillas();
+});
+</script>
+</body>
+</html>
