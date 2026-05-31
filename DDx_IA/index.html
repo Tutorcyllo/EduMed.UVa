@@ -158,9 +158,12 @@
     /* ── Responsive ── */
     @media (max-width: 640px) {
       .hero { padding: 48px 0 40px; }
+      .hero-pills { justify-content: center; }
       .modules { padding: 44px 0 60px; }
-      .modules-grid { grid-template-columns: 1fr; }
-      .module-card { padding: 24px 22px; }
+      .module-row-top,
+      .module-row-bottom { grid-template-columns: 1fr; }
+      .module-group-cards { flex-direction: column; }
+      .module-card { padding: 22px 18px; }
       .module-num { font-size: 3rem; }
       .callout-box { flex-direction: column; padding: 28px 24px; gap: 16px; text-align: center; }
       .callout-icon { font-size: 2.5rem; }
