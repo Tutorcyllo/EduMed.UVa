@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Tipos de prompts para razonar con IA en clínica · EduMed UVa</title>
+  <title>Prompts · Fundamentos y flujos de trabajo · Prompts en clínica · EduMed UVa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -290,6 +290,56 @@
     .resource-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 18px; border-radius: 999px; background: var(--uva-blue); color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; transition: background .15s, transform .15s; }
     .resource-link:hover { background: var(--uva-blue-soft); transform: translateY(-1px); }
 
+    /* ══ CoT Builder ══ */
+    .cot-builder { margin-top: 16px; border: 1.5px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper); box-shadow: var(--shadow-sm); }
+    .cot-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
+    .cot-toggles { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .cot-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); cursor: pointer; transition: background .15s; user-select: none; position: relative; }
+    .cot-row:last-child { border-bottom: none; }
+    .cot-row:hover { background: var(--cream); }
+    .cot-row.active { background: var(--row-bg, #f0fdf4); border-left: 3px solid var(--row-color, #166534); }
+    .cot-row-icon { font-size: 1.1rem; flex-shrink: 0; width: 24px; text-align: center; }
+    .cot-row-text { flex: 1; min-width: 0; }
+    .cot-row-title { font-size: 12px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+    .cot-row-sub { font-size: 11px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
+    .cot-toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .cot-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .cot-toggle-track { position: absolute; inset: 0; border-radius: 999px; background: var(--line-strong); transition: background .2s; cursor: pointer; }
+    .cot-toggle input:checked + .cot-toggle-track { background: var(--row-color, #166534); }
+    .cot-toggle-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .2s; pointer-events: none; }
+    .cot-toggle input:checked ~ .cot-toggle-thumb { transform: translateX(16px); }
+
+    .cot-preview { padding: 16px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+    .cot-preview-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .cot-preview-text { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.78rem; line-height: 1.7; color: var(--ink); white-space: pre-wrap; }
+    .cot-frag { transition: all .2s; }
+    .cot-frag.inactive { color: var(--line-strong); opacity: .45; }
+    .cot-frag.inactive mark { background: none; text-decoration: none; color: inherit; }
+    .cot-frag.active { color: var(--ink); opacity: 1; }
+    .cot-frag.active mark { background: var(--frag-bg, #dcfce7); color: var(--frag-ink, #166634); border-radius: 2px; padding: 0 2px; }
+
+    .cot-quality { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--cream); }
+    .cot-quality-bar-wrap { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+    .cot-quality-bar { height: 100%; border-radius: 999px; width: 0%; transition: width .4s ease, background .4s ease; }
+    .cot-quality-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .cot-quality-pct { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 700; font-style: italic; color: var(--ink); min-width: 40px; text-align: right; }
+    .cot-quality-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+    .cot-detail { padding: 20px; border-top: 1px solid var(--line); background: var(--cream-2); animation: fadeUp .25s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .cot-detail-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .cot-detail-icon { font-size: 1.4rem; }
+    .cot-detail-title { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 700; }
+    .cot-detail-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 12px; }
+    .cot-detail-example { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.8rem; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--detail-color, #003973); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 10px 14px; line-height: 1.6; color: var(--ink); margin-bottom: 10px; white-space: pre-wrap; }
+    .cot-detail-warning { font-size: 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--r-sm); padding: 8px 12px; color: #92400e; line-height: 1.5; }
+    .cot-detail-warning::before { content: "⚠️ "; }
+
+    @media (max-width: 640px) {
+      .cot-panel { grid-template-columns: 1fr; }
+      .cot-toggles { border-right: none; border-bottom: 1px solid var(--line); }
+    }
+
     /* ── Footer ── */
     .footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
     .footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
@@ -317,10 +367,24 @@
     :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
     @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
   </style>
+  <style>
+    /* ── Paginación ── */
+    .page-nav { background: var(--cream); border-top: 1px solid var(--line); padding: 20px 0; }
+    .page-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .page-nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; text-decoration: none; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink-soft); transition: all .18s; }
+    .page-nav-btn:hover { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .page-nav-btn.next { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); }
+    .page-nav-btn.next:hover { background: var(--uva-blue-soft); }
+    .page-nav-btn.disabled { opacity: .3; pointer-events: none; }
+    .page-nav-btn svg { width: 14px; height: 14px; }
+    .page-counter { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .page-dots { display: flex; gap: 6px; align-items: center; }
+    .page-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); transition: background .2s; }
+    .page-dot.active { background: var(--uva-blue); width: 20px; border-radius: 999px; }
+  </style>
 </head>
 <body>
 
-  <!-- ── BARRA EDUMED ── -->
   <div class="edumed-bar">
     <div class="edumed-bar-inner">
       <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
@@ -329,52 +393,31 @@
           <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
         </div>
       </a>
-      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">
+      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts/">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
-        Volver a DDx_IA
+        Prompts en clínica
       </a>
     </div>
   </div>
 
-  <!-- ── NAV ÍNDICE ── -->
+  <div class="hero" style="padding:36px 0 28px;">
+    <div class="container">
+      <div class="hero-tag"><div class="hero-tag-dot"></div><span>Parte 1 de 3 · Tipos de prompts para razonar con IA</span></div>
+      <h1 class="hero-title" style="font-size:clamp(1.6rem,4vw,2.4rem);">Fundamentos del prompt clínico</h1>
+      <p class="hero-subtitle" style="font-size:14px;margin-bottom:0;">Qué es un prompt, cómo varía según su complejidad y cuáles son sus seis componentes internos.</p>
+    </div>
+  </div>
+
   <div class="nav-index">
     <div class="container">
       <div class="nav-pills">
-        <button class="nav-pill" onclick="scrollToSection('marco')">💬 Qué es</button>
+        <button class="nav-pill active" onclick="scrollToSection('marco')">💬 Qué es</button>
         <button class="nav-pill" onclick="scrollToSection('complejidad')">📶 Complejidad</button>
         <button class="nav-pill" onclick="scrollToSection('anatomia')">🔬 Anatomía</button>
-        <button class="nav-pill" onclick="scrollToSection('tipos')">🗂️ Tipos</button>
-        <button class="nav-pill" onclick="scrollToSection('flujos')">🔁 Flujos</button>
-        <button class="nav-pill" onclick="scrollToSection('supervision')">👁️ Supervisión</button>
-        <button class="nav-pill" onclick="scrollToSection('rag')">📚 RAG</button>
-        <button class="nav-pill" onclick="scrollToSection('estrategia')">🎯 Cómo elegir</button>
-        <button class="nav-pill" onclick="scrollToSection('cierre')">💡 Ideas finales</button>
-        <button class="nav-pill" onclick="scrollToSection('repaso')">🃏 Repaso</button>
-        <button class="nav-pill" onclick="scrollToSection('referencias')">📖 Referencias</button>
       </div>
     </div>
   </div>
 
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="container">
-      <div class="hero-tag">
-        <div class="hero-tag-dot"></div>
-        <span>Curso IA y razonamiento clínico · EduMed UVa</span>
-      </div>
-      <h1 class="hero-title">Tipos de prompts<br><em>para razonar con IA en clínica</em></h1>
-      <p class="hero-subtitle">La utilidad de un LLM en diagnóstico no depende solo del modelo, sino de cómo se le pregunta. Este material ordena los principales tipos de prompts desde los más simples hasta los más complejos, y explica cuándo conviene consultar primero al clínico o al modelo, qué papel tiene la supervisión humana y por qué el RAG importa en preguntas de alto impacto clínico.</p>
-      <div class="hero-meta">
-        <div class="hero-badge"><div class="hero-badge-icon">🗂️</div><div class="hero-badge-text"><span>Objetivo 1</span><span>Distinguir tipos de prompts según complejidad y función</span></div></div>
-        <div class="hero-badge"><div class="hero-badge-icon">⚖️</div><div class="hero-badge-text"><span>Objetivo 2</span><span>Qué gana y qué pierde el estudiante con cada forma de interacción</span></div></div>
-        <div class="hero-badge"><div class="hero-badge-icon">🎯</div><div class="hero-badge-text"><span>Objetivo 3</span><span>Elegir la estrategia adecuada según incertidumbre y momento</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       1. QUÉ ES UN PROMPT
-  ══════════════════════════════════ -->
   <section class="section" id="marco">
     <div class="container">
       <div class="section-eyebrow">Fundamentos</div>
@@ -403,6 +446,7 @@
   <!-- ══════════════════════════════════
        2. COMPLEJIDAD
   ══════════════════════════════════ -->
+
   <section class="section" id="complejidad">
     <div class="container">
       <div class="section-eyebrow">Gradiente de complejidad</div>
@@ -437,6 +481,7 @@
   <!-- ══════════════════════════════════
        3. ANATOMÍA DE UN PROMPT
   ══════════════════════════════════ -->
+
   <section class="section" id="anatomia">
     <div class="container">
       <div class="section-eyebrow">Estructura interna</div>
@@ -495,787 +540,127 @@
         <div class="alert-title">⚠️ Nunca incluyas datos personales del paciente en un prompt</div>
         <div class="alert-body"><strong>Nombre, fecha de nacimiento, número de historia clínica, dirección, teléfono o cualquier otro dato identificativo no deben aparecer jamás.</strong> Los LLM son servicios externos que procesan y pueden registrar el texto que reciben. Para construir un escenario clínico útil basta con datos anonimizados: sexo, edad aproximada y los datos clínicos relevantes. La protección de datos del paciente es una obligación legal y ética que no admite excepciones.</div>
       </div>
+
+      <!-- ── Constructor interactivo ── -->
+      <div style="margin-top:28px;">
+        <div class="section-eyebrow" style="margin-bottom:10px;">Ejemplo interactivo</div>
+        <p style="font-size:14px;color:var(--ink-soft);margin-bottom:16px;line-height:1.65;">Activa los componentes que quieras incluir y observa cómo se construye el prompt en tiempo real. Pulsa cualquier fila para ver su descripción, ejemplo y error frecuente.</p>
+
+        <div class="cot-builder" id="anatBuilder">
+          <div class="cot-panel">
+            <div class="cot-toggles" id="anatToggles"></div>
+            <div class="cot-preview">
+              <div class="cot-preview-label">Vista previa del prompt</div>
+              <div class="cot-preview-text" id="anatPreview"></div>
+            </div>
+          </div>
+          <div class="cot-quality">
+            <div class="cot-quality-bar-wrap">
+              <div class="cot-quality-bar" id="anatBar"></div>
+            </div>
+            <div class="cot-quality-meta">
+              <span class="cot-quality-pct" id="anatPct">0%</span>
+              <span class="cot-quality-label" id="anatLabel">Sin estructura</span>
+            </div>
+          </div>
+          <div class="cot-detail" id="anatDetail" style="display:none;"></div>
+        </div>
+      </div>
+
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       4. TIPOS DE PROMPTS
-  ══════════════════════════════════ -->
-  <section class="section" id="tipos">
+  <div class="page-nav">
     <div class="container">
-      <div class="section-eyebrow">Catálogo práctico</div>
-      <h2 class="section-title">4. Tipos de prompts</h2>
-      <p class="section-lead">Pulsa sobre cada tipo para ver su descripción, ventajas, límites, contexto ideal de uso y un ejemplo orientativo.</p>
-
-      <div class="acc-group" id="acc-tipos">
-
-        <div class="prompt-group-label">
-          <span class="prompt-group-icon">📝</span>
-          <div>
-            <div class="prompt-group-title">Prompts instruccionales</div>
-            <div class="prompt-group-desc">Organizan cómo el modelo estructura y presenta la información</div>
-          </div>
+      <div class="page-nav-inner">
+        <a class="page-nav-btn" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts/">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+          Índice
+        </a>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div class="page-dots"><div class="page-dot active"></div><div class="page-dot"></div><div class="page-dot"></div></div>
+          <span class="page-counter">Parte 1 de 3</span>
         </div>
-
-        <div class="acc-item blue open">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">1</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Instrucción directa · Zero-shot prompting</span>
-              <span class="acc-sublabel">Rápido e intuitivo — el más usado y el más vulnerable</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>El estudiante proporciona el caso clínico en texto libre y solicita directamente un diagnóstico o diferencial sin ofrecer ninguna estructura previa, ejemplos ni instrucciones de formato.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> es el método más rápido, intuitivo y fácil de formular.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> es el formato más vulnerable a respuestas superficiales o confirmatorias.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> consultas factuales rápidas o casos muy sencillos.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> puede dar una falsa sensación de utilidad porque no obliga a estructurar ni a auditar.</div>
-            </div>
-            <div class="prompt-box">Aquí está el caso clínico de una mujer de 75 años con edema y proteinuria. ¿Cuál es el diagnóstico más probable y qué diagnósticos diferenciales priorizarías?</div>
-          </div>
-        </div>
-
-        <div class="acc-item blue">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">2</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Instrucción en dos pasos · Two-Step prompting</span>
-              <span class="acc-sublabel">Sintetiza primero, diagnostica después</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>Se fuerza a la IA a organizar y estructurar primero la información clínica antes de intentar diagnosticar. Esto imita el proceso de síntesis que realizan los médicos humanos y reduce el riesgo de que el modelo pase por alto datos enterrados en el texto.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> mejora el rendimiento frente a la instrucción directa porque obliga al modelo a sintetizar antes de concluir.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> requiere más lectura y todavía no obliga a explicar bien la fisiopatología.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> viñetas largas o historiales desordenados.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> un error en la síntesis inicial puede arrastrarse a todo el diferencial.</div>
-            </div>
-            <div class="prompt-box">Paso 1: organiza la información del siguiente caso clínico en categorías estructuradas.
-Paso 2: a partir de esa información organizada, genera un diagnóstico diferencial priorizado.</div>
-          </div>
-        </div>
-
-        <div class="acc-item blue">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">3</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Cadena de pensamiento · Chain-of-Thought / CoT</span>
-              <span class="acc-sublabel">Razonamiento paso a paso explícito y auditable</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>Se instruye al modelo para que razone paso a paso y haga explícita su lógica antes de ofrecer una conclusión final. Es la estrategia más útil cuando el estudiante necesita ver cómo el modelo conecta los datos del caso.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> produce explicaciones más ricas y vuelve la lógica más auditable.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> tarda más y puede acumular errores en casos muy ruidosos.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> casos complejos, atípicos o raros.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> la apariencia de lógica no sustituye a la plausibilidad clínica.</div>
-            </div>
-            <div class="prompt-box">#1 Síntesis clínica: resume los datos clave del caso (antecedentes, síntomas, signos, exploración física y analítica disponible). A partir de ello, crea una lista de "problemas activos".
-
-#2 Análisis sindrómico: identifica los síndromes principales que emergen del caso.
-
-#3 Indagación activa: antes de dar el diagnóstico diferencial, detente. Enumera qué datos específicos de la anamnesis, factores de riesgo epidemiológico o hallazgos físicos faltan y explica por qué son cruciales para discriminar entre tus sospechas iniciales.
-
-#4 Diagnóstico diferencial jerarquizado:
-- Más probable: por frecuencia y concordancia clínica.
-- Diferenciales competitivos: otras causas que encajan parcialmente.
-- "Must-not-miss": diagnósticos graves o urgentes que deben descartarse obligatoriamente, aunque sean menos probables.
-
-#5 Justificación de hipótesis: explica brevemente qué datos apoyan y qué datos contradicen cada una de tus 5 hipótesis principales.
-
-#6 Plan de acción: sugiere pruebas complementarias priorizadas por la relación coste-beneficio y rentabilidad diagnóstica, de lo más sencillo o no invasivo a lo más complejo.
-
-Espera a mi respuesta tras el punto 3 si consideras que la información es insuficiente para avanzar con seguridad.</div>
-          </div>
-        </div>
-
-        <div class="prompt-group-label" style="margin-top:8px;">
-          <span class="prompt-group-icon" style="background:var(--e-red-l);color:var(--e-red);">🎭</span>
-          <div>
-            <div class="prompt-group-title" style="color:var(--e-red);">Modificaciones del rol y la reflexión del LLM</div>
-            <div class="prompt-group-desc">Cambian el papel que adopta el modelo o le obligan a revisar su propia salida</div>
-          </div>
-        </div>
-
-        <div class="acc-item red">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-amber-l);color:var(--e-amber);">4</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Generación de conocimiento previo · Generated Knowledge</span>
-              <span class="acc-sublabel">Marco teórico primero, caso clínico después</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>Se pide al LLM que primero recupere teoría o guías sobre un síndrome o un síntoma y solo después aplique ese conocimiento al caso concreto.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> reduce errores de omisión y ancla la respuesta en un marco teórico.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> si la teoría inicial contiene errores o desactualización, el razonamiento posterior hereda ese fallo.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> síndromes que el estudiante no domina bien.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> el alumno puede quedarse en la teoría general y dejar de pensar en el paciente real.</div>
-            </div>
-            <div class="prompt-box">Primero, resume las principales causas de dolor torácico agudo según las guías clínicas actuales.
-Luego, usando ese resumen, propón un diagnóstico diferencial para este paciente.</div>
-          </div>
-        </div>
-
-        <div class="acc-item red">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">5</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Autorreflexión y consistencia · Self-Reflection</span>
-              <span class="acc-sublabel">El modelo se revisa a sí mismo como revisor crítico</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>Se solicita a la IA que se revise a sí misma, que actúe como revisor crítico de su propia salida o que vuelva a analizar el caso buscando contradicciones, diagnósticos omitidos o banderas rojas.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> ayuda a mitigar el cierre prematuro y favorece una segunda lectura del caso.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> consume más tiempo y puede volver al modelo excesivamente conservador.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> decisiones clínicas de alto riesgo o validación final.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> no elimina la necesidad de supervisión humana.</div>
-            </div>
-            <div class="prompt-box">Has propuesto este diferencial. Ahora asume el rol de un revisor crítico:
-¿Qué evidencia de este caso contradice tu primer diagnóstico?
-¿Qué enfermedad pudiste omitir? Revisa tu respuesta.</div>
-          </div>
-        </div>
-
-        <div class="acc-item red">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">6</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Roles dialógicos y adversariales · Tutor socrático y Equipo Rojo</span>
-              <span class="acc-sublabel">El LLM pone a prueba el razonamiento del estudiante</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>El estudiante formula primero su hipótesis y luego pide al LLM que adopte un papel pedagógico o adversarial para ponerla a prueba. Es una de las estrategias más recomendables para evitar aquiescencia y automatización.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> genera fricción epistémica y obliga a justificar el razonamiento.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> requiere que el estudiante ya haya pensado primero.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> entrenamiento avanzado del juicio clínico.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> si el prompt es blando, el diálogo puede ser largo pero poco exigente.</div>
-            </div>
-            <div class="prompt-box">Actúa como un médico adjunto senior muy crítico. Mi diagnóstico principal para este paciente es X.
-Tu misión es cuestionar mi razonamiento, señalar los datos que he ignorado y proponer la mejor hipótesis alternativa que podría llevar al fallecimiento del paciente si me equivoco.</div>
-          </div>
-        </div>
-
-        <div class="acc-item red">
-          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">7</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Experto en fisiopatología</span>
-              <span class="acc-sublabel">Obliga a demostrar que la hipótesis explica causalmente el caso</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <p>Se pide al LLM que actúe como tutor de mecanismos biológicos. Su función no es dar el diagnóstico final, sino obligar al estudiante a demostrar que su hipótesis explica de forma causal y coherente el conjunto del caso.</p>
-            <div class="meta-grid">
-              <div class="meta-box"><strong>Ventajas:</strong> combate la ilusión de fluidez y obliga a conectar signos, síntomas y analítica.</div>
-              <div class="meta-box"><strong>Limitaciones:</strong> exige bastante base previa del estudiante.</div>
-              <div class="meta-box"><strong>Ideal para:</strong> profundizar en casos complejos o revisar hipótesis débiles.</div>
-              <div class="meta-box"><strong>Riesgo docente:</strong> sin base previa, la conversación puede resultar improductiva.</div>
-            </div>
-            <div class="prompt-box">Actúa como tutor socrático de fisiopatología. No quiero que me des el diagnóstico final.
-Guíame con preguntas para analizar si esa enfermedad puede explicar de forma coherente los hallazgos clínicos y analíticos.</div>
-          </div>
-        </div>
-
+        <a class="page-nav-btn next" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Tipos">
+          Tipos y flujos →
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
+        </a>
       </div>
     </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       5. CUÁNDO CONSULTA QUIÉN
-  ══════════════════════════════════ -->
-  <section class="section" id="flujos">
-    <div class="container">
-      <div class="section-eyebrow">Orden de interacción</div>
-      <h2 class="section-title">5. Cuándo consulta quién</h2>
-      <p class="section-lead">No solo importa el tipo de prompt. También importa en qué momento se consulta al LLM y quién formula la primera hipótesis. Esta decisión cambia el riesgo de anclaje, aquiescencia y automatización.</p>
-
-      <div class="tabs-nav" id="flujoNav">
-        <button class="tab-btn active" data-tab="f1" onclick="switchTab(this,'pane-f1','flujoNav','flujoBody')">✅ Human-first</button>
-        <button class="tab-btn" data-tab="f2" onclick="switchTab(this,'pane-f2','flujoNav','flujoBody')">⚠️ LLM-first</button>
-        <button class="tab-btn" data-tab="f3" onclick="switchTab(this,'pane-f3','flujoNav','flujoBody')">🔀 Paralelo</button>
-        <button class="tab-btn" data-tab="f4" onclick="switchTab(this,'pane-f4','flujoNav','flujoBody')">🔁 Segunda lectura</button>
-      </div>
-      <div class="tabs-body" id="flujoBody">
-
-        <div class="tab-pane active" id="pane-f1" style="background:var(--e-green-l);">
-          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Flujo recomendado</div>
-          <div class="tab-pane-title" style="color:var(--e-green);">Human-first · Protocolo sándwich</div>
-          <p class="tab-pane-def">El clínico piensa primero, formula su representación del problema y construye un diferencial inicial antes de consultar al LLM. Después usa la IA para ampliar, tensionar o revisar su razonamiento. Protege el esfuerzo cognitivo propio y reduce el anclaje sobre la primera salida del modelo.</p>
-          <div class="tab-subcats">
-            <div class="tab-subcat"><div class="tab-subcat-title">Por qué es el flujo de referencia en docencia</div><div class="tab-subcat-desc">El estudiante debe pensar antes de consultar. El LLM añade valor cuando actúa como ampliador, crítico o revisor, no cuando sustituye la construcción inicial del problema.</div></div>
-          </div>
-        </div>
-
-        <div class="tab-pane" id="pane-f2" style="background:var(--e-red-l);">
-          <div class="tab-pane-tag" style="background:rgba(157,23,77,.12);color:var(--e-red);">Uso más arriesgado</div>
-          <div class="tab-pane-title" style="color:var(--e-red);">LLM-first · AI-first</div>
-          <p class="tab-pane-def">El modelo formula primero las hipótesis y el clínico las revisa después. Puede ser útil para abrir posibilidades en casos muy atípicos o cuando se busca una segunda perspectiva inicial, pero aumenta el riesgo de sesgo de automatización, sobre todo en estudiantes o usuarios poco entrenados.</p>
-        </div>
-
-        <div class="tab-pane" id="pane-f3" style="background:var(--e-indigo-l);">
-          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Opción avanzada</div>
-          <div class="tab-pane-title" style="color:var(--e-indigo);">Pensamiento en paralelo</div>
-          <p class="tab-pane-def">El clínico y el LLM generan de forma independiente un diferencial inicial y luego se comparan ambas salidas. Este modelo reduce la contaminación mutua de hipótesis y puede ser especialmente útil en casos complejos, aunque exige más tiempo y más disciplina cognitiva.</p>
-        </div>
-
-        <div class="tab-pane" id="pane-f4" style="background:var(--e-teal-l);">
-          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">Uso concreto</div>
-          <div class="tab-pane-title" style="color:var(--e-teal);">Second thought · Segunda lectura</div>
-          <p class="tab-pane-def">El LLM no se usa al inicio, sino al final de un primer ciclo diagnóstico, como herramienta de contraste. Sirve para revisar diagnósticos omitidos, pedir datos discordantes o actuar como revisor crítico antes de cerrar el caso.</p>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       6. SUPERVISIÓN HUMANA
-  ══════════════════════════════════ -->
-  <section class="section" id="supervision">
-    <div class="container">
-      <div class="section-eyebrow">Control del proceso</div>
-      <h2 class="section-title">6. Supervisión humana: in, on y out of the loop</h2>
-      <p class="section-lead">Estas expresiones ayudan a pensar cuánto control mantiene el clínico sobre la salida del sistema.</p>
-
-      <div class="tabs-nav" id="loopNav">
-        <button class="tab-btn active" data-tab="l1" onclick="switchTab(this,'pane-l1','loopNav','loopBody')">✅ In the loop</button>
-        <button class="tab-btn" data-tab="l2" onclick="switchTab(this,'pane-l2','loopNav','loopBody')">⚠️ On the loop</button>
-        <button class="tab-btn" data-tab="l3" onclick="switchTab(this,'pane-l3','loopNav','loopBody')">🚫 Out of the loop</button>
-        <button class="tab-btn" data-tab="l4" onclick="switchTab(this,'pane-l4','loopNav','loopBody')">📋 Recomendaciones</button>
-      </div>
-      <div class="tabs-body" id="loopBody">
-
-        <div class="tab-pane active" id="pane-l1" style="background:var(--e-green-l);">
-          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Modelo recomendado</div>
-          <div class="tab-pane-title" style="color:var(--e-green);">Human in the loop</div>
-          <p class="tab-pane-def">El clínico permanece dentro del proceso: introduce el caso, revisa la salida, contrasta los errores y toma la decisión final. Es el modelo más seguro y el más apropiado para formación, porque la IA no sustituye el juicio humano sino que se integra en él.</p>
-        </div>
-
-        <div class="tab-pane" id="pane-l2" style="background:var(--e-amber-l);">
-          <div class="tab-pane-tag" style="background:rgba(146,64,14,.12);color:var(--e-amber);">Supervisión limitada</div>
-          <div class="tab-pane-title" style="color:var(--e-amber);">Human on the loop</div>
-          <p class="tab-pane-def">El sistema actúa con bastante autonomía y el humano supervisa más a distancia que de forma activa. Puede tener sentido en tareas más protocolizadas o de bajo riesgo, pero es menos apropiado para razonamiento clínico abierto y diagnóstico diferencial complejo.</p>
-        </div>
-
-        <div class="tab-pane" id="pane-l3" style="background:var(--e-red-l);">
-          <div class="tab-pane-tag" style="background:rgba(157,23,77,.12);color:var(--e-red);">No recomendado en diagnóstico</div>
-          <div class="tab-pane-title" style="color:var(--e-red);">Human out of the loop</div>
-          <p class="tab-pane-def">El humano queda fuera del circuito decisional o interviene demasiado tarde. En razonamiento clínico y diagnóstico diferencial este modelo no es aceptable como enfoque docente ni como práctica clínica segura, porque rompe el principio de validación crítica y desplaza indebidamente la responsabilidad.</p>
-        </div>
-
-        <div class="tab-pane" id="pane-l4" style="background:var(--e-indigo-l);">
-          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Aplicación práctica</div>
-          <div class="tab-pane-title" style="color:var(--e-indigo);">Cómo trasladar este marco a la docencia y a la práctica</div>
-          <div class="tab-subcats">
-            <div class="tab-subcat"><div class="tab-subcat-title">En formación</div><div class="tab-subcat-desc">Debe mantenerse al estudiante dentro del proceso, no convertirlo en mero lector de salidas de IA.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">En práctica clínica</div><div class="tab-subcat-desc">El profesional debe conservar la autonomía interpretativa y la decisión final.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">En evaluación</div><div class="tab-subcat-desc">Hay que valorar no solo la respuesta final, sino cómo se ha usado la IA y qué supervisión real ha existido.</div></div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       7. RAG Y HERRAMIENTAS CON EVIDENCIA
-  ══════════════════════════════════ -->
-  <section class="section" id="rag">
-    <div class="container">
-      <div class="section-eyebrow">Evidencia externa</div>
-      <h2 class="section-title">7. RAG y herramientas con evidencia</h2>
-      <p class="section-lead">No todos los sistemas de IA clínica funcionan igual. Un <strong>LLM generalista</strong> responde usando sobre todo lo que aprendió durante su entrenamiento previo. En cambio, un sistema con <strong>RAG</strong> añade un paso intermedio: antes de responder, busca información en fuentes externas y luego genera la respuesta a partir de esos documentos recuperados.</p>
-
-      <div class="ethics-list" style="margin-bottom:20px;">
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-indigo);">1</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Qué es exactamente un RAG</div>
-            <div class="ethics-desc">La sigla RAG significa <em>Retrieval-Augmented Generation</em> (generación aumentada por recuperación). El proceso tiene tres pasos: el usuario formula una pregunta clínica → el sistema recupera artículos, guías o documentos relevantes en una base de datos externa → el modelo usa esos textos recuperados para generar una respuesta más anclada en fuentes concretas. El RAG no sustituye al modelo de lenguaje, sino que le añade un mecanismo de consulta externa antes de responder.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-teal);">2</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Por qué importa en clínica</div>
-            <div class="ethics-desc">En medicina, muchas preguntas dependen de guías recientes, ensayos actualizados, fichas técnicas nuevas o recomendaciones cambiantes. Un LLM generalista puede sonar convincente aunque esté usando información antigua o aproximada. Un sistema con RAG intenta reducir ese problema consultando primero una fuente externa antes de construir la respuesta. Especialmente útil en preguntas terapéuticas, guías recientes, conductas de alto impacto clínico y fármacos nuevos.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--uva-blue);">3</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Diferencia práctica entre ambos modelos</div>
-            <div class="ethics-desc">Si preguntas a un <strong>LLM generalista</strong> por el tratamiento actual de un síndrome, la respuesta dependerá sobre todo de lo que el modelo aprendió antes. Si haces la misma pregunta a un sistema con <strong>RAG</strong>, este intentará localizar primero documentos relevantes y responder a partir de ellos. Dicho de forma simple: el LLM generalista contesta "desde su memoria"; el sistema con RAG intenta contestar "mirando primero en una biblioteca".</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-red);">4</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Qué no soluciona por sí solo</div>
-            <div class="ethics-desc">Tener RAG no convierte automáticamente una herramienta en correcta ni elimina la necesidad de supervisión. También hay que valorar qué fuentes consulta, cómo selecciona los documentos, si los interpreta bien y si el clínico comprueba que la respuesta realmente encaja con el caso.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-amber);">5</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Ejemplos de bases que podría consultar un RAG médico</div>
-            <div class="ethics-desc">
-              <div class="rag-grid" style="margin-top:8px;">
-                <div class="rag-card"><div class="rag-card-title">📄 Bases bibliográficas</div><div class="rag-card-desc">PubMed y bases de artículos científicos.</div></div>
-                <div class="rag-card"><div class="rag-card-title">📋 Guías clínicas</div><div class="rag-card-desc">Recomendaciones de sociedades científicas.</div></div>
-                <div class="rag-card"><div class="rag-card-title">📚 Sumarios clínicos</div><div class="rag-card-desc">Recursos estructurados para respuestas rápidas.</div></div>
-                <div class="rag-card"><div class="rag-card-title">💊 Bases farmacológicas</div><div class="rag-card-desc">Fichas técnicas, dosis e interacciones.</div></div>
-                <div class="rag-card"><div class="rag-card-title">🏥 Historia clínica</div><div class="rag-card-desc">Datos del paciente si el sistema está conectado.</div></div>
-                <div class="rag-card"><div class="rag-card-title">🗂️ Protocolos locales</div><div class="rag-card-desc">Vías clínicas y documentos hospitalarios.</div></div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-green);">6</div>
-          <div class="ethics-content">
-            <div class="ethics-title">OpenEvidence como ejemplo docente</div>
-            <div class="ethics-desc">Puede presentarse como ejemplo de herramienta de IA orientada a medicina basada en la evidencia. Su interés docente no está en sustituir el razonamiento clínico, sino en mostrar la diferencia entre conversar con un LLM generalista y consultar un sistema diseñado para apoyarse en literatura médica estructurada. Puede usarse para comparar dos preguntas idénticas formuladas a sistemas distintos.</div>
-            <a class="resource-link" href="https://www.openevidence.com/" target="_blank" rel="noopener noreferrer" style="margin-top:10px;">🔗 Abrir OpenEvidence</a>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       8. CÓMO ELEGIR EL TIPO DE PROMPT
-  ══════════════════════════════════ -->
-  <section class="section" id="estrategia">
-    <div class="container">
-      <div class="section-eyebrow">Criterio de selección</div>
-      <h2 class="section-title">8. Cómo elegir el tipo de prompt</h2>
-      <p class="section-lead">No se trata de usar siempre el prompt más complejo, sino el más adecuado para la incertidumbre del caso y para el objetivo docente del momento.</p>
-
-      <div class="ethics-list">
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-green);">1</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos simples o consultas breves → instrucción directa (zero-shot)</div>
-            <div class="ethics-desc">Cuando la pregunta es factual, el riesgo es bajo y el tiempo disponible es escaso. No requiere estructura especial.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-teal);">2</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos largos o desordenados → instrucción en dos pasos (two-step)</div>
-            <div class="ethics-desc">Cuando la viñeta clínica es extensa o los datos están dispersos. Obliga al modelo a sintetizar antes de diagnosticar.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-indigo);">3</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos complejos o atípicos → cadena de pensamiento (CoT)</div>
-            <div class="ethics-desc">Cuando el caso requiere razonamiento explícito y auditable paso a paso, especialmente en presentaciones poco habituales.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-amber);">4</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Cuando falta base teórica → generación de conocimiento previo</div>
-            <div class="ethics-desc">Cuando el estudiante no domina bien el síndrome o la categoría diagnóstica. El modelo aporta el marco teórico antes de aplicarlo al caso.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-violet);">5</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Antes de cerrar un caso → autorreflexión (self-reflection)</div>
-            <div class="ethics-desc">Como revisión final antes de aceptar un diferencial. El modelo actúa como revisor crítico de su propia salida o de la hipótesis del estudiante.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-red);">6</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Para entrenar juicio crítico → tutor socrático o equipo rojo</div>
-            <div class="ethics-desc">Cuando el objetivo es pedagógico, no diagnóstico. El modelo tensiona, cuestiona y obliga al estudiante a justificar su razonamiento.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--uva-blue);">7</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Para revisar mecanismos → experto en fisiopatología</div>
-            <div class="ethics-desc">Cuando se quiere comprobar si la hipótesis es biológicamente coherente. El modelo no da el diagnóstico, sino que exige al estudiante explicar los mecanismos.</div>
-            <span class="ethics-tag">⚠️ Largo no significa mejor — la calidad depende de si la instrucción mantiene el esfuerzo cognitivo del estudiante</span>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       9. REFERENCIAS
-  ══════════════════════════════════ -->
-
-  <!-- ══════════════════════════════════
-       9. REPASO INTERACTIVO — FLASHCARDS
-  ══════════════════════════════════ -->
-  <section class="section" id="repaso">
-    <div class="container">
-      <div class="section-eyebrow">Autoevaluación</div>
-      <h2 class="section-title">9. Repaso interactivo</h2>
-      <p class="section-lead">Lee el prompt del anverso e intenta identificar de qué tipo es y para qué es más útil antes de girar la tarjeta.</p>
-        <span class="choice-progress">Tarjeta <span id="fcCur">1</span> de <span id="fcTot">6</span></span>
-        <span style="font-size:13px;color:var(--muted);">Pulsa para girar · usa las flechas para navegar</span>
-      </div>
-
-      <div class="choice-stack" id="fcStack">
-
-        <button class="choice-card" data-idx="0" style="--card-tint:var(--e-green-l);--card-ink:var(--e-green);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">1</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Paciente de 58 años con dolor torácico y sudoración. ¿Cuál es el diagnóstico más probable?"</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Instrucción directa · Zero-shot</p>
-                <p class="choice-back-explain">Solicita directamente el diagnóstico sin estructura previa. Rápido e intuitivo, pero vulnerable a respuestas genéricas.<br><br><strong style="color:var(--e-green);">Más útil en:</strong> consultas factuales rápidas y casos simples de bajo riesgo.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="1" style="--card-tint:var(--e-teal-l);--card-ink:var(--e-teal);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">2</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Paso 1: organiza los datos del caso en antecedentes, síntomas, exploración y analítica. Paso 2: usando esa organización, genera un diferencial priorizado."</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Instrucción en dos pasos · Two-step</p>
-                <p class="choice-back-explain">Fuerza al modelo a sintetizar la información antes de diagnosticar. Reduce el riesgo de que datos relevantes queden enterrados en el texto.<br><br><strong style="color:var(--e-teal);">Más útil en:</strong> viñetas largas, historiales desordenados o casos con muchos datos dispersos.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="2" style="--card-tint:var(--e-violet-l);--card-ink:var(--e-violet);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">3</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"#1 Síntesis clínica → #2 Síndromes → #3 Datos faltantes → #4 DDx jerarquizado (probable / competitivo / must-not-miss) → #5 Justificación → #6 Plan diagnóstico."</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Cadena de pensamiento · CoT</p>
-                <p class="choice-back-explain">Estructura el razonamiento en pasos explícitos y auditables. El modelo hace visible su lógica antes de concluir.<br><br><strong style="color:var(--e-violet);">Más útil en:</strong> casos complejos, atípicos o raros donde la lógica importa tanto como el diagnóstico final.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="3" style="--card-tint:var(--e-amber-l);--card-ink:var(--e-amber);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">4</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Has propuesto IC descompensada. Ahora actúa como revisor crítico: ¿qué datos de este caso contradicen ese diagnóstico? ¿Qué has podido omitir?"</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Autorreflexión · Self-Reflection</p>
-                <p class="choice-back-explain">Pide al modelo que revise su propia salida o la hipótesis del estudiante desde una posición crítica. Combate el cierre prematuro.<br><br><strong style="color:var(--e-amber);">Más útil en:</strong> validación final antes de aceptar un diferencial o en decisiones de alto riesgo.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="4" style="--card-tint:var(--e-red-l);--card-ink:var(--e-red);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">5</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Actúa como médico adjunto senior muy crítico. Mi diagnóstico es TEP. Cuestiona mi razonamiento, señala los datos que he ignorado y propón la hipótesis alternativa más peligrosa si me equivoco."</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Rol dialógico adversarial · Equipo Rojo</p>
-                <p class="choice-back-explain">Asigna al modelo un papel crítico que cuestiona activamente la hipótesis del estudiante. Genera fricción epistémica útil.<br><br><strong style="color:var(--e-red);">Más útil en:</strong> entrenamiento avanzado del juicio clínico. Requiere que el estudiante haya pensado primero.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="5" style="--card-tint:var(--e-indigo-l);--card-ink:var(--e-indigo);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
-                  <span class="choice-num">6</span>
-                </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Actúa como tutor socrático de fisiopatología. No me des el diagnóstico final. Guíame con preguntas para analizar si la insuficiencia cardiaca puede explicar de forma coherente todos los hallazgos del caso."</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Experto en fisiopatología · Tutor socrático</p>
-                <p class="choice-back-explain">El modelo no da el diagnóstico sino que obliga al estudiante a demostrar que su hipótesis es biológicamente coherente. Combate la ilusión de fluidez.<br><br><strong style="color:var(--e-indigo);">Más útil en:</strong> profundizar en casos complejos o revisar hipótesis con base teórica insuficiente.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-      </div>
-
-      <div class="choice-controls">
-        <button class="choice-ctrl" id="fcPrev">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button class="choice-ctrl flip" id="fcFlip">↺ Girar</button>
-        <button class="choice-ctrl" id="fcNext">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       10. IDEAS FINALES
-  ══════════════════════════════════ -->
-  <section class="section" id="cierre">
-    <div class="container">
-      <div class="section-eyebrow">Síntesis</div>
-      <h2 class="section-title">10. Ideas finales</h2>
-        <div class="info-card-eyebrow">No olvidar</div>
-        <div class="info-card-title">El prompt es una herramienta diagnóstica indirecta</div>
-        <div class="info-card-body">
-          <p>No cambia al paciente, pero sí cambia cómo el LLM organiza, interpreta y devuelve la información. En ese sentido, escribir un buen prompt se parece a formular una buena pregunta clínica.</p>
-        </div>
-      </div>
-      <div class="dark-card" style="margin-bottom:28px;">
-        <div class="dark-card-title">🎯 Meta formativa</div>
-        <div class="dark-card-body">
-          <p>En estudiantes de medicina, el mejor prompt no es el que da la respuesta más rápida, sino el que <strong style="color:#f5c518;">obliga a pensar mejor</strong>. La finalidad docente no es solo obtener un diferencial, sino aprender a construirlo, revisarlo y justificarlo.</p>
-        </div>
-      </div>
-
-      <!-- Mini actividad -->
-      <div class="activity-cta">
-        <div class="activity-cta-header">
-          <div class="activity-cta-icon">✍️</div>
-          <div>
-            <div class="activity-cta-title">Mini actividad final</div>
-            <div class="activity-cta-subtitle">Para un mismo caso clínico, formula tres versiones del prompt y compara qué cambia en las respuestas</div>
-          </div>
-        </div>
-        <div class="activity-cases" id="actCases">
-          <div class="activity-case" onclick="toggleCase(this)">
-            <div class="activity-case-num">01</div>
-            <div class="activity-case-content">
-              <div class="activity-case-q">Una instrucción directa (zero-shot)</div>
-              <div class="activity-case-answer">
-                <div class="activity-answer-row"><span class="answer-badge answer-1">Ejemplo</span>"Paciente de 62 años con disnea y edemas. ¿Cuál es el diagnóstico más probable?"</div>
-                <div class="activity-answer-row"><span class="answer-badge answer-d">Qué observar</span>La respuesta es rápida pero puede ser genérica. ¿Organiza bien el diferencial? ¿Justifica la prioridad?</div>
-              </div>
-            </div>
-            <div class="activity-case-cta">Ver ejemplo ↓</div>
-          </div>
-          <div class="activity-case" onclick="toggleCase(this)">
-            <div class="activity-case-num">02</div>
-            <div class="activity-case-content">
-              <div class="activity-case-q">Una instrucción en dos pasos (two-step)</div>
-              <div class="activity-case-answer">
-                <div class="activity-answer-row"><span class="answer-badge answer-1">Ejemplo</span>"Paso 1: organiza los datos del caso en categorías. Paso 2: genera un diferencial priorizado a partir de esa organización."</div>
-                <div class="activity-answer-row"><span class="answer-badge answer-d">Qué observar</span>¿La síntesis inicial cambia el diferencial? ¿Aparecen diagnósticos que no habían surgido con el zero-shot?</div>
-              </div>
-            </div>
-            <div class="activity-case-cta">Ver ejemplo ↓</div>
-          </div>
-          <div class="activity-case" onclick="toggleCase(this)">
-            <div class="activity-case-num">03</div>
-            <div class="activity-case-content">
-              <div class="activity-case-q">Una versión con cadena de pensamiento o tutor socrático</div>
-              <div class="activity-case-answer">
-                <div class="activity-answer-row"><span class="answer-badge answer-1">Ejemplo</span>"Razona paso a paso: síntesis clínica → síndromes → preguntas pendientes → DDx jerarquizado → justificación → plan."</div>
-                <div class="activity-answer-row"><span class="answer-badge answer-d">Pregunta de reflexión</span>¿Qué cambia más entre las tres versiones: el diagnóstico final, la amplitud del diferencial o la calidad de la justificación?</div>
-              </div>
-            </div>
-            <div class="activity-case-cta">Ver ejemplo ↓</div>
-          </div>
-        </div>
-        <div class="activity-cta-footer">Pulsa cada versión para ver el ejemplo y la pregunta de observación</div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" id="referencias">
-    <div class="container">
-      <div class="section-eyebrow">Evidencia de respaldo</div>
-      <h2 class="section-title">11. Referencias comentadas</h2>
-      <p class="section-lead">Estas referencias son útiles para entender qué comparó cada estudio y por qué resulta relevante para diseñar el uso docente y clínico de los prompts.</p>
-
-      <div class="ref-grid">
-        <div class="ref-card blue"><div class="ref-kicker">Interacción clínico-IA</div><div class="ref-title">Goh et al. · JAMA Network Open · 2024</div><div class="ref-meta">Médicos con GPT-4 + recursos convencionales vs. médicos con recursos convencionales solos.</div><div class="ref-body">Mostró que dar acceso al LLM sin una estrategia clara no mejoraba de forma significativa el razonamiento diagnóstico del médico, aunque el LLM solo sí obtenía un rendimiento alto.</div></div>
-        <div class="ref-card red"><div class="ref-kicker">Formación en IA</div><div class="ref-title">Qazi et al. · Nature Health · 2026</div><div class="ref-meta">Médicos con formación estructurada en alfabetización en IA vs. médicos con recursos convencionales solos.</div><div class="ref-body">Mostró una mejora clara del razonamiento diagnóstico cuando el uso del LLM iba precedido de entrenamiento específico.</div></div>
-        <div class="ref-card blue"><div class="ref-kicker">Asistencia diagnóstica</div><div class="ref-title">McDuff et al. · Nature · 2025</div><div class="ref-meta">Clínicos asistidos por AMIE vs. clínicos con buscadores y recursos médicos estándar.</div><div class="ref-body">Útil para pensar la IA como apoyo al diferencial en casos desafiantes.</div></div>
-        <div class="ref-card red"><div class="ref-kicker">Prompting</div><div class="ref-title">Hassanein et al. · Scientific Reports · 2025</div><div class="ref-meta">Prompting directo, chain-of-thought y self-reflection en modelo multimodal para diagnóstico oral.</div><div class="ref-body">Muestra que la estructura del prompt cambia el rendimiento, la calidad explicativa y la calibración del modelo.</div></div>
-        <div class="ref-card blue"><div class="ref-kicker">RAG</div><div class="ref-title">Liu et al. · JAMIA · 2025</div><div class="ref-meta">Revisión sistemática y metaanálisis: LLMs basales vs. sistemas con RAG en tareas biomédicas.</div><div class="ref-body">Es la referencia más clara para explicar qué aporta el RAG: mejoría global del rendimiento y mejor anclaje en conocimiento externo.</div></div>
-        <div class="ref-card red"><div class="ref-kicker">Casos complejos</div><div class="ref-title">Ríos-Hoyo et al. · Frontiers in Medicine · 2024</div><div class="ref-meta">GPT-3.5 y GPT-4 en 75 casos complejos del Massachusetts General Hospital Case Records.</div><div class="ref-body">Los LLM pueden incluir el diagnóstico correcto en el diferencial con cierta frecuencia, pero siguen fallando al jerarquizarlo como primera opción.</div></div>
-      </div>
-    </div>
-  </section>
+  </div>
 
   <footer class="footer">
     <div class="container">
       <div class="footer-row">
         <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
-        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← IA y Diagnóstico Diferencial</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // ── Activity cases ──
-    function toggleCase(el) { el.classList.toggle('open'); }
-
-    // ── Flashcards ──
+    function scrollToSection(id){document.getElementById(id)?.scrollIntoView({behavior:'smooth',block:'start'});}
+    const sections=document.querySelectorAll('section[id]');
+    const navBtns=document.querySelectorAll('.nav-pill');
+    sections.forEach(s=>new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){navBtns.forEach(b=>{const oc=b.getAttribute('onclick')||'';b.classList.toggle('active',oc.includes("'"+e.target.id+"'"));});}})},{rootMargin:'-30% 0px -60% 0px'}).observe(s));
+    function toggleAcc(btn,groupId){const item=btn.closest('.acc-item');const group=document.getElementById(groupId);const wasOpen=item.classList.contains('open');group.querySelectorAll('.acc-item').forEach(i=>i.classList.remove('open'));if(!wasOpen){item.classList.add('open');setTimeout(()=>{const top=item.getBoundingClientRect().top+window.scrollY-90;window.scrollTo({top,behavior:'smooth'});},50);}}
+    function switchTab(btn,paneId,navId,bodyId){const nav=document.getElementById(navId);const body=document.getElementById(bodyId);nav.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));body.querySelectorAll('.tab-pane').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById(paneId).classList.add('active');const btns=Array.from(nav.querySelectorAll('.tab-btn'));const idx=btns.indexOf(btn);const last=btns.length-1;body.style.borderRadius=idx===0?'0 var(--r-lg) var(--r-lg) var(--r-lg)':idx===last?'var(--r-lg) 0 var(--r-lg) var(--r-lg)':'var(--r-lg)';}
     (function() {
-      const stack = document.getElementById('fcStack');
-      const cards = Array.from(stack.querySelectorAll('.choice-card'));
-      let cur = 0;
-      function update() {
-        cards.forEach(c => c.classList.remove('visible','flipped'));
-        cards[cur].classList.add('visible');
-        document.getElementById('fcCur').textContent = cur + 1;
-        document.getElementById('fcTot').textContent = cards.length;
-      }
-      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
-      document.getElementById('fcPrev').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
-      document.getElementById('fcNext').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
-      document.getElementById('fcFlip').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
-      update();
+      var steps = [
+        { icon:'🎭', color:'#3730a3', bg:'#ede9fe', fragBg:'#ede9fe', fragInk:'#3730a3',
+          title:'Rol', sub:'Quién debe ser el modelo',
+          desc:'Define la identidad, experiencia y estilo del modelo antes de responder.',
+          example:'Eres un médico internista con experiencia en urgencias,\nhabituado a razonar de forma sistemática y a comunicarte\ncon estudiantes de medicina de tercer curso.',
+          warning:'Un rol genérico produce respuestas igualmente genéricas. Especifica especialidad, contexto y nivel de comunicación.' },
+        { icon:'🏥', color:'#0d6e6e', bg:'#e0f2f1', fragBg:'#e0f2f1', fragInk:'#0d6e6e',
+          title:'Contexto clínico', sub:'El caso que presenta el clínico',
+          desc:'Es la presentación del caso: qué sabe el modelo antes de responder.',
+          example:'Paciente de 68 años, mujer, sin alergias conocidas,\ncon HTA en tratamiento. Acude por disnea progresiva\nde 3 semanas, ortopnea y edemas en ambos tobillos.',
+          warning:'Nunca incluyas datos identificativos. Usa siempre datos anonimizados.' },
+        { icon:'✅', color:'#9d174d', bg:'#fce7f3', fragBg:'#fce7f3', fragInk:'#9d174d',
+          title:'Tarea', sub:'Qué quieres exactamente que haga',
+          desc:'La instrucción concreta. Cuanto más específica, más útil la respuesta.',
+          example:'Genera un diagnóstico diferencial con los 5 diagnósticos\nmás probables, ordenados de más a menos urgente.\nPara cada uno, indica el dato clave que lo apoya.',
+          warning:'Una tarea vaga produce una respuesta vaga. Define qué quieres, cuántos ítems y en qué orden.' },
+        { icon:'👤', color:'#92400e', bg:'#fffbeb', fragBg:'#fffbeb', fragInk:'#92400e',
+          title:'Audiencia y tono', sub:'Para quién es la respuesta',
+          desc:'Especifica quién leerá la respuesta y en qué registro.',
+          example:'Dirígete a un estudiante de tercer curso de Medicina\nque conoce los fundamentos de la fisiopatología\npero no tiene experiencia clínica previa.',
+          warning:'Sin indicar audiencia, el modelo elige un nivel medio que puede ser demasiado superficial o técnico.' },
+        { icon:'📋', color:'#166534', bg:'#dcfce7', fragBg:'#dcfce7', fragInk:'#166534',
+          title:'Formato de salida', sub:'Cómo debe estructurarse la respuesta',
+          desc:'Puedes pedir prosa, listas numeradas, tablas o una longitud máxima.',
+          example:'Responde con una lista numerada. Máximo 5 diagnósticos.\nPara cada uno: nombre, probabilidad (alta/media/baja)\ny un dato del caso que lo justifica.',
+          warning:'Sin formato explícito, el modelo puede generar bloques largos difíciles de revisar.' },
+        { icon:'🚫', color:'#6d28d9', bg:'#f5f3ff', fragBg:'#f5f3ff', fragInk:'#6d28d9',
+          title:'Restricciones', sub:'Qué debe evitar o no asumir',
+          desc:'Indica al modelo qué no debe hacer.',
+          example:'No incluyas diagnósticos de baja prevalencia\nsin justificación explícita en los datos del caso.\nNo asumas datos que no aparecen en la presentación.',
+          warning:'Sin restricciones, el modelo puede especular o incluir opciones que no se apoyan en los datos.' }
+      ];
+      var ql=[{min:0,max:0,label:'Sin estructura',color:'#ef4444'},{min:1,max:33,label:'Básico',color:'#f97316'},{min:34,max:66,label:'En construcción',color:'#eab308'},{min:67,max:99,label:'Casi completo',color:'#84cc16'},{min:100,max:100,label:'Completo',color:'#22c55e'}];
+      var tEl=document.getElementById('anatToggles'),pEl=document.getElementById('anatPreview'),
+          bEl=document.getElementById('anatBar'),pctEl=document.getElementById('anatPct'),
+          lblEl=document.getElementById('anatLabel'),dEl=document.getElementById('anatDetail');
+      if(!tEl)return;
+      var active=new Array(steps.length).fill(false), openD=-1;
+      tEl.innerHTML=steps.map(function(s,i){
+        return '<div class="cot-row" id="aR'+i+'" style="--row-color:'+s.color+';--row-bg:'+s.bg+';" onclick="window.aRC('+i+')">'
+          +'<span class="cot-row-icon">'+s.icon+'</span>'
+          +'<div class="cot-row-text"><div class="cot-row-title">'+s.title+'</div><div class="cot-row-sub">'+s.sub+'</div></div>'
+          +'<label class="cot-toggle" onclick="event.stopPropagation()">'
+          +'<input type="checkbox" id="aC'+i+'" onchange="window.aT('+i+')">'
+          +'<div class="cot-toggle-track"></div><div class="cot-toggle-thumb"></div></label></div>';
+      }).join('');
+      pEl.innerHTML=steps.map(function(s,i){
+        return '<span class="cot-frag inactive" id="aF'+i+'" style="--frag-bg:'+s.fragBg+';--frag-ink:'+s.fragInk+';">'
+          +'<mark>'+s.example+'</mark>\n\n</span>';
+      }).join('');
+      window.aT=function(i){active[i]=document.getElementById('aC'+i).checked;document.getElementById('aR'+i).classList.toggle('active',active[i]);document.getElementById('aF'+i).classList.toggle('inactive',!active[i]);document.getElementById('aF'+i).classList.toggle('active',active[i]);uB();};
+      window.aRC=function(i){if(openD===i){openD=-1;dEl.style.display='none';}else{openD=i;var s=steps[i];dEl.style.display='block';dEl.style.setProperty('--detail-color',s.color);dEl.innerHTML='<div class="cot-detail-header"><span class="cot-detail-icon">'+s.icon+'</span><span class="cot-detail-title" style="color:'+s.color+'">'+s.title+' — '+s.sub+'</span></div><div class="cot-detail-desc">'+s.desc+'</div><div class="cot-detail-example">'+s.example+'</div><div class="cot-detail-warning">'+s.warning+'</div>';dEl.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+      function uB(){var on=active.filter(Boolean).length,pct=Math.round(on/steps.length*100),lvl=ql.find(function(l){return pct>=l.min&&pct<=l.max;})||ql[0];bEl.style.width=pct+'%';bEl.style.background=lvl.color;pctEl.textContent=pct+'%';lblEl.textContent=lvl.label;}
+      uB();
     })();
-
-    // ── Scroll a sección ──
-    function scrollToSection(id) {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // ── Nav activa por scroll ──
-    const sections = document.querySelectorAll('section[id]');
-    const navBtns  = document.querySelectorAll('.nav-pill');
-    sections.forEach(s => new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          navBtns.forEach(b => {
-            const oc = b.getAttribute('onclick') || '';
-            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
-          });
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
-
-    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
-    function toggleAcc(btn, groupId) {
-      const item    = btn.closest('.acc-item');
-      const group   = document.getElementById(groupId);
-      const wasOpen = item.classList.contains('open');
-      group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) {
-        item.classList.add('open');
-        setTimeout(() => {
-          const top = item.getBoundingClientRect().top + window.scrollY - 90;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }, 50);
-      }
-    }
-
-    // ── Pestañas ──
-    function switchTab(btn, paneId, navId, bodyId) {
-      const nav  = document.getElementById(navId);
-      const body = document.getElementById(bodyId);
-      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(paneId).classList.add('active');
-      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
-      const idx  = btns.indexOf(btn);
-      const last = btns.length - 1;
-      body.style.borderRadius =
-        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
-        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
-                       'var(--r-lg)';
-    }
   </script>
 </body>
 </html>
