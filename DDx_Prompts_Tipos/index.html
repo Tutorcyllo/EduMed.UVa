@@ -1,1 +1,1233 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tipos de prompts y flujos de trabajo · Prompts en clínica · EduMed UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uva-blue:      #003973;
+      --uva-blue-soft: #1d4f8a;
+      --uva-red:       #c60046;
+      --ink:           #1a1f2e;
+      --ink-soft:      #3d4554;
+      --muted:         #6b7486;
+      --cream:         #faf7f2;
+      --cream-2:       #f3ede3;
+      --paper:         #ffffff;
+      --line:          #e8e1d4;
+      --line-strong:   #d9cfbb;
+      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
+      --e-orange:      #b45309;   --e-orange-l: #fef3c7;
+      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
+      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
+      --e-green:       #166534;   --e-green-l:  #dcfce7;
+      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
+      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+      --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
+      --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --max: 960px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
 
+    /* ── Barra EduMed ── */
+    .edumed-bar { position: sticky; top: 0; z-index: 100; background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
+    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+    .edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
+    .edumed-back:hover { background: #fff; transform: translateX(-1px); }
+    .edumed-back svg { width: 14px; height: 14px; }
+
+    /* ── Nav pills ── */
+    .nav-index { background: var(--cream); border-bottom: 1px solid var(--line); }
+    .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 0; }
+    .nav-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); transition: all .18s; cursor: pointer; font-family: "Inter", sans-serif; appearance: none; }
+    .nav-pill:hover, .nav-pill.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+
+    /* ── Hero ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 52px 0 44px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
+    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--uva-red); }
+    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); margin-bottom: 14px; }
+    .hero-title em { font-style: italic; color: var(--uva-blue); }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 720px; margin-bottom: 32px; line-height: 1.55; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
+    .hero-badge { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow-sm); }
+    .hero-badge-icon { font-size: 20px; }
+    .hero-badge-text { display: flex; flex-direction: column; }
+    .hero-badge-text span:first-child { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+    .hero-badge-text span:last-child { font-size: 13px; font-weight: 600; color: var(--ink); }
+
+    /* ── Secciones ── */
+    .section { padding: 52px 0; }
+    .section + .section { border-top: 1px solid var(--line); }
+    .section-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
+    .section-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
+    .section-title { font-family: "Fraunces", serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.15; color: var(--ink); margin-bottom: 14px; }
+    .section-lead { font-size: 15px; color: var(--ink-soft); max-width: 720px; line-height: 1.65; margin-bottom: 28px; }
+
+    /* ── Two col ── */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 14px; }
+
+    /* ── Info cards ── */
+    .info-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; box-shadow: var(--shadow-sm); }
+    .info-card.accent-blue { border-left: 3px solid var(--uva-blue); }
+    .info-card.accent-red  { border-left: 3px solid var(--uva-red); }
+    .info-card.accent-teal { border-left: 3px solid var(--e-teal); }
+    .info-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 8px; }
+    .info-card-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .info-card-body { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+    .info-card-body p + p { margin-top: 8px; }
+
+    /* ── Dark card ── */
+    .dark-card { background: var(--uva-blue); color: #fff; border-radius: var(--r-lg); padding: 24px; }
+    .dark-card-title { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 600; color: #f5c518; margin-bottom: 10px; }
+    .dark-card-body { font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.65; }
+
+    /* ── Pullquote ── */
+    .pullquote { background: var(--paper); border-left: 4px solid var(--uva-blue); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 18px 22px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
+    .pullquote p { font-family: "Fraunces", serif; font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.5; }
+
+    /* ── Callout ── */
+    .callout { border-radius: var(--r-md); padding: 16px 20px; font-size: 13px; line-height: 1.65; margin-top: 14px; }
+    .callout-teal   { background: var(--e-teal-l);   border: 1px solid #99d6d4; color: var(--e-teal); }
+    .callout-blue   { background: #dbeafe;            border: 1px solid #93c5fd; color: var(--uva-blue); }
+    .callout-amber  { background: var(--e-amber-l);   border: 1px solid #fcd34d; color: var(--e-amber); }
+    .callout-red    { background: var(--e-red-l);     border: 1px solid #fbcfe8; color: var(--e-red); }
+    .callout-title  { font-weight: 700; margin-bottom: 5px; font-size: 13px; }
+
+    /* ── Alert ── */
+    .alert-warning { background: var(--e-amber-l); border: 1px solid #fcd34d; border-left: 4px solid var(--e-amber); border-radius: var(--r-md); padding: 16px 20px; margin-top: 20px; }
+    .alert-danger  { background: var(--e-red-l);   border: 1px solid #fbcfe8;  border-left: 4px solid var(--e-red);   border-radius: var(--r-md); padding: 16px 20px; margin-top: 20px; }
+    .alert-title   { font-size: 13px; font-weight: 700; color: var(--e-red); margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .alert-body    { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+    .alert-body strong { color: var(--ink); }
+
+    /* ── Progression tiers ── */
+    .tier-list { display: flex; flex-direction: column; gap: 8px; }
+    .tier-item { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--uva-blue); border-radius: var(--r-md); padding: 18px 20px; box-shadow: var(--shadow-sm); }
+    .tier-item.red { border-left-color: var(--uva-red); }
+    .tier-level { display: inline-flex; align-items: center; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--uva-blue); margin-bottom: 6px; }
+    .tier-item.red .tier-level { color: var(--uva-red); }
+    .tier-title { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    .tier-desc  { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+    /* ── Acordeón ── */
+    .acc-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .acc-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: box-shadow .2s; }
+    .acc-item.open { box-shadow: var(--shadow-md); }
+    .acc-item.red { border-top: 3px solid var(--uva-red); }
+    .acc-item.blue { border-top: 3px solid var(--uva-blue); }
+    .acc-trigger { width: 100%; border: 0; background: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 16px 20px; text-align: left; transition: background .15s; font-family: "Inter", sans-serif; }
+    .acc-trigger:hover { background: var(--cream); }
+    .acc-num { width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 0.95rem; font-style: italic; }
+    .acc-label-wrap { flex: 1; text-align: left; }
+    .acc-label { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); display: block; }
+    .acc-sublabel { font-size: 12px; color: var(--muted); font-family: "Inter", sans-serif; font-weight: 400; display: block; margin-top: 2px; }
+    .acc-chevron { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s, background .2s; }
+    .acc-chevron svg { width: 13px; height: 13px; color: var(--muted); }
+    .acc-item.open .acc-chevron { transform: rotate(180deg); background: var(--uva-blue); border-color: var(--uva-blue); }
+    .acc-item.open .acc-chevron svg { color: #fff; }
+    .acc-body { display: none; padding: 0 20px 20px 66px; }
+    .acc-item.open .acc-body { display: block; }
+    .acc-body p { font-size: 14px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 12px; }
+    .acc-body p:last-child { margin-bottom: 0; }
+
+    /* ── Meta boxes dentro de acordeón ── */
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 12px 0; }
+    .meta-box { background: var(--cream); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+    .meta-box strong { color: var(--ink); }
+
+    /* ── Prompt box (monospace) ── */
+    .prompt-box { background: var(--paper); border: 1px solid var(--line); border-left: 4px solid var(--uva-blue); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 14px 16px; font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.82rem; color: var(--ink); line-height: 1.6; white-space: pre-wrap; margin-top: 14px; box-shadow: var(--shadow-sm); }
+    .acc-item.red .prompt-box { border-left-color: var(--uva-red); }
+
+    /* ── Pestañas ── */
+    .tabs-nav { display: flex; gap: 4px; flex-wrap: wrap; }
+    .tab-btn { appearance: none; cursor: pointer; display: flex; align-items: center; gap: 8px; padding: 10px 18px; font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700; color: var(--muted); background: var(--cream-2); border: 1px solid var(--line); border-bottom: none; border-radius: var(--r-md) var(--r-md) 0 0; transition: color .18s, background .18s; position: relative; bottom: -1px; }
+    .tab-btn:hover { color: var(--ink); background: var(--paper); }
+    .tabs-body { border: 1px solid var(--line); border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg); box-shadow: var(--shadow-sm); overflow: hidden; margin-bottom: 24px; }
+    .tab-pane { display: none; padding: 28px; }
+    .tab-pane.active { display: block; }
+    .tab-pane-tag { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; margin-bottom: 10px; }
+    .tab-pane-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+    .tab-pane-def { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
+    .tab-subcats { display: flex; flex-direction: column; gap: 10px; margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(0,0,0,.08); }
+    .tab-subcat { background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.07); border-radius: var(--r-md); padding: 14px 16px; }
+    .tab-subcat-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .tab-subcat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+    /* colores activos pestañas marco */
+    .tab-btn.active[data-tab="mc1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="mc2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+
+    /* colores activos pestañas complejidad */
+    .tab-btn.active[data-tab="cp1"] { background: var(--e-green-l);  border-color: #86efac;  color: var(--e-green);  z-index:1; }
+    .tab-btn.active[data-tab="cp2"] { background: var(--e-amber-l);  border-color: #fcd34d;  color: var(--e-amber);  z-index:1; }
+    .tab-btn.active[data-tab="cp3"] { background: var(--e-red-l);    border-color: #fbcfe8;  color: var(--e-red);    z-index:1; }
+
+    /* colores activos pestañas flujos */
+    .tab-btn.active[data-tab="f1"]  { background: var(--e-green-l);  border-color: #86efac;  color: var(--e-green);  z-index:1; }
+    .tab-btn.active[data-tab="f2"]  { background: var(--e-red-l);    border-color: #fbcfe8;  color: var(--e-red);    z-index:1; }
+    .tab-btn.active[data-tab="f3"]  { background: var(--e-indigo-l); border-color: #c4b5fd;  color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="f4"]  { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+
+    /* ── Prompt group label (divisor en tipos) ── */
+    .prompt-group-label { display: flex; align-items: center; gap: 12px; padding: 12px 16px; background: var(--cream-2); border: 1px solid var(--line); border-radius: var(--r-md); margin-bottom: 4px; }
+    .prompt-group-icon { width: 36px; height: 36px; border-radius: 8px; background: var(--e-indigo-l); color: var(--e-indigo); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .prompt-group-title { font-family: "Fraunces", serif; font-size: 0.95rem; font-weight: 600; color: var(--ink); }
+    .prompt-group-desc  { font-size: 12px; color: var(--muted); margin-top: 2px; }
+
+    /* ── Ethics list ── */
+    .ethics-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 24px; }
+    .ethics-item { display: flex; gap: 18px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s; }
+    .ethics-item:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
+    .ethics-num { font-family: "Fraunces", serif; font-size: 2.5rem; font-weight: 700; font-style: italic; line-height: 1; flex-shrink: 0; width: 52px; text-align: center; }
+    .ethics-content { flex: 1; min-width: 0; }
+    .ethics-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    .ethics-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
+    .ethics-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--cream-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+
+    /* ── Activity CTA ── */
+    .activity-cta { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); overflow: hidden; box-shadow: var(--shadow-md); margin-bottom: 0; }
+    .activity-cta-header { display: flex; gap: 16px; align-items: flex-start; padding: 24px 24px 20px; background: var(--cream-2); border-bottom: 1px solid var(--line); }
+    .activity-cta-icon { font-size: 2.2rem; flex-shrink: 0; }
+    .activity-cta-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+    .activity-cta-subtitle { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+    .activity-cases { display: flex; flex-direction: column; }
+    .activity-case { background: var(--paper); padding: 18px 24px; cursor: pointer; transition: background .15s; display: flex; gap: 16px; align-items: flex-start; border-bottom: 1px solid var(--line); }
+    .activity-case:last-child { border-bottom: none; }
+    .activity-case:hover { background: var(--cream); }
+    .activity-case.open { background: var(--cream-2); }
+    .activity-case-num { font-family: "Fraunces", serif; font-size: 2rem; font-weight: 700; font-style: italic; color: var(--line-strong); flex-shrink: 0; width: 44px; line-height: 1; margin-top: 2px; }
+    .activity-case.open .activity-case-num { color: var(--uva-blue); }
+    .activity-case-content { flex: 1; min-width: 0; }
+    .activity-case-q { font-size: 15px; font-weight: 600; color: var(--ink); line-height: 1.4; margin-bottom: 0; }
+    .activity-case-answer { display: none; margin-top: 14px; flex-direction: column; gap: 7px; }
+    .activity-case.open .activity-case-answer { display: flex; }
+    .activity-answer-row { display: flex; gap: 8px; align-items: flex-start; font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+    .answer-badge { flex-shrink: 0; font-size: 10px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; margin-top: 2px; white-space: nowrap; }
+    .answer-1 { background: var(--uva-blue); color: #fff; }
+    .answer-d { background: var(--e-teal-l); color: var(--e-teal); }
+    .activity-case-cta { font-size: 12px; font-weight: 600; color: var(--uva-blue); flex-shrink: 0; margin-top: 4px; opacity: .7; white-space: nowrap; }
+    .activity-case:hover .activity-case-cta { opacity: 1; }
+    .activity-case.open .activity-case-cta { display: none; }
+    .activity-cta-footer { text-align: center; padding: 12px 24px; font-size: 12px; color: var(--muted); background: var(--cream); border-top: 1px solid var(--line); }
+
+    /* ── Flashcards ── */
+    .choice-intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
+    .choice-progress { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+    .choice-stack { position: relative; height: 380px; max-width: 520px; margin: 0 auto; perspective: 1400px; }
+    .choice-card { position: absolute; inset: 0; appearance: none; border: 0; background: transparent; padding: 0; border-radius: var(--r-xl); cursor: pointer; transform-style: preserve-3d; display: none; }
+    .choice-card.visible { display: block; }
+    .choice-inner { position: absolute; inset: 0; border-radius: var(--r-xl); transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.8,.2,1); }
+    .choice-card.flipped .choice-inner { transform: rotateY(180deg); }
+    .choice-face { position: absolute; inset: 0; border-radius: var(--r-xl); padding: 26px 24px; display: flex; flex-direction: column; justify-content: space-between; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: var(--shadow-md); overflow: hidden; }
+    .choice-front { background: var(--paper); border: 1px solid var(--line); }
+    .choice-back  { background: var(--card-tint, #e8f0f8); transform: rotateY(180deg); }
+    .choice-eyebrow { font: 700 11px "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); }
+    .choice-num { font-family: "Fraunces", serif; font-size: 52px; font-weight: 400; line-height: 1; font-style: italic; color: var(--card-ink, var(--uva-blue)); opacity: .18; }
+    .choice-q { font-family: "Fraunces", serif; font-size: clamp(1rem, 3vw, 1.2rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.3; color: var(--ink); margin: 8px 0 0; text-align: left; }
+    .choice-hint { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 10px; }
+    .choice-back-label { font: 700 11px "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--card-ink, var(--uva-blue)); display: block; margin-bottom: 8px; }
+    .choice-back-text { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 700; color: var(--card-ink, var(--uva-blue)); margin-bottom: 10px; line-height: 1.2; }
+    .choice-back-explain { font-size: 13px; color: var(--ink); line-height: 1.6; flex: 1; }
+    .choice-controls { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
+    .choice-ctrl { appearance: none; background: var(--paper); border: 1px solid var(--line); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); transition: all .18s; box-shadow: var(--shadow-sm); }
+    .choice-ctrl:hover { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-2px); }
+    .choice-ctrl svg { width: 16px; height: 16px; }
+    .choice-ctrl.flip { width: auto; padding: 0 18px; border-radius: 999px; font: 600 13px "Inter", sans-serif; gap: 6px; }
+    .tab-btn.active[data-tab="a1"] { background: var(--e-indigo-l); border-color: #c4b5fd; color: var(--e-indigo); z-index:1; }
+    .tab-btn.active[data-tab="a2"] { background: var(--e-teal-l);   border-color: #99d6d4;  color: var(--e-teal);   z-index:1; }
+    .tab-btn.active[data-tab="a3"] { background: var(--e-violet-l); border-color: #d8b4fe;  color: var(--e-violet); z-index:1; }
+    .tab-btn.active[data-tab="a4"] { background: var(--e-amber-l);  border-color: #fcd34d;  color: var(--e-amber);  z-index:1; }
+    .tab-btn.active[data-tab="a5"] { background: var(--e-green-l);  border-color: #86efac;  color: var(--e-green);  z-index:1; }
+    .tab-btn.active[data-tab="a6"] { background: var(--e-red-l);    border-color: #fbcfe8;  color: var(--e-red);    z-index:1; }
+
+    /* colores activos pestañas loop */
+    .tab-btn.active[data-tab="l1"] { background: var(--e-green-l);  border-color: #86efac;  color: var(--e-green);  z-index:1; }
+    .tab-btn.active[data-tab="l2"] { background: var(--e-amber-l);  border-color: #fcd34d;  color: var(--e-amber);  z-index:1; }
+    .tab-btn.active[data-tab="l3"] { background: var(--e-red-l);    border-color: #fbcfe8;  color: var(--e-red);    z-index:1; }
+    .tab-btn.active[data-tab="l4"] { background: var(--e-indigo-l); border-color: #c4b5fd;  color: var(--e-indigo); z-index:1; }
+
+    /* ── Use-list ── */
+    .use-list { display: flex; flex-direction: column; gap: 8px; }
+    .use-item { display: flex; gap: 10px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 11px 14px; font-size: 14px; color: var(--ink-soft); line-height: 1.5; }
+    .use-item::before { content: "✓"; color: var(--e-teal); font-weight: 800; flex-shrink: 0; margin-top: 1px; font-size: 13px; }
+
+    /* ── RAG sources grid ── */
+    .rag-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 16px; }
+    .rag-card { background: var(--paper); border: 1px solid var(--line); border-top: 3px solid var(--uva-blue); border-radius: var(--r-md); padding: 16px; box-shadow: var(--shadow-sm); }
+    .rag-card-title { font-family: "Fraunces", serif; font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
+    .rag-card-desc  { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
+
+    /* ── Reference cards ── */
+    .ref-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .ref-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-sm); }
+    .ref-card.blue { border-top: 3px solid var(--uva-blue); }
+    .ref-card.red  { border-top: 3px solid var(--uva-red); }
+    .ref-kicker { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 8px; }
+    .ref-card.blue .ref-kicker { background: #dbeafe; color: var(--uva-blue); }
+    .ref-card.red  .ref-kicker { background: var(--e-red-l); color: var(--e-red); }
+    .ref-title { font-family: "Fraunces", serif; font-size: 0.95rem; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .ref-meta  { font-size: 12px; color: var(--muted); margin-bottom: 8px; font-style: italic; }
+    .ref-body  { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
+
+    /* ── Resource link ── */
+    .resource-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 14px; padding: 10px 18px; border-radius: 999px; background: var(--uva-blue); color: #fff; text-decoration: none; font-size: 13px; font-weight: 700; transition: background .15s, transform .15s; }
+    .resource-link:hover { background: var(--uva-blue-soft); transform: translateY(-1px); }
+
+    /* ══ CoT Builder ══ */
+    .cot-builder { margin-top: 16px; border: 1.5px solid var(--line); border-radius: var(--r-lg); overflow: hidden; background: var(--paper); box-shadow: var(--shadow-sm); }
+    .cot-panel { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
+    .cot-toggles { border-right: 1px solid var(--line); display: flex; flex-direction: column; }
+    .cot-row { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); cursor: pointer; transition: background .15s; user-select: none; position: relative; }
+    .cot-row:last-child { border-bottom: none; }
+    .cot-row:hover { background: var(--cream); }
+    .cot-row.active { background: var(--row-bg, #f0fdf4); border-left: 3px solid var(--row-color, #166534); }
+    .cot-row-icon { font-size: 1.1rem; flex-shrink: 0; width: 24px; text-align: center; }
+    .cot-row-text { flex: 1; min-width: 0; }
+    .cot-row-title { font-size: 12px; font-weight: 700; color: var(--ink); line-height: 1.2; }
+    .cot-row-sub { font-size: 11px; color: var(--muted); line-height: 1.3; margin-top: 2px; }
+    .cot-toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+    .cot-toggle input { opacity: 0; width: 0; height: 0; position: absolute; }
+    .cot-toggle-track { position: absolute; inset: 0; border-radius: 999px; background: var(--line-strong); transition: background .2s; cursor: pointer; }
+    .cot-toggle input:checked + .cot-toggle-track { background: var(--row-color, #166534); }
+    .cot-toggle-thumb { position: absolute; top: 3px; left: 3px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 3px rgba(0,0,0,.2); transition: transform .2s; pointer-events: none; }
+    .cot-toggle input:checked ~ .cot-toggle-thumb { transform: translateX(16px); }
+
+    .cot-preview { padding: 16px; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+    .cot-preview-label { font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+    .cot-preview-text { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.78rem; line-height: 1.7; color: var(--ink); white-space: pre-wrap; }
+    .cot-frag { transition: all .2s; }
+    .cot-frag.inactive { color: var(--line-strong); opacity: .45; }
+    .cot-frag.inactive mark { background: none; text-decoration: none; color: inherit; }
+    .cot-frag.active { color: var(--ink); opacity: 1; }
+    .cot-frag.active mark { background: var(--frag-bg, #dcfce7); color: var(--frag-ink, #166634); border-radius: 2px; padding: 0 2px; }
+
+    .cot-quality { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--cream); }
+    .cot-quality-bar-wrap { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
+    .cot-quality-bar { height: 100%; border-radius: 999px; width: 0%; transition: width .4s ease, background .4s ease; }
+    .cot-quality-meta { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .cot-quality-pct { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 700; font-style: italic; color: var(--ink); min-width: 40px; text-align: right; }
+    .cot-quality-label { font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+    .cot-detail { padding: 20px; border-top: 1px solid var(--line); background: var(--cream-2); animation: fadeUp .25s ease; }
+    @keyframes fadeUp { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+    .cot-detail-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+    .cot-detail-icon { font-size: 1.4rem; }
+    .cot-detail-title { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 700; }
+    .cot-detail-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.65; margin-bottom: 12px; }
+    .cot-detail-example { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.8rem; background: var(--paper); border: 1px solid var(--line); border-left: 3px solid var(--detail-color, #003973); border-radius: 0 var(--r-sm) var(--r-sm) 0; padding: 10px 14px; line-height: 1.6; color: var(--ink); margin-bottom: 10px; white-space: pre-wrap; }
+    .cot-detail-warning { font-size: 12px; background: #fef3c7; border: 1px solid #fcd34d; border-radius: var(--r-sm); padding: 8px 12px; color: #92400e; line-height: 1.5; }
+    .cot-detail-warning::before { content: "⚠️ "; }
+
+    @media (max-width: 640px) {
+      .cot-panel { grid-template-columns: 1fr; }
+      .cot-toggles { border-right: none; border-bottom: 1px solid var(--line); }
+    }
+
+    /* ── Footer ── */
+    .footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
+
+    /* ── Animaciones ── */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .edumed-bar-inner { padding: 10px 14px; }
+      .edumed-wordmark .w1 { font-size: 15px; }
+      .edumed-back { padding: 7px 10px; font-size: 12px; }
+      .hero { padding: 36px 0 28px; }
+      .hero-meta { flex-direction: column; }
+      .section { padding: 36px 0; }
+      .two-col { grid-template-columns: 1fr; }
+      .meta-grid { grid-template-columns: 1fr; }
+      .rag-grid { grid-template-columns: 1fr 1fr; }
+      .ref-grid { grid-template-columns: 1fr; }
+      .acc-body { padding-left: 20px; }
+      .tabs-nav { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; }
+      .tab-btn  { white-space: nowrap; flex-shrink: 0; }
+    }
+    @media (max-width: 480px) { .rag-grid { grid-template-columns: 1fr; } }
+    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+  <style>
+    /* ── Paginación ── */
+    .page-nav { background: var(--cream); border-top: 1px solid var(--line); padding: 20px 0; }
+    .page-nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .page-nav-btn { display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px; font-size: 13px; font-weight: 700; text-decoration: none; border: 1.5px solid var(--line); background: var(--paper); color: var(--ink-soft); transition: all .18s; }
+    .page-nav-btn:hover { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+    .page-nav-btn.next { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); }
+    .page-nav-btn.next:hover { background: var(--uva-blue-soft); }
+    .page-nav-btn.disabled { opacity: .3; pointer-events: none; }
+    .page-nav-btn svg { width: 14px; height: 14px; }
+    .page-counter { font-size: 12px; color: var(--muted); font-weight: 600; }
+    .page-dots { display: flex; gap: 6px; align-items: center; }
+    .page-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--line-strong); transition: background .2s; }
+    .page-dot.active { background: var(--uva-blue); width: 20px; border-radius: 999px; }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA EDUMED ── -->
+  <div class="edumed-bar">
+    <div class="edumed-bar-inner">
+      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+        <div class="edumed-wordmark">
+          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+        </div>
+      </a>
+      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts/">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+        Prompts en clínica
+      </a>
+    </div>
+  </div>
+
+  <!-- ── MINI HERO ── -->
+  <div class="hero" style="padding:36px 0 28px;">
+    <div class="container">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span>Parte 2 de 3 · Tipos de prompts para razonar con IA</span>
+      </div>
+      <h1 class="hero-title" style="font-size:clamp(1.6rem,4vw,2.4rem);">Tipos de prompts y flujos de trabajo</h1>
+      <p class="hero-subtitle" style="font-size:14px;margin-bottom:0;">Los 7 tipos de prompts, cuándo consulta primero el clínico y cuánto control humano debe mantenerse.</p>
+    </div>
+  </div>
+
+  <!-- ── NAV ÍNDICE ── -->
+  <div class="nav-index">
+    <div class="container">
+      <div class="nav-pills">
+        
+        <button class="nav-pill active" onclick="scrollToSection('tipos')">🗂️ Tipos</button>
+        <button class="nav-pill" onclick="scrollToSection('flujos')">🔁 Flujos</button>
+        <button class="nav-pill" onclick="scrollToSection('supervision')">👁️ Supervisión</button>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONTENIDO ── -->
+    <section class="section" id="tipos">
+    <div class="container">
+      <div class="section-eyebrow">Catálogo práctico</div>
+      <h2 class="section-title">4. Tipos de prompts</h2>
+      <p class="section-lead">Pulsa sobre cada tipo para ver su descripción, ventajas, límites, contexto ideal de uso y un ejemplo orientativo.</p>
+
+      <div class="acc-group" id="acc-tipos">
+
+        <div class="prompt-group-label">
+          <span class="prompt-group-icon">📝</span>
+          <div>
+            <div class="prompt-group-title">Prompts instruccionales</div>
+            <div class="prompt-group-desc">Organizan cómo el modelo estructura y presenta la información</div>
+          </div>
+        </div>
+
+        <div class="acc-item blue open">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">1</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Instrucción directa · Zero-shot prompting</span>
+              <span class="acc-sublabel">Rápido e intuitivo — el más usado y el más vulnerable</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>El estudiante proporciona el caso clínico en texto libre y solicita directamente un diagnóstico o diferencial sin ofrecer ninguna estructura previa, ejemplos ni instrucciones de formato.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> es el método más rápido, intuitivo y fácil de formular.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> es el formato más vulnerable a respuestas superficiales o confirmatorias.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> consultas factuales rápidas o casos muy sencillos.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> puede dar una falsa sensación de utilidad porque no obliga a estructurar ni a auditar.</div>
+            </div>
+            <div class="prompt-box">Aquí está el caso clínico de una mujer de 75 años con edema y proteinuria. ¿Cuál es el diagnóstico más probable y qué diagnósticos diferenciales priorizarías?</div>
+          </div>
+        </div>
+
+        <div class="acc-item blue">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">2</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Instrucción en dos pasos · Two-Step prompting</span>
+              <span class="acc-sublabel">Sintetiza primero, diagnostica después</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>Se fuerza a la IA a organizar y estructurar primero la información clínica antes de intentar diagnosticar. Esto imita el proceso de síntesis que realizan los médicos humanos y reduce el riesgo de que el modelo pase por alto datos enterrados en el texto.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> mejora el rendimiento frente a la instrucción directa porque obliga al modelo a sintetizar antes de concluir.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> requiere más lectura y todavía no obliga a explicar bien la fisiopatología.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> viñetas largas o historiales desordenados.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> un error en la síntesis inicial puede arrastrarse a todo el diferencial.</div>
+            </div>
+            <div class="prompt-box" style="display:none;">Paso 1: organiza la información del siguiente caso clínico en categorías estructuradas.
+Paso 2: a partir de esa información organizada, genera un diagnóstico diferencial priorizado.</div>
+
+            <div class="cot-builder" id="tsBuilder">
+              <div class="cot-panel">
+                <div class="cot-toggles" id="tsToggles"></div>
+                <div class="cot-preview">
+                  <div class="cot-preview-label">Vista previa del prompt</div>
+                  <div class="cot-preview-text" id="tsPreview"></div>
+                </div>
+              </div>
+              <div class="cot-quality">
+                <div class="cot-quality-bar-wrap"><div class="cot-quality-bar" id="tsBar"></div></div>
+                <div class="cot-quality-meta">
+                  <span class="cot-quality-pct" id="tsPct">0%</span>
+                  <span class="cot-quality-label" id="tsLabel">Sin estructura</span>
+                </div>
+              </div>
+              <div class="cot-detail" id="tsDetail" style="display:none;"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="acc-item blue">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">3</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Cadena de pensamiento · Chain-of-Thought / CoT</span>
+              <span class="acc-sublabel">Razonamiento paso a paso explícito y auditable</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>Se instruye al modelo para que razone paso a paso y haga explícita su lógica antes de ofrecer una conclusión final. Es la estrategia más útil cuando el estudiante necesita ver cómo el modelo conecta los datos del caso.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> produce explicaciones más ricas y vuelve la lógica más auditable.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> tarda más y puede acumular errores en casos muy ruidosos.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> casos complejos, atípicos o raros.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> la apariencia de lógica no sustituye a la plausibilidad clínica.</div>
+            </div>
+            <div class="cot-builder" id="cotBuilder">
+
+              <!-- Panel principal: 2 columnas -->
+              <div class="cot-panel">
+
+                <!-- Columna izquierda: toggles -->
+                <div class="cot-toggles" id="cotToggles"></div>
+
+                <!-- Columna derecha: texto en tiempo real -->
+                <div class="cot-preview">
+                  <div class="cot-preview-label">Vista previa del prompt</div>
+                  <div class="cot-preview-text" id="cotPreview"></div>
+                </div>
+              </div>
+
+              <!-- Barra de calidad -->
+              <div class="cot-quality">
+                <div class="cot-quality-bar-wrap">
+                  <div class="cot-quality-bar" id="cotBar"></div>
+                </div>
+                <div class="cot-quality-meta">
+                  <span class="cot-quality-pct" id="cotPct">0%</span>
+                  <span class="cot-quality-label" id="cotLabel">Sin estructura</span>
+                </div>
+              </div>
+
+              <!-- Panel de detalle -->
+              <div class="cot-detail" id="cotDetail" style="display:none;"></div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="prompt-group-label" style="margin-top:8px;">
+          <span class="prompt-group-icon" style="background:var(--e-red-l);color:var(--e-red);">🎭</span>
+          <div>
+            <div class="prompt-group-title" style="color:var(--e-red);">Modificaciones del rol y la reflexión del LLM</div>
+            <div class="prompt-group-desc">Cambian el papel que adopta el modelo o le obligan a revisar su propia salida</div>
+          </div>
+        </div>
+
+        <div class="acc-item red">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-amber-l);color:var(--e-amber);">4</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Generación de conocimiento previo · Generated Knowledge</span>
+              <span class="acc-sublabel">Marco teórico primero, caso clínico después</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>Se pide al LLM que primero recupere teoría o guías sobre un síndrome o un síntoma y solo después aplique ese conocimiento al caso concreto.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> reduce errores de omisión y ancla la respuesta en un marco teórico.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> si la teoría inicial contiene errores o desactualización, el razonamiento posterior hereda ese fallo.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> síndromes que el estudiante no domina bien.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> el alumno puede quedarse en la teoría general y dejar de pensar en el paciente real.</div>
+            </div>
+            <div class="prompt-box">Primero, resume las principales causas de dolor torácico agudo según las guías clínicas actuales.
+Luego, usando ese resumen, propón un diagnóstico diferencial para este paciente.</div>
+          </div>
+        </div>
+
+        <div class="acc-item red">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">5</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Autorreflexión y consistencia · Self-Reflection</span>
+              <span class="acc-sublabel">El modelo se revisa a sí mismo como revisor crítico</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>Se solicita a la IA que se revise a sí misma, que actúe como revisor crítico de su propia salida o que vuelva a analizar el caso buscando contradicciones, diagnósticos omitidos o banderas rojas.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> ayuda a mitigar el cierre prematuro y favorece una segunda lectura del caso.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> consume más tiempo y puede volver al modelo excesivamente conservador.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> decisiones clínicas de alto riesgo o validación final.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> no elimina la necesidad de supervisión humana.</div>
+            </div>
+            <div class="prompt-box">Has propuesto este diferencial. Ahora asume el rol de un revisor crítico:
+¿Qué evidencia de este caso contradice tu primer diagnóstico?
+¿Qué enfermedad pudiste omitir? Revisa tu respuesta.</div>
+          </div>
+        </div>
+
+        <div class="acc-item red">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">6</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Roles dialógicos y adversariales · Tutor socrático y Equipo Rojo</span>
+              <span class="acc-sublabel">El LLM pone a prueba el razonamiento del estudiante</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>El estudiante formula primero su hipótesis y luego pide al LLM que adopte un papel pedagógico o adversarial para ponerla a prueba. Es una de las estrategias más recomendables para evitar aquiescencia y automatización.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> genera fricción epistémica y obliga a justificar el razonamiento.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> requiere que el estudiante ya haya pensado primero.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> entrenamiento avanzado del juicio clínico.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> si el prompt es blando, el diálogo puede ser largo pero poco exigente.</div>
+            </div>
+            <div class="prompt-box">Actúa como un médico adjunto senior muy crítico. Mi diagnóstico principal para este paciente es X.
+Tu misión es cuestionar mi razonamiento, señalar los datos que he ignorado y proponer la mejor hipótesis alternativa que podría llevar al fallecimiento del paciente si me equivoco.</div>
+          </div>
+        </div>
+
+        <div class="acc-item red">
+          <button class="acc-trigger" onclick="toggleAcc(this,'acc-tipos')">
+            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">7</div>
+            <div class="acc-label-wrap">
+              <span class="acc-label">Experto en fisiopatología</span>
+              <span class="acc-sublabel">Obliga a demostrar que la hipótesis explica causalmente el caso</span>
+            </div>
+            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </button>
+          <div class="acc-body">
+            <p>Se pide al LLM que actúe como tutor de mecanismos biológicos. Su función no es dar el diagnóstico final, sino obligar al estudiante a demostrar que su hipótesis explica de forma causal y coherente el conjunto del caso.</p>
+            <div class="meta-grid">
+              <div class="meta-box"><strong>Ventajas:</strong> combate la ilusión de fluidez y obliga a conectar signos, síntomas y analítica.</div>
+              <div class="meta-box"><strong>Limitaciones:</strong> exige bastante base previa del estudiante.</div>
+              <div class="meta-box"><strong>Ideal para:</strong> profundizar en casos complejos o revisar hipótesis débiles.</div>
+              <div class="meta-box"><strong>Riesgo docente:</strong> sin base previa, la conversación puede resultar improductiva.</div>
+            </div>
+            <div class="prompt-box">Actúa como tutor socrático de fisiopatología. No quiero que me des el diagnóstico final.
+Guíame con preguntas para analizar si esa enfermedad puede explicar de forma coherente los hallazgos clínicos y analíticos.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       5. CUÁNDO CONSULTA QUIÉN
+  ══════════════════════════════════ -->
+  <section class="section" id="flujos">
+    <div class="container">
+      <div class="section-eyebrow">Orden de interacción</div>
+      <h2 class="section-title">5. Cuándo consulta quién</h2>
+      <p class="section-lead">No solo importa el tipo de prompt. También importa en qué momento se consulta al LLM y quién formula la primera hipótesis. Esta decisión cambia el riesgo de anclaje, aquiescencia y automatización.</p>
+
+      <div class="tabs-nav" id="flujoNav">
+        <button class="tab-btn active" data-tab="f1" onclick="switchTab(this,'pane-f1','flujoNav','flujoBody')">✅ Human-first</button>
+        <button class="tab-btn" data-tab="f2" onclick="switchTab(this,'pane-f2','flujoNav','flujoBody')">⚠️ LLM-first</button>
+        <button class="tab-btn" data-tab="f3" onclick="switchTab(this,'pane-f3','flujoNav','flujoBody')">🔀 Paralelo</button>
+        <button class="tab-btn" data-tab="f4" onclick="switchTab(this,'pane-f4','flujoNav','flujoBody')">🔁 Segunda lectura</button>
+      </div>
+      <div class="tabs-body" id="flujoBody">
+
+        <div class="tab-pane active" id="pane-f1" style="background:var(--e-green-l);">
+          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Flujo recomendado</div>
+          <div class="tab-pane-title" style="color:var(--e-green);">Human-first · Protocolo sándwich</div>
+          <p class="tab-pane-def">El clínico piensa primero, formula su representación del problema y construye un diferencial inicial antes de consultar al LLM. Después usa la IA para ampliar, tensionar o revisar su razonamiento. Protege el esfuerzo cognitivo propio y reduce el anclaje sobre la primera salida del modelo.</p>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">Por qué es el flujo de referencia en docencia</div><div class="tab-subcat-desc">El estudiante debe pensar antes de consultar. El LLM añade valor cuando actúa como ampliador, crítico o revisor, no cuando sustituye la construcción inicial del problema.</div></div>
+          </div>
+        </div>
+
+        <div class="tab-pane" id="pane-f2" style="background:var(--e-red-l);">
+          <div class="tab-pane-tag" style="background:rgba(157,23,77,.12);color:var(--e-red);">Uso más arriesgado</div>
+          <div class="tab-pane-title" style="color:var(--e-red);">LLM-first · AI-first</div>
+          <p class="tab-pane-def">El modelo formula primero las hipótesis y el clínico las revisa después. Puede ser útil para abrir posibilidades en casos muy atípicos o cuando se busca una segunda perspectiva inicial, pero aumenta el riesgo de sesgo de automatización, sobre todo en estudiantes o usuarios poco entrenados.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-f3" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Opción avanzada</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">Pensamiento en paralelo</div>
+          <p class="tab-pane-def">El clínico y el LLM generan de forma independiente un diferencial inicial y luego se comparan ambas salidas. Este modelo reduce la contaminación mutua de hipótesis y puede ser especialmente útil en casos complejos, aunque exige más tiempo y más disciplina cognitiva.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-f4" style="background:var(--e-teal-l);">
+          <div class="tab-pane-tag" style="background:rgba(13,110,110,.12);color:var(--e-teal);">Uso concreto</div>
+          <div class="tab-pane-title" style="color:var(--e-teal);">Second thought · Segunda lectura</div>
+          <p class="tab-pane-def">El LLM no se usa al inicio, sino al final de un primer ciclo diagnóstico, como herramienta de contraste. Sirve para revisar diagnósticos omitidos, pedir datos discordantes o actuar como revisor crítico antes de cerrar el caso.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       6. SUPERVISIÓN HUMANA
+  ══════════════════════════════════ -->
+  <section class="section" id="supervision">
+    <div class="container">
+      <div class="section-eyebrow">Control del proceso</div>
+      <h2 class="section-title">6. Supervisión humana: in, on y out of the loop</h2>
+      <p class="section-lead">Estas expresiones ayudan a pensar cuánto control mantiene el clínico sobre la salida del sistema.</p>
+
+      <div class="tabs-nav" id="loopNav">
+        <button class="tab-btn active" data-tab="l1" onclick="switchTab(this,'pane-l1','loopNav','loopBody')">✅ In the loop</button>
+        <button class="tab-btn" data-tab="l2" onclick="switchTab(this,'pane-l2','loopNav','loopBody')">⚠️ On the loop</button>
+        <button class="tab-btn" data-tab="l3" onclick="switchTab(this,'pane-l3','loopNav','loopBody')">🚫 Out of the loop</button>
+        <button class="tab-btn" data-tab="l4" onclick="switchTab(this,'pane-l4','loopNav','loopBody')">📋 Recomendaciones</button>
+      </div>
+      <div class="tabs-body" id="loopBody">
+
+        <div class="tab-pane active" id="pane-l1" style="background:var(--e-green-l);">
+          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Modelo recomendado</div>
+          <div class="tab-pane-title" style="color:var(--e-green);">Human in the loop</div>
+          <p class="tab-pane-def">El clínico permanece dentro del proceso: introduce el caso, revisa la salida, contrasta los errores y toma la decisión final. Es el modelo más seguro y el más apropiado para formación, porque la IA no sustituye el juicio humano sino que se integra en él.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-l2" style="background:var(--e-amber-l);">
+          <div class="tab-pane-tag" style="background:rgba(146,64,14,.12);color:var(--e-amber);">Supervisión limitada</div>
+          <div class="tab-pane-title" style="color:var(--e-amber);">Human on the loop</div>
+          <p class="tab-pane-def">El sistema actúa con bastante autonomía y el humano supervisa más a distancia que de forma activa. Puede tener sentido en tareas más protocolizadas o de bajo riesgo, pero es menos apropiado para razonamiento clínico abierto y diagnóstico diferencial complejo.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-l3" style="background:var(--e-red-l);">
+          <div class="tab-pane-tag" style="background:rgba(157,23,77,.12);color:var(--e-red);">No recomendado en diagnóstico</div>
+          <div class="tab-pane-title" style="color:var(--e-red);">Human out of the loop</div>
+          <p class="tab-pane-def">El humano queda fuera del circuito decisional o interviene demasiado tarde. En razonamiento clínico y diagnóstico diferencial este modelo no es aceptable como enfoque docente ni como práctica clínica segura, porque rompe el principio de validación crítica y desplaza indebidamente la responsabilidad.</p>
+        </div>
+
+        <div class="tab-pane" id="pane-l4" style="background:var(--e-indigo-l);">
+          <div class="tab-pane-tag" style="background:rgba(55,48,163,.12);color:var(--e-indigo);">Aplicación práctica</div>
+          <div class="tab-pane-title" style="color:var(--e-indigo);">Cómo trasladar este marco a la docencia y a la práctica</div>
+          <div class="tab-subcats">
+            <div class="tab-subcat"><div class="tab-subcat-title">En formación</div><div class="tab-subcat-desc">Debe mantenerse al estudiante dentro del proceso, no convertirlo en mero lector de salidas de IA.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">En práctica clínica</div><div class="tab-subcat-desc">El profesional debe conservar la autonomía interpretativa y la decisión final.</div></div>
+            <div class="tab-subcat"><div class="tab-subcat-title">En evaluación</div><div class="tab-subcat-desc">Hay que valorar no solo la respuesta final, sino cómo se ha usado la IA y qué supervisión real ha existido.</div></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════
+       7. RAG Y HERRAMIENTAS CON EVIDENCIA
+  ══════════════════════════════════ -->
+
+
+  <!-- ── PAGINACIÓN ── -->
+  <div class="page-nav">
+    <div class="container">
+      <div class="page-nav-inner">
+        <a class="page-nav-btn " href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
+          ← Fundamentos
+        </a>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
+          <div class="page-dots">
+            <div class="page-dot"></div><div class="page-dot active"></div><div class="page-dot"></div>
+          </div>
+          <span class="page-counter">Parte 2 de 3</span>
+        </div>
+        <a class="page-nav-btn next " href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Avanzado">
+          Uso avanzado →
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── FOOTER ── -->
+    <footer class="footer">
+    <div class="container">
+      <div class="footer-row">
+        <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ══ CoT Builder ══
+    (function() {
+      const steps = [
+        {
+          icon: '📋', color: '#0d6e6e', bg: '#e0f2f1', fragBg: '#e0f2f1', fragInk: '#0d6e6e',
+          title: '#1 Síntesis clínica',
+          sub: 'Resume datos clave y define problemas activos',
+          desc: 'Pides al modelo que organice la información antes de razonar. Identifica antecedentes, síntomas, signos y analítica, y genera una lista de problemas activos. Es el paso que más reduce los errores de omisión.',
+          example: '#1 Síntesis clínica: resume los datos clave del caso\n(antecedentes, síntomas, signos, exploración física\ny analítica disponible). Crea una lista de "problemas activos".',
+          warning: 'Si el modelo sintetiza mal aquí, todos los pasos siguientes heredan ese error. Verifica antes de continuar.'
+        },
+        {
+          icon: '🔗', color: '#3730a3', bg: '#ede9fe', fragBg: '#ede9fe', fragInk: '#3730a3',
+          title: '#2 Análisis sindrómico',
+          sub: 'Identifica los síndromes principales del caso',
+          desc: 'Obliga al modelo a agrupar los problemas activos en síndromes reconocibles. Este paso conecta los datos clínicos con categorías diagnósticas antes de generar hipótesis.',
+          example: '#2 Análisis sindrómico: identifica los síndromes\nprincipales que emergen del caso.',
+          warning: 'Sin este paso, el modelo puede saltar directamente a diagnósticos sin integrar bien los datos.'
+        },
+        {
+          icon: '🔍', color: '#b45309', bg: '#fef3c7', fragBg: '#fef3c7', fragInk: '#92400e',
+          title: '#3 Indagación activa',
+          sub: 'Qué datos faltan y por qué son cruciales',
+          desc: 'Antes de dar el diferencial, el modelo debe detenerse y señalar qué información falta. Este paso activa el pensamiento crítico y evita que el modelo asuma datos que no se le han proporcionado.',
+          example: '#3 Indagación activa: antes de dar el diagnóstico\ndiferencial, detente. Enumera qué datos específicos\nfaltan y explica por qué son cruciales.',
+          warning: 'Si el modelo no se detiene aquí, probablemente está asumiendo datos. Pide explícitamente que espere tu respuesta.'
+        },
+        {
+          icon: '📊', color: '#9d174d', bg: '#fce7f3', fragBg: '#fce7f3', fragInk: '#9d174d',
+          title: '#4 DDx jerarquizado',
+          sub: 'Probable · Competitivo · Must-not-miss',
+          desc: 'El corazón del prompt. El modelo genera tres capas de diferencial: el diagnóstico más probable por frecuencia, los diferenciales competitivos que encajan parcialmente, y los must-not-miss que no pueden omitirse por su gravedad.',
+          example: '#4 Diagnóstico diferencial jerarquizado:\n- Más probable: por frecuencia y concordancia clínica.\n- Diferenciales competitivos: otras causas que encajan.\n- "Must-not-miss": diagnósticos graves o urgentes.',
+          warning: 'El "must-not-miss" no es opcional. Si el modelo no lo incluye, el prompt no está funcionando correctamente.'
+        },
+        {
+          icon: '⚖️', color: '#6d28d9', bg: '#f5f3ff', fragBg: '#f5f3ff', fragInk: '#6d28d9',
+          title: '#5 Justificación de hipótesis',
+          sub: 'Qué datos apoyan y qué datos contradicen',
+          desc: 'Para cada hipótesis principal, el modelo debe citar los datos que la sostienen y los que la contradicen. Este es el paso que mejor protege contra el sesgo de confirmación.',
+          example: '#5 Justificación: explica brevemente qué datos\napoyan y qué datos contradicen cada una de\ntus 5 hipótesis principales.',
+          warning: 'Si solo aparecen datos a favor, el modelo está siendo aquiescente. Pide explícitamente los datos en contra.'
+        },
+        {
+          icon: '🔬', color: '#166534', bg: '#dcfce7', fragBg: '#dcfce7', fragInk: '#166534',
+          title: '#6 Plan de acción',
+          sub: 'Pruebas priorizadas de menor a mayor complejidad',
+          desc: 'El modelo propone pruebas complementarias ordenadas por rentabilidad diagnóstica y relación coste-beneficio. La priorización es clave: no todas las pruebas tienen el mismo valor en el mismo momento.',
+          example: '#6 Plan de acción: sugiere pruebas priorizadas\npor rentabilidad diagnóstica, de lo más sencillo\na lo más complejo o invasivo.',
+          warning: 'Una lista larga de pruebas sin priorizar no es un plan. Si el modelo no ordena, el prompt necesita más instrucción.'
+        }
+      ];
+
+      const qualityLevels = [
+        { min: 0,   max: 0,   label: 'Sin estructura',   color: '#ef4444' },
+        { min: 1,   max: 33,  label: 'Básico',           color: '#f97316' },
+        { min: 34,  max: 66,  label: 'En construcción',  color: '#eab308' },
+        { min: 67,  max: 99,  label: 'Casi completo',    color: '#84cc16' },
+        { min: 100, max: 100, label: 'Completo',         color: '#22c55e' }
+      ];
+
+      const togglesEl  = document.getElementById('cotToggles');
+      const previewEl  = document.getElementById('cotPreview');
+      const barEl      = document.getElementById('cotBar');
+      const pctEl      = document.getElementById('cotPct');
+      const labelEl    = document.getElementById('cotLabel');
+      const detailEl   = document.getElementById('cotDetail');
+
+      let active = new Array(steps.length).fill(false);
+      let openDetail = -1;
+
+      function buildUI() {
+        // Toggles
+        togglesEl.innerHTML = steps.map((s, i) => `
+          <div class="cot-row" id="cotRow${i}" style="--row-color:${s.color};--row-bg:${s.bg};" onclick="cotRowClick(${i})">
+            <span class="cot-row-icon">${s.icon}</span>
+            <div class="cot-row-text">
+              <div class="cot-row-title">${s.title}</div>
+              <div class="cot-row-sub">${s.sub}</div>
+            </div>
+            <label class="cot-toggle" onclick="event.stopPropagation()">
+              <input type="checkbox" id="cotChk${i}" onchange="cotToggle(${i})">
+              <div class="cot-toggle-track"></div>
+              <div class="cot-toggle-thumb"></div>
+            </label>
+          </div>`).join('');
+
+        // Preview fragments
+        previewEl.innerHTML = steps.map((s, i) => `<span class="cot-frag inactive" id="cotFrag${i}" style="--frag-bg:${s.fragBg};--frag-ink:${s.fragInk};"><mark>${s.example}</mark>\n\n</span>`).join('');
+      }
+
+      function cotToggle(i) {
+        active[i] = document.getElementById(`cotChk${i}`).checked;
+        document.getElementById(`cotRow${i}`).classList.toggle('active', active[i]);
+        document.getElementById(`cotFrag${i}`).classList.toggle('inactive', !active[i]);
+        document.getElementById(`cotFrag${i}`).classList.toggle('active', active[i]);
+        updateBar();
+      }
+
+      function cotRowClick(i) {
+        if (openDetail === i) {
+          openDetail = -1;
+          detailEl.style.display = 'none';
+        } else {
+          openDetail = i;
+          const s = steps[i];
+          detailEl.style.display = 'block';
+          detailEl.style.setProperty('--detail-color', s.color);
+          detailEl.innerHTML = `
+            <div class="cot-detail-header">
+              <span class="cot-detail-icon">${s.icon}</span>
+              <span class="cot-detail-title" style="color:${s.color}">${s.title} — ${s.sub}</span>
+            </div>
+            <div class="cot-detail-desc">${s.desc}</div>
+            <div class="cot-detail-example">${s.example}</div>
+            <div class="cot-detail-warning">${s.warning}</div>`;
+          detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+      window.cotToggle    = cotToggle;
+      window.cotRowClick  = cotRowClick;
+
+      function updateBar() {
+        const on  = active.filter(Boolean).length;
+        const pct = Math.round((on / steps.length) * 100);
+        const lvl = qualityLevels.find(l => pct >= l.min && pct <= l.max) || qualityLevels[0];
+        barEl.style.width     = pct + '%';
+        barEl.style.background = lvl.color;
+        pctEl.textContent     = pct + '%';
+        labelEl.textContent   = lvl.label;
+      }
+
+      buildUI();
+      updateBar();
+    })();
+
+    // ══ Two-Step Builder ══
+    document.addEventListener('DOMContentLoaded', function() {
+      const steps = [
+        { icon:'📋', color:'#0d6e6e', bg:'#e0f2f1', fragBg:'#e0f2f1', fragInk:'#0d6e6e', title:'Paso 1 · Organiza', sub:'Estructura la información clínica antes de diagnosticar', desc:'Pides al modelo que sintetice y organice los datos del caso en categorías antes de intentar nada. Reduce el riesgo de que datos relevantes queden enterrados en el texto.', example:'Paso 1: organiza la información del siguiente caso clínico\nen categorías estructuradas: antecedentes relevantes,\nsíntomas principales, exploración física y pruebas disponibles.', warning:'Si el modelo sintetiza mal en este paso, el diferencial del paso 2 hereda ese error. Verifica la síntesis antes de aceptar el diagnóstico.' },
+        { icon:'🔍', color:'#3730a3', bg:'#ede9fe', fragBg:'#ede9fe', fragInk:'#3730a3', title:'Paso 2 · Diagnostica', sub:'Genera el diferencial a partir de la síntesis', desc:'Solo después de organizar, el modelo genera el diagnóstico diferencial. Al partir de una síntesis estructurada, el diferencial es más completo y menos vulnerable a datos irrelevantes.', example:'Paso 2: a partir de esa información organizada, genera\nun diagnóstico diferencial priorizado con los diagnósticos\nmás probables ordenados por urgencia e indicando\nel dato clave que apoya cada hipótesis.', warning:'Sin el paso previo de síntesis, este prompt se convierte en una instrucción directa (zero-shot). La ventaja del two-step desaparece si se omite el primer paso.' }
+      ];
+      const ql=[{min:0,max:0,label:'Sin estructura',color:'#ef4444'},{min:1,max:99,label:'Incompleto',color:'#f97316'},{min:100,max:100,label:'Completo',color:'#22c55e'}];
+      const tEl=document.getElementById('tsToggles'),pEl=document.getElementById('tsPreview'),bEl=document.getElementById('tsBar'),pctEl=document.getElementById('tsPct'),lblEl=document.getElementById('tsLabel'),dEl=document.getElementById('tsDetail');
+      if(!tEl)return;
+      let active=new Array(steps.length).fill(false),openD=-1;
+      tEl.innerHTML=steps.map((s,i)=>`<div class="cot-row" id="tsR${i}" style="--row-color:${s.color};--row-bg:${s.bg};" onclick="window.tsRC(${i})"><span class="cot-row-icon">${s.icon}</span><div class="cot-row-text"><div class="cot-row-title">${s.title}</div><div class="cot-row-sub">${s.sub}</div></div><label class="cot-toggle" onclick="event.stopPropagation()"><input type="checkbox" id="tsC${i}" onchange="window.tsT(${i})"><div class="cot-toggle-track"></div><div class="cot-toggle-thumb"></div></label></div>`).join('');
+      pEl.innerHTML=steps.map((s,i)=>`<span class="cot-frag inactive" id="tsF${i}" style="--frag-bg:${s.fragBg};--frag-ink:${s.fragInk};"><mark>${s.example}</mark>
+
+</span>`).join('');
+      window.tsT=function(i){active[i]=document.getElementById('tsC'+i).checked;document.getElementById('tsR'+i).classList.toggle('active',active[i]);document.getElementById('tsF'+i).classList.toggle('inactive',!active[i]);document.getElementById('tsF'+i).classList.toggle('active',active[i]);uBts();};
+      window.tsRC=function(i){if(openD===i){openD=-1;dEl.style.display='none';}else{openD=i;const s=steps[i];dEl.style.display='block';dEl.style.setProperty('--detail-color',s.color);dEl.innerHTML=`<div class="cot-detail-header"><span class="cot-detail-icon">${s.icon}</span><span class="cot-detail-title" style="color:${s.color}">${s.title} — ${s.sub}</span></div><div class="cot-detail-desc">${s.desc}</div><div class="cot-detail-example">${s.example}</div><div class="cot-detail-warning">${s.warning}</div>`;dEl.scrollIntoView({behavior:'smooth',block:'nearest'});}};
+      function uBts(){const on=active.filter(Boolean).length,pct=Math.round(on/steps.length*100),lvl=ql.find(l=>pct>=l.min&&pct<=l.max)||ql[0];bEl.style.width=pct+'%';bEl.style.background=lvl.color;pctEl.textContent=pct+'%';lblEl.textContent=lvl.label;}
+      uBts();
+    });
+
+    // ── Activity cases ──
+    function toggleCase(el) { el.classList.toggle('open'); }
+
+    // ── Flashcards ──
+    (function() {
+      const stack = document.getElementById('fcStack');
+      const cards = Array.from(stack.querySelectorAll('.choice-card'));
+      let cur = 0;
+      function update() {
+        cards.forEach(c => c.classList.remove('visible','flipped'));
+        cards[cur].classList.add('visible');
+        document.getElementById('fcCur').textContent = cur + 1;
+        document.getElementById('fcTot').textContent = cards.length;
+      }
+      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
+      document.getElementById('fcPrev').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
+      document.getElementById('fcNext').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
+      document.getElementById('fcFlip').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
+      update();
+    })();
+
+    // ── Scroll a sección ──
+    function scrollToSection(id) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Nav activa por scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navBtns  = document.querySelectorAll('.nav-pill');
+    sections.forEach(s => new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navBtns.forEach(b => {
+            const oc = b.getAttribute('onclick') || '';
+            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
+
+    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
+    function toggleAcc(btn, groupId) {
+      const item    = btn.closest('.acc-item');
+      const group   = document.getElementById(groupId);
+      const wasOpen = item.classList.contains('open');
+      group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) {
+        item.classList.add('open');
+        setTimeout(() => {
+          const top = item.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // ── Pestañas ──
+    function switchTab(btn, paneId, navId, bodyId) {
+      const nav  = document.getElementById(navId);
+      const body = document.getElementById(bodyId);
+      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(paneId).classList.add('active');
+      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
+      const idx  = btns.indexOf(btn);
+      const last = btns.length - 1;
+      body.style.borderRadius =
+        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
+        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
+                       'var(--r-lg)';
+    }
+  </script>
+
+
+    <script>
+    // ══ CoT Builder ══
+    (function() {
+      const steps = [
+        {
+          icon: '📋', color: '#0d6e6e', bg: '#e0f2f1', fragBg: '#e0f2f1', fragInk: '#0d6e6e',
+          title: '#1 Síntesis clínica',
+          sub: 'Resume datos clave y define problemas activos',
+          desc: 'Pides al modelo que organice la información antes de razonar. Identifica antecedentes, síntomas, signos y analítica, y genera una lista de problemas activos. Es el paso que más reduce los errores de omisión.',
+          example: '#1 Síntesis clínica: resume los datos clave del caso\n(antecedentes, síntomas, signos, exploración física\ny analítica disponible). Crea una lista de "problemas activos".',
+          warning: 'Si el modelo sintetiza mal aquí, todos los pasos siguientes heredan ese error. Verifica antes de continuar.'
+        },
+        {
+          icon: '🔗', color: '#3730a3', bg: '#ede9fe', fragBg: '#ede9fe', fragInk: '#3730a3',
+          title: '#2 Análisis sindrómico',
+          sub: 'Identifica los síndromes principales del caso',
+          desc: 'Obliga al modelo a agrupar los problemas activos en síndromes reconocibles. Este paso conecta los datos clínicos con categorías diagnósticas antes de generar hipótesis.',
+          example: '#2 Análisis sindrómico: identifica los síndromes\nprincipales que emergen del caso.',
+          warning: 'Sin este paso, el modelo puede saltar directamente a diagnósticos sin integrar bien los datos.'
+        },
+        {
+          icon: '🔍', color: '#b45309', bg: '#fef3c7', fragBg: '#fef3c7', fragInk: '#92400e',
+          title: '#3 Indagación activa',
+          sub: 'Qué datos faltan y por qué son cruciales',
+          desc: 'Antes de dar el diferencial, el modelo debe detenerse y señalar qué información falta. Este paso activa el pensamiento crítico y evita que el modelo asuma datos que no se le han proporcionado.',
+          example: '#3 Indagación activa: antes de dar el diagnóstico\ndiferencial, detente. Enumera qué datos específicos\nfaltan y explica por qué son cruciales.',
+          warning: 'Si el modelo no se detiene aquí, probablemente está asumiendo datos. Pide explícitamente que espere tu respuesta.'
+        },
+        {
+          icon: '📊', color: '#9d174d', bg: '#fce7f3', fragBg: '#fce7f3', fragInk: '#9d174d',
+          title: '#4 DDx jerarquizado',
+          sub: 'Probable · Competitivo · Must-not-miss',
+          desc: 'El corazón del prompt. El modelo genera tres capas de diferencial: el diagnóstico más probable por frecuencia, los diferenciales competitivos que encajan parcialmente, y los must-not-miss que no pueden omitirse por su gravedad.',
+          example: '#4 Diagnóstico diferencial jerarquizado:\n- Más probable: por frecuencia y concordancia clínica.\n- Diferenciales competitivos: otras causas que encajan.\n- "Must-not-miss": diagnósticos graves o urgentes.',
+          warning: 'El "must-not-miss" no es opcional. Si el modelo no lo incluye, el prompt no está funcionando correctamente.'
+        },
+        {
+          icon: '⚖️', color: '#6d28d9', bg: '#f5f3ff', fragBg: '#f5f3ff', fragInk: '#6d28d9',
+          title: '#5 Justificación de hipótesis',
+          sub: 'Qué datos apoyan y qué datos contradicen',
+          desc: 'Para cada hipótesis principal, el modelo debe citar los datos que la sostienen y los que la contradicen. Este es el paso que mejor protege contra el sesgo de confirmación.',
+          example: '#5 Justificación: explica brevemente qué datos\napoyan y qué datos contradicen cada una de\ntus 5 hipótesis principales.',
+          warning: 'Si solo aparecen datos a favor, el modelo está siendo aquiescente. Pide explícitamente los datos en contra.'
+        },
+        {
+          icon: '🔬', color: '#166534', bg: '#dcfce7', fragBg: '#dcfce7', fragInk: '#166534',
+          title: '#6 Plan de acción',
+          sub: 'Pruebas priorizadas de menor a mayor complejidad',
+          desc: 'El modelo propone pruebas complementarias ordenadas por rentabilidad diagnóstica y relación coste-beneficio. La priorización es clave: no todas las pruebas tienen el mismo valor en el mismo momento.',
+          example: '#6 Plan de acción: sugiere pruebas priorizadas\npor rentabilidad diagnóstica, de lo más sencillo\na lo más complejo o invasivo.',
+          warning: 'Una lista larga de pruebas sin priorizar no es un plan. Si el modelo no ordena, el prompt necesita más instrucción.'
+        }
+      ];
+
+      const qualityLevels = [
+        { min: 0,   max: 0,   label: 'Sin estructura',   color: '#ef4444' },
+        { min: 1,   max: 33,  label: 'Básico',           color: '#f97316' },
+        { min: 34,  max: 66,  label: 'En construcción',  color: '#eab308' },
+        { min: 67,  max: 99,  label: 'Casi completo',    color: '#84cc16' },
+        { min: 100, max: 100, label: 'Completo',         color: '#22c55e' }
+      ];
+
+      const togglesEl  = document.getElementById('cotToggles');
+      const previewEl  = document.getElementById('cotPreview');
+      const barEl      = document.getElementById('cotBar');
+      const pctEl      = document.getElementById('cotPct');
+      const labelEl    = document.getElementById('cotLabel');
+      const detailEl   = document.getElementById('cotDetail');
+
+      let active = new Array(steps.length).fill(false);
+      let openDetail = -1;
+
+      function buildUI() {
+        // Toggles
+        togglesEl.innerHTML = steps.map((s, i) => `
+          <div class="cot-row" id="cotRow${i}" style="--row-color:${s.color};--row-bg:${s.bg};" onclick="cotRowClick(${i})">
+            <span class="cot-row-icon">${s.icon}</span>
+            <div class="cot-row-text">
+              <div class="cot-row-title">${s.title}</div>
+              <div class="cot-row-sub">${s.sub}</div>
+            </div>
+            <label class="cot-toggle" onclick="event.stopPropagation()">
+              <input type="checkbox" id="cotChk${i}" onchange="cotToggle(${i})">
+              <div class="cot-toggle-track"></div>
+              <div class="cot-toggle-thumb"></div>
+            </label>
+          </div>`).join('');
+
+        // Preview fragments
+        previewEl.innerHTML = steps.map((s, i) => `<span class="cot-frag inactive" id="cotFrag${i}" style="--frag-bg:${s.fragBg};--frag-ink:${s.fragInk};"><mark>${s.example}</mark>\n\n</span>`).join('');
+      }
+
+      function cotToggle(i) {
+        active[i] = document.getElementById(`cotChk${i}`).checked;
+        document.getElementById(`cotRow${i}`).classList.toggle('active', active[i]);
+        document.getElementById(`cotFrag${i}`).classList.toggle('inactive', !active[i]);
+        document.getElementById(`cotFrag${i}`).classList.toggle('active', active[i]);
+        updateBar();
+      }
+
+      function cotRowClick(i) {
+        if (openDetail === i) {
+          openDetail = -1;
+          detailEl.style.display = 'none';
+        } else {
+          openDetail = i;
+          const s = steps[i];
+          detailEl.style.display = 'block';
+          detailEl.style.setProperty('--detail-color', s.color);
+          detailEl.innerHTML = `
+            <div class="cot-detail-header">
+              <span class="cot-detail-icon">${s.icon}</span>
+              <span class="cot-detail-title" style="color:${s.color}">${s.title} — ${s.sub}</span>
+            </div>
+            <div class="cot-detail-desc">${s.desc}</div>
+            <div class="cot-detail-example">${s.example}</div>
+            <div class="cot-detail-warning">${s.warning}</div>`;
+          detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      }
+      window.cotToggle    = cotToggle;
+      window.cotRowClick  = cotRowClick;
+
+      function updateBar() {
+        const on  = active.filter(Boolean).length;
+        const pct = Math.round((on / steps.length) * 100);
+        const lvl = qualityLevels.find(l => pct >= l.min && pct <= l.max) || qualityLevels[0];
+        barEl.style.width     = pct + '%';
+        barEl.style.background = lvl.color;
+        pctEl.textContent     = pct + '%';
+        labelEl.textContent   = lvl.label;
+      }
+
+      buildUI();
+      updateBar();
+    })();
+
+    // ── Activity cases ──
+    function toggleCase(el) { el.classList.toggle('open'); }
+
+    // ── Flashcards ──
+    (function() {
+      const stack = document.getElementById('fcStack');
+      const cards = Array.from(stack.querySelectorAll('.choice-card'));
+      let cur = 0;
+      function update() {
+        cards.forEach(c => c.classList.remove('visible','flipped'));
+        cards[cur].classList.add('visible');
+        document.getElementById('fcCur').textContent = cur + 1;
+        document.getElementById('fcTot').textContent = cards.length;
+      }
+      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
+      document.getElementById('fcPrev').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
+      document.getElementById('fcNext').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
+      document.getElementById('fcFlip').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
+      update();
+    })();
+
+    // ── Scroll a sección ──
+    function scrollToSection(id) {
+      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ── Nav activa por scroll ──
+    const sections = document.querySelectorAll('section[id]');
+    const navBtns  = document.querySelectorAll('.nav-pill');
+    sections.forEach(s => new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          navBtns.forEach(b => {
+            const oc = b.getAttribute('onclick') || '';
+            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
+          });
+        }
+      });
+    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
+
+    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
+    function toggleAcc(btn, groupId) {
+      const item    = btn.closest('.acc-item');
+      const group   = document.getElementById(groupId);
+      const wasOpen = item.classList.contains('open');
+      group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
+      if (!wasOpen) {
+        item.classList.add('open');
+        setTimeout(() => {
+          const top = item.getBoundingClientRect().top + window.scrollY - 90;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }, 50);
+      }
+    }
+
+    // ── Pestañas ──
+    function switchTab(btn, paneId, navId, bodyId) {
+      const nav  = document.getElementById(navId);
+      const body = document.getElementById(bodyId);
+      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
+      btn.classList.add('active');
+      document.getElementById(paneId).classList.add('active');
+      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
+      const idx  = btns.indexOf(btn);
+      const last = btns.length - 1;
+      body.style.borderRadius =
+        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
+        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
+                       'var(--r-lg)';
+    }
+  </script>
+</body>
+</html>
