@@ -10,7 +10,6 @@
   <style>
     :root {
       --uva-blue:      #003973;
-      --uva-blue-soft: #1d4f8a;
       --uva-red:       #c60046;
       --ink:           #1a1f2e;
       --ink-soft:      #3d4554;
@@ -22,91 +21,128 @@
       --line-strong:   #d9cfbb;
       --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
       --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
-      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
       --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
       --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
-      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
       --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
-      --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
-      --max: 960px;
+      --r-lg: 22px; --r-xl: 28px; --max: 960px;
     }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
-    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    body { font-family: "Inter", sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
     .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
 
-    /* ── Barra EduMed (sin botón volver) ── */
-    .edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    /* ── Barra ── */
+    .edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 4px 14px rgba(0,0,0,.06); }
     .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; padding: 14px 20px; }
     .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
     .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
-    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
-    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; }
     .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
 
-    /* ── Hero grande ── */
-    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 72px 0 60px; text-align: center; position: relative; overflow: hidden; }
-    .hero::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,57,115,.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
+    /* ── Hero ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 64px 0 52px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before { content: ""; position: absolute; inset: 0; background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,57,115,.07) 0%, transparent 70%); pointer-events: none; }
     .hero-inner { position: relative; z-index: 1; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 16px; margin-bottom: 28px; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 16px; margin-bottom: 24px; }
     .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--uva-red); }
     .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 20px; }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 16px; }
     .hero-title em { font-style: italic; color: var(--uva-blue); }
-    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.15rem); color: var(--ink-soft); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 580px; margin: 0 auto 32px; line-height: 1.6; }
     .hero-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-    .hero-pill { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; font-size: 13px; font-weight: 600; color: var(--ink-soft); box-shadow: var(--shadow-sm); }
+    .hero-pill { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 6px 14px; font-size: 13px; font-weight: 600; color: var(--ink-soft); box-shadow: var(--shadow-sm); }
 
-    /* ── Separador ── */
-    .sep-line { border: none; border-top: 1px solid var(--line); margin: 0; }
-
-    /* ── Grid de módulos ── */
-    .modules { padding: 64px 0 80px; }
-    .modules-intro { text-align: center; margin-bottom: 48px; }
-    .modules-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
+    /* ── Módulos ── */
+    .modules { padding: 56px 0 72px; }
+    .modules-intro { text-align: center; margin-bottom: 40px; }
+    .modules-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 10px; }
     .modules-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
-    .modules-title { font-family: "Fraunces", serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); }
+    .modules-title { font-family: "Fraunces", serif; font-size: clamp(1.4rem, 3vw, 1.9rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); }
 
-    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .module-group-cards { flex-direction: column; } }
+    /* Grid: 2 cols en escritorio, 1 col en móvil */
+    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
-    /* ── Callout inferior ── */
-    .callout-wrap { padding: 0 0 72px; }
-    .callout-box { background: var(--uva-blue); border-radius: var(--r-xl); padding: 40px 44px; display: flex; align-items: center; gap: 32px; }
+    /* ── Module card ── */
+    .module-card { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); padding: 28px 24px; box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: box-shadow .25s, transform .25s, border-color .25s; }
+    .module-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: var(--line-strong); }
+    .module-num { font-family: "Fraunces", serif; font-size: 3.5rem; font-weight: 700; font-style: italic; line-height: 1; margin-bottom: 12px; opacity: .12; }
+    .module-icon { font-size: 2rem; margin-bottom: 12px; }
+    .module-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 3px; margin-bottom: 10px; }
+    .module-title { font-family: "Fraunces", serif; font-size: 1.15rem; font-weight: 600; color: var(--ink); line-height: 1.2; margin-bottom: 8px; }
+    .module-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; flex: 1; margin-bottom: 20px; }
+    .module-topics { display: flex; flex-direction: column; gap: 5px; margin-bottom: 20px; }
+    .module-topic { font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 6px; line-height: 1.4; }
+    .module-topic::before { content: "→"; flex-shrink: 0; font-weight: 700; margin-top: 1px; }
+    .module-cta { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; padding: 10px 18px; border-radius: 999px; margin-top: auto; align-self: flex-start; transition: all .18s; }
+    .module-cta svg { width: 14px; height: 14px; transition: transform .18s; }
+    .module-card:hover .module-cta svg { transform: translateX(3px); }
+
+    /* Colores por módulo */
+    .mod-1  .module-num { color: var(--e-teal); }
+    .mod-1  .module-tag { background: var(--e-teal-l); color: var(--e-teal); }
+    .mod-1  .module-topic::before { color: var(--e-teal); }
+    .mod-1  .module-cta { background: var(--e-teal); color: #fff; }
+
+    .mod-2  .module-num { color: var(--e-indigo); }
+    .mod-2  .module-tag { background: var(--e-indigo-l); color: var(--e-indigo); }
+    .mod-2  .module-topic::before { color: var(--e-indigo); }
+    .mod-2  .module-cta { background: var(--e-indigo); color: #fff; }
+
+    .mod-2b .module-num { color: var(--e-teal); }
+    .mod-2b .module-tag { background: var(--e-teal-l); color: var(--e-teal); }
+    .mod-2b .module-topic::before { color: var(--e-teal); }
+    .mod-2b .module-cta { background: var(--e-teal); color: #fff; }
+
+    .mod-2c .module-num { color: var(--e-violet); }
+    .mod-2c .module-tag { background: var(--e-violet-l); color: var(--e-violet); }
+    .mod-2c .module-topic::before { color: var(--e-violet); }
+    .mod-2c .module-cta { background: var(--e-violet); color: #fff; }
+
+    .mod-3  .module-num { color: var(--uva-red); }
+    .mod-3  .module-tag { background: var(--e-red-l); color: var(--uva-red); }
+    .mod-3  .module-topic::before { color: var(--uva-red); }
+    .mod-3  .module-cta { background: var(--uva-red); color: #fff; }
+
+    .mod-4  .module-num { color: var(--e-amber); }
+    .mod-4  .module-tag { background: var(--e-amber-l); color: var(--e-amber); }
+    .mod-4  .module-topic::before { color: var(--e-amber); }
+    .mod-4  .module-cta { background: var(--e-amber); color: #fff; }
+
+    /* ── Callout ── */
+    .callout-wrap { padding: 0 0 64px; }
+    .callout-box { background: var(--uva-blue); border-radius: var(--r-xl); padding: 36px 44px; display: flex; align-items: center; gap: 28px; }
     .callout-text { flex: 1; }
-    .callout-title { font-family: "Fraunces", serif; font-size: 1.4rem; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.2; }
-    .callout-desc  { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.6; }
-    .callout-icon  { font-size: 4rem; flex-shrink: 0; opacity: .7; }
+    .callout-title { font-family: "Fraunces", serif; font-size: 1.2rem; font-weight: 600; color: #fff; margin-bottom: 6px; }
+    .callout-desc { font-size: 14px; color: rgba(255,255,255,.7); line-height: 1.6; }
+    .callout-icon { font-size: 3rem; opacity: .7; flex-shrink: 0; }
 
     /* ── Footer ── */
     .footer { border-top: 1px solid var(--line); padding: 24px 0 36px; font-size: 13px; color: var(--muted); }
     .footer-row { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
 
-    /* ── Responsive ── */
+    /* ── Responsive: móvil 1 columna ── */
     @media (max-width: 640px) {
-      .hero { padding: 48px 0 40px; }
-      .hero-pills { justify-content: center; }
-      .modules { padding: 44px 0 60px; }
-      .module-row-top,
-      .module-row-bottom { grid-template-columns: 1fr; }
-      .module-group-cards { flex-direction: column; }
-      .module-card { padding: 22px 18px; }
+      .hero { padding: 44px 0 36px; }
+      .hero-pills { gap: 6px; }
+      .hero-pill { font-size: 12px; padding: 5px 11px; }
+      .modules { padding: 36px 0 52px; }
+      .modules-grid { grid-template-columns: 1fr; gap: 16px; }
+      .module-card { padding: 22px 20px; }
       .module-num { font-size: 3rem; }
       .callout-box { flex-direction: column; padding: 28px 24px; gap: 16px; text-align: center; }
       .callout-icon { font-size: 2.5rem; }
     }
+
     :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; } }
   </style>
 </head>
 <body>
 
-  <!-- ── BARRA EDUMED ── -->
+  <!-- ── BARRA ── -->
   <div class="edumed-bar">
     <div class="edumed-bar-inner">
       <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
@@ -138,7 +174,7 @@
     </div>
   </div>
 
-  <hr class="sep-line">
+  <hr style="border:none;border-top:1px solid var(--line);">
 
   <!-- ── MÓDULOS ── -->
   <section class="modules">
@@ -161,7 +197,7 @@
             <div class="module-topic">Qué es el razonamiento clínico y cómo se entrena</div>
             <div class="module-topic">Los 7 pasos básicos del proceso diagnóstico</div>
             <div class="module-topic">Cómo construir un diferencial útil por categorías</div>
-            <div class="module-topic">Errores frecuentes: anclaje, cierre prematuro, momentum diagnóstico</div>
+            <div class="module-topic">Errores frecuentes: anclaje, cierre prematuro, momentum</div>
           </div>
           <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
         </a>
@@ -171,7 +207,7 @@
           <div class="module-icon">🔬</div>
           <span class="module-tag">Prompts · Fundamentos</span>
           <div class="module-title">Cómo hablar con un LLM · Fundamentos</div>
-          <div class="module-desc">Qué es un prompt, cómo varía según su complejidad y cuáles son sus seis componentes internos. Con constructor interactivo.</div>
+          <div class="module-desc">Qué es un prompt, cómo varía según su complejidad y cuáles son sus seis componentes. Con constructor interactivo.</div>
           <div class="module-topics">
             <div class="module-topic">Qué es un prompt y por qué importa cómo se formula</div>
             <div class="module-topic">Tres niveles de complejidad</div>
@@ -203,7 +239,7 @@
           <div class="module-title">Cómo hablar con un LLM · Uso avanzado</div>
           <div class="module-desc">RAG y herramientas con evidencia, cómo elegir el prompt según el caso y repaso interactivo con flashcards.</div>
           <div class="module-topics">
-            <div class="module-topic">RAG vs. LLM generalista</div>
+            <div class="module-topic">RAG vs. LLM generalista · OpenEvidence</div>
             <div class="module-topic">Guía de elección según complejidad del caso</div>
             <div class="module-topic">Repaso interactivo con 6 flashcards</div>
             <div class="module-topic">Referencias comentadas</div>
@@ -216,7 +252,7 @@
           <div class="module-icon">⚠️</div>
           <span class="module-tag">Uso seguro</span>
           <div class="module-title">Riesgos y limitaciones que debes conocer</div>
-          <div class="module-desc">Un LLM puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Fallos del modelo, errores de interacción y protocolo de verificación.</div>
+          <div class="module-desc">Un LLM puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Fallos, errores de interacción y protocolo de verificación.</div>
           <div class="module-topics">
             <div class="module-topic">7 limitaciones intrínsecas: alucinaciones, sesgos, privacidad…</div>
             <div class="module-topic">3 sesgos de interacción: automatización, anclaje, fluidez</div>
@@ -231,7 +267,7 @@
           <div class="module-icon">📖</div>
           <span class="module-tag">Referencia rápida</span>
           <div class="module-title">Glosario de términos clave</div>
-          <div class="module-desc">27 términos del vocabulario de IA clínica y razonamiento diagnóstico, con búsqueda en tiempo real y filtros por letra y categoría.</div>
+          <div class="module-desc">27 términos de IA clínica y razonamiento diagnóstico con búsqueda en tiempo real y filtros por letra y categoría.</div>
           <div class="module-topics">
             <div class="module-topic">Términos técnicos: LLM, RAG, fine-tuning, XAI…</div>
             <div class="module-topic">Sesgos cognitivos: anclaje, aquiescencia, automatización…</div>
@@ -239,341 +275,6 @@
             <div class="module-topic">Búsqueda en tiempo real y filtros por categoría</div>
           </div>
           <span class="module-cta">Abrir glosario <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
-        </a>
-
-      </div>
-
-    </div>
-  </section>ad>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>IA y Diagnóstico Diferencial · EduMed UVa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --uva-blue:      #003973;
-      --uva-blue-soft: #1d4f8a;
-      --uva-red:       #c60046;
-      --ink:           #1a1f2e;
-      --ink-soft:      #3d4554;
-      --muted:         #6b7486;
-      --cream:         #faf7f2;
-      --cream-2:       #f3ede3;
-      --paper:         #ffffff;
-      --line:          #e8e1d4;
-      --line-strong:   #d9cfbb;
-      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
-      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
-      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
-      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
-      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
-      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
-      --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
-      --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
-      --max: 960px;
-    }
-
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
-    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
-
-    /* ── Barra EduMed (sin botón volver) ── */
-    .edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
-    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; padding: 14px 20px; }
-    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
-    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
-    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
-    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
-    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
-
-    /* ── Hero grande ── */
-    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 72px 0 60px; text-align: center; position: relative; overflow: hidden; }
-    .hero::before {
-      content: "";
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,57,115,.07) 0%, transparent 70%);
-      pointer-events: none;
-    }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 16px; margin-bottom: 28px; }
-    .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--uva-red); }
-    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 20px; }
-    .hero-title em { font-style: italic; color: var(--uva-blue); }
-    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.15rem); color: var(--ink-soft); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
-    .hero-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
-    .hero-pill { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; font-size: 13px; font-weight: 600; color: var(--ink-soft); box-shadow: var(--shadow-sm); }
-
-    /* ── Separador ── */
-    .sep-line { border: none; border-top: 1px solid var(--line); margin: 0; }
-
-    /* ── Grid de módulos ── */
-    .modules { padding: 64px 0 80px; }
-    .modules-intro { text-align: center; margin-bottom: 48px; }
-    .modules-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
-    .modules-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
-    .modules-title { font-family: "Fraunces", serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); }
-
-    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-
-    /* ── Module card ── */
-    .module-card { background: var(--paper); border: 1.5px solid var(--line); border-radius: var(--r-xl); padding: 32px 28px; box-shadow: var(--shadow-sm); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 0; transition: box-shadow .25s, transform .25s, border-color .25s; position: relative; overflow: hidden; }
-    .module-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: var(--line-strong); }
-    .module-card::after { content: ""; position: absolute; inset: 0; border-radius: var(--r-xl); opacity: 0; transition: opacity .25s; pointer-events: none; }
-    .module-card:hover::after { opacity: 1; }
-
-    .module-num { font-family: "Fraunces", serif; font-size: 4rem; font-weight: 700; font-style: italic; line-height: 1; margin-bottom: 16px; opacity: .12; }
-    .module-icon { font-size: 2.2rem; margin-bottom: 14px; }
-    .module-tag { display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; padding: 3px 10px; border-radius: 999px; margin-bottom: 12px; }
-    .module-title { font-family: "Fraunces", serif; font-size: 1.25rem; font-weight: 600; color: var(--ink); line-height: 1.2; margin-bottom: 10px; }
-    .module-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.6; flex: 1; margin-bottom: 24px; }
-    .module-topics { display: flex; flex-direction: column; gap: 5px; margin-bottom: 24px; }
-    .module-topic { font-size: 12px; color: var(--muted); display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
-    .module-topic::before { content: "→"; flex-shrink: 0; font-weight: 700; margin-top: 1px; }
-    .module-cta { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; padding: 11px 20px; border-radius: 999px; margin-top: auto; transition: all .18s; align-self: flex-start; }
-    .module-cta svg { width: 14px; height: 14px; transition: transform .18s; }
-    .module-card:hover .module-cta svg { transform: translateX(3px); }
-
-    /* ── Colores por módulo ── */
-    .mod-1 .module-num   { color: var(--e-teal); }
-    .mod-1 .module-tag   { background: var(--e-teal-l); color: var(--e-teal); }
-    .mod-1 .module-topic::before { color: var(--e-teal); }
-    .mod-1 .module-cta   { background: var(--e-teal); color: #fff; }
-    .mod-1 .module-cta:hover { background: #0a5f5f; }
-    .mod-1:hover::after  { background: radial-gradient(circle at 80% 20%, rgba(13,110,110,.04) 0%, transparent 70%); }
-
-    .mod-2 .module-num   { color: var(--e-indigo); }
-    .mod-2 .module-tag   { background: var(--e-indigo-l); color: var(--e-indigo); }
-    .mod-2 .module-topic::before { color: var(--e-indigo); }
-    .mod-2 .module-cta   { background: var(--e-indigo); color: #fff; }
-    .mod-2 .module-cta:hover { background: #2d27a3; }
-    .mod-2:hover::after  { background: radial-gradient(circle at 80% 20%, rgba(55,48,163,.04) 0%, transparent 70%); }
-
-    .mod-3 .module-num   { color: var(--uva-red); }
-    .mod-3 .module-tag   { background: #fce7f3; color: var(--uva-red); }
-    .mod-3 .module-topic::before { color: var(--uva-red); }
-    .mod-3 .module-cta   { background: var(--uva-red); color: #fff; }
-    .mod-3 .module-cta:hover { background: #a8003c; }
-    .mod-3:hover::after  { background: radial-gradient(circle at 80% 20%, rgba(198,0,70,.04) 0%, transparent 70%); }
-
-    .mod-4 .module-num   { color: var(--e-amber); }
-    .mod-4 .module-tag   { background: var(--e-amber-l); color: var(--e-amber); }
-    .mod-4 .module-topic::before { color: var(--e-amber); }
-    .mod-4 .module-cta   { background: var(--e-amber); color: #fff; }
-    .mod-4 .module-cta:hover { background: #7a3508; }
-    .mod-4:hover::after  { background: radial-gradient(circle at 80% 20%, rgba(146,64,14,.04) 0%, transparent 70%); }
-
-    /* ── Grupo de módulos (prompts) ── */
-    .module-group { grid-column: 1 / -1; display: flex; flex-direction: column; gap: 12px; }
-    .module-group-label { display: flex; align-items: center; gap: 12px; padding: 14px 20px; background: var(--e-indigo-l); border: 1.5px solid #c4b5fd; border-radius: var(--r-lg); }
-    .module-group-icon { font-size: 1.4rem; }
-    .module-group-title { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 700; color: var(--e-indigo); line-height: 1.2; }
-    .module-group-sub { font-size: 12px; color: var(--e-indigo); opacity: .7; margin-top: 2px; }
-    .module-group-cards { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-    .mod-2a .module-num { color: var(--e-indigo); }
-    .mod-2a .module-tag { background: var(--e-indigo-l); color: var(--e-indigo); }
-    .mod-2a .module-cta { background: var(--e-indigo); color: #fff; }
-    .mod-2a .module-cta:hover { background: #2d27a3; }
-    .mod-2b .module-num { color: var(--e-teal); }
-    .mod-2b .module-tag { background: var(--e-teal-l); color: var(--e-teal); }
-    .mod-2b .module-cta { background: var(--e-teal); color: #fff; }
-    .mod-2b .module-cta:hover { background: #0a5f5f; }
-    .mod-2c .module-num { color: var(--e-violet); }
-    .mod-2c .module-tag { background: var(--e-violet-l); color: var(--e-violet); }
-    .mod-2c .module-cta { background: var(--e-violet); color: #fff; }
-    .mod-2c .module-cta:hover { background: #5b21b6; }
-    @media (max-width: 640px) { .module-row-top, .module-row-bottom { grid-template-columns: 1fr; } .module-group-cards { flex-direction: column; } }
-
-    /* ── Callout inferior ── */
-    .callout-wrap { padding: 0 0 72px; }
-    .callout-box { background: var(--uva-blue); border-radius: var(--r-xl); padding: 40px 44px; display: flex; align-items: center; gap: 32px; }
-    .callout-text { flex: 1; }
-    .callout-title { font-family: "Fraunces", serif; font-size: 1.4rem; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.2; }
-    .callout-desc  { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.6; }
-    .callout-icon  { font-size: 4rem; flex-shrink: 0; opacity: .7; }
-
-    /* ── Footer ── */
-    .footer { border-top: 1px solid var(--line); padding: 24px 0 36px; font-size: 13px; color: var(--muted); }
-    .footer-row { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .hero { padding: 48px 0 40px; }
-      .hero-pills { justify-content: center; }
-      .modules { padding: 44px 0 60px; }
-      .module-row-top,
-      .module-row-bottom { grid-template-columns: 1fr; }
-      .module-group-cards { flex-direction: column; }
-      .module-card { padding: 22px 18px; }
-      .module-num { font-size: 3rem; }
-      .callout-box { flex-direction: column; padding: 28px 24px; gap: 16px; text-align: center; }
-      .callout-icon { font-size: 2.5rem; }
-    }
-    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
-  </style>
-</head>
-<body>
-
-  <!-- ── BARRA EDUMED ── -->
-  <div class="edumed-bar">
-    <div class="edumed-bar-inner">
-      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
-        <div class="edumed-wordmark">
-          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
-          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
-        </div>
-      </a>
-    </div>
-  </div>
-
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="container hero-inner">
-      <div class="hero-tag">
-        <div class="hero-tag-dot"></div>
-        <span>Curso · IA y razonamiento clínico</span>
-      </div>
-      <h1 class="hero-title">IA y diagnóstico diferencial:<br><em>aprende a usarla bien</em></h1>
-      <p class="hero-subtitle">Seis módulos para entender cómo razona un clínico, cómo interactuar con un LLM de forma segura y crítica, y qué riesgos debes conocer antes de confiar en sus respuestas.</p>
-      <div class="hero-pills">
-        <span class="hero-pill">🧠 Razonamiento clínico</span>
-        <span class="hero-pill">💬 Prompts · Fundamentos</span>
-        <span class="hero-pill">🗂️ Prompts · Tipos y flujos</span>
-        <span class="hero-pill">🚀 Prompts · Uso avanzado</span>
-        <span class="hero-pill">⚠️ Riesgos y limitaciones</span>
-        <span class="hero-pill">📖 Glosario de términos</span>
-      </div>
-    </div>
-  </div>
-
-  <hr class="sep-line">
-
-  <!-- ── MÓDULOS ── -->
-  <section class="modules">
-    <div class="container">
-
-      <div class="modules-intro">
-        <div class="modules-eyebrow">Módulos del curso</div>
-        <h2 class="modules-title">Elige por dónde empezar</h2>
-      </div>
-
-      <div class="modules-grid">
-
-        <div class="module-row-top">
-
-        <!-- Módulo 1 -->
-        <a class="module-card mod-1" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_basicos">
-          <div class="module-num">01</div>
-          <div class="module-icon">🧠</div>
-          <span class="module-tag">Antes de la IA</span>
-          <div class="module-title">Básicos del razonamiento clínico</div>
-          <div class="module-desc">Antes de trabajar con inteligencia artificial conviene entender cómo razona un clínico. Este módulo cubre los fundamentos del diagnóstico diferencial, los pasos del razonamiento y los errores cognitivos más frecuentes.</div>
-          <div class="module-topics">
-            <div class="module-topic">Qué es el razonamiento clínico y cómo se entrena</div>
-            <div class="module-topic">Los 7 pasos básicos del proceso diagnóstico</div>
-            <div class="module-topic">Cómo construir un diferencial útil por categorías</div>
-            <div class="module-topic">Errores frecuentes: anclaje, cierre prematuro, momentum diagnóstico</div>
-          </div>
-          <span class="module-cta">
-            Abrir módulo
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-          </span>
-        </a>
-
-        <!-- Módulos 2a · 2b · 2c — franja de 3 columnas -->
-        <div class="module-group">
-          <div class="module-group-label">
-            <span class="module-group-icon">💬</span>
-            <div>
-              <div class="module-group-title">Cómo hablar con un LLM sobre diagnósticos</div>
-              <div class="module-group-sub">Teoría de prompts · En tres partes</div>
-            </div>
-          </div>
-          <div class="module-group-cards">
-
-            <a class="module-card mod-2a" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts">
-              <div class="module-num" style="font-size:2.2rem;">2a</div>
-              <div class="module-icon" style="font-size:1.6rem;">🔬</div>
-              <span class="module-tag">Fundamentos</span>
-              <div class="module-title" style="font-size:1rem;">Qué es un prompt y cómo está construido</div>
-              <div class="module-desc" style="font-size:13px;">Complejidad, anatomía en 6 componentes y privacidad de datos.</div>
-              <span class="module-cta" style="font-size:12px;padding:8px 14px;">
-                Abrir
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-              </span>
-            </a>
-
-            <a class="module-card mod-2b" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Tipos">
-              <div class="module-num" style="font-size:2.2rem;">2b</div>
-              <div class="module-icon" style="font-size:1.6rem;">🗂️</div>
-              <span class="module-tag">Tipos y flujos</span>
-              <div class="module-title" style="font-size:1rem;">Los 7 tipos de prompts y cuándo usarlos</div>
-              <div class="module-desc" style="font-size:13px;">Del zero-shot al tutor socrático, flujos y supervisión humana.</div>
-              <span class="module-cta" style="font-size:12px;padding:8px 14px;">
-                Abrir
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-              </span>
-            </a>
-
-            <a class="module-card mod-2c" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Avanzado">
-              <div class="module-num" style="font-size:2.2rem;">2c</div>
-              <div class="module-icon" style="font-size:1.6rem;">🚀</div>
-              <span class="module-tag">Uso avanzado</span>
-              <div class="module-title" style="font-size:1rem;">RAG, estrategia y repaso interactivo</div>
-              <div class="module-desc" style="font-size:13px;">RAG, cómo elegir el prompt adecuado y flashcards de repaso.</div>
-              <span class="module-cta" style="font-size:12px;padding:8px 14px;">
-                Abrir
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-              </span>
-            </a>
-
-          </div>
-        </div>
-
-        </div><!-- /module-row-top -->
-
-        <div class="module-row-bottom">
-
-        <!-- Módulo 3 -->
-        <a class="module-card mod-3" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_RiesgoIA/">
-          <div class="module-num">03</div>
-          <div class="module-icon">⚠️</div>
-          <span class="module-tag">Uso seguro</span>
-          <div class="module-title">Riesgos y limitaciones que debes conocer</div>
-          <div class="module-desc">Un LLM puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Este módulo analiza los fallos del modelo y los errores de interacción humano-IA, y propone un protocolo de verificación.</div>
-          <div class="module-topics">
-            <div class="module-topic">7 limitaciones intrínsecas: alucinaciones, sesgos, privacidad…</div>
-            <div class="module-topic">3 sesgos de interacción: automatización, anclaje, ilusión de fluidez</div>
-            <div class="module-topic">Protocolo de verificación en 3 niveles</div>
-            <div class="module-topic">Repaso interactivo con flashcards</div>
-          </div>
-          <span class="module-cta">
-            Abrir módulo
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-          </span>
-        </a>
-
-        <!-- Módulo 4 -->
-        <a class="module-card mod-4" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Glosario/">
-          <div class="module-num">04</div>
-          <div class="module-icon">📖</div>
-          <span class="module-tag">Referencia rápida</span>
-          <div class="module-title">Glosario de términos clave</div>
-          <div class="module-desc">27 términos del vocabulario de IA clínica y razonamiento diagnóstico, ordenados alfabéticamente con búsqueda y filtros. Para consultar en cualquier momento del curso.</div>
-          <div class="module-topics">
-            <div class="module-topic">Términos técnicos: LLM, RAG, fine-tuning, XAI…</div>
-            <div class="module-topic">Sesgos cognitivos: anclaje, aquiescencia, automatización…</div>
-            <div class="module-topic">Estrategias de prompt: CoT, zero-shot, equipo rojo…</div>
-            <div class="module-topic">Búsqueda en tiempo real y filtros por categoría</div>
-          </div>
-          <span class="module-cta">
-            Abrir glosario
-            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg>
-          </span>
         </a>
 
       </div>
@@ -586,7 +287,7 @@
       <div class="callout-box">
         <div class="callout-text">
           <div class="callout-title">¿Por dónde empezar?</div>
-          <div class="callout-desc">Si no has trabajado antes con IA en clínica, el orden recomendado es el del propio numerado: empieza por los fundamentos del razonamiento clínico, aprende a construir prompts, entiende los riesgos y ten el glosario a mano para cuando necesites aclarar un término.</div>
+          <div class="callout-desc">El orden recomendado es el del propio numerado: empieza por los fundamentos del razonamiento clínico, aprende a construir prompts en sus tres partes, entiende los riesgos y ten el glosario a mano para cuando necesites aclarar un término.</div>
         </div>
         <div class="callout-icon">🗺️</div>
       </div>
