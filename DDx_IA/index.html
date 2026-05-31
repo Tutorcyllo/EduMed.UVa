@@ -73,6 +73,250 @@
     .modules-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
     .modules-title { font-family: "Fraunces", serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); }
 
+    .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; } .module-group-cards { flex-direction: column; } }
+
+    /* ── Callout inferior ── */
+    .callout-wrap { padding: 0 0 72px; }
+    .callout-box { background: var(--uva-blue); border-radius: var(--r-xl); padding: 40px 44px; display: flex; align-items: center; gap: 32px; }
+    .callout-text { flex: 1; }
+    .callout-title { font-family: "Fraunces", serif; font-size: 1.4rem; font-weight: 600; color: #fff; margin-bottom: 8px; line-height: 1.2; }
+    .callout-desc  { font-size: 14px; color: rgba(255,255,255,.75); line-height: 1.6; }
+    .callout-icon  { font-size: 4rem; flex-shrink: 0; opacity: .7; }
+
+    /* ── Footer ── */
+    .footer { border-top: 1px solid var(--line); padding: 24px 0 36px; font-size: 13px; color: var(--muted); }
+    .footer-row { display: flex; flex-wrap: wrap; gap: 12px 24px; align-items: center; justify-content: space-between; }
+
+    /* ── Responsive ── */
+    @media (max-width: 640px) {
+      .hero { padding: 48px 0 40px; }
+      .hero-pills { justify-content: center; }
+      .modules { padding: 44px 0 60px; }
+      .module-row-top,
+      .module-row-bottom { grid-template-columns: 1fr; }
+      .module-group-cards { flex-direction: column; }
+      .module-card { padding: 22px 18px; }
+      .module-num { font-size: 3rem; }
+      .callout-box { flex-direction: column; padding: 28px 24px; gap: 16px; text-align: center; }
+      .callout-icon { font-size: 2.5rem; }
+    }
+    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- ── BARRA EDUMED ── -->
+  <div class="edumed-bar">
+    <div class="edumed-bar-inner">
+      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+        <div class="edumed-wordmark">
+          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- ── HERO ── -->
+  <div class="hero">
+    <div class="container hero-inner">
+      <div class="hero-tag">
+        <div class="hero-tag-dot"></div>
+        <span>Curso · IA y razonamiento clínico</span>
+      </div>
+      <h1 class="hero-title">IA y diagnóstico diferencial:<br><em>aprende a usarla bien</em></h1>
+      <p class="hero-subtitle">Seis módulos para entender cómo razona un clínico, cómo interactuar con un LLM de forma segura y crítica, y qué riesgos debes conocer antes de confiar en sus respuestas.</p>
+      <div class="hero-pills">
+        <span class="hero-pill">🧠 Razonamiento clínico</span>
+        <span class="hero-pill">💬 Prompts · Fundamentos</span>
+        <span class="hero-pill">🗂️ Prompts · Tipos y flujos</span>
+        <span class="hero-pill">🚀 Prompts · Uso avanzado</span>
+        <span class="hero-pill">⚠️ Riesgos y limitaciones</span>
+        <span class="hero-pill">📖 Glosario de términos</span>
+      </div>
+    </div>
+  </div>
+
+  <hr class="sep-line">
+
+  <!-- ── MÓDULOS ── -->
+  <section class="modules">
+    <div class="container">
+
+      <div class="modules-intro">
+        <div class="modules-eyebrow">Módulos del curso</div>
+        <h2 class="modules-title">Elige por dónde empezar</h2>
+      </div>
+
+      <div class="modules-grid">
+
+        <a class="module-card mod-1" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_basicos">
+          <div class="module-num">01</div>
+          <div class="module-icon">🧠</div>
+          <span class="module-tag">Antes de la IA</span>
+          <div class="module-title">Básicos del razonamiento clínico</div>
+          <div class="module-desc">Fundamentos del razonamiento diagnóstico: cómo se construye un diferencial, los pasos del proceso clínico y los errores cognitivos más frecuentes.</div>
+          <div class="module-topics">
+            <div class="module-topic">Qué es el razonamiento clínico y cómo se entrena</div>
+            <div class="module-topic">Los 7 pasos básicos del proceso diagnóstico</div>
+            <div class="module-topic">Cómo construir un diferencial útil por categorías</div>
+            <div class="module-topic">Errores frecuentes: anclaje, cierre prematuro, momentum diagnóstico</div>
+          </div>
+          <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <a class="module-card mod-2" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts">
+          <div class="module-num">02</div>
+          <div class="module-icon">🔬</div>
+          <span class="module-tag">Prompts · Fundamentos</span>
+          <div class="module-title">Cómo hablar con un LLM · Fundamentos</div>
+          <div class="module-desc">Qué es un prompt, cómo varía según su complejidad y cuáles son sus seis componentes internos. Con constructor interactivo.</div>
+          <div class="module-topics">
+            <div class="module-topic">Qué es un prompt y por qué importa cómo se formula</div>
+            <div class="module-topic">Tres niveles de complejidad</div>
+            <div class="module-topic">Anatomía en 6 componentes con ejemplo interactivo</div>
+            <div class="module-topic">Privacidad y datos del paciente</div>
+          </div>
+          <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <a class="module-card mod-2b" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Tipos">
+          <div class="module-num">03</div>
+          <div class="module-icon">🗂️</div>
+          <span class="module-tag">Prompts · Tipos y flujos</span>
+          <div class="module-title">Cómo hablar con un LLM · Tipos y flujos</div>
+          <div class="module-desc">Los 7 tipos de prompts, cuándo consulta primero el clínico y cuánto control humano debe mantenerse sobre la salida.</div>
+          <div class="module-topics">
+            <div class="module-topic">7 tipos: del zero-shot al tutor socrático</div>
+            <div class="module-topic">Instruccionales vs. modificaciones de rol</div>
+            <div class="module-topic">Flujos: human-first, AI-first, paralelo</div>
+            <div class="module-topic">Supervisión in / on / out of the loop</div>
+          </div>
+          <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <a class="module-card mod-2c" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Avanzado">
+          <div class="module-num">04</div>
+          <div class="module-icon">🚀</div>
+          <span class="module-tag">Prompts · Uso avanzado</span>
+          <div class="module-title">Cómo hablar con un LLM · Uso avanzado</div>
+          <div class="module-desc">RAG y herramientas con evidencia, cómo elegir el prompt según el caso y repaso interactivo con flashcards.</div>
+          <div class="module-topics">
+            <div class="module-topic">RAG vs. LLM generalista</div>
+            <div class="module-topic">Guía de elección según complejidad del caso</div>
+            <div class="module-topic">Repaso interactivo con 6 flashcards</div>
+            <div class="module-topic">Referencias comentadas</div>
+          </div>
+          <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <a class="module-card mod-3" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_RiesgoIA/">
+          <div class="module-num">05</div>
+          <div class="module-icon">⚠️</div>
+          <span class="module-tag">Uso seguro</span>
+          <div class="module-title">Riesgos y limitaciones que debes conocer</div>
+          <div class="module-desc">Un LLM puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Fallos del modelo, errores de interacción y protocolo de verificación.</div>
+          <div class="module-topics">
+            <div class="module-topic">7 limitaciones intrínsecas: alucinaciones, sesgos, privacidad…</div>
+            <div class="module-topic">3 sesgos de interacción: automatización, anclaje, fluidez</div>
+            <div class="module-topic">Protocolo de verificación en 3 niveles</div>
+            <div class="module-topic">Repaso interactivo con flashcards</div>
+          </div>
+          <span class="module-cta">Abrir módulo <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+        <a class="module-card mod-4" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Glosario/">
+          <div class="module-num">06</div>
+          <div class="module-icon">📖</div>
+          <span class="module-tag">Referencia rápida</span>
+          <div class="module-title">Glosario de términos clave</div>
+          <div class="module-desc">27 términos del vocabulario de IA clínica y razonamiento diagnóstico, con búsqueda en tiempo real y filtros por letra y categoría.</div>
+          <div class="module-topics">
+            <div class="module-topic">Términos técnicos: LLM, RAG, fine-tuning, XAI…</div>
+            <div class="module-topic">Sesgos cognitivos: anclaje, aquiescencia, automatización…</div>
+            <div class="module-topic">Estrategias de prompt: CoT, zero-shot, equipo rojo…</div>
+            <div class="module-topic">Búsqueda en tiempo real y filtros por categoría</div>
+          </div>
+          <span class="module-cta">Abrir glosario <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 4l4 4-4 4"/></svg></span>
+        </a>
+
+      </div>
+
+    </div>
+  </section>ad>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IA y Diagnóstico Diferencial · EduMed UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uva-blue:      #003973;
+      --uva-blue-soft: #1d4f8a;
+      --uva-red:       #c60046;
+      --ink:           #1a1f2e;
+      --ink-soft:      #3d4554;
+      --muted:         #6b7486;
+      --cream:         #faf7f2;
+      --cream-2:       #f3ede3;
+      --paper:         #ffffff;
+      --line:          #e8e1d4;
+      --line-strong:   #d9cfbb;
+      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
+      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
+      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
+      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
+      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+      --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
+      --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
+      --max: 960px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+
+    /* ── Barra EduMed (sin botón volver) ── */
+    .edumed-bar { background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
+    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; padding: 14px 20px; }
+    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
+    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+
+    /* ── Hero grande ── */
+    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 72px 0 60px; text-align: center; position: relative; overflow: hidden; }
+    .hero::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(0,57,115,.07) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 16px; margin-bottom: 28px; }
+    .hero-tag-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--uva-red); }
+    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2.2rem, 6vw, 3.6rem); font-weight: 700; letter-spacing: -.04em; line-height: 1.05; color: var(--ink); margin-bottom: 20px; }
+    .hero-title em { font-style: italic; color: var(--uva-blue); }
+    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.15rem); color: var(--ink-soft); max-width: 600px; margin: 0 auto 40px; line-height: 1.6; }
+    .hero-pills { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; }
+    .hero-pill { background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 7px 16px; font-size: 13px; font-weight: 600; color: var(--ink-soft); box-shadow: var(--shadow-sm); }
+
+    /* ── Separador ── */
+    .sep-line { border: none; border-top: 1px solid var(--line); margin: 0; }
+
+    /* ── Grid de módulos ── */
+    .modules { padding: 64px 0 80px; }
+    .modules-intro { text-align: center; margin-bottom: 48px; }
+    .modules-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
+    .modules-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
+    .modules-title { font-family: "Fraunces", serif; font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 600; letter-spacing: -.025em; color: var(--ink); }
+
     .modules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
 
     /* ── Module card ── */
