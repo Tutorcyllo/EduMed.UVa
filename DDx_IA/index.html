@@ -141,7 +141,7 @@
     .mod-2c .module-tag { background: var(--e-violet-l); color: var(--e-violet); }
     .mod-2c .module-cta { background: var(--e-violet); color: #fff; }
     .mod-2c .module-cta:hover { background: #5b21b6; }
-    @media (max-width: 640px) { .module-group-cards { grid-template-columns: 1fr; } }
+    @media (max-width: 640px) { .module-row-top, .module-row-bottom { grid-template-columns: 1fr; } .module-group-cards { flex-direction: column; } }
 
     /* ── Callout inferior ── */
     .callout-wrap { padding: 0 0 72px; }
@@ -216,6 +216,8 @@
 
       <div class="modules-grid">
 
+        <div class="module-row-top">
+
         <!-- Módulo 1 -->
         <a class="module-card mod-1" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_basicos">
           <div class="module-num">01</div>
@@ -284,6 +286,10 @@
 
           </div>
         </div>
+
+        </div><!-- /module-row-top -->
+
+        <div class="module-row-bottom">
 
         <!-- Módulo 3 -->
         <a class="module-card mod-3" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_RiesgoIA/">
