@@ -5,607 +5,803 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>EduMed.UVa · Unidad de Educación Médica · Universidad de Valladolid</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@300;400;500;600;700;800&family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root {
   --yellow:      #F5C518;
-  --yellow-deep: #D4A000;
-  --yellow-mid:  #FEF0A0;
-  --yellow-pale: #FFFDE7;
-  --gray-900:    #111318;
-  --gray-700:    #3D4451;
-  --gray-500:    #6B7280;
-  --gray-200:    #E5E7EB;
-  --gray-100:    #F3F4F6;
-  --gray-50:     #F9FAFB;
-  --white:       #FFFFFF;
-  --radius:      10px;
-  --shadow-sm:   0 1px 3px rgba(0,0,0,0.08);
-  --shadow-md:   0 4px 12px rgba(0,0,0,0.10);
-  --shadow-lg:   0 8px 24px rgba(0,0,0,0.13);
+  --yellow-deep: #C28E00;
+  --yellow-soft: #FCEBA0;
+  --yellow-wash: #FFF8DD;
+
+  --cream:       #FFFCF4;
+  --cream-2:     #FBF4E2;
+  --paper:       #FFFFFF;
+
+  --ink:         #211C10;
+  --ink-2:       #34301F;
+  --ink-soft:    #514A39;
+  --muted:       #8A8268;
+  --line:        #EBE3CE;
+  --line-2:      #E1D7BC;
+
+  --font-head:   'Figtree', sans-serif;
+  --font-body:   'Figtree', sans-serif;
+
+  --gap:         48px;   /* section rhythm */
+  --card-pad:    22px;
+  --row-pad:     16px;
+
+  --radius:      16px;
+  --radius-sm:   12px;
+  --shadow-sm:   0 1px 2px rgba(60,48,12,0.05), 0 2px 6px rgba(60,48,12,0.05);
+  --shadow-md:   0 2px 6px rgba(60,48,12,0.06), 0 10px 26px rgba(60,48,12,0.08);
+  --shadow-yellow: 0 8px 26px rgba(199,142,0,0.22);
 }
+
+/* density */
+body.density-airy { --gap: 64px; --card-pad: 28px; --row-pad: 20px; }
+
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: 'Figtree', sans-serif; background: #F3F4F6; color: #111318; min-height: 100vh; }
-
-/* HEADER */
-header { background: #F5C518; border-bottom: 2px solid #D4A000; position: sticky; top: 0; z-index: 100; box-shadow: var(--shadow-sm); }
-.header-inner { max-width: 1280px; margin: 0 auto; padding: 0 36px; height: 68px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-.header-brand { display: flex; align-items: center; gap: 12px; }
-.header-logo { width: 52px; height: 52px; border-radius: 50%; object-fit: contain; background: white; padding: 4px; border: 2px solid rgba(0,0,0,0.12); flex-shrink: 0; }
-.badge { background: #111318; color: #F5C518; font-size: 0.7rem; font-weight: 700; padding: 4px 12px; border-radius: 100px; white-space: nowrap; }
-
-/* HERO */
-.hero { background: #F5C518; border-bottom: 2px solid #D4A000; padding: 40px 36px 36px; }
-.hero-inner { max-width: 1280px; margin: 0 auto; display: flex; align-items: center; gap: 40px; }
-.hero-text { flex: 1; min-width: 0; }
-.hero-headline { font-size: 2.75rem; font-weight: 800; color: #111318; line-height: 1.1; letter-spacing: -0.3px; margin-bottom: 10px; }
-.hero-sub { font-size: 0.9rem; color: #3D4451; font-weight: 500; margin-bottom: 20px; line-height: 1.65; }
-.hero-stats { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 20px; }
-.stat-pill { background: #111318; color: #F5C518; font-size: 0.72rem; font-weight: 700; padding: 5px 14px; border-radius: 100px; text-decoration: none; transition: background 0.15s, transform 0.15s; }
-.stat-pill:hover { background: #3D4451; transform: translateY(-2px); }
-.hero-grados { background: rgba(0,0,0,0.08); border-radius: 8px; padding: 12px 16px; font-size: 0.78rem; color: #3D4451; line-height: 1.6; }
-.hero-grados strong { color: #111318; font-weight: 700; }
-.hero-img-wrap { flex-shrink: 0; width: 260px; }
-.hero-img { display: block; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 4px 16px rgba(0,0,0,0.18)); border-radius: 12px; }
-
-/* MAIN */
-main { max-width: 1280px; margin: 0 auto; padding: 36px 36px 80px; }
-
-/* TOP-LEVEL SECTION ACCORDION */
-.sec-acc { margin-bottom: 12px; border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm); }
-
-.sec-acc-row {
-  display: flex; align-items: center; gap: 14px;
-  padding: 20px 24px; cursor: pointer; user-select: none;
-  transition: filter 0.15s;
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--font-body);
+  background: var(--cream);
+  color: var(--ink);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
-.sec-acc-row:hover { filter: brightness(1.08); }
 
-.sec-acc-icon { width: 46px; height: 46px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0; background: #ffffff; box-shadow: var(--shadow-sm); }
-.sec-acc-info { flex: 1; min-width: 0; }
-.sec-acc-num   { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; opacity: 0.7; margin-bottom: 2px; }
-.sec-acc-title { font-size: 2.75rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.3px; }
-.sec-acc-desc  { font-size: 0.75rem; margin-top: 3px; opacity: 0.8; }
-.sec-acc-chevron { font-size: 1rem; flex-shrink: 0; transition: transform 0.25s; opacity: 0.8; }
-.sec-acc-row.open .sec-acc-chevron { transform: rotate(180deg); }
+/* ICONS */
+.ic { display: inline-flex; align-items: center; justify-content: center; width: 1.25em; height: 1.25em; flex-shrink: 0; }
+.ic svg { width: 100%; height: 100%; display: block; }
 
-.sec-acc-body { display: none; padding: 16px 20px; }
-.sec-acc-body.open { display: block; }
+/* subtle line at top */
+.topline { height: 4px; background: var(--yellow); }
 
-/* Section colors */
-.s1 .sec-acc-row { background: #111318; color: #F5C518; border-bottom: none; }
-.s1 .sec-acc-body { background: #FFFFFF; border: 1.5px solid #E5E7EB; border-top: none; border-radius: 0 0 14px 14px; }
+/* ───────── HEADER ───────── */
+header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--line-2);
+  position: sticky; top: 0; z-index: 100;
+}
+.header-inner { max-width: 1200px; margin: 0 auto; padding: 0 32px; height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; }
+.header-brand { display: flex; align-items: center; gap: 14px; }
+.header-logo { width: 48px; height: 48px; border-radius: 50%; object-fit: contain; background: var(--paper); padding: 3px; box-shadow: 0 0 0 1px var(--line-2), var(--shadow-sm); flex-shrink: 0; }
+.header-name { font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; letter-spacing: -0.02em; color: var(--ink); line-height: 1.05; }
+.header-name b { color: var(--yellow-deep); }
+.header-tag { font-size: 0.64rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-top: 3px; }
+.badge { display: inline-flex; align-items: center; gap: 7px; background: var(--ink); color: var(--yellow); font-size: 0.7rem; font-weight: 700; padding: 7px 14px; border-radius: 100px; white-space: nowrap; }
+.badge .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--yellow); box-shadow: 0 0 0 3px rgba(245,197,24,0.25); }
 
-.s2 .sec-acc-row { background: #3D4A5C; color: #F5C518; }
-.s2 .sec-acc-body { background: #F3F4F6; border: 1.5px solid #D1D5DB; border-top: none; border-radius: 0 0 14px 14px; }
+/* ───────── HERO ───────── */
+.hero { position: relative; background: var(--yellow); border-bottom: 1px solid var(--yellow-deep); }
+.hero-inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; padding: 52px 32px 56px; display: grid; grid-template-columns: 1fr 220px; align-items: center; gap: 52px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 9px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.13em; color: var(--ink); background: rgba(255,255,255,0.55); border: 1px solid var(--ink); padding: 7px 14px; border-radius: 100px; margin-bottom: 22px; }
+.eyebrow .ic { color: var(--ink); width: 1.05em; height: 1.05em; }
+.hero-headline { font-family: var(--font-head); font-size: clamp(2rem, 4vw, 2.9rem); font-weight: 800; color: var(--ink); line-height: 1.06; letter-spacing: -0.025em; margin-bottom: 18px; text-wrap: balance; }
+.hero-headline em { font-style: normal; }
+.hero-sub { font-size: 1rem; color: var(--ink-2); font-weight: 400; margin-bottom: 26px; line-height: 1.65; max-width: 58ch; text-wrap: pretty; }
+.hero-stats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 24px; }
+.stat-pill { display: inline-flex; align-items: center; gap: 8px; background: var(--paper); color: var(--ink); font-size: 0.82rem; font-weight: 700; padding: 9px 15px; border-radius: 100px; text-decoration: none; border: 1px solid rgba(33,28,16,0.18); box-shadow: var(--shadow-sm); transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease, background 0.16s ease; }
+.stat-pill .ic { color: var(--yellow-deep); }
+.stat-pill:hover { transform: translateY(-2px); border-color: var(--ink); box-shadow: var(--shadow-md); }
+.hero-grados { display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,0.5); border: 1px solid rgba(33,28,16,0.16); border-left: 3px solid var(--ink); border-radius: 12px; padding: 13px 16px; font-size: 0.82rem; color: var(--ink-2); line-height: 1.65; max-width: 64ch; }
+.hero-grados .ic { color: var(--ink); margin-top: 2px; }
+.hero-grados strong { color: var(--ink); font-weight: 700; }
 
-.s3 .sec-acc-row { background: #4B5263; color: #F5C518; }
-.s3 .sec-acc-body { background: #E5E7EB; border: 1.5px solid #C4C9D4; border-top: none; border-radius: 0 0 14px 14px; }
+.hero-img-wrap { position: relative; width: 248px; justify-self: end; }
+.hero-img { display: block; width: 100%; height: auto; object-fit: contain; filter: drop-shadow(0 8px 16px rgba(80,55,0,0.22)); }
 
-.s4 .sec-acc-row { background: #5C4033; color: #F5C518; }
-.s4 .sec-acc-body { background: #EFEBE9; border: 1.5px solid #D7CCC8; border-top: none; border-radius: 0 0 14px 14px; }
+/* ───────── MAIN ───────── */
+main { max-width: 1200px; margin: 0 auto; padding: var(--gap) 32px 90px; }
 
-.s5 .sec-acc-row { background: #000000; color: #ffffff; border-bottom: 2px solid #F5C518; }
-.s5 .sec-acc-row .sec-acc-icon { background: #F5C518; }
-.s5 .sec-acc-row .sec-acc-num  { color: #F5C518; }
-.s5 .sec-acc-row .sec-acc-desc { color: #F5C518; opacity: 1; }
-.s5 .sec-acc-body { background: #111318; border: 1.5px solid #222; border-top: none; border-radius: 0 0 14px 14px; }
+/* ───────── SECTION CARD ───────── */
+.section-block { margin-bottom: var(--gap); }
+.section-head { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 20px; padding-left: 2px; }
+.section-tile { width: 52px; height: 52px; border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--yellow); color: var(--ink); box-shadow: var(--shadow-yellow); }
+.section-tile .ic { width: 26px; height: 26px; }
+.section-headtext { padding-top: 2px; min-width: 0; }
+.section-num { display: inline-flex; align-items: center; gap: 7px; font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.16em; color: var(--yellow-deep); margin-bottom: 6px; }
+.section-num::before { content: ""; width: 18px; height: 2px; background: var(--yellow-deep); border-radius: 2px; }
+.section-title { font-family: var(--font-head); font-size: clamp(1.4rem, 2.4vw, 1.85rem); font-weight: 800; line-height: 1.12; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+.section-desc { font-size: 0.92rem; margin-top: 7px; color: var(--muted); line-height: 1.5; max-width: 70ch; }
 
-.s6 .sec-acc-row { background: #6B7280; color: #F5C518; }
-.s6 .sec-acc-body { background: #D1D5DB; border: 1.5px solid #B0B7C3; border-top: none; border-radius: 0 0 14px 14px; }
+/* dark headers tweak */
+body.headers-dark .section-head { background: var(--ink); color: #fff; border-radius: var(--radius); padding: 20px 22px; align-items: center; }
+body.headers-dark .section-title { color: #fff; }
+body.headers-dark .section-num { color: var(--yellow); }
+body.headers-dark .section-num::before { background: var(--yellow); }
+body.headers-dark .section-desc { color: rgba(255,255,255,0.72); }
+.section-headtext { flex: 1; }
 
-.s-quien .sec-acc-row { background: #D4A000; color: #111318; }
-.s-quien .sec-acc-row .sec-acc-num { color: #111318; }
-.s-quien .sec-acc-row .sec-acc-desc { color: #111318; }
-.s-quien .sec-acc-body { background: #FFFDE7; border: 1.5px solid #FEF0A0; border-top: none; border-radius: 0 0 14px 14px; }
+/* ───────── COLLAPSIBLE SECTIONS ───────── */
+.section-block.collapsible { scroll-margin-top: 96px; }
+.collapsible > .section-head, .collapsible .feature-dark > .section-head { cursor: pointer; }
+.section-toggle { margin-left: auto; align-self: center; display: inline-flex; align-items: center; gap: 14px; flex-shrink: 0; padding-left: 16px; }
+.section-count { font-size: 0.68rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--yellow-deep); background: var(--yellow-wash); border: 1px solid var(--yellow-soft); padding: 5px 11px; border-radius: 100px; white-space: nowrap; }
+.section-chevron { color: var(--muted); display: inline-flex; transition: transform 0.3s ease, color 0.16s ease; }
+.section-chevron .ic { width: 22px; height: 22px; }
+.collapsible.open .section-chevron { transform: rotate(180deg); color: var(--yellow-deep); }
 
-/* INNER ACCORDION (recursos) */
-.accordion { display: flex; flex-direction: column; gap: 6px; }
-.acc-item { border-radius: 8px; overflow: hidden; }
-.acc-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #ffffff; border: 1.5px solid #E5E7EB; border-radius: 8px; transition: background 0.15s; user-select: none; }
-.acc-row:hover { background: #FFFDE7; }
-.acc-row.open  { border-radius: 8px 8px 0 0; border-bottom-color: transparent; background: #FFFDE7; }
-.acc-row.pending { background: #F3F4F6; cursor: default; opacity: 0.7; }
-.acc-row.pending:hover { background: #F3F4F6; }
-.acc-icon  { font-size: 1.4rem; flex-shrink: 0; }
-.acc-title { font-size: 0.9rem; font-weight: 700; color: #111318; flex: 1; line-height: 1.3; }
-.acc-tag   { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; padding: 2px 8px; border-radius: 100px; background: #FFFDE7; color: #D4A000; border: 1px solid #FEF0A0; white-space: nowrap; flex-shrink: 0; }
-.acc-pending-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; background: #E5E7EB; color: #6B7280; border: 1px solid #D1D5DB; white-space: nowrap; flex-shrink: 0; }
-.acc-chevron { font-size: 0.8rem; color: #6B7280; flex-shrink: 0; transition: transform 0.2s; }
-.acc-row.open .acc-chevron { transform: rotate(180deg); }
-.acc-body { display: none; padding: 16px 20px; background: #ffffff; border: 1.5px solid #E5E7EB; border-top: none; border-radius: 0 0 8px 8px; }
+/* light "bar" head (std sections) */
+.collapsible.bar > .section-head { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px 20px; margin-bottom: 0; align-items: center; box-shadow: var(--shadow-sm); transition: border-color 0.16s ease, box-shadow 0.16s ease; }
+.collapsible.bar > .section-head:hover { border-color: var(--yellow-deep); box-shadow: var(--shadow-md); }
+.collapsible.bar > .section-head .section-tile { width: 46px; height: 46px; border-radius: 12px; }
+.collapsible.bar > .section-head .section-tile .ic { width: 23px; height: 23px; }
+.collapsible.bar > .section-head .section-title { font-size: clamp(1.2rem, 1.9vw, 1.45rem); }
+.collapsible.bar > .section-head .section-desc { margin-top: 4px; }
+
+/* dark feature head as toggle */
+.collapsible .feature-dark .section-head { margin-bottom: 0; }
+.collapsible .feature-dark .section-count { color: var(--yellow); background: #3B361F; border-color: #4A4426; }
+.collapsible .feature-dark .section-chevron { color: #9A937A; }
+.collapsible.open .feature-dark .section-chevron { color: var(--yellow); }
+
+/* animated content reveal (JS-managed max-height) */
+.section-content { overflow: hidden; max-height: 0; transition: max-height 0.38s ease; }
+.section-content-inner { padding-top: 14px; }
+
+/* explore-by-section bar */
+.sections-bar { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.sections-bar-label { display: inline-flex; align-items: center; gap: 9px; font-size: 0.72rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); }
+.sections-bar-label .ic { width: 16px; height: 16px; color: var(--yellow-deep); }
+.expand-all-btn { display: inline-flex; align-items: center; gap: 9px; background: var(--paper); border: 1px solid var(--line-2); color: var(--ink); font-family: var(--font-body); font-size: 0.82rem; font-weight: 700; padding: 9px 17px; border-radius: 100px; cursor: pointer; white-space: nowrap; box-shadow: var(--shadow-sm); transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease; }
+.sections-bar-label { white-space: nowrap; }
+.expand-all-btn:hover { border-color: var(--yellow-deep); background: var(--yellow-wash); }
+.expand-all-btn .ic { width: 16px; height: 16px; color: var(--yellow-deep); transition: transform 0.3s ease; }
+.expand-all-btn.all-open .ic { transform: rotate(180deg); }
+
+/* ───────── TABS NAVIGATION MODE ───────── */
+.tab-bar { display: none; }
+body.nav-tabs .sections-bar { display: none; }
+body.nav-tabs .tab-bar {
+  display: flex; gap: 5px; align-items: flex-end;
+  margin: 0 -32px 0; padding: 16px 32px 0;
+  overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none;
+  position: sticky; top: 72px; z-index: 60; background: var(--cream);
+  border-bottom: 2px solid var(--ink);
+}
+body.nav-tabs .tab-bar::-webkit-scrollbar { display: none; }
+.nav-tab {
+  display: inline-flex; align-items: center; gap: 9px;
+  padding: 12px 19px; margin-bottom: -2px;
+  border: 2px solid var(--ink); border-bottom: none;
+  border-radius: 11px 11px 0 0;
+  background: var(--yellow); color: var(--ink);
+  font-family: var(--font-body); font-size: 0.86rem; font-weight: 700;
+  cursor: pointer; white-space: nowrap; flex-shrink: 0;
+  transition: background 0.16s ease, color 0.16s ease, transform 0.12s ease;
+}
+.nav-tab .ic { width: 18px; height: 18px; color: var(--ink); }
+.nav-tab:hover:not(.active) { background: var(--yellow-soft); transform: translateY(-2px); }
+.nav-tab.active {
+  background: var(--paper); color: var(--ink);
+  border-color: var(--ink); border-bottom: 2px solid var(--paper);
+  position: relative; z-index: 2;
+}
+.nav-tab.active .ic { color: var(--yellow-deep); }
+
+/* tabs mode: only active section shows, inside a paper "folder body" */
+body.nav-tabs .section-block.collapsible { display: none; opacity: 1 !important; transform: none !important; scroll-margin-top: 150px; }
+body.nav-tabs .section-block.collapsible.tab-active { display: block; }
+body.nav-tabs .section-block.tab-active {
+  background: var(--cream-2);
+  border: 2px solid var(--ink); border-top: none;
+  border-radius: 0 0 16px 16px;
+  padding: 26px 28px 30px; margin-bottom: var(--gap);
+}
+body.nav-tabs .section-content { max-height: none !important; overflow: visible; }
+body.nav-tabs .section-toggle { display: none; }
+body.nav-tabs .collapsible.bar > .section-head { background: transparent; border: none; box-shadow: none; padding: 0; margin-bottom: 0; cursor: default; align-items: flex-start; }
+body.nav-tabs .collapsible.bar > .section-head:hover { box-shadow: none; }
+body.nav-tabs .collapsible.bar > .section-head .section-title { font-size: clamp(1.4rem, 2.4vw, 1.8rem); }
+body.nav-tabs .collapsible .section-head { cursor: default; }
+body.nav-tabs .section-content-inner { padding-top: 18px; }
+/* dark IA section: neutralise its dark shell inside the folder, keep dark resource rows */
+body.nav-tabs #sec-iagen .feature-dark { background: transparent; padding: 0; box-shadow: none; border-radius: 0; }
+body.nav-tabs #sec-iagen .feature-dark .section-head { margin-bottom: 0; }
+body.nav-tabs #sec-iagen .feature-dark .section-title { color: var(--ink); }
+body.nav-tabs #sec-iagen .feature-dark .section-desc { color: var(--muted); }
+body.nav-tabs #sec-iagen .feature-dark .section-num { color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .feature-dark .section-num::before { background: var(--yellow-deep); }
+/* tabs mode: make IAgen resource rows match the other sections (light cards on cream) */
+body.nav-tabs #sec-iagen .acc-row { background: var(--paper); border: 1px solid var(--line); }
+body.nav-tabs #sec-iagen .acc-row:hover, body.nav-tabs #sec-iagen .acc-row.open { background: var(--paper); border-color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .acc-tile { background: var(--yellow-wash); color: var(--yellow-deep); border: 1px solid var(--yellow-soft); }
+body.nav-tabs #sec-iagen .acc-row:hover .acc-tile, body.nav-tabs #sec-iagen .acc-row.open .acc-tile { background: var(--yellow); color: var(--ink); border-color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .acc-title { color: var(--ink); }
+body.nav-tabs #sec-iagen .acc-tag { background: var(--yellow-wash); color: var(--yellow-deep); border: 1px solid var(--yellow-soft); }
+body.nav-tabs #sec-iagen .acc-chevron { color: var(--muted); }
+body.nav-tabs #sec-iagen .acc-row:hover .acc-chevron, body.nav-tabs #sec-iagen .acc-row.open .acc-chevron { color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .acc-body { background: var(--paper); border-color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .acc-desc { color: var(--ink-soft); }
+body.nav-tabs #sec-iagen .acc-cta { background: var(--ink); color: var(--yellow); }
+body.nav-tabs #sec-iagen .acc-cta:hover { background: var(--ink-2); }
+/* repo highlight stays special but light */
+body.nav-tabs #sec-iagen .acc-repo-row { background: var(--yellow-wash); }
+body.nav-tabs #sec-iagen .acc-repo-title { color: var(--yellow-deep); }
+body.nav-tabs #sec-iagen .acc-repo-body { background: var(--paper); }
+body.nav-tabs #sec-iagen .acc-repo-desc { color: var(--ink-soft); }
+
+/* ───────── ACCORDION ───────── */
+.accordion { display: flex; flex-direction: column; gap: 10px; }
+.acc-item { border-radius: var(--radius-sm); }
+.acc-row { display: flex; align-items: center; gap: 14px; padding: var(--row-pad) 18px; cursor: pointer; background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-sm); transition: border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease; user-select: none; }
+.acc-row:hover { border-color: var(--yellow-deep); box-shadow: var(--shadow-sm); }
+.acc-row.open { border-color: var(--yellow-deep); border-radius: var(--radius-sm) var(--radius-sm) 0 0; box-shadow: var(--shadow-sm); }
+.acc-tile { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--yellow-wash); color: var(--yellow-deep); border: 1px solid var(--yellow-soft); transition: background 0.16s ease, color 0.16s ease; }
+.acc-tile .ic { width: 20px; height: 20px; }
+.acc-row:hover .acc-tile, .acc-row.open .acc-tile { background: var(--yellow); color: var(--ink); border-color: var(--yellow-deep); }
+.acc-title { font-size: 0.97rem; font-weight: 700; color: var(--ink); flex: 1; line-height: 1.32; letter-spacing: -0.01em; }
+.acc-tag { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px; background: var(--yellow-wash); color: var(--yellow-deep); border: 1px solid var(--yellow-soft); white-space: nowrap; flex-shrink: 0; }
+.acc-chevron { color: var(--muted); flex-shrink: 0; transition: transform 0.25s ease, color 0.16s ease; }
+.acc-chevron .ic { width: 18px; height: 18px; }
+.acc-row:hover .acc-chevron { color: var(--yellow-deep); }
+.acc-row.open .acc-chevron { transform: rotate(180deg); color: var(--yellow-deep); }
+.acc-body { display: none; background: var(--paper); border: 1px solid var(--yellow-deep); border-top: none; border-radius: 0 0 var(--radius-sm) var(--radius-sm); }
 .acc-body.open { display: block; }
-.acc-desc { font-size: 0.85rem; color: #6B7280; line-height: 1.65; margin-bottom: 14px; }
-.acc-cta { display: inline-flex; align-items: center; gap: 6px; background: #111318; color: #F5C518; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; transition: background 0.15s; }
-.acc-cta:hover { background: #3D4451; }
+.acc-body-pad { padding: 4px 20px 20px 74px; }
+.acc-desc { font-size: 0.92rem; color: var(--ink-soft); line-height: 1.65; margin-bottom: 16px; text-wrap: pretty; }
+.acc-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--yellow); font-family: var(--font-body); font-size: 0.84rem; font-weight: 700; padding: 10px 20px; border-radius: 100px; text-decoration: none; white-space: nowrap; transition: background 0.16s ease, transform 0.16s ease, gap 0.16s ease; }
+.acc-cta .ic { width: 16px; height: 16px; }
+.acc-cta:hover { background: var(--ink-2); transform: translateY(-1px); gap: 11px; }
 
-/* DARK inner accordion (IAgen) */
-.acc-dark .acc-row         { background: #52596e; border-color: #636b80; }
-.acc-dark .acc-row:hover   { background: #5e6678; }
-.acc-dark .acc-row.open    { background: #5e6678; border-bottom-color: transparent; }
-.acc-dark .acc-title       { color: #ffffff; }
-.acc-dark .acc-chevron     { color: #aaaaaa; }
-.acc-dark .acc-tag         { background: #636b80; color: #F5C518; border-color: #737b90; }
-.acc-dark .acc-pending-tag { background: #3a3f52; color: #888; border-color: #4a5068; }
-.acc-dark .acc-row.pending { background: #3a3f52; opacity: 0.7; }
-.acc-dark .acc-body        { background: #3a3f52; border-color: #4a5068; }
-.acc-dark .acc-desc        { color: #ffffff; }
-.acc-dark .acc-cta         { background: #F5C518; color: #111318; }
-.acc-dark .acc-cta:hover   { background: #D4A000; }
+/* pending row */
+.acc-row.pending { background: repeating-linear-gradient(135deg, var(--cream-2) 0 12px, var(--cream) 12px 24px); border-style: dashed; border-color: var(--line-2); cursor: default; }
+.acc-row.pending:hover { box-shadow: none; }
+.acc-row.pending .acc-tile { background: var(--cream-2); color: var(--muted); border-color: var(--line-2); }
+.acc-row.pending .acc-title { color: var(--muted); }
+.acc-pending-tag { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px; background: var(--cream-2); color: var(--muted); border: 1px dashed var(--line-2); white-space: nowrap; flex-shrink: 0; }
 
-/* REPO ALUMNADO */
-.acc-repo { margin-top: 6px; border-radius: 8px; overflow: hidden; border: 2px solid #F5C518; }
-.acc-repo-row { display: flex; align-items: center; gap: 12px; padding: 14px 16px; cursor: pointer; background: #1e2535; user-select: none; }
-.acc-repo-row:hover { background: #252d42; }
-.acc-repo-title { flex: 1; font-size: 0.9rem; font-weight: 700; color: #F5C518; line-height: 1.3; }
-.acc-repo-tag { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; background: #F5C518; color: #111318; white-space: nowrap; flex-shrink: 0; }
-.acc-repo-chevron { color: #F5C518; font-size: 0.8rem; flex-shrink: 0; transition: transform 0.2s; }
+/* ───────── DARK FEATURE SECTION (IAgen) ───────── */
+.feature-dark { background: var(--ink); border-radius: var(--radius); padding: var(--card-pad) var(--card-pad) calc(var(--card-pad) + 4px); box-shadow: var(--shadow-md); }
+.feature-dark .section-head { margin-bottom: 22px; padding: 0 4px; }
+.feature-dark .section-title { color: #fff; }
+.feature-dark .section-desc { color: rgba(255,255,255,0.7); }
+.feature-dark .section-num { color: var(--yellow); }
+.feature-dark .section-num::before { background: var(--yellow); }
+.feature-dark .acc-row { background: #2A2618; border-color: #3B361F; }
+.feature-dark .acc-row:hover { border-color: var(--yellow); background: #302B1A; }
+.feature-dark .acc-row.open { border-color: var(--yellow); background: #302B1A; }
+.feature-dark .acc-tile { background: #3B361F; color: var(--yellow); border-color: #4A4426; }
+.feature-dark .acc-row:hover .acc-tile, .feature-dark .acc-row.open .acc-tile { background: var(--yellow); color: var(--ink); border-color: var(--yellow); }
+.feature-dark .acc-title { color: #fff; }
+.feature-dark .acc-tag { background: #3B361F; color: var(--yellow); border-color: #4A4426; }
+.feature-dark .acc-chevron { color: #9A937A; }
+.feature-dark .acc-row:hover .acc-chevron, .feature-dark .acc-row.open .acc-chevron { color: var(--yellow); }
+.feature-dark .acc-body { background: #211D11; border-color: var(--yellow); }
+.feature-dark .acc-desc { color: rgba(255,255,255,0.78); }
+.feature-dark .acc-cta { background: var(--yellow); color: var(--ink); }
+.feature-dark .acc-cta:hover { background: #fff; }
+
+/* repo highlight */
+.acc-repo { margin-top: 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--yellow); overflow: hidden; box-shadow: var(--shadow-yellow); }
+.acc-repo-row { display: flex; align-items: center; gap: 14px; padding: var(--row-pad) 18px; cursor: pointer; background: linear-gradient(100deg, #322C19, #2A2618); user-select: none; }
+.acc-repo-tile { width: 40px; height: 40px; border-radius: 11px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; background: var(--yellow); color: var(--ink); }
+.acc-repo-tile .ic { width: 22px; height: 22px; }
+.acc-repo-title { flex: 1; font-size: 0.97rem; font-weight: 800; color: var(--yellow); line-height: 1.32; letter-spacing: -0.01em; }
+.acc-repo-tag { font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; padding: 4px 10px; border-radius: 100px; background: var(--yellow); color: var(--ink); white-space: nowrap; flex-shrink: 0; }
+.acc-repo-chevron { color: var(--yellow); flex-shrink: 0; transition: transform 0.25s ease; }
+.acc-repo-chevron .ic { width: 18px; height: 18px; }
 .acc-repo-row.open .acc-repo-chevron { transform: rotate(180deg); }
-.acc-repo-body { display: none; padding: 16px 20px; background: #1e2535; border-top: 2px solid #F5C518; }
+.acc-repo-body { display: none; background: #211D11; }
 .acc-repo-body.open { display: block; }
-.acc-repo-desc { font-size: 0.85rem; color: #ffffff; line-height: 1.65; margin-bottom: 14px; }
-.acc-repo-cta { display: inline-flex; align-items: center; gap: 6px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.8rem; font-weight: 700; padding: 8px 18px; border-radius: 100px; text-decoration: none; }
-.acc-repo-cta:hover { background: #D4A000; }
+.acc-repo-pad { padding: 18px 20px 20px 74px; }
+.acc-repo-desc { font-size: 0.92rem; color: rgba(255,255,255,0.82); line-height: 1.65; margin-bottom: 16px; }
+.acc-repo-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--yellow); color: var(--ink); font-family: var(--font-body); font-size: 0.84rem; font-weight: 700; padding: 10px 20px; border-radius: 100px; text-decoration: none; white-space: nowrap; transition: background 0.16s ease, transform 0.16s ease, gap 0.16s ease; }
+.acc-repo-cta .ic { width: 16px; height: 16px; }
+.acc-repo-cta:hover { background: #fff; transform: translateY(-1px); gap: 11px; }
 
-/* FOLDER TABS */
-.folder-tabs { border-radius: 10px; overflow: hidden; border: 2px solid #D4A000; }
-.folder-tab-bar { display: flex; }
-.folder-tab { flex: 1; padding: 11px 8px; text-align: center; font-size: 0.8rem; font-weight: 700; cursor: pointer; background: #FEF0A0; color: #D4A000; border-right: 1px solid #D4A000; transition: background 0.15s, color 0.15s; user-select: none; }
-.folder-tab:last-child { border-right: none; }
-.folder-tab.active { background: #D4A000; color: #111318; }
-.folder-tab:hover:not(.active) { background: #FDE68A; }
-.folder-content { padding: 18px 20px; background: #ffffff; font-size: 0.88rem; color: #3D4451; line-height: 1.7; border-top: 2px solid #D4A000; min-height: 80px; }
-.folder-content strong { color: #111318; }
+/* ───────── PARA QUIÉN (yellow feature) ───────── */
+.feature-yellow { background: linear-gradient(165deg, var(--yellow) 0%, var(--yellow-soft) 130%); border-radius: var(--radius); padding: var(--card-pad); box-shadow: var(--shadow-yellow); }
+.feature-yellow .section-head { margin-bottom: 20px; padding: 0 2px; }
+.feature-yellow .section-tile { background: var(--ink); color: var(--yellow); box-shadow: var(--shadow-md); }
+.feature-yellow .section-num { color: var(--ink); opacity: 0.7; }
+.feature-yellow .section-num::before { background: var(--ink); opacity: 0.6; }
+.feature-yellow .section-title { color: var(--ink); }
+.feature-yellow .section-desc { color: var(--ink-2); opacity: 0.92; }
 
-/* CONTACT */
-.contact-block { background: #111318; border-radius: 14px; padding: 36px; margin-bottom: 40px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); margin-top: 24px; }
-.contact-text { flex: 1; }
-.contact-title { font-size: 1.1rem; font-weight: 800; color: #F5C518; margin-bottom: 8px; }
-.contact-desc  { font-size: 0.88rem; color: #D1D5DB; line-height: 1.6; }
-.contact-btn { display: inline-flex; align-items: center; gap: 8px; background: #F5C518; color: #111318; font-family: 'Figtree', sans-serif; font-size: 0.88rem; font-weight: 800; padding: 12px 24px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.15s, transform 0.15s; flex-shrink: 0; }
-.contact-btn:hover { background: #D4A000; transform: translateY(-2px); }
+.folder-tabs { border-radius: var(--radius-sm); overflow: hidden; background: var(--paper); box-shadow: var(--shadow-sm); }
+.folder-tab-bar { display: flex; gap: 4px; padding: 6px; background: rgba(33,28,16,0.06); }
+.folder-tab { flex: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 11px 10px; text-align: center; font-size: 0.84rem; font-weight: 700; cursor: pointer; color: var(--ink-2); border-radius: 9px; transition: background 0.16s ease, color 0.16s ease, box-shadow 0.16s ease; user-select: none; }
+.folder-tab .ic { width: 17px; height: 17px; }
+.folder-tab.active { background: var(--ink); color: var(--yellow); box-shadow: var(--shadow-sm); }
+.folder-tab:hover:not(.active) { background: rgba(255,255,255,0.7); }
+.folder-content { padding: 24px; font-size: 0.96rem; color: var(--ink-soft); line-height: 1.75; min-height: 86px; text-wrap: pretty; }
+.folder-content strong { color: var(--ink); font-weight: 700; }
 
-/* FOOTER */
-footer { text-align: center; padding: 20px 16px; font-size: 0.75rem; color: #6B7280; border-top: 1px solid #E5E7EB; background: #ffffff; }
-footer strong { color: #D4A000; }
-footer a { color: #3D4451; text-decoration: none; }
-footer a:hover { text-decoration: underline; }
+/* ───────── CONTACT ───────── */
+.contact-block { position: relative; overflow: hidden; background: var(--ink); border-radius: var(--radius); padding: 40px; margin-bottom: 44px; display: flex; align-items: center; gap: 32px; box-shadow: var(--shadow-md); }
+.contact-block::before { content: ""; position: absolute; right: -60px; top: -60px; width: 220px; height: 220px; border-radius: 50%; background: radial-gradient(circle, rgba(245,197,24,0.22), transparent 70%); }
+.contact-icon { position: relative; width: 56px; height: 56px; border-radius: 16px; background: var(--yellow); color: var(--ink); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.contact-icon .ic { width: 28px; height: 28px; }
+.contact-text { position: relative; flex: 1; }
+.contact-title { font-family: var(--font-head); font-size: 1.2rem; font-weight: 800; color: var(--yellow); margin-bottom: 8px; letter-spacing: -0.01em; }
+.contact-desc { font-size: 0.94rem; color: rgba(255,255,255,0.78); line-height: 1.6; max-width: 60ch; }
+.contact-btn { position: relative; display: inline-flex; align-items: center; gap: 9px; background: var(--yellow); color: var(--ink); font-family: var(--font-body); font-size: 0.92rem; font-weight: 800; padding: 14px 26px; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; white-space: nowrap; transition: background 0.16s ease, transform 0.16s ease; flex-shrink: 0; }
+.contact-btn .ic { width: 18px; height: 18px; }
+.contact-btn:hover { background: #fff; transform: translateY(-2px); }
 
-/* BACK TOP */
-.back-top { position: fixed; bottom: 24px; right: 24px; width: 44px; height: 44px; border-radius: 50%; background: #111318; color: #F5C518; border: none; cursor: pointer; font-size: 1.2rem; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transition: opacity 0.2s, transform 0.2s; z-index: 200; }
-.back-top.visible { opacity: 1; pointer-events: auto; }
-.back-top:hover { background: #3D4451; transform: translateY(-2px); }
+/* ───────── FOOTER ───────── */
+footer { text-align: center; padding: 32px 20px 40px; font-size: 0.82rem; color: var(--muted); border-top: 1px solid var(--line); background: var(--cream); line-height: 1.7; }
+footer .foot-name { font-family: var(--font-head); font-weight: 800; color: var(--ink); font-size: 0.95rem; }
+footer .foot-name b { color: var(--yellow-deep); }
+footer a { color: var(--ink-soft); text-decoration: none; font-weight: 600; }
+footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
+.foot-mail { display: inline-flex; align-items: center; gap: 6px; margin-top: 6px; }
+.foot-mail .ic { width: 15px; height: 15px; color: var(--yellow-deep); }
 
-/* RESPONSIVE */
-@media (max-width: 1024px) { .hero-img-wrap { width: 200px; } }
-@media (max-width: 768px) {
-  .header-inner { padding: 0 16px; height: 60px; }
+/* ───────── BACK TO TOP ───────── */
+.back-top { position: fixed; bottom: 26px; right: 26px; width: 48px; height: 48px; border-radius: 50%; background: var(--ink); color: var(--yellow); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; box-shadow: var(--shadow-md); opacity: 0; pointer-events: none; transform: translateY(8px) scale(0.9); transition: opacity 0.22s ease, transform 0.22s ease, background 0.16s ease; z-index: 200; }
+.back-top .ic { width: 20px; height: 20px; }
+.back-top.visible { opacity: 1; pointer-events: auto; transform: translateY(0) scale(1); }
+.back-top:hover { background: var(--yellow); color: var(--ink); }
+
+/* reveal on scroll */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+/* ───────── RESPONSIVE ───────── */
+@media (max-width: 980px) {
+  .hero-inner { grid-template-columns: 1fr; gap: 28px; }
+  .hero-img-wrap { width: 176px; justify-self: center; order: -1; }
+}
+@media (max-width: 760px) {
+  .sections-bar { flex-wrap: wrap; gap: 12px; }
+}
+@media (max-width: 720px) {
+  .header-inner { padding: 0 18px; height: 62px; }
   .badge { display: none; }
-  .hero { padding: 24px 16px; }
-  .hero-inner { flex-direction: column; align-items: stretch; }
-  .hero-img-wrap { display: none; }
-  .hero-headline { font-size: 1.8rem; }
-  main { padding: 24px 16px 60px; }
-  .sec-acc-title { font-size: 1.5rem; }
-  .sec-acc-row { padding: 16px 18px; }
-  .contact-block { flex-direction: column; gap: 20px; }
+  .header-tag { display: none; }
+  .hero-inner { padding: 36px 18px 42px; }
+  .hero-img-wrap { width: 150px; }
+  main { padding: 36px 18px 70px; }
+  body.nav-tabs .tab-bar { top: 62px; margin: 0 -18px 22px; padding: 12px 18px; }
+  .contact-block { flex-direction: column; align-items: flex-start; gap: 22px; padding: 28px; }
   .contact-btn { width: 100%; justify-content: center; }
-  .acc-row { flex-wrap: wrap; }
-  .acc-title { order: 1; width: calc(100% - 60px); }
-  .acc-tag, .acc-pending-tag { order: 2; margin-left: 52px; margin-top: 6px; }
-  .acc-chevron { order: 0; }
+  .acc-body-pad, .acc-repo-pad { padding-left: 20px; padding-right: 20px; }
+  .acc-row, .acc-repo-row { flex-wrap: wrap; }
+  .acc-title, .acc-repo-title { order: 2; width: calc(100% - 56px); }
+  .acc-tag, .acc-pending-tag, .acc-repo-tag { order: 3; margin-left: 54px; }
+  .acc-chevron, .acc-repo-chevron { order: 1; margin-left: auto; }
+  .folder-tab span.lbl { display: none; }
+  .folder-tab { padding: 12px; }
+  .folder-tab .ic { width: 19px; height: 19px; }
+}
+@media (max-width: 560px) {
+  .section-toggle .section-count { display: none; }
+  .collapsible.bar > .section-head { padding: 13px 16px; }
+  .section-tile { width: 44px; height: 44px; }
+  .hero-stats .stat-pill { font-size: 0.78rem; padding: 8px 13px; }
 }
 </style>
 </head>
-<body>
+<body class="nav-tabs density-airy">
+
+<div class="topline"></div>
 
 <header>
   <div class="header-inner">
     <div class="header-brand">
       <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png" alt="Logo Facultad de Medicina UVa" class="header-logo">
       <div>
-        <div style="font-family:'Figtree',sans-serif;font-size:1.05rem;font-weight:800;">EduMed · UVa</div>
-        <div style="font-family:'Figtree',sans-serif;font-size:0.65rem;font-weight:600;text-transform:uppercase;letter-spacing:0.08em;">Unidad de Educación Médica · Facultad de Medicina</div>
+        <div class="header-name">EduMed<b>·</b>UVa</div>
+        <div class="header-tag">Unidad de Educación Médica · Facultad de Medicina</div>
       </div>
     </div>
-    <div class="badge">Actualizado en mayo de 2026</div>
+    <div class="badge"><span class="dot"></span>Actualizado en mayo de 2026</div>
   </div>
 </header>
 
-<div class="hero">
+<section class="hero">
   <div class="hero-inner">
     <div class="hero-text">
-      <div class="hero-headline">Unidad de Educación Médica<br>de la Facultad de Medicina · UVa</div>
+      <span class="eyebrow"><i class="ic" data-i="sparkles"></i>Web App · Educación Médica UVa</span>
+      <h1 class="hero-headline">Unidad de Educación Médica de la <em>Facultad de Medicina</em> · UVa</h1>
       <p class="hero-sub">Bienvenido a la Web App de EduMed.UVa. Un espacio diseñado para potenciar tu docencia con acceso directo a cuadernos, materiales docentes y un repositorio colaborativo donde compartir actividades innovadoras con otros profesionales. Explora la plataforma y descubre cómo estas herramientas pueden ayudar a mejorar tu día a día educativo. ¡Entra y comienza a compartir!</p>
       <div class="hero-stats">
-        <a class="stat-pill" href="#sec-cuadernos">📓 Cuadernos Docentes</a>
-        <a class="stat-pill" href="#sec-basicos">🧱 Básicos</a>
-        <a class="stat-pill" href="#sec-evaluacion">📋 Evaluación</a>
-        <a class="stat-pill" href="#sec-lecturas">📚 Lecturas</a>
-        <a class="stat-pill" href="#sec-iagen">🤖 IA en el Aula</a>
-        <a class="stat-pill" href="#sec-innovacion">🔬 Innovación</a>
+        <a class="stat-pill" href="#sec-cuadernos"><i class="ic" data-i="book-open"></i>Cuadernos Docentes</a>
+        <a class="stat-pill" href="#sec-basicos"><i class="ic" data-i="layers"></i>Básicos</a>
+        <a class="stat-pill" href="#sec-evaluacion"><i class="ic" data-i="clipboard-check"></i>Evaluación</a>
+        <a class="stat-pill" href="#sec-iagen"><i class="ic" data-i="cpu"></i>IA en el Aula</a>
+        <a class="stat-pill" href="#sec-innovacion"><i class="ic" data-i="lightbulb"></i>Innovación</a>
       </div>
       <div class="hero-grados">
-        <strong>Grados:</strong> Medicina · Logopedia · Nutrición Humana y Dietética · Ingeniería Biomédica · Biomedicina y Terapias Avanzadas · Farmacia
+        <i class="ic" data-i="graduation-cap"></i>
+        <div><strong>Grados:</strong> Medicina · Logopedia · Nutrición Humana y Dietética · Ingeniería Biomédica · Biomedicina y Terapias Avanzadas · Farmacia</div>
       </div>
     </div>
     <div class="hero-img-wrap">
-      <img class="hero-img" src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png" alt="Innovando en educación médica" onerror="this.style.display='none'">
+      <img class="hero-img" src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/medicina_innova2026.png" alt="Innovando en educación médica" onerror="this.closest('.hero-img-wrap').style.display='none'">
     </div>
   </div>
-</div>
+</section>
 
 <main>
 
+  <div class="sections-bar">
+    <span class="sections-bar-label"><i class="ic" data-i="layers"></i>Explora por apartados</span>
+    <button class="expand-all-btn" id="expandAll"><span class="ea-label">Expandir todo</span><i class="ic" data-i="chevron-down"></i></button>
+  </div>
+  <nav class="tab-bar" id="tabBar" aria-label="Secciones"></nav>
+
   <!-- 1. CUADERNOS -->
-  <div class="sec-acc s1" id="sec-cuadernos">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">📓</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num">Sección 01</div>
-        <div class="sec-acc-title">Cuadernos Docentes</div>
-        <div class="sec-acc-desc">Colección EduMed.UVa · 2 cuadernos disponibles</div>
+  <div class="section-block reveal collapsible bar" id="sec-cuadernos">
+    <div class="section-head">
+      <div class="section-tile"><i class="ic" data-i="book-open"></i></div>
+      <div class="section-headtext">
+        <div class="section-num">Sección 01</div>
+        <div class="section-title">Cuadernos Docentes</div>
+        <div class="section-desc">Colección EduMed.UVa · 2 cuadernos disponibles</div>
       </div>
-      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="sec-acc-body">
-      <div class="accordion">
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🎬</div>
-            <div class="acc-title">Aprendizaje Multimedia. Bases teóricas y aplicación práctica</div>
-            <span class="acc-tag">Cuaderno 1</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Fundamentos del aprendizaje multimedia y orientaciones para su aplicación en la docencia de ciencias de la salud.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/aprendizaje.multimedia/" target="_blank" rel="noopener">Acceder al cuaderno →</a>
-          </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="film"></i></div>
+          <div class="acc-title">Aprendizaje Multimedia. Bases teóricas y aplicación práctica</div>
+          <span class="acc-tag">Cuaderno 1</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🎓</div>
-            <div class="acc-title">¿Podemos seguir utilizando la clase magistral como herramienta educativa?</div>
-            <span class="acc-tag">Cuaderno 2</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/clasemagistral2026/" target="_blank" rel="noopener">Acceder al cuaderno →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Fundamentos del aprendizaje multimedia y orientaciones para su aplicación en la docencia de ciencias de la salud.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/aprendizaje.multimedia/" target="_blank" rel="noopener">Acceder al cuaderno <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="graduation-cap"></i></div>
+          <div class="acc-title">¿Podemos seguir utilizando la clase magistral como herramienta educativa?</div>
+          <span class="acc-tag">Cuaderno 2</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row pending">
-            <div class="acc-icon">🚧</div>
-            <div class="acc-title">¿Cómo visualizar el pensamiento en Educación Médica? El caso del razonamiento clínico</div>
-            <span class="acc-pending-tag">🚧 En construcción</span>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Revisión crítica y actualizada sobre el papel de la lección magistral en la educación médica contemporánea.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/clasemagistral2026/" target="_blank" rel="noopener">Acceder al cuaderno <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row pending">
+          <div class="acc-tile"><i class="ic" data-i="wrench"></i></div>
+          <div class="acc-title">¿Cómo visualizar el pensamiento en Educación Médica? El caso del razonamiento clínico</div>
+          <span class="acc-pending-tag">En construcción</span>
         </div>
       </div>
     </div>
   </div>
 
   <!-- 2. BÁSICOS -->
-  <div class="sec-acc s2" id="sec-basicos">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">🧱</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num">Sección 02</div>
-        <div class="sec-acc-title">Básicos en educación médica explicados para principiantes</div>
-        <div class="sec-acc-desc">Los fundamentos que todo docente debería conocer</div>
+  <div class="section-block reveal collapsible bar" id="sec-basicos">
+    <div class="section-head">
+      <div class="section-tile"><i class="ic" data-i="layers"></i></div>
+      <div class="section-headtext">
+        <div class="section-num">Sección 02</div>
+        <div class="section-title">Básicos en educación médica explicados para principiantes</div>
+        <div class="section-desc">Los fundamentos que todo docente debería conocer</div>
       </div>
-      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="sec-acc-body">
-      <div class="accordion">
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🔺</div>
-            <div class="acc-title">Taxonomía de Bloom (revisada). ¿Qué es? ¿Cómo aplicarla?</div>
-            <span class="acc-tag">Taxonomía</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Introducción a la Taxonomía de Bloom: qué es, para qué sirve y cómo aplicarla en la docencia de ciencias de la salud.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/taxonomiabloom/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="triangle"></i></div>
+          <div class="acc-title">Taxonomía de Bloom (revisada). ¿Qué es? ¿Cómo aplicarla?</div>
+          <span class="acc-tag">Taxonomía</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">📊</div>
-            <div class="acc-title">Niveles de Kirkpatrick aplicados a la educación médica</div>
-            <span class="acc-tag">Evaluación</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Cuáles son los niveles del modelo de Kirkpatrick, qué es lo que realmente medimos en cada uno y cómo aplicarlos en la formación médica.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Kirkpatrick/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Introducción a la Taxonomía de Bloom: qué es, para qué sirve y cómo aplicarla en la docencia de ciencias de la salud.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/taxonomiabloom/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="bar-chart"></i></div>
+          <div class="acc-title">Niveles de Kirkpatrick aplicados a la educación médica</div>
+          <span class="acc-tag">Evaluación</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🏔️</div>
-            <div class="acc-title">De saber a hacer: marcos para entender y diseñar la competencia clínica</div>
-            <span class="acc-tag">Habilidades clínicas</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla. (Pirámide de Miller, Kolb, práctica deliberada de Ericsson, EPAs…)</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Cuáles son los niveles del modelo de Kirkpatrick, qué es lo que realmente medimos en cada uno y cómo aplicarlos en la formación médica.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Kirkpatrick/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="mountain"></i></div>
+          <div class="acc-title">De saber a hacer: marcos para entender y diseñar la competencia clínica</div>
+          <span class="acc-tag">Habilidades clínicas</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Más allá de los exámenes y las clases: cómo se desarrolla realmente la competencia médica, qué condiciones la favorecen y qué herramientas tiene el docente para diseñarla. (Pirámide de Miller, Kolb, práctica deliberada de Ericsson, EPAs…)</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Miller/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
       </div>
     </div>
   </div>
 
   <!-- 3. EVALUACIÓN -->
-  <div class="sec-acc s3" id="sec-evaluacion">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">📋</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num">Sección 03</div>
-        <div class="sec-acc-title">Evaluando la evaluación</div>
-        <div class="sec-acc-desc">Herramientas para diseñar una evaluación más justa y eficaz</div>
+  <div class="section-block reveal collapsible bar" id="sec-evaluacion">
+    <div class="section-head">
+      <div class="section-tile"><i class="ic" data-i="clipboard-check"></i></div>
+      <div class="section-headtext">
+        <div class="section-num">Sección 03</div>
+        <div class="section-title">Evaluando la evaluación</div>
+        <div class="section-desc">Herramientas para diseñar una evaluación más justa y eficaz</div>
       </div>
-      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="sec-acc-body">
-      <div class="accordion">
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">📋</div>
-            <div class="acc-title">Rúbricas. Cómo construirlas, adaptarlas o mejorarlas</div>
-            <span class="acc-tag">Evaluación</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="table"></i></div>
+          <div class="acc-title">Rúbricas. Cómo construirlas, adaptarlas o mejorarlas</div>
+          <span class="acc-tag">Evaluación</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">❓</div>
-            <div class="acc-title">Tipos de preguntas para examen: test, hecho clave y concordancia de guiones</div>
-            <span class="acc-tag">Evaluación</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Guía sobre los principales tipos de preguntas para examen y cómo utilizarlas de forma efectiva en ciencias de la salud.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/preguntas/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Guía práctica para diseñar, adaptar y mejorar rúbricas de evaluación en los grados de ciencias de la salud.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.EvalUVa.Rubricas/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="help-circle"></i></div>
+          <div class="acc-title">Tipos de preguntas para examen: test, hecho clave y concordancia de guiones</div>
+          <span class="acc-tag">Evaluación</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🔁</div>
-            <div class="acc-title">Retroalimentación: mitos y consejos para hacerla formativa</div>
-            <span class="acc-tag">Evaluación</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Claves para convertir la retroalimentación en una herramienta de aprendizaje real, desmontando mitos frecuentes en la práctica docente.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/retroalimentacion/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Guía sobre los principales tipos de preguntas para examen y cómo utilizarlas de forma efectiva en ciencias de la salud.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/preguntas/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="repeat"></i></div>
+          <div class="acc-title">Retroalimentación: mitos y consejos para hacerla formativa</div>
+          <span class="acc-tag">Evaluación</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Claves para convertir la retroalimentación en una herramienta de aprendizaje real, desmontando mitos frecuentes en la práctica docente.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/retroalimentacion/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- 4. LECTURAS -->
-  <div class="sec-acc s4" id="sec-lecturas">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">📚</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num">Sección 04</div>
-        <div class="sec-acc-title">Lecturas para docentes</div>
-        <div class="sec-acc-desc">Libros que acercan la investigación sobre el aprendizaje al aula</div>
+  <!-- 4. IAGEN (dark feature) -->
+  <div class="section-block reveal collapsible" id="sec-iagen">
+    <div class="feature-dark">
+      <div class="section-head">
+        <div class="section-tile"><i class="ic" data-i="cpu"></i></div>
+        <div class="section-headtext">
+          <div class="section-num">Sección 04</div>
+          <div class="section-title">El reto de la IAgen</div>
+          <div class="section-desc">Inteligencia artificial generativa en la docencia médica</div>
+        </div>
       </div>
-      <span class="sec-acc-chevron">▼</span>
-    </div>
-    <div class="sec-acc-body">
       <div class="accordion">
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">📖</div>
-            <div class="acc-title">Docencia pequeña. Lecciones cotidianas de las ciencias del aprendizaje — James M. Lang</div>
-            <span class="acc-tag">Lectura recomendada</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Estrategias sencillas y respaldadas por la investigación para ajustar tu docencia a cómo aprenden realmente tus estudiantes — sin grandes cambios, con resultados visibles.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/docencia_pequena/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- 5. IAGEN -->
-  <div class="sec-acc s5" id="sec-iagen">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon" style="background:#F5C518;">🤖</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num" style="color:#F5C518;">Sección 05</div>
-        <div class="sec-acc-title" style="color:#ffffff;">El reto de la IAgen</div>
-        <div class="sec-acc-desc" style="color:#F5C518;opacity:1;">Inteligencia artificial generativa en la docencia médica</div>
-      </div>
-      <span class="sec-acc-chevron" style="color:#F5C518;">▼</span>
-    </div>
-    <div class="sec-acc-body">
-      <div class="accordion acc-dark">
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">💭</div>
+            <div class="acc-tile"><i class="ic" data-i="message-circle"></i></div>
             <div class="acc-title">Reflexiones sobre el uso de la IA en educación médica. ¿Qué retos enfrentan alumnos, profesores e instituciones? ¿Cómo abordarlos?</div>
             <span class="acc-tag">IA en el aula</span>
-            <span class="acc-chevron">▼</span>
+            <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
           </div>
-          <div class="acc-body">
+          <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
             <p class="acc-desc">Una mirada amplia a los retos que plantea la inteligencia artificial generativa en educación médica, desde la perspectiva del alumnado, el profesorado y las instituciones.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+          </div></div></div>
         </div>
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🤖</div>
+            <div class="acc-tile"><i class="ic" data-i="sparkles"></i></div>
             <div class="acc-title">Small TeAIching e IA lenta o fluente</div>
             <span class="acc-tag">IA en el aula</span>
-            <span class="acc-chevron">▼</span>
+            <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
           </div>
-          <div class="acc-body">
+          <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
             <p class="acc-desc">Pequeños cambios para introducir la IA en los grados de la Facultad de Medicina. Estrategias accesibles para el docente.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/smallteaiching/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+          </div></div></div>
         </div>
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🎓</div>
+            <div class="acc-tile"><i class="ic" data-i="graduation-cap"></i></div>
             <div class="acc-title">Recomendaciones al alumnado para un uso más "productivo" de la IAgen en la redacción de textos y la elaboración de trabajos</div>
             <span class="acc-tag">Alumnos e IA</span>
-            <span class="acc-chevron">▼</span>
+            <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
           </div>
-          <div class="acc-body">
+          <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
             <p class="acc-desc">Orientaciones prácticas para que el alumnado use la inteligencia artificial generativa de forma más reflexiva y productiva en sus trabajos académicos.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/diez_recomendaciones_CyL/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/diez_recomendaciones_CyL/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+          </div></div></div>
         </div>
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🔬</div>
+            <div class="acc-tile"><i class="ic" data-i="stethoscope"></i></div>
             <div class="acc-title">¿Podemos mejorar nuestra capacidad diagnóstica con el uso de la IAgen? Automatización o aumentación. Cuando el "human in the loop" puede empeorar los resultados.</div>
             <span class="acc-tag">IA y diagnóstico</span>
-            <span class="acc-chevron">▼</span>
+            <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
           </div>
-          <div class="acc-body">
+          <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
             <p class="acc-desc">El razonamiento clínico y el diagnóstico en prompts. Una reflexión sobre automatización, aumentación y el papel del médico en el bucle de decisión con IA.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" target="_blank" rel="noopener">Ver recurso →</a>
-          </div>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+          </div></div></div>
         </div>
       </div>
       <div class="acc-repo">
         <div class="acc-repo-row" onclick="toggleRepo(this)">
-          <span style="font-size:1.4rem;flex-shrink:0;">⭐</span>
+          <div class="acc-repo-tile"><i class="ic" data-i="star"></i></div>
           <span class="acc-repo-title">Repositorio de herramientas IA creadas por el alumnado de la Facultad</span>
           <span class="acc-repo-tag">Alumnado crea</span>
-          <span class="acc-repo-chevron">▼</span>
+          <span class="acc-repo-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-repo-body">
+        <div class="acc-repo-body"><div><div class="acc-repo-pad">
           <p class="acc-repo-desc">Aplicaciones y herramientas basadas en IAgen desarrolladas por alumnos de la Facultad de Medicina a iniciativa propia para mejorar el estudio, la práctica clínica y el día a día de la educación médica.</p>
-          <a class="acc-repo-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Alumnos_aplicaciones/" target="_blank" rel="noopener">Ver repositorio →</a>
-        </div>
+          <a class="acc-repo-cta" href="https://tutorcyllo.github.io/EduMed.UVa/Alumnos_aplicaciones/" target="_blank" rel="noopener">Ver repositorio <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- 6. REPOSITORIOS -->
-  <div class="sec-acc s6" id="sec-innovacion">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">🔬</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-num">Sección 06</div>
-        <div class="sec-acc-title">Repositorios de iniciativas innovadoras</div>
-        <div class="sec-acc-desc">Comparte y descubre experiencias de innovación docente en medicina</div>
+  <!-- 5. REPOSITORIOS -->
+  <div class="section-block reveal collapsible bar" id="sec-innovacion">
+    <div class="section-head">
+      <div class="section-tile"><i class="ic" data-i="lightbulb"></i></div>
+      <div class="section-headtext">
+        <div class="section-num">Sección 05</div>
+        <div class="section-title">Repositorios de iniciativas innovadoras</div>
+        <div class="section-desc">Comparte y descubre experiencias de innovación docente en medicina</div>
       </div>
-      <span class="sec-acc-chevron">▼</span>
     </div>
-    <div class="sec-acc-body">
-      <div class="accordion">
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🏫</div>
-            <div class="acc-title">Innovación en EduMed.UVa</div>
-            <span class="acc-tag">Innovación · UVa</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.UVa/" target="_blank" rel="noopener">Ver repositorio →</a>
-          </div>
+    <div class="accordion">
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="building"></i></div>
+          <div class="acc-title">Innovación en EduMed.UVa</div>
+          <span class="acc-tag">Innovación · UVa</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
-        <div class="acc-item">
-          <div class="acc-row" onclick="toggleAcc(this)">
-            <div class="acc-icon">🏛️</div>
-            <div class="acc-title">Innovación en las Facultades de Medicina españolas</div>
-            <span class="acc-tag">Innovación · Nacional</span>
-            <span class="acc-chevron">▼</span>
-          </div>
-          <div class="acc-body">
-            <p class="acc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España.</p>
-            <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.CNDFM/" target="_blank" rel="noopener">Ver repositorio →</a>
-          </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Repositorio activo de las actividades innovadoras en nuestra facultad. Un espacio vivo para compartir y aprender.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.UVa/" target="_blank" rel="noopener">Ver repositorio <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
+      </div>
+      <div class="acc-item">
+        <div class="acc-row" onclick="toggleAcc(this)">
+          <div class="acc-tile"><i class="ic" data-i="landmark"></i></div>
+          <div class="acc-title">Innovación en las Facultades de Medicina españolas</div>
+          <span class="acc-tag">Innovación · Nacional</span>
+          <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
         </div>
+        <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+          <p class="acc-desc">Repositorio de actividades innovadoras en las distintas facultades de medicina de España.</p>
+          <a class="acc-cta" href="https://tutorcyllo.github.io/Innovacion.EduMed.CNDFM/" target="_blank" rel="noopener">Ver repositorio <i class="ic" data-i="arrow-right"></i></a>
+        </div></div></div>
       </div>
     </div>
   </div>
 
-  <!-- PARA QUIÉN -->
-  <div class="sec-acc s-quien">
-    <div class="sec-acc-row" onclick="toggleSec(this)">
-      <div class="sec-acc-icon">👩‍🏫</div>
-      <div class="sec-acc-info">
-        <div class="sec-acc-title">¿Para quién es EduMed.UVa?</div>
-        <div class="sec-acc-desc">Dirigido al profesorado y al alumnado de todos los grados de la Facultad, y a la comunidad docente médica nacional e internacional</div>
+  <!-- PARA QUIÉN (yellow feature) -->
+  <div class="section-block reveal">
+    <div class="feature-yellow">
+      <div class="section-head">
+        <div class="section-tile"><i class="ic" data-i="presentation"></i></div>
+        <div class="section-headtext">
+          <div class="section-num">EduMed · UVa</div>
+          <div class="section-title">¿Para quién es EduMed.UVa?</div>
+          <div class="section-desc">Dirigido al profesorado y al alumnado de todos los grados de la Facultad, y a la comunidad docente médica nacional e internacional</div>
+        </div>
       </div>
-      <span class="sec-acc-chevron" style="color:#111318;">▼</span>
-    </div>
-    <div class="sec-acc-body" style="padding:20px;">
       <div class="folder-tabs">
         <div class="folder-tab-bar">
-          <div class="folder-tab active" id="ftab-1">🏫 Profesorado</div>
-          <div class="folder-tab" id="ftab-2">🤝 Uso del material</div>
-          <div class="folder-tab" id="ftab-3">🌍 Más allá de la UVa</div>
+          <div class="folder-tab active" id="ftab-1"><i class="ic" data-i="building"></i><span class="lbl">Profesorado</span></div>
+          <div class="folder-tab" id="ftab-2"><i class="ic" data-i="handshake"></i><span class="lbl">Uso del material</span></div>
+          <div class="folder-tab" id="ftab-3"><i class="ic" data-i="globe"></i><span class="lbl">Más allá de la UVa</span></div>
         </div>
         <div class="folder-content" id="folder-content">
-          Todo el profesorado y el alumnado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>
+          Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>
         </div>
       </div>
     </div>
   </div>
 
   <!-- CONTACTO -->
-  <div class="contact-block">
+  <div class="contact-block reveal">
+    <div class="contact-icon"><i class="ic" data-i="message-square"></i></div>
     <div class="contact-text">
-      <div class="contact-title">💬 ¿Tienes una opinión o sugerencia?</div>
-      <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos.</div>
+      <div class="contact-title">¿Tienes una opinión o sugerencia?</div>
+      <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
     </div>
-    <a class="contact-btn" href="mailto:luis.corral@uva.es?subject=Opinión%20sobre%20EduMed.UVa&body=Hola%20TutorCyLlo%2C%0A%0AMe%20gustaría%20compartir%20mi%20opinión%20sobre%20EduMed.UVa%3A%0A%0A">✉️ Escribe a TutorCyLlo</a>
+    <a class="contact-btn" href="/cdn-cgi/l/email-protection#3c5049554f125f534e4e5d507c494a5d12594f034f495e56595f4801734c555255ff8f52190e0c4f535e4e59190e0c79584971595812696a5d1a5e535845017453505d190e0c684948534e7f45705053190e7f190c7d190c7d7159190e0c5b494f485d4eff915d190e0c5f53514c5d4e48554e190e0c5155190e0c534c555255ff8f52190e0c4f535e4e59190e0c79584971595812696a5d190f7d190c7d190c7d"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
   </div>
 
 </main>
 
 <footer>
-  <strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid · <span>Actualizado en mayo de 2026</span><br>
-  <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a>
+  <div class="foot-name">EduMed<b>·</b>UVa</div>
+  Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid<br>
+  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#86eaf3eff5a8e5e9f4f4e7eac6f3f0e7a8e3f5"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="dab6afb3a9f4b9b5a8a8bbb69aafacbbf4bfa9">[email&#160;protected]</span></a>
 </footer>
 
-<button class="back-top" id="backTop">↑</button>
+<button class="back-top" id="backTop" aria-label="Volver arriba"><i class="ic" data-i="arrow-up"></i></button>
 
-<script>
-function toggleSec(row) {
-  const body = row.nextElementSibling;
-  const isOpen = row.classList.contains('open');
-  row.classList.toggle('open', !isOpen);
-  body.classList.toggle('open', !isOpen);
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ───────── ICONS (Lucide-style line icons) ───────── */
+const ICONS = {
+  'book-open': '<path d="M12 7v14"/><path d="M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/>',
+  'film': '<rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18"/><path d="M3 7.5h4"/><path d="M3 12h18"/><path d="M3 16.5h4"/><path d="M17 3v18"/><path d="M17 7.5h4"/><path d="M17 16.5h4"/>',
+  'graduation-cap': '<path d="M21.42 10.922a1 1 0 0 0-.019-1.838L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.832l8.57 3.908a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/>',
+  'wrench': '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+  'layers': '<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>',
+  'triangle': '<path d="M13.73 4a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3z"/>',
+  'bar-chart': '<path d="M3 3v16a2 2 0 0 0 2 2h16"/><path d="M18 17V9"/><path d="M13 17V5"/><path d="M8 17v-3"/>',
+  'mountain': '<path d="m8 3 4 8 5-5 5 15H2L8 3z"/>',
+  'clipboard-check': '<rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/>',
+  'table': '<path d="M12 3v18"/><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/>',
+  'help-circle': '<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/>',
+  'repeat': '<path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/>',
+  'cpu': '<rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/><path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/><path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>',
+  'message-circle': '<path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>',
+  'sparkles': '<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.962 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/>',
+  'stethoscope': '<path d="M11 2v2"/><path d="M5 2v2"/><path d="M5 3H4a2 2 0 0 0-2 2v4a6 6 0 0 0 12 0V5a2 2 0 0 0-2-2h-1"/><path d="M8 15a6 6 0 0 0 12 0v-3"/><circle cx="20" cy="10" r="2"/>',
+  'star': '<path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.756a2.122 2.122 0 0 0 1.597-1.16z"/>',
+  'lightbulb': '<path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/>',
+  'building': '<path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/>',
+  'landmark': '<line x1="3" x2="21" y1="22" y2="22"/><line x1="6" x2="6" y1="18" y2="11"/><line x1="10" x2="10" y1="18" y2="11"/><line x1="14" x2="14" y1="18" y2="11"/><line x1="18" x2="18" y1="18" y2="11"/><polygon points="12 2 20 7 4 7"/>',
+  'presentation': '<path d="M2 3h20"/><path d="M21 3v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V3"/><path d="m7 21 5-5 5 5"/>',
+  'handshake': '<path d="m11 17 2 2a1 1 0 1 0 3-3"/><path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"/><path d="m21 3 1 11h-2"/><path d="M3 3 2 14l6.5 6.5a1 1 0 1 0 3-3"/><path d="M3 4h8"/>',
+  'globe': '<circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/>',
+  'message-square': '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+  'mail': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
+  'arrow-right': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  'arrow-up': '<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>',
+  'chevron-down': '<path d="m6 9 6 6 6-6"/>'
+};
+function renderIcons(root) {
+  (root || document).querySelectorAll('.ic[data-i]').forEach(el => {
+    if (el.dataset.done) return;
+    const p = ICONS[el.dataset.i];
+    if (!p) return;
+    el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + p + '</svg>';
+    el.dataset.done = '1';
+  });
 }
+renderIcons();
 
+/* ───────── ACCORDION ───────── */
 function toggleAcc(row) {
   if (row.classList.contains('pending')) return;
   const body = row.nextElementSibling;
   const isOpen = row.classList.contains('open');
   row.classList.toggle('open', !isOpen);
   body.classList.toggle('open', !isOpen);
+  uncapSection(row);
 }
-
+function uncapSection(el) {
+  const sec = el.closest('.section-block.collapsible');
+  if (sec && sec.classList.contains('open')) {
+    const c = sec.querySelector('.section-content');
+    if (c) c.style.maxHeight = 'none';
+  }
+}
 function toggleRepo(row) {
   const body = row.nextElementSibling;
   const isOpen = row.classList.contains('open');
   row.classList.toggle('open', !isOpen);
   body.classList.toggle('open', !isOpen);
+  uncapSection(row);
 }
 
+/* ───────── FOLDER TABS ───────── */
 const tabContents = {
-  'ftab-1': 'Todo el profesorado y el alumnado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
-  'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente o estudiante de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
+  'ftab-1': 'Todo el profesorado de los grados de la Facultad de Medicina de la UVa: <strong>Medicina, Logopedia, Nutrición Humana y Dietética, Ingeniería Biomédica, Biomedicina y Terapias Avanzadas y Farmacia.</strong>',
+  'ftab-2': 'Los materiales y recursos están pensados para ser útiles a <strong>cualquier docente de ciencias de la salud</strong>, independientemente de su grado o especialidad. Sin barreras, sin jerarquías.',
   'ftab-3': 'Docentes de otras facultades de medicina y ciencias de la salud <strong>en español</strong> interesados en compartir y aprender de experiencias innovadoras a nivel nacional e internacional.'
 };
 document.querySelectorAll('.folder-tab').forEach(tab => {
@@ -616,10 +812,135 @@ document.querySelectorAll('.folder-tab').forEach(tab => {
   });
 });
 
-document.getElementById('backTop').addEventListener('click', () => window.scrollTo({top:0,behavior:'smooth'}));
+/* ───────── BACK TO TOP ───────── */
+const backTop = document.getElementById('backTop');
+backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 window.addEventListener('scroll', () => {
-  document.getElementById('backTop').classList.toggle('visible', window.scrollY > 300);
+  backTop.classList.toggle('visible', window.scrollY > 400);
 });
+
+/* ───────── REVEAL ON SCROLL ───────── */
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ───────── COLLAPSIBLE SECTIONS ───────── */
+function openSection(sec) {
+  const c = sec.querySelector('.section-content');
+  sec.classList.add('open');
+  c.style.maxHeight = c.scrollHeight + 'px';
+  clearTimeout(c._t);
+  c._t = setTimeout(() => { if (sec.classList.contains('open')) c.style.maxHeight = 'none'; }, 420);
+}
+function closeSection(sec) {
+  const c = sec.querySelector('.section-content');
+  if (!sec.classList.contains('open')) { c.style.maxHeight = '0px'; return; }
+  clearTimeout(c._t);
+  c.style.maxHeight = c.scrollHeight + 'px';
+  void c.offsetHeight; // force reflow so the transition to 0 animates
+  sec.classList.remove('open');
+  requestAnimationFrame(() => { c.style.maxHeight = '0px'; });
+}
+function setSection(sec, open) { open ? openSection(sec) : closeSection(sec); }
+function toggleSection(sec) { setSection(sec, !sec.classList.contains('open')); refreshExpandAll(); }
+function initCollapsibles() {
+  document.querySelectorAll('.section-block.collapsible').forEach(sec => {
+    const head = sec.querySelector('.section-head');
+    const parent = head.parentElement; // section-block (std) or feature-dark
+    let content = sec.querySelector('.section-content');
+    if (!content) {
+      content = document.createElement('div');
+      content.className = 'section-content';
+      const inner = document.createElement('div');
+      inner.className = 'section-content-inner';
+      let node = head.nextElementSibling;
+      const moved = [];
+      while (node) { moved.push(node); node = node.nextElementSibling; }
+      moved.forEach(n => inner.appendChild(n));
+      content.appendChild(inner);
+      parent.appendChild(content);
+    }
+    if (!head.querySelector('.section-toggle')) {
+      const n = content.querySelectorAll('.acc-row, .acc-repo-row').length;
+      const tog = document.createElement('div');
+      tog.className = 'section-toggle';
+      tog.innerHTML = '<span class="section-count">' + n + ' recursos</span><span class="section-chevron"><i class="ic" data-i="chevron-down"></i></span>';
+      head.appendChild(tog);
+      renderIcons(head);
+      head.addEventListener('click', (e) => { if (e.target.closest('a')) return; toggleSection(sec); });
+    }
+  });
+  refreshExpandAll();
+}
+const expandAllBtn = document.getElementById('expandAll');
+function refreshExpandAll() {
+  const secs = [...document.querySelectorAll('.section-block.collapsible')];
+  const allOpen = secs.length > 0 && secs.every(s => s.classList.contains('open'));
+  expandAllBtn.classList.toggle('all-open', allOpen);
+  expandAllBtn.querySelector('.ea-label').textContent = allOpen ? 'Plegar todo' : 'Expandir todo';
+}
+expandAllBtn.addEventListener('click', () => {
+  const secs = [...document.querySelectorAll('.section-block.collapsible')];
+  const allOpen = secs.every(s => s.classList.contains('open'));
+  secs.forEach(s => setSection(s, !allOpen));
+  refreshExpandAll();
+});
+initCollapsibles();
+
+/* ───────── TABS MODE ───────── */
+const SECTION_TABS = [
+  { id: 'sec-cuadernos', icon: 'book-open', label: 'Cuadernos' },
+  { id: 'sec-basicos', icon: 'layers', label: 'Básicos' },
+  { id: 'sec-evaluacion', icon: 'clipboard-check', label: 'Evaluación' },
+  { id: 'sec-iagen', icon: 'cpu', label: 'IAgen' },
+  { id: 'sec-innovacion', icon: 'lightbulb', label: 'Innovación' }
+];
+let activeTab = 'sec-cuadernos';
+function buildTabBar() {
+  const bar = document.getElementById('tabBar');
+  if (bar.children.length) return;
+  SECTION_TABS.forEach(t => {
+    const b = document.createElement('button');
+    b.className = 'nav-tab';
+    b.dataset.target = t.id;
+    b.innerHTML = '<i class="ic" data-i="' + t.icon + '"></i><span>' + t.label + '</span>';
+    b.addEventListener('click', () => setActiveTab(t.id, true));
+    bar.appendChild(b);
+  });
+  renderIcons(bar);
+}
+function setActiveTab(id, doScroll) {
+  activeTab = id;
+  document.querySelectorAll('.section-block.collapsible').forEach(s => s.classList.toggle('tab-active', s.id === id));
+  document.querySelectorAll('#tabBar .nav-tab').forEach(b => b.classList.toggle('active', b.dataset.target === id));
+  if (doScroll) {
+    const sec = document.getElementById(id);
+    const bar = document.getElementById('tabBar');
+    const headerH = window.innerWidth <= 720 ? 62 : 72;
+    const y = sec.getBoundingClientRect().top + window.scrollY - headerH - bar.offsetHeight - 4;
+    window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
+  }
+}
+
+/* hero pills: respect current nav mode */
+document.querySelectorAll('.stat-pill').forEach(pill => {
+  pill.addEventListener('click', (e) => {
+    const id = pill.getAttribute('href').slice(1);
+    const sec = document.getElementById(id);
+    if (!sec || !sec.classList.contains('collapsible')) return;
+    if (document.body.classList.contains('nav-tabs')) {
+      setActiveTab(id, false);
+    } else {
+      setSection(sec, true);
+      refreshExpandAll();
+    }
+  });
+});
+
+/* init: tabs navigation (fixed default for production) */
+buildTabBar();
+setActiveTab(activeTab, false);
 </script>
 </body>
 </html>
