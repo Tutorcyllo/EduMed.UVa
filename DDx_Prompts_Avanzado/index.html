@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>RAG, estrategia y repaso · Prompts en clínica · EduMed UVa</title>
+  <title>Prompts · Uso avanzado y flujos de trabajo · Prompts en clínica · EduMed UVa</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -314,8 +314,9 @@
     .cot-preview-text { font-family: "JetBrains Mono", ui-monospace, monospace; font-size: 0.78rem; line-height: 1.7; color: var(--ink); white-space: pre-wrap; }
     .cot-frag { transition: all .2s; }
     .cot-frag.inactive { color: var(--line-strong); opacity: .45; }
+    .cot-frag.inactive mark { background: none; text-decoration: none; color: inherit; }
     .cot-frag.active { color: var(--ink); opacity: 1; }
-    .cot-frag.active mark { background: var(--frag-bg, #dcfce7); color: var(--frag-ink, #166534); border-radius: 2px; padding: 0 2px; }
+    .cot-frag.active mark { background: var(--frag-bg, #dcfce7); color: var(--frag-ink, #166634); border-radius: 2px; padding: 0 2px; }
 
     .cot-quality { display: flex; align-items: center; gap: 14px; padding: 12px 16px; border-top: 1px solid var(--line); background: var(--cream); }
     .cot-quality-bar-wrap { flex: 1; height: 8px; background: var(--line); border-radius: 999px; overflow: hidden; }
@@ -384,7 +385,6 @@
 </head>
 <body>
 
-  <!-- ── BARRA EDUMED ── -->
   <div class="edumed-bar">
     <div class="edumed-bar-inner">
       <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
@@ -400,7 +400,6 @@
     </div>
   </div>
 
-  <!-- ── MINI HERO ── -->
   <div class="hero" style="padding:36px 0 28px;">
     <div class="container">
       <div class="hero-tag">
@@ -408,27 +407,23 @@
         <span>Parte 3 de 3 · Tipos de prompts para razonar con IA</span>
       </div>
       <h1 class="hero-title" style="font-size:clamp(1.6rem,4vw,2.4rem);">RAG, estrategia y repaso</h1>
-      <p class="hero-subtitle" style="font-size:14px;margin-bottom:0;">Qué añade el RAG, cómo elegir el prompt según el caso y un repaso interactivo con flashcards.</p>
+      <p class="hero-subtitle" style="font-size:14px;margin-bottom:0;">Qué añade el RAG, cómo elegir el prompt adecuado según el caso y repaso interactivo con flashcards.</p>
     </div>
   </div>
 
-  <!-- ── NAV ÍNDICE ── -->
   <div class="nav-index">
     <div class="container">
       <div class="nav-pills">
-        
         <button class="nav-pill active" onclick="scrollToSection('rag')">📚 RAG</button>
         <button class="nav-pill" onclick="scrollToSection('estrategia')">🎯 Cómo elegir</button>
         <button class="nav-pill" onclick="scrollToSection('repaso')">🃏 Repaso</button>
         <button class="nav-pill" onclick="scrollToSection('cierre')">💡 Ideas finales</button>
         <button class="nav-pill" onclick="scrollToSection('referencias')">📖 Referencias</button>
-
       </div>
     </div>
   </div>
 
-  <!-- ── CONTENIDO ── -->
-    <section class="section" id="rag">
+  <section class="section" id="rag">
     <div class="container">
       <div class="section-eyebrow">Evidencia externa</div>
       <h2 class="section-title">7. RAG y herramientas con evidencia</h2>
@@ -501,6 +496,7 @@
   <!-- ══════════════════════════════════
        8. CÓMO ELEGIR EL TIPO DE PROMPT
   ══════════════════════════════════ -->
+
   <section class="section" id="estrategia">
     <div class="container">
       <div class="section-eyebrow">Criterio de selección</div>
@@ -577,11 +573,14 @@
   <!-- ══════════════════════════════════
        9. REPASO INTERACTIVO — FLASHCARDS
   ══════════════════════════════════ -->
-  <section class="section" id="repaso">
+
+    <section class="section" id="repaso">
     <div class="container">
       <div class="section-eyebrow">Autoevaluación</div>
       <h2 class="section-title">9. Repaso interactivo</h2>
       <p class="section-lead">Lee el prompt del anverso e intenta identificar de qué tipo es y para qué es más útil antes de girar la tarjeta.</p>
+
+      <div class="choice-intro">
         <span class="choice-progress">Tarjeta <span id="fcCur">1</span> de <span id="fcTot">6</span></span>
         <span style="font-size:13px;color:var(--muted);">Pulsa para girar · usa las flechas para navegar</span>
       </div>
@@ -596,7 +595,7 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">1</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Paciente de 58 años con dolor torácico y sudoración. ¿Cuál es el diagnóstico más probable?"</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"Paciente de 58 años con dolor torácico y sudoración. ¿Cuál es el diagnóstico más probable?"</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
@@ -619,7 +618,7 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">2</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Paso 1: organiza los datos del caso en antecedentes, síntomas, exploración y analítica. Paso 2: usando esa organización, genera un diferencial priorizado."</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"Paso 1: organiza los datos del caso en categorías. Paso 2: genera un diferencial priorizado a partir de esa organización."</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
@@ -627,7 +626,7 @@
               <div>
                 <span class="choice-back-label">Tipo de prompt</span>
                 <p class="choice-back-text">Instrucción en dos pasos · Two-step</p>
-                <p class="choice-back-explain">Fuerza al modelo a sintetizar la información antes de diagnosticar. Reduce el riesgo de que datos relevantes queden enterrados en el texto.<br><br><strong style="color:var(--e-teal);">Más útil en:</strong> viñetas largas, historiales desordenados o casos con muchos datos dispersos.</p>
+                <p class="choice-back-explain">Fuerza al modelo a sintetizar antes de diagnosticar. Reduce el riesgo de que datos relevantes queden enterrados en el texto.<br><br><strong style="color:var(--e-teal);">Más útil en:</strong> viñetas largas o historiales desordenados.</p>
               </div>
               <span class="choice-hint">← Pulsa para volver</span>
             </div>
@@ -642,7 +641,7 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">3</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"#1 Síntesis clínica → #2 Síndromes → #3 Datos faltantes → #4 DDx jerarquizado (probable / competitivo / must-not-miss) → #5 Justificación → #6 Plan diagnóstico."</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"#1 Síntesis clínica → #2 Síndromes → #3 Datos faltantes → #4 DDx jerarquizado → #5 Justificación → #6 Plan."</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
@@ -650,7 +649,7 @@
               <div>
                 <span class="choice-back-label">Tipo de prompt</span>
                 <p class="choice-back-text">Cadena de pensamiento · CoT</p>
-                <p class="choice-back-explain">Estructura el razonamiento en pasos explícitos y auditables. El modelo hace visible su lógica antes de concluir.<br><br><strong style="color:var(--e-violet);">Más útil en:</strong> casos complejos, atípicos o raros donde la lógica importa tanto como el diagnóstico final.</p>
+                <p class="choice-back-explain">Estructura el razonamiento en pasos explícitos y auditables. La lógica es visible antes de la conclusión.<br><br><strong style="color:var(--e-violet);">Más útil en:</strong> casos complejos o atípicos donde la lógica importa tanto como el diagnóstico.</p>
               </div>
               <span class="choice-hint">← Pulsa para volver</span>
             </div>
@@ -665,7 +664,7 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">4</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Has propuesto IC descompensada. Ahora actúa como revisor crítico: ¿qué datos de este caso contradicen ese diagnóstico? ¿Qué has podido omitir?"</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"Has propuesto IC descompensada. Actúa como revisor crítico: ¿qué datos contradicen ese diagnóstico? ¿Qué has podido omitir?"</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
@@ -673,7 +672,7 @@
               <div>
                 <span class="choice-back-label">Tipo de prompt</span>
                 <p class="choice-back-text">Autorreflexión · Self-Reflection</p>
-                <p class="choice-back-explain">Pide al modelo que revise su propia salida o la hipótesis del estudiante desde una posición crítica. Combate el cierre prematuro.<br><br><strong style="color:var(--e-amber);">Más útil en:</strong> validación final antes de aceptar un diferencial o en decisiones de alto riesgo.</p>
+                <p class="choice-back-explain">Pide al modelo que revise su propia salida desde una posición crítica. Combate el cierre prematuro.<br><br><strong style="color:var(--e-amber);">Más útil en:</strong> validación final antes de aceptar un diferencial.</p>
               </div>
               <span class="choice-hint">← Pulsa para volver</span>
             </div>
@@ -688,7 +687,7 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">5</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Actúa como médico adjunto senior muy crítico. Mi diagnóstico es TEP. Cuestiona mi razonamiento, señala los datos que he ignorado y propón la hipótesis alternativa más peligrosa si me equivoco."</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"Actúa como médico adjunto muy crítico. Mi diagnóstico es TEP. Cuestiona mi razonamiento y propón la hipótesis alternativa más peligrosa."</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
@@ -696,7 +695,7 @@
               <div>
                 <span class="choice-back-label">Tipo de prompt</span>
                 <p class="choice-back-text">Rol dialógico adversarial · Equipo Rojo</p>
-                <p class="choice-back-explain">Asigna al modelo un papel crítico que cuestiona activamente la hipótesis del estudiante. Genera fricción epistémica útil.<br><br><strong style="color:var(--e-red);">Más útil en:</strong> entrenamiento avanzado del juicio clínico. Requiere que el estudiante haya pensado primero.</p>
+                <p class="choice-back-explain">Asigna al modelo un papel crítico que cuestiona activamente la hipótesis del estudiante.<br><br><strong style="color:var(--e-red);">Más útil en:</strong> entrenamiento avanzado del juicio clínico.</p>
               </div>
               <span class="choice-hint">← Pulsa para volver</span>
             </div>
@@ -711,15 +710,15 @@
                   <span class="choice-eyebrow">¿Qué tipo de prompt es?</span>
                   <span class="choice-num">6</span>
                 </div>
-                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;font-weight:400;margin-top:14px;">"Actúa como tutor socrático de fisiopatología. No me des el diagnóstico final. Guíame con preguntas para analizar si la insuficiencia cardiaca puede explicar de forma coherente todos los hallazgos del caso."</p>
+                <p class="choice-q" style="font-family:'JetBrains Mono',monospace;font-size:0.85rem;margin-top:14px;">"Actúa como tutor socrático de fisiopatología. No me des el diagnóstico. Guíame con preguntas para analizar si la IC explica todos los hallazgos."</p>
               </div>
               <span class="choice-hint">Pulsa para ver el tipo y uso →</span>
             </div>
             <div class="choice-face choice-back">
               <div>
                 <span class="choice-back-label">Tipo de prompt</span>
-                <p class="choice-back-text">Experto en fisiopatología · Tutor socrático</p>
-                <p class="choice-back-explain">El modelo no da el diagnóstico sino que obliga al estudiante a demostrar que su hipótesis es biológicamente coherente. Combate la ilusión de fluidez.<br><br><strong style="color:var(--e-indigo);">Más útil en:</strong> profundizar en casos complejos o revisar hipótesis con base teórica insuficiente.</p>
+                <p class="choice-back-text">Tutor socrático · Experto en fisiopatología</p>
+                <p class="choice-back-explain">El modelo no da el diagnóstico sino que obliga a demostrar que la hipótesis es biológicamente coherente.<br><br><strong style="color:var(--e-indigo);">Más útil en:</strong> revisar hipótesis con base teórica insuficiente.</p>
               </div>
               <span class="choice-hint">← Pulsa para volver</span>
             </div>
@@ -740,9 +739,6 @@
     </div>
   </section>
 
-  <!-- ══════════════════════════════════
-       10. IDEAS FINALES
-  ══════════════════════════════════ -->
   <section class="section" id="cierre">
     <div class="container">
       <div class="section-eyebrow">Síntesis</div>
@@ -826,25 +822,18 @@
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-row">
-        <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
-        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
-      </div>
-
-
-  <!-- ── PAGINACIÓN ── -->
   <div class="page-nav">
     <div class="container">
       <div class="page-nav-inner">
-        <a class="page-nav-btn " href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Tipos">
+        <a class="page-nav-btn" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_Prompts_Tipos">
           <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
           ← Tipos y flujos
         </a>
         <div style="display:flex;flex-direction:column;align-items:center;gap:8px;">
           <div class="page-dots">
-            <div class="page-dot"></div><div class="page-dot"></div><div class="page-dot active"></div>
+            <div class="page-dot"></div>
+            <div class="page-dot"></div>
+            <div class="page-dot active"></div>
           </div>
           <span class="page-counter">Parte 3 de 3</span>
         </div>
@@ -856,180 +845,20 @@
     </div>
   </div>
 
-  <!-- ── FOOTER ── -->
-    <footer class="footer">
+  <footer class="footer">
     <div class="container">
       <div class="footer-row">
         <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
-        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
+        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← DDx_IA</a>
       </div>
     </div>
   </footer>
 
   <script>
-    // ══ CoT Builder ══
-    (function() {
-      const steps = [
-        {
-          icon: '📋', color: '#0d6e6e', bg: '#e0f2f1', fragBg: '#e0f2f1', fragInk: '#0d6e6e',
-          title: '#1 Síntesis clínica',
-          sub: 'Resume datos clave y define problemas activos',
-          desc: 'Pides al modelo que organice la información antes de razonar. Identifica antecedentes, síntomas, signos y analítica, y genera una lista de problemas activos. Es el paso que más reduce los errores de omisión.',
-          example: '#1 Síntesis clínica: resume los datos clave del caso\n(antecedentes, síntomas, signos, exploración física\ny analítica disponible). Crea una lista de "problemas activos".',
-          warning: 'Si el modelo sintetiza mal aquí, todos los pasos siguientes heredan ese error. Verifica antes de continuar.'
-        },
-        {
-          icon: '🔗', color: '#3730a3', bg: '#ede9fe', fragBg: '#ede9fe', fragInk: '#3730a3',
-          title: '#2 Análisis sindrómico',
-          sub: 'Identifica los síndromes principales del caso',
-          desc: 'Obliga al modelo a agrupar los problemas activos en síndromes reconocibles. Este paso conecta los datos clínicos con categorías diagnósticas antes de generar hipótesis.',
-          example: '#2 Análisis sindrómico: identifica los síndromes\nprincipales que emergen del caso.',
-          warning: 'Sin este paso, el modelo puede saltar directamente a diagnósticos sin integrar bien los datos.'
-        },
-        {
-          icon: '🔍', color: '#b45309', bg: '#fef3c7', fragBg: '#fef3c7', fragInk: '#92400e',
-          title: '#3 Indagación activa',
-          sub: 'Qué datos faltan y por qué son cruciales',
-          desc: 'Antes de dar el diferencial, el modelo debe detenerse y señalar qué información falta. Este paso activa el pensamiento crítico y evita que el modelo asuma datos que no se le han proporcionado.',
-          example: '#3 Indagación activa: antes de dar el diagnóstico\ndiferencial, detente. Enumera qué datos específicos\nfaltan y explica por qué son cruciales.',
-          warning: 'Si el modelo no se detiene aquí, probablemente está asumiendo datos. Pide explícitamente que espere tu respuesta.'
-        },
-        {
-          icon: '📊', color: '#9d174d', bg: '#fce7f3', fragBg: '#fce7f3', fragInk: '#9d174d',
-          title: '#4 DDx jerarquizado',
-          sub: 'Probable · Competitivo · Must-not-miss',
-          desc: 'El corazón del prompt. El modelo genera tres capas de diferencial: el diagnóstico más probable por frecuencia, los diferenciales competitivos que encajan parcialmente, y los must-not-miss que no pueden omitirse por su gravedad.',
-          example: '#4 Diagnóstico diferencial jerarquizado:\n- Más probable: por frecuencia y concordancia clínica.\n- Diferenciales competitivos: otras causas que encajan.\n- "Must-not-miss": diagnósticos graves o urgentes.',
-          warning: 'El "must-not-miss" no es opcional. Si el modelo no lo incluye, el prompt no está funcionando correctamente.'
-        },
-        {
-          icon: '⚖️', color: '#6d28d9', bg: '#f5f3ff', fragBg: '#f5f3ff', fragInk: '#6d28d9',
-          title: '#5 Justificación de hipótesis',
-          sub: 'Qué datos apoyan y qué datos contradicen',
-          desc: 'Para cada hipótesis principal, el modelo debe citar los datos que la sostienen y los que la contradicen. Este es el paso que mejor protege contra el sesgo de confirmación.',
-          example: '#5 Justificación: explica brevemente qué datos\napoyan y qué datos contradicen cada una de\ntus 5 hipótesis principales.',
-          warning: 'Si solo aparecen datos a favor, el modelo está siendo aquiescente. Pide explícitamente los datos en contra.'
-        },
-        {
-          icon: '🔬', color: '#166534', bg: '#dcfce7', fragBg: '#dcfce7', fragInk: '#166534',
-          title: '#6 Plan de acción',
-          sub: 'Pruebas priorizadas de menor a mayor complejidad',
-          desc: 'El modelo propone pruebas complementarias ordenadas por rentabilidad diagnóstica y relación coste-beneficio. La priorización es clave: no todas las pruebas tienen el mismo valor en el mismo momento.',
-          example: '#6 Plan de acción: sugiere pruebas priorizadas\npor rentabilidad diagnóstica, de lo más sencillo\na lo más complejo o invasivo.',
-          warning: 'Una lista larga de pruebas sin priorizar no es un plan. Si el modelo no ordena, el prompt necesita más instrucción.'
-        }
-      ];
-
-      const qualityLevels = [
-        { min: 0,   max: 0,   label: 'Sin estructura',   color: '#ef4444' },
-        { min: 1,   max: 33,  label: 'Básico',           color: '#f97316' },
-        { min: 34,  max: 66,  label: 'En construcción',  color: '#eab308' },
-        { min: 67,  max: 99,  label: 'Casi completo',    color: '#84cc16' },
-        { min: 100, max: 100, label: 'Completo',         color: '#22c55e' }
-      ];
-
-      const togglesEl  = document.getElementById('cotToggles');
-      const previewEl  = document.getElementById('cotPreview');
-      const barEl      = document.getElementById('cotBar');
-      const pctEl      = document.getElementById('cotPct');
-      const labelEl    = document.getElementById('cotLabel');
-      const detailEl   = document.getElementById('cotDetail');
-
-      let active = new Array(steps.length).fill(false);
-      let openDetail = -1;
-
-      function buildUI() {
-        // Toggles
-        togglesEl.innerHTML = steps.map((s, i) => `
-          <div class="cot-row" id="cotRow${i}" style="--row-color:${s.color};--row-bg:${s.bg};" onclick="cotRowClick(${i})">
-            <span class="cot-row-icon">${s.icon}</span>
-            <div class="cot-row-text">
-              <div class="cot-row-title">${s.title}</div>
-              <div class="cot-row-sub">${s.sub}</div>
-            </div>
-            <label class="cot-toggle" onclick="event.stopPropagation()">
-              <input type="checkbox" id="cotChk${i}" onchange="cotToggle(${i})">
-              <div class="cot-toggle-track"></div>
-              <div class="cot-toggle-thumb"></div>
-            </label>
-          </div>`).join('');
-
-        // Preview fragments
-        previewEl.innerHTML = steps.map((s, i) => `<span class="cot-frag inactive" id="cotFrag${i}" style="--frag-bg:${s.fragBg};--frag-ink:${s.fragInk};"><mark>${s.example}</mark>\n\n</span>`).join('');
-      }
-
-      function cotToggle(i) {
-        active[i] = document.getElementById(`cotChk${i}`).checked;
-        document.getElementById(`cotRow${i}`).classList.toggle('active', active[i]);
-        document.getElementById(`cotFrag${i}`).classList.toggle('inactive', !active[i]);
-        document.getElementById(`cotFrag${i}`).classList.toggle('active', active[i]);
-        updateBar();
-      }
-
-      function cotRowClick(i) {
-        if (openDetail === i) {
-          openDetail = -1;
-          detailEl.style.display = 'none';
-        } else {
-          openDetail = i;
-          const s = steps[i];
-          detailEl.style.display = 'block';
-          detailEl.style.setProperty('--detail-color', s.color);
-          detailEl.innerHTML = `
-            <div class="cot-detail-header">
-              <span class="cot-detail-icon">${s.icon}</span>
-              <span class="cot-detail-title" style="color:${s.color}">${s.title} — ${s.sub}</span>
-            </div>
-            <div class="cot-detail-desc">${s.desc}</div>
-            <div class="cot-detail-example">${s.example}</div>
-            <div class="cot-detail-warning">${s.warning}</div>`;
-          detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      }
-      window.cotToggle    = cotToggle;
-      window.cotRowClick  = cotRowClick;
-
-      function updateBar() {
-        const on  = active.filter(Boolean).length;
-        const pct = Math.round((on / steps.length) * 100);
-        const lvl = qualityLevels.find(l => pct >= l.min && pct <= l.max) || qualityLevels[0];
-        barEl.style.width     = pct + '%';
-        barEl.style.background = lvl.color;
-        pctEl.textContent     = pct + '%';
-        labelEl.textContent   = lvl.label;
-      }
-
-      buildUI();
-      updateBar();
-    })();
-
-    // ── Activity cases ──
-    function toggleCase(el) { el.classList.toggle('open'); }
-
-    // ── Flashcards ──
-    (function() {
-      const stack = document.getElementById('fcStack');
-      const cards = Array.from(stack.querySelectorAll('.choice-card'));
-      let cur = 0;
-      function update() {
-        cards.forEach(c => c.classList.remove('visible','flipped'));
-        cards[cur].classList.add('visible');
-        document.getElementById('fcCur').textContent = cur + 1;
-        document.getElementById('fcTot').textContent = cards.length;
-      }
-      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
-      document.getElementById('fcPrev').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
-      document.getElementById('fcNext').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
-      document.getElementById('fcFlip').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
-      update();
-    })();
-
-    // ── Scroll a sección ──
     function scrollToSection(id) {
       document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
 
-    // ── Nav activa por scroll ──
     const sections = document.querySelectorAll('section[id]');
     const navBtns  = document.querySelectorAll('.nav-pill');
     sections.forEach(s => new IntersectionObserver(entries => {
@@ -1043,10 +872,9 @@
       });
     }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
 
-    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
     function toggleAcc(btn, groupId) {
-      const item    = btn.closest('.acc-item');
-      const group   = document.getElementById(groupId);
+      const item = btn.closest('.acc-item');
+      const group = document.getElementById(groupId);
       const wasOpen = item.classList.contains('open');
       group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
       if (!wasOpen) {
@@ -1058,7 +886,6 @@
       }
     }
 
-    // ── Pestañas ──
     function switchTab(btn, paneId, navId, bodyId) {
       const nav  = document.getElementById(navId);
       const body = document.getElementById(bodyId);
@@ -1074,217 +901,34 @@
         idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
                        'var(--r-lg)';
     }
-  </script>
 
-
-    <script>
-    // ══ CoT Builder ══
-    (function() {
-      const steps = [
-        {
-          icon: '📋', color: '#0d6e6e', bg: '#e0f2f1', fragBg: '#e0f2f1', fragInk: '#0d6e6e',
-          title: '#1 Síntesis clínica',
-          sub: 'Resume datos clave y define problemas activos',
-          desc: 'Pides al modelo que organice la información antes de razonar. Identifica antecedentes, síntomas, signos y analítica, y genera una lista de problemas activos. Es el paso que más reduce los errores de omisión.',
-          example: '#1 Síntesis clínica: resume los datos clave del caso\n(antecedentes, síntomas, signos, exploración física\ny analítica disponible). Crea una lista de "problemas activos".',
-          warning: 'Si el modelo sintetiza mal aquí, todos los pasos siguientes heredan ese error. Verifica antes de continuar.'
-        },
-        {
-          icon: '🔗', color: '#3730a3', bg: '#ede9fe', fragBg: '#ede9fe', fragInk: '#3730a3',
-          title: '#2 Análisis sindrómico',
-          sub: 'Identifica los síndromes principales del caso',
-          desc: 'Obliga al modelo a agrupar los problemas activos en síndromes reconocibles. Este paso conecta los datos clínicos con categorías diagnósticas antes de generar hipótesis.',
-          example: '#2 Análisis sindrómico: identifica los síndromes\nprincipales que emergen del caso.',
-          warning: 'Sin este paso, el modelo puede saltar directamente a diagnósticos sin integrar bien los datos.'
-        },
-        {
-          icon: '🔍', color: '#b45309', bg: '#fef3c7', fragBg: '#fef3c7', fragInk: '#92400e',
-          title: '#3 Indagación activa',
-          sub: 'Qué datos faltan y por qué son cruciales',
-          desc: 'Antes de dar el diferencial, el modelo debe detenerse y señalar qué información falta. Este paso activa el pensamiento crítico y evita que el modelo asuma datos que no se le han proporcionado.',
-          example: '#3 Indagación activa: antes de dar el diagnóstico\ndiferencial, detente. Enumera qué datos específicos\nfaltan y explica por qué son cruciales.',
-          warning: 'Si el modelo no se detiene aquí, probablemente está asumiendo datos. Pide explícitamente que espere tu respuesta.'
-        },
-        {
-          icon: '📊', color: '#9d174d', bg: '#fce7f3', fragBg: '#fce7f3', fragInk: '#9d174d',
-          title: '#4 DDx jerarquizado',
-          sub: 'Probable · Competitivo · Must-not-miss',
-          desc: 'El corazón del prompt. El modelo genera tres capas de diferencial: el diagnóstico más probable por frecuencia, los diferenciales competitivos que encajan parcialmente, y los must-not-miss que no pueden omitirse por su gravedad.',
-          example: '#4 Diagnóstico diferencial jerarquizado:\n- Más probable: por frecuencia y concordancia clínica.\n- Diferenciales competitivos: otras causas que encajan.\n- "Must-not-miss": diagnósticos graves o urgentes.',
-          warning: 'El "must-not-miss" no es opcional. Si el modelo no lo incluye, el prompt no está funcionando correctamente.'
-        },
-        {
-          icon: '⚖️', color: '#6d28d9', bg: '#f5f3ff', fragBg: '#f5f3ff', fragInk: '#6d28d9',
-          title: '#5 Justificación de hipótesis',
-          sub: 'Qué datos apoyan y qué datos contradicen',
-          desc: 'Para cada hipótesis principal, el modelo debe citar los datos que la sostienen y los que la contradicen. Este es el paso que mejor protege contra el sesgo de confirmación.',
-          example: '#5 Justificación: explica brevemente qué datos\napoyan y qué datos contradicen cada una de\ntus 5 hipótesis principales.',
-          warning: 'Si solo aparecen datos a favor, el modelo está siendo aquiescente. Pide explícitamente los datos en contra.'
-        },
-        {
-          icon: '🔬', color: '#166534', bg: '#dcfce7', fragBg: '#dcfce7', fragInk: '#166534',
-          title: '#6 Plan de acción',
-          sub: 'Pruebas priorizadas de menor a mayor complejidad',
-          desc: 'El modelo propone pruebas complementarias ordenadas por rentabilidad diagnóstica y relación coste-beneficio. La priorización es clave: no todas las pruebas tienen el mismo valor en el mismo momento.',
-          example: '#6 Plan de acción: sugiere pruebas priorizadas\npor rentabilidad diagnóstica, de lo más sencillo\na lo más complejo o invasivo.',
-          warning: 'Una lista larga de pruebas sin priorizar no es un plan. Si el modelo no ordena, el prompt necesita más instrucción.'
-        }
-      ];
-
-      const qualityLevels = [
-        { min: 0,   max: 0,   label: 'Sin estructura',   color: '#ef4444' },
-        { min: 1,   max: 33,  label: 'Básico',           color: '#f97316' },
-        { min: 34,  max: 66,  label: 'En construcción',  color: '#eab308' },
-        { min: 67,  max: 99,  label: 'Casi completo',    color: '#84cc16' },
-        { min: 100, max: 100, label: 'Completo',         color: '#22c55e' }
-      ];
-
-      const togglesEl  = document.getElementById('cotToggles');
-      const previewEl  = document.getElementById('cotPreview');
-      const barEl      = document.getElementById('cotBar');
-      const pctEl      = document.getElementById('cotPct');
-      const labelEl    = document.getElementById('cotLabel');
-      const detailEl   = document.getElementById('cotDetail');
-
-      let active = new Array(steps.length).fill(false);
-      let openDetail = -1;
-
-      function buildUI() {
-        // Toggles
-        togglesEl.innerHTML = steps.map((s, i) => `
-          <div class="cot-row" id="cotRow${i}" style="--row-color:${s.color};--row-bg:${s.bg};" onclick="cotRowClick(${i})">
-            <span class="cot-row-icon">${s.icon}</span>
-            <div class="cot-row-text">
-              <div class="cot-row-title">${s.title}</div>
-              <div class="cot-row-sub">${s.sub}</div>
-            </div>
-            <label class="cot-toggle" onclick="event.stopPropagation()">
-              <input type="checkbox" id="cotChk${i}" onchange="cotToggle(${i})">
-              <div class="cot-toggle-track"></div>
-              <div class="cot-toggle-thumb"></div>
-            </label>
-          </div>`).join('');
-
-        // Preview fragments
-        previewEl.innerHTML = steps.map((s, i) => `<span class="cot-frag inactive" id="cotFrag${i}" style="--frag-bg:${s.fragBg};--frag-ink:${s.fragInk};"><mark>${s.example}</mark>\n\n</span>`).join('');
-      }
-
-      function cotToggle(i) {
-        active[i] = document.getElementById(`cotChk${i}`).checked;
-        document.getElementById(`cotRow${i}`).classList.toggle('active', active[i]);
-        document.getElementById(`cotFrag${i}`).classList.toggle('inactive', !active[i]);
-        document.getElementById(`cotFrag${i}`).classList.toggle('active', active[i]);
-        updateBar();
-      }
-
-      function cotRowClick(i) {
-        if (openDetail === i) {
-          openDetail = -1;
-          detailEl.style.display = 'none';
-        } else {
-          openDetail = i;
-          const s = steps[i];
-          detailEl.style.display = 'block';
-          detailEl.style.setProperty('--detail-color', s.color);
-          detailEl.innerHTML = `
-            <div class="cot-detail-header">
-              <span class="cot-detail-icon">${s.icon}</span>
-              <span class="cot-detail-title" style="color:${s.color}">${s.title} — ${s.sub}</span>
-            </div>
-            <div class="cot-detail-desc">${s.desc}</div>
-            <div class="cot-detail-example">${s.example}</div>
-            <div class="cot-detail-warning">${s.warning}</div>`;
-          detailEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-      }
-      window.cotToggle    = cotToggle;
-      window.cotRowClick  = cotRowClick;
-
-      function updateBar() {
-        const on  = active.filter(Boolean).length;
-        const pct = Math.round((on / steps.length) * 100);
-        const lvl = qualityLevels.find(l => pct >= l.min && pct <= l.max) || qualityLevels[0];
-        barEl.style.width     = pct + '%';
-        barEl.style.background = lvl.color;
-        pctEl.textContent     = pct + '%';
-        labelEl.textContent   = lvl.label;
-      }
-
-      buildUI();
-      updateBar();
-    })();
-
-    // ── Activity cases ──
     function toggleCase(el) { el.classList.toggle('open'); }
 
-    // ── Flashcards ──
     (function() {
-      const stack = document.getElementById('fcStack');
-      const cards = Array.from(stack.querySelectorAll('.choice-card'));
-      let cur = 0;
+      var stack = document.getElementById('fcStack');
+      if (!stack) return;
+      var cards = Array.prototype.slice.call(stack.querySelectorAll('.choice-card'));
+      var cur = 0;
       function update() {
-        cards.forEach(c => c.classList.remove('visible','flipped'));
+        cards.forEach(function(c) { c.classList.remove('visible', 'flipped'); });
         cards[cur].classList.add('visible');
         document.getElementById('fcCur').textContent = cur + 1;
         document.getElementById('fcTot').textContent = cards.length;
       }
-      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
-      document.getElementById('fcPrev').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
-      document.getElementById('fcNext').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
-      document.getElementById('fcFlip').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
+      cards.forEach(function(c) {
+        c.addEventListener('click', function() { c.classList.toggle('flipped'); });
+      });
+      document.getElementById('fcPrev').addEventListener('click', function() {
+        cur = (cur - 1 + cards.length) % cards.length; update();
+      });
+      document.getElementById('fcNext').addEventListener('click', function() {
+        cur = (cur + 1) % cards.length; update();
+      });
+      document.getElementById('fcFlip').addEventListener('click', function() {
+        cards[cur].classList.toggle('flipped');
+      });
       update();
     })();
-
-    // ── Scroll a sección ──
-    function scrollToSection(id) {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-
-    // ── Nav activa por scroll ──
-    const sections = document.querySelectorAll('section[id]');
-    const navBtns  = document.querySelectorAll('.nav-pill');
-    sections.forEach(s => new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          navBtns.forEach(b => {
-            const oc = b.getAttribute('onclick') || '';
-            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
-          });
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
-
-    // ── Acordeón (uno a la vez por grupo, scroll al abrir) ──
-    function toggleAcc(btn, groupId) {
-      const item    = btn.closest('.acc-item');
-      const group   = document.getElementById(groupId);
-      const wasOpen = item.classList.contains('open');
-      group.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) {
-        item.classList.add('open');
-        setTimeout(() => {
-          const top = item.getBoundingClientRect().top + window.scrollY - 90;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }, 50);
-      }
-    }
-
-    // ── Pestañas ──
-    function switchTab(btn, paneId, navId, bodyId) {
-      const nav  = document.getElementById(navId);
-      const body = document.getElementById(bodyId);
-      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(paneId).classList.add('active');
-      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
-      const idx  = btns.indexOf(btn);
-      const last = btns.length - 1;
-      body.style.borderRadius =
-        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
-        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
-                       'var(--r-lg)';
-    }
   </script>
 </body>
 </html>
