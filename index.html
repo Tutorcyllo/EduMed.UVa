@@ -359,7 +359,14 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
   .hero-inner { padding: 36px 18px 42px; }
   .hero-img-wrap { width: 150px; }
   main { padding: 36px 18px 70px; }
-  body.nav-tabs .tab-bar { top: 62px; margin: 0 -18px 22px; padding: 12px 18px; }
+  /* móvil: pestañas en rejilla de 2 columnas, todas visibles, sin scroll horizontal */
+  body.nav-tabs .tab-bar { position: static; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin: 0; padding: 0; border-bottom: none; overflow: visible; }
+  .nav-tab { margin-bottom: 0; justify-content: center; padding: 13px 12px; border: 1.5px solid var(--ink); border-radius: 11px; background: var(--yellow); }
+  .nav-tab:hover:not(.active) { transform: none; }
+  .nav-tab:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .nav-tab.active { background: var(--ink); color: #fff; border-color: var(--ink); border-bottom: 1.5px solid var(--ink); }
+  .nav-tab.active .ic { color: var(--yellow); }
+  body.nav-tabs .section-block.tab-active { border: 2px solid var(--ink); border-radius: 16px; margin-top: 0; padding: 22px 18px 26px; }
   .contact-block { flex-direction: column; align-items: flex-start; gap: 22px; padding: 28px; }
   .contact-btn { width: 100%; justify-content: center; }
   .acc-body-pad, .acc-repo-pad { padding-left: 20px; padding-right: 20px; }
@@ -718,7 +725,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
       <div class="contact-title">¿Tienes una opinión o sugerencia?</div>
       <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
     </div>
-    <a class="contact-btn" href="/cdn-cgi/l/email-protection#3c5049554f125f534e4e5d507c494a5d12594f034f495e56595f4801734c555255ff8f52190e0c4f535e4e59190e0c79584971595812696a5d1a5e535845017453505d190e0c684948534e7f45705053190e7f190c7d190c7d7159190e0c5b494f485d4eff915d190e0c5f53514c5d4e48554e190e0c5155190e0c534c555255ff8f52190e0c4f535e4e59190e0c79584971595812696a5d190f7d190c7d190c7d"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
+    <a class="contact-btn" href="/cdn-cgi/l/email-protection#2f435a465c014c405d5d4e436f5a594e014a5c105c5a4d454a4c5b12605f464146ec9c410a1d1f5c404d5d4a0a1d1f6a4b5a624a4b017a794e094d404b56126740434e0a1d1f7b5a5b405d6c566343400a1d6c0a1f6e0a1f6e624a0a1d1f485a5c5b4e5dec824e0a1d1f4c40425f4e5d5b465d0a1d1f42460a1d1f405f464146ec9c410a1d1f5c404d5d4a0a1d1f6a4b5a624a4b017a794e0a1c6e0a1f6e0a1f6e"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
   </div>
 
 </main>
@@ -726,7 +733,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
 <footer>
   <div class="foot-name">EduMed<b>·</b>UVa</div>
   Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid<br>
-  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#86eaf3eff5a8e5e9f4f4e7eac6f3f0e7a8e3f5"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="dab6afb3a9f4b9b5a8a8bbb69aafacbbf4bfa9">[email&#160;protected]</span></a>
+  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#dab6afb3a9f4b9b5a8a8bbb69aafacbbf4bfa9"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="a9c5dcc0da87cac6dbdbc8c5e9dcdfc887ccda">[email&#160;protected]</span></a>
 </footer>
 
 <button class="back-top" id="backTop" aria-label="Volver arriba"><i class="ic" data-i="arrow-up"></i></button>
