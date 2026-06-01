@@ -87,6 +87,12 @@ a{color:var(--accent-deep);text-underline-offset:3px}
 /* ── ERA BANDS ───────────────────────────────────── */
 .era-bands{display:flex;margin-bottom:0;border-radius:10px 10px 0 0;overflow:hidden;border:1px solid var(--line);border-bottom:none}
 .era-band{flex:1;padding:10px 14px;text-align:center;position:relative}
+@media(max-width:640px){
+  .era-bands{display:grid;grid-template-columns:1fr 1fr;border-radius:10px 10px 0 0}
+  .era-band{border-right:1px solid rgba(255,255,255,.15);border-bottom:1px solid rgba(255,255,255,.15)}
+  .era-band:nth-child(even){border-right:none}
+  .era-band::after{display:none}
+}
 .era-band-num{font-family:var(--mono);font-size:10px;font-weight:500;opacity:.7;margin-bottom:3px}
 .era-band-label{font-size:12px;font-weight:700;line-height:1.25}
 .era-band-period{font-size:10px;opacity:.65;margin-top:3px}
@@ -149,6 +155,12 @@ a{color:var(--accent-deep);text-underline-offset:3px}
 .step-btn .s-icon{font-size:18px}
 .step-btn.active{background:var(--accent-light);color:var(--accent)}
 .step-btn:hover:not(.active){background:var(--bg-deep);color:var(--ink)}
+@media(max-width:640px){
+  .steps-nav{display:grid;grid-template-columns:repeat(3,1fr)}
+  .step-btn{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 4px;font-size:11px}
+  .step-btn:nth-child(3n){border-right:none}
+  .step-btn:nth-child(4),.step-btn:nth-child(5),.step-btn:nth-child(6){border-bottom:none}
+}
 .step-content{display:none}.step-content.active{display:block}
 
 /* ── VIZ BOX ─────────────────────────────────────── */
@@ -776,7 +788,14 @@ const GEN_SCRIPTS = {
 function adjustNavTop() {
   const bar = document.querySelector('.edumed-bar');
   const nav = document.querySelector('.main-nav');
-  if (bar && nav) nav.style.top = bar.offsetHeight + 'px';
+  if (!bar || !nav) return;
+  const barH = bar.offsetHeight;
+  nav.style.top = barH + 'px';
+  // wait a frame so grid reflow is done before measuring nav height
+  requestAnimationFrame(() => {
+    const navH = nav.offsetHeight;
+    document.body.style.paddingTop = (barH + navH) + 'px';
+  });
 }
 window.addEventListener('load', adjustNavTop);
 window.addEventListener('resize', adjustNavTop);
