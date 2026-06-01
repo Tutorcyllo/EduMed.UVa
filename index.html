@@ -737,7 +737,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
       <div class="contact-title">¿Tienes una opinión o sugerencia?</div>
       <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
     </div>
-    <a class="contact-btn" href="/cdn-cgi/l/email-protection#bcd0c9d5cf92dfd3ceceddd0fcc9cadd92d9cf83cfc9ded6d9dfc881f3ccd5d2d57f0fd2998e8ccfd3deced9998e8cf9d8c9f1d9d892e9eadd9aded3d8c581f4d3d0dd998e8ce8c9c8d3ceffc5f0d0d3998eff998cfd998cfdf1d9998e8cdbc9cfc8ddce7f11dd998e8cdfd3d1ccddcec8d5ce998e8cd1d5998e8cd3ccd5d2d57f0fd2998e8ccfd3deced9998e8cf9d8c9f1d9d892e9eadd998ffd998cfd998cfd"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
+    <a class="contact-btn" href="/cdn-cgi/l/email-protection#90fce5f9e3bef3ffe2e2f1fcd0e5e6f1bef5e3afe3e5f2faf5f3e4addfe0f9fef95323feb5a2a0e3fff2e2f5b5a2a0d5f4e5ddf5f4bec5c6f1b6f2fff4e9add8fffcf1b5a2a0c4e5e4ffe2d3e9dcfcffb5a2d3b5a0d1b5a0d1ddf5b5a2a0f7e5e3e4f1e2533df1b5a2a0f3fffde0f1e2e4f9e2b5a2a0fdf9b5a2a0ffe0f9fef95323feb5a2a0e3fff2e2f5b5a2a0d5f4e5ddf5f4bec5c6f1b5a3d1b5a0d1b5a0d1"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
   </div>
 
 </main>
@@ -745,7 +745,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
 <footer>
   <div class="foot-name">EduMed<b>·</b>UVa</div>
   Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid<br>
-  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#94f8e1fde7baf7fbe6e6f5f8d4e1e2f5baf1e7"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="305c4559431e535f4242515c704546511e5543">[email&#160;protected]</span></a>
+  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#adc1d8c4de83cec2dfdfccc1edd8dbcc83c8de"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="fa968f9389d4999588889b96ba8f8c9bd49f89">[email&#160;protected]</span></a>
 </footer>
 
 <button class="back-top" id="backTop" aria-label="Volver arriba"><i class="ic" data-i="arrow-up"></i></button>
@@ -944,6 +944,17 @@ function setActiveTab(id, doScroll) {
     window.scrollTo({ top: Math.max(0, y), behavior: 'smooth' });
   }
 }
+
+/* default presentation (applied immediately so it works even if the Tweaks
+   panel / external jsx fails to load, e.g. standalone or downloaded HTML).
+   The Tweaks script, if present, re-applies the persisted/default values after. */
+(function applyDefaultPresentation() {
+  document.body.classList.remove('density-cozy');
+  document.body.classList.add('density-airy');
+  document.body.classList.add('nav-tabs');
+  buildTabBar();
+  setActiveTab(activeTab, false);
+})();
 
 /* hero pills: respect current nav mode */
 document.querySelectorAll('.stat-pill').forEach(pill => {
