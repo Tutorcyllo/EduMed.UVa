@@ -386,7 +386,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
 }
 </style>
 </head>
-<body class="nav-tabs density-airy">
+<body class="density-cozy">
 
 <div class="topline"></div>
 
@@ -606,6 +606,18 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
         </div>
         <div class="acc-item">
           <div class="acc-row" onclick="toggleAcc(this)">
+            <div class="acc-tile"><i class="ic" data-i="compass"></i></div>
+            <div class="acc-title">Básicos en los primeros pasos con la IA en EduMed</div>
+            <span class="acc-tag">Primeros pasos</span>
+            <span class="acc-chevron"><i class="ic" data-i="chevron-down"></i></span>
+          </div>
+          <div class="acc-body"><div class="acc-body-inner"><div class="acc-body-pad">
+            <p class="acc-desc">Acceso a recursos para entender cómo funcionan los modelos de lenguaje, cómo comunicarse con ellos de forma eficaz y cómo empezar a usarlos en el contexto de la educación y la práctica médica. Sin conocimientos técnicos previos.</p>
+            <a class="acc-cta" href="https://tutorcyllo.github.io/EduMed.UVa/basicos_IA_EduMed/" target="_blank" rel="noopener">Ver recurso <i class="ic" data-i="arrow-right"></i></a>
+          </div></div></div>
+        </div>
+        <div class="acc-item">
+          <div class="acc-row" onclick="toggleAcc(this)">
             <div class="acc-tile"><i class="ic" data-i="sparkles"></i></div>
             <div class="acc-title">Small TeAIching e IA lenta o fluente</div>
             <span class="acc-tag">IA en el aula</span>
@@ -725,7 +737,7 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
       <div class="contact-title">¿Tienes una opinión o sugerencia?</div>
       <div class="contact-desc">Nos interesa saber qué te parece la plataforma, qué echas en falta o cómo podríamos mejorarla. Tu opinión ayuda a que EduMed.UVa sea más útil para todos los docentes.</div>
     </div>
-    <a class="contact-btn" href="/cdn-cgi/l/email-protection#0e627b677d206d617c7c6f624e7b786f206b7d317d7b6c646b6d7a33417e676067cdbd602b3c3e7d616c7c6b2b3c3e4b6a7b436b6a205b586f286c616a77334661626f2b3c3e5a7b7a617c4d774262612b3c4d2b3e4f2b3e4f436b2b3c3e697b7d7a6f7ccda36f2b3c3e6d61637e6f7c7a677c2b3c3e63672b3c3e617e676067cdbd602b3c3e7d616c7c6b2b3c3e4b6a7b436b6a205b586f2b3d4f2b3e4f2b3e4f"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
+    <a class="contact-btn" href="/cdn-cgi/l/email-protection#bcd0c9d5cf92dfd3ceceddd0fcc9cadd92d9cf83cfc9ded6d9dfc881f3ccd5d2d57f0fd2998e8ccfd3deced9998e8cf9d8c9f1d9d892e9eadd9aded3d8c581f4d3d0dd998e8ce8c9c8d3ceffc5f0d0d3998eff998cfd998cfdf1d9998e8cdbc9cfc8ddce7f11dd998e8cdfd3d1ccddcec8d5ce998e8cd1d5998e8cd3ccd5d2d57f0fd2998e8ccfd3deced9998e8cf9d8c9f1d9d892e9eadd998ffd998cfd998cfd"><i class="ic" data-i="mail"></i>Escribe a TutorCyLlo</a>
   </div>
 
 </main>
@@ -733,10 +745,12 @@ footer a:hover { color: var(--yellow-deep); text-decoration: underline; }
 <footer>
   <div class="foot-name">EduMed<b>·</b>UVa</div>
   Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid<br>
-  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#e488918d97ca878b96968588a4919285ca8197"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="a5c9d0ccd68bc6cad7d7c4c9e5d0d3c48bc0d6">[email&#160;protected]</span></a>
+  <span id="fecha-footer">Actualizado en mayo de 2026</span> · <a class="foot-mail" href="/cdn-cgi/l/email-protection#94f8e1fde7baf7fbe6e6f5f8d4e1e2f5baf1e7"><i class="ic" data-i="mail"></i><span class="__cf_email__" data-cfemail="305c4559431e535f4242515c704546511e5543">[email&#160;protected]</span></a>
 </footer>
 
 <button class="back-top" id="backTop" aria-label="Volver arriba"><i class="ic" data-i="arrow-up"></i></button>
+
+<div id="tweaks-root"></div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ───────── ICONS (Lucide-style line icons) ───────── */
@@ -768,7 +782,8 @@ const ICONS = {
   'mail': '<rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/>',
   'arrow-right': '<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
   'arrow-up': '<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>',
-  'chevron-down': '<path d="m6 9 6 6 6-6"/>'
+  'chevron-down': '<path d="m6 9 6 6 6-6"/>',
+  'compass': '<path d="m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z"/><circle cx="12" cy="12" r="10"/>'
 };
 function renderIcons(root) {
   (root || document).querySelectorAll('.ic[data-i]').forEach(el => {
@@ -944,10 +959,94 @@ document.querySelectorAll('.stat-pill').forEach(pill => {
     }
   });
 });
+</script>
 
-/* init: tabs navigation (fixed default for production) */
-buildTabBar();
-setActiveTab(activeTab, false);
+<!-- ───────── TWEAKS ───────── -->
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel">
+const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+  "yellow": [
+    "#F5C518",
+    "#C28E00",
+    "#FCEBA0",
+    "#FFF8DD"
+  ],
+  "headFont": "Figtree",
+  "headerStyle": "light",
+  "density": "airy",
+  "initialView": "collapsed",
+  "navMode": "tabs"
+}/*EDITMODE-END*/;
+
+let _lastView = null;
+
+function applyTweaks(t) {
+  const root = document.documentElement.style;
+  const y = t.yellow || TWEAK_DEFAULTS.yellow;
+  root.setProperty('--yellow', y[0]);
+  root.setProperty('--yellow-deep', y[1]);
+  root.setProperty('--yellow-soft', y[2]);
+  root.setProperty('--yellow-wash', y[3]);
+  root.setProperty('--font-head', "'" + (t.headFont || 'Figtree') + "', sans-serif");
+  document.body.classList.toggle('headers-dark', t.headerStyle === 'dark');
+  document.body.classList.toggle('density-airy', t.density === 'airy');
+  document.body.classList.toggle('density-cozy', t.density !== 'airy');
+  const view = t.initialView || 'collapsed';
+  if (view !== _lastView && typeof setSection === 'function') {
+    _lastView = view;
+    document.querySelectorAll('.section-block.collapsible').forEach(s => setSection(s, view === 'expanded'));
+    if (typeof refreshExpandAll === 'function') refreshExpandAll();
+  }
+  const nav = t.navMode || 'plegable';
+  document.body.classList.toggle('nav-tabs', nav === 'tabs');
+  if (nav === 'tabs' && typeof buildTabBar === 'function') {
+    buildTabBar();
+    setActiveTab(activeTab, false);
+  }
+}
+
+function App() {
+  const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
+  React.useEffect(() => { applyTweaks(t); }, [t]);
+  return (
+    <TweaksPanel title="Tweaks">
+      <TweakSection label="Color" />
+      <TweakColor label="Tono de amarillo" value={t.yellow}
+        options={[
+          ["#F5C518", "#C28E00", "#FCEBA0", "#FFF8DD"],
+          ["#F7B500", "#BC7A00", "#FBE2A0", "#FFF4D6"],
+          ["#EAA21C", "#B06E0E", "#F6D9A4", "#FCF0DA"],
+          ["#FFD23F", "#C99A12", "#FDEDAE", "#FFFAE6"]
+        ]}
+        onChange={(v) => setTweak('yellow', v)} />
+      <TweakSection label="Tipografía" />
+      <TweakSelect label="Fuente de títulos" value={t.headFont}
+        options={["Figtree", "Bricolage Grotesque", "Plus Jakarta Sans"]}
+        onChange={(v) => setTweak('headFont', v)} />
+      <TweakSection label="Disposición" />
+      <TweakRadio label="Navegación" value={t.navMode}
+        options={["plegable", "tabs"]}
+        onChange={(v) => setTweak('navMode', v)} />
+      <TweakRadio label="Vista inicial" value={t.initialView}
+        options={["collapsed", "expanded"]}
+        onChange={(v) => setTweak('initialView', v)} />
+      <TweakRadio label="Cabeceras" value={t.headerStyle}
+        options={["light", "dark"]}
+        onChange={(v) => setTweak('headerStyle', v)} />
+      <TweakRadio label="Densidad" value={t.density}
+        options={["cozy", "airy"]}
+        onChange={(v) => setTweak('density', v)} />
+    </TweaksPanel>
+  );
+}
+
+(function mount(){
+  if (!window.useTweaks || !window.ReactDOM) { setTimeout(mount, 40); return; }
+  ReactDOM.createRoot(document.getElementById('tweaks-root')).render(<App />);
+})();
 </script>
 </body>
 </html>
