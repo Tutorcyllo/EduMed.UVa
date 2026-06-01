@@ -1,1 +1,271 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Básicos de IA en Educación Médica · EduMed · UVa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --uva-blue:      #003973;
+  --uva-blue-soft: #1d4f8a;
+  --uva-red:       #c60046;
+  --ink:           #1a1f2e;
+  --ink-soft:      #3d4554;
+  --muted:         #6b7486;
+  --cream:         #faf7f2;
+  --cream-2:       #f3ede3;
+  --paper:         #ffffff;
+  --line:          #e8e1d4;
+  --line-strong:   #d9cfbb;
+  --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
+  --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
+  --r-md:16px; --r-lg:22px; --r-xl:28px; --max:960px;
+  --c-alumnos:#1d4e89; --c-alumnos-l:#dbeafe;
+  --c-profes: #166534; --c-profes-l: #dcfce7;
+  --c-inst:   #7c2d12; --c-inst-l:   #fee2e2;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html{scroll-behavior:smooth;}
+body{font-family:"Inter",sans-serif;background:var(--cream);color:var(--ink);line-height:1.6;font-size:16px;-webkit-font-smoothing:antialiased;}
+.container{width:min(100% - 32px,var(--max));margin:0 auto;}
 
+/* ── BARRA ── */
+.edumed-bar{position:sticky;top:0;z-index:100;background:#f5c518;border-bottom:1px solid #d9a800;box-shadow:0 1px 0 rgba(0,0,0,.04),0 4px 14px rgba(0,0,0,.06);}
+.edumed-bar-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 20px;}
+.edumed-brand{display:flex;align-items:center;gap:14px;color:#1a1f2e;text-decoration:none;}
+.edumed-wordmark{display:flex;flex-direction:column;line-height:1.1;}
+.edumed-wordmark .w1{font-weight:800;font-size:18px;letter-spacing:-.01em;color:#1a1f2e;}
+.edumed-wordmark .w1 .sep{opacity:.45;margin:0 4px;font-weight:500;}
+.edumed-wordmark .w2{font-weight:600;font-size:10.5px;letter-spacing:.08em;color:#1a1f2e;opacity:.8;margin-top:3px;}
+.edumed-back{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:#1a1f2e;text-decoration:none;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.55);border:1px solid rgba(26,31,46,.15);transition:background .15s,transform .15s;white-space:nowrap;}
+.edumed-back:hover{background:#fff;transform:translateX(-1px);}
+.edumed-back svg{width:14px;height:14px;}
+
+/* ── HERO ── */
+.hero{background:var(--cream);border-bottom:1px solid var(--line);padding:72px 0 56px;position:relative;overflow:hidden;}
+.hero::before{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 90% 20%,rgba(0,57,115,.06) 0%,transparent 55%),radial-gradient(ellipse at 5% 80%,rgba(22,101,52,.05) 0%,transparent 50%);pointer-events:none;}
+.hero-inner{position:relative;z-index:1;}
+.hero-kicker{display:inline-flex;align-items:center;gap:8px;background:var(--cream-2);border:1px solid var(--line-strong);border-radius:999px;padding:6px 16px;margin-bottom:28px;}
+.hero-kicker-dot{width:7px;height:7px;border-radius:50%;background:var(--uva-red);}
+.hero-kicker span{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);}
+.hero-title{font-family:"Fraunces",serif;font-size:clamp(2.2rem,6vw,3.6rem);font-weight:700;letter-spacing:-.035em;line-height:1.05;color:var(--ink);margin-bottom:20px;max-width:680px;}
+.hero-title em{font-style:italic;color:var(--uva-blue);}
+.hero-sub{font-size:clamp(1rem,2.5vw,1.15rem);color:var(--ink-soft);max-width:580px;line-height:1.65;margin-bottom:36px;}
+.hero-steps{display:flex;flex-wrap:wrap;gap:10px;}
+.hero-step{display:inline-flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-md);padding:10px 16px;box-shadow:var(--shadow-sm);}
+.hero-step-num{width:24px;height:24px;border-radius:50%;background:var(--uva-blue);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.hero-step span{font-size:13px;font-weight:600;color:var(--ink);}
+
+/* ── DIVIDER ── */
+.divider{height:1px;background:var(--line);}
+
+/* ── SECCIÓN RECURSOS ── */
+.recursos-section{padding:64px 0 80px;}
+.recursos-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--uva-red);margin-bottom:10px;}
+.recursos-eyebrow::before{content:"";width:20px;height:2px;background:var(--uva-red);border-radius:1px;}
+.recursos-title{font-family:"Fraunces",serif;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;letter-spacing:-.025em;color:var(--ink);margin-bottom:12px;}
+.recursos-lead{font-size:15px;color:var(--ink-soft);max-width:640px;line-height:1.6;margin-bottom:36px;}
+
+.recursos-list{display:flex;flex-direction:column;gap:12px;}
+.recurso-card{display:flex;gap:20px;align-items:center;background:var(--paper);border:1px solid var(--line);border-left:3px solid var(--uva-blue);border-radius:var(--r-lg);padding:20px 24px;box-shadow:var(--shadow-sm);text-decoration:none;color:inherit;transition:transform .2s,box-shadow .2s,border-color .2s;}
+.recurso-card:hover{transform:translateX(6px);box-shadow:var(--shadow-md);}
+.recurso-num{font-family:"Fraunces",serif;font-size:2.2rem;font-weight:700;font-style:italic;line-height:1;flex-shrink:0;width:48px;text-align:center;opacity:.2;color:var(--uva-blue);}
+.recurso-icon{width:48px;height:48px;border-radius:var(--r-md);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:24px;}
+.recurso-content{flex:1;}
+.recurso-tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;}
+.recurso-title{font-family:"Fraunces",serif;font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.recurso-desc{font-size:13px;color:var(--ink-soft);line-height:1.5;}
+.recurso-audience{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;}
+.aud-badge{font-size:10px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;border-radius:999px;border:1px solid transparent;}
+.aud-alumnos{background:var(--c-alumnos-l);color:var(--c-alumnos);border-color:#93c5fd;}
+.aud-profes {background:var(--c-profes-l); color:var(--c-profes); border-color:#86efac;}
+.aud-inst   {background:var(--c-inst-l);   color:var(--c-inst);   border-color:#fca5a5;}
+.recurso-arrow{flex-shrink:0;width:36px;height:36px;border-radius:50%;background:var(--cream-2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;transition:background .18s,border-color .18s;}
+.recurso-card:hover .recurso-arrow{background:var(--uva-blue);border-color:var(--uva-blue);}
+.recurso-arrow svg{width:14px;height:14px;color:var(--muted);transition:color .18s;}
+.recurso-card:hover .recurso-arrow svg{color:#fff;}
+
+/* ── VUELTA A IA EN EDUMED ── */
+.vuelta-section{padding:48px 0;background:var(--cream-2);border-top:1px solid var(--line);}
+.vuelta-inner{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:20px;}
+.vuelta-text{}
+.vuelta-eyebrow{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.vuelta-title{font-family:"Fraunces",serif;font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:4px;}
+.vuelta-desc{font-size:14px;color:var(--ink-soft);}
+.vuelta-btn{display:inline-flex;align-items:center;gap:8px;background:var(--uva-blue);color:#fff;font:700 14px "Inter",sans-serif;padding:12px 24px;border-radius:999px;text-decoration:none;white-space:nowrap;transition:background .18s,transform .18s;flex-shrink:0;box-shadow:var(--shadow-md);}
+.vuelta-btn:hover{background:var(--uva-blue-soft);transform:translateY(-2px);}
+.vuelta-btn svg{width:14px;height:14px;}
+
+/* ── FOOTER ── */
+.footer{border-top:1px solid var(--line);padding:24px 0 32px;font-size:12px;color:var(--muted);}
+.footer-row{display:flex;flex-wrap:wrap;gap:10px 24px;align-items:center;justify-content:space-between;}
+
+@media(max-width:640px){
+  .hero{padding:48px 0 40px;}
+  .hero-steps{flex-direction:column;}
+  .recurso-card{flex-wrap:wrap;gap:12px;}
+  .recurso-num{display:none;}
+  .vuelta-inner{flex-direction:column;align-items:flex-start;}
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA EDUMED -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">UNIDAD DE EDUCACIÓN MÉDICA · FACULTAD DE MEDICINA</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+      IA en EduMed
+    </a>
+  </div>
+</div>
+
+<!-- ══════════════════════════
+     HERO
+══════════════════════════ -->
+<section class="hero">
+  <div class="container hero-inner">
+    <div class="hero-kicker"><div class="hero-kicker-dot"></div><span>EduMed · UVa · Recursos formativos</span></div>
+    <h1 class="hero-title">Antes de usar la IA,<br><em>entiende cómo funciona</em></h1>
+    <p class="hero-sub">Cinco recursos para entender qué son los modelos de lenguaje, cómo comunicarse con ellos de forma eficaz y cómo empezar a usarlos en el contexto de la educación y la práctica médica.</p>
+    <div class="hero-steps">
+      <div class="hero-step"><div class="hero-step-num">1</div><span>Cómo funciona la IA</span></div>
+      <div class="hero-step"><div class="hero-step-num">2</div><span>Cómo comunicarte con ella</span></div>
+      <div class="hero-step"><div class="hero-step-num">3</div><span>Cómo aplicarla en medicina</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     RECURSOS
+══════════════════════════ -->
+<section class="recursos-section">
+  <div class="container">
+    <div class="recursos-eyebrow">Cinco recursos en orden progresivo</div>
+    <h2 class="recursos-title">Para empezar desde cero o ir más allá</h2>
+    <p class="recursos-lead">Puedes seguirlos en orden o ir directamente al que más encaje con donde estás ahora. Están pensados para que cualquier persona de la comunidad educativa médica pueda sacarles partido, sin necesidad de conocimientos técnicos previos.</p>
+
+    <div class="recursos-list">
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/como_piensan_LLM/" target="_blank" rel="noopener">
+        <div class="recurso-num">1</div>
+        <div class="recurso-icon" style="background:#fef3c7;">🧠</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Fundamentos · Cómo funciona la IA generativa</div>
+          <div class="recurso-title">¿Cómo funciona la IA generativa y los LLM?</div>
+          <div class="recurso-desc">Qué son los grandes modelos de lenguaje, cómo generan texto y cuáles son sus principales limitaciones: alucinaciones, sesgos y fronteras del conocimiento. El punto de partida para no fiarte ciegamente de la herramienta.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/prompts_contexto/" target="_blank" rel="noopener">
+        <div class="recurso-num">2</div>
+        <div class="recurso-icon" style="background:#d8f3dc;">💬</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Comunicación con la IA · Parte I</div>
+          <div class="recurso-title">¿Cómo nos comunicamos con los LLM? (I)</div>
+          <div class="recurso-desc">Prompts, contexto, flujos, agentes: los conceptos fundamentales para comunicarse de forma eficaz con los modelos de lenguaje y obtener respuestas realmente útiles.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/NotebookLM_Medicina/" target="_blank" rel="noopener">
+        <div class="recurso-num">3</div>
+        <div class="recurso-icon" style="background:#ede9fe;">📓</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Comunicación con la IA · Parte II</div>
+          <div class="recurso-title">¿Cómo nos comunicamos con los LLM? (II)</div>
+          <div class="recurso-desc">El ejemplo de NotebookLM: cómo trabajar con tus propios documentos, generar resúmenes, podcasts y guías de estudio a partir de tus materiales clínicos y bibliografía.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/empezar_IA_docencia_medica/" target="_blank" rel="noopener">
+        <div class="recurso-num">4</div>
+        <div class="recurso-icon" style="background:#fce7f3;">🚀</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Primeros pasos · Docencia médica</div>
+          <div class="recurso-title">Primeros usos de la IA en docencia médica</div>
+          <div class="recurso-desc">Texto, imágenes, audios, vídeos, aplicaciones: todo se puede construir dialogando con la IAgen. Una guía práctica para empezar a crear con IA en el contexto de la educación médica.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+            <span class="aud-badge aud-inst">🏛️ Instituciones</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+      <a class="recurso-card" href="https://tutorcyllo.github.io/EduMed.UVa/ocho_roles_ia/" target="_blank" rel="noopener">
+        <div class="recurso-num">5</div>
+        <div class="recurso-icon" style="background:#ede9fe;">🎭</div>
+        <div class="recurso-content">
+          <div class="recurso-tag">Mollick & Mollick · Ocho roles pedagógicos</div>
+          <div class="recurso-title">Los ocho roles de la IA en el aula</div>
+          <div class="recurso-desc">Más allá del uso básico: descubre cómo la IA puede actuar como tutor socrático, mentor, entrenador, compañero de estudio o abogado del diablo para mejorar tu rendimiento sin perder tu papel protagonista.</div>
+          <div class="recurso-audience">
+            <span class="aud-badge aud-alumnos">🎓 Alumnos</span>
+            <span class="aud-badge aud-profes">🧑‍🏫 Profesores</span>
+          </div>
+        </div>
+        <div class="recurso-arrow"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 7h10M7 2l5 5-5 5"/></svg></div>
+      </a>
+
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- ══════════════════════════
+     VUELTA A IA EN EDUMED
+══════════════════════════ -->
+<section class="vuelta-section">
+  <div class="container vuelta-inner">
+    <div class="vuelta-text">
+      <div class="vuelta-eyebrow">¿Buscas más?</div>
+      <div class="vuelta-title">Vuelve al espacio principal de IA en EduMed</div>
+      <div class="vuelta-desc">Preguntas para reflexionar por colectivo, recursos académicos, herramientas institucionales y aplicaciones creadas por los propios alumnos.</div>
+    </div>
+    <a class="vuelta-btn" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 3L5 8l5 5"/></svg>
+      IA en EduMed
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-row">
+      <div>EduMed · UVa — Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</div>
+      <div>Básicos de IA en Educación Médica · 2026</div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
