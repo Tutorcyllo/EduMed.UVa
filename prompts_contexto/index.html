@@ -1193,8 +1193,20 @@ function openPlant(i,el){
 function copyPlant(i){navigator.clipboard.writeText(PLANTILLAS[i].txt);event.target.textContent='✓ Copiado';setTimeout(()=>event.target.textContent='📋 Copiar plantilla',2000);}
 
 /* ══ INIT ════════════════════════════════════════════════════ */
+function fixLayout(){
+  const bar = document.querySelector('.edumed-bar');
+  const nav = document.querySelector('.top-nav');
+  if(!bar || !nav) return;
+  const barH = bar.getBoundingClientRect().height;
+  nav.style.top = barH + 'px';
+  const navH = nav.getBoundingClientRect().height;
+  document.body.style.paddingTop = (barH + navH) + 'px';
+}
+
 document.addEventListener('DOMContentLoaded',()=>{
   buildNav();
+  // Run after nav is built so we know its height
+  requestAnimationFrame(()=>{ fixLayout(); });
   buildTimeline();
   buildPBC();
   buildPromptTypes();
@@ -1205,6 +1217,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   buildCtxBuilderGrid();
   buildPlantillas();
 });
+window.addEventListener('resize', fixLayout);
 </script>
 </body>
 </html>
