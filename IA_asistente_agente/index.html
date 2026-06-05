@@ -1,1 +1,2010 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agentes Docentes · EduMed·UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
 
+<style>
+/* ============================================================
+   TOKENS (del sistema EduMed·UVa)
+   ============================================================ */
+:root {
+  --bg:          oklch(0.975 0.008 75);
+  --bg-deep:     oklch(0.95 0.012 75);
+  --surface:     oklch(0.995 0.004 80);
+  --surface-2:   oklch(0.985 0.008 75);
+  --ink:         oklch(0.22 0.018 55);
+  --ink-soft:    oklch(0.42 0.018 55);
+  --ink-mute:    oklch(0.58 0.015 55);
+  --line:        oklch(0.88 0.012 70);
+  --line-strong: oklch(0.78 0.015 65);
+
+  --accent:      oklch(0.55 0.13 35);
+  --accent-deep: oklch(0.42 0.13 35);
+  --accent-soft: oklch(0.94 0.04 40);
+  --accent-tint: oklch(0.97 0.018 40);
+
+  --sage:        oklch(0.5 0.05 155);
+  --sage-soft:   oklch(0.94 0.025 155);
+
+  /* Colores de sección */
+  --blue:        oklch(0.52 0.12 240);
+  --blue-soft:   oklch(0.94 0.03 240);
+  --blue-tint:   oklch(0.97 0.015 240);
+  --amber:       #f5c518;
+  --amber-soft:  oklch(0.96 0.04 85);
+
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans:  "DM Sans", -apple-system, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, monospace;
+
+  --radius:    14px;
+  --radius-sm: 8px;
+  --radius-lg: 22px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* Altura header EduMed (~57px) + barra nav (~37px) = ~94px de offset total */
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 94px;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+
+/* ============================================================
+   BARRA EDUMED (literal del sistema)
+   ============================================================ */
+.edumed-bar {
+  display: block;
+  background: #f5c518;
+  border-bottom: 1px solid #d9a800;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06);
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+}
+.edumed-bar-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 20px;
+}
+.edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
+.edumed-brand:hover { opacity: .85; }
+.edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; font-family: var(--sans); }
+.edumed-wordmark .w1 { font-weight: 700; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+.edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+.edumed-wordmark .w2 { font-weight: 500; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+.edumed-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; color: #1a1f2e;
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15);
+  text-decoration: none;
+  transition: background .15s, transform .15s; white-space: nowrap;
+}
+.edumed-back:hover { background: #fff; transform: translateX(-2px); color: #1a1f2e; }
+.edumed-back svg { width: 14px; height: 14px; }
+
+/* ============================================================
+   BARRA DE NAVEGACIÓN — una línea fija bajo el header
+   ============================================================ */
+.nav-bar {
+  position: fixed;
+  top: 64px; /* se sobreescribe por JS igual que el body */
+  left: 0; right: 0;
+  z-index: 80;
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+}
+.nav-bar-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  gap: 0;
+}
+.nav-tab {
+  padding: 10px 16px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color .15s, border-color .15s;
+  line-height: 1;
+}
+.nav-tab:hover { color: var(--ink-soft); }
+.nav-tab.active {
+  color: var(--accent-deep);
+  border-bottom-color: var(--accent-deep);
+  font-weight: 600;
+}
+
+/* ── Layout: contenido centrado bajo la nav ── */
+.page-layout {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+/* ── Paneles ── */
+.panel { display: none; }
+.panel.active { display: block; }
+
+/* ── Shell dentro de cada panel ── */
+.shell {
+  padding: 36px 0 100px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 780px) {
+  .nav-bar-inner { padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar-inner::-webkit-scrollbar { display: none; }
+  .nav-tab { padding: 10px 12px; font-size: 12.5px; }
+  .page-layout { padding: 0 20px; }
+  .shell { padding: 24px 0 80px; }
+}
+
+/* ============================================================
+   EYEBROW / TÍTULO / LEAD
+   ============================================================ */
+.section-eyebrow {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.section-eyebrow::before {
+  content: "";
+  width: 28px; height: 1px;
+  background: var(--ink-mute);
+  display: inline-block;
+}
+.section-title {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(26px, 3.2vw, 38px);
+  line-height: 1.1;
+  letter-spacing: -.015em;
+  margin: 0 0 14px;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.section-title em { font-style: italic; color: var(--accent-deep); }
+.section-lead {
+  font-family: var(--serif);
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  max-width: 66ch;
+  margin: 0 0 36px;
+  text-wrap: pretty;
+}
+
+/* ============================================================
+   PANEL 0 — HERO / INTRO
+   ============================================================ */
+.hero-band {
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  padding: 40px 48px;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.hero-band::before {
+  content: "";
+  position: absolute;
+  top: -60px; right: -60px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: var(--accent-soft);
+  opacity: .45;
+}
+.hero-band-inner { position: relative; z-index: 1; }
+.hero-band h2 {
+  font-family: var(--serif);
+  font-size: clamp(22px, 2.8vw, 32px);
+  font-weight: 400;
+  line-height: 1.2;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+.hero-band h2 em { font-style: italic; color: var(--accent-deep); }
+.hero-band p {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink-soft);
+  margin: 0 0 24px;
+  max-width: 56ch;
+}
+
+/* Comparativa asistente vs agente */
+.vs-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 16px;
+  align-items: start;
+  margin: 36px 0;
+}
+.vs-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px;
+}
+.vs-card.highlight { border-color: var(--accent); background: var(--accent-tint); }
+.vs-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+}
+.vs-card.highlight .vs-label { color: var(--accent-deep); }
+.vs-card h3 {
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0 0 10px;
+  color: var(--ink);
+}
+.vs-card.highlight h3 { color: var(--accent-deep); }
+.vs-card p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.vs-card ul { margin: 0; padding-left: 18px; }
+.vs-card ul li { font-size: 14px; color: var(--ink-soft); margin-bottom: 5px; line-height: 1.4; }
+.vs-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--serif);
+  font-size: 22px;
+  font-style: italic;
+  color: var(--ink-mute);
+  padding-top: 40px;
+}
+
+/* Frase clave */
+.key-phrase {
+  background: var(--accent-tint);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 18px 24px;
+  margin: 32px 0;
+  font-family: var(--serif);
+  font-size: 18px;
+  font-style: italic;
+  color: var(--ink);
+}
+.key-phrase strong { font-style: normal; }
+
+/* Tabla diferencia */
+.diff-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+  margin: 24px 0;
+}
+.diff-table th {
+  background: var(--bg-deep);
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 12px;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  padding: 10px 14px;
+  text-align: left;
+  color: var(--ink-soft);
+  border-bottom: 1px solid var(--line);
+}
+.diff-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  vertical-align: top;
+  line-height: 1.45;
+}
+.diff-table tr:last-child td { border-bottom: none; }
+.diff-table td:first-child { font-weight: 600; color: var(--ink); }
+.diff-table td.highlight-cell {
+  color: var(--accent-deep);
+  font-weight: 500;
+}
+
+/* Requisitos previos */
+.req-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+  margin: 28px 0;
+}
+.req-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.req-icon {
+  width: 36px; height: 36px;
+  border-radius: var(--radius-sm);
+  background: var(--accent-soft);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.req-card.ok .req-icon { background: oklch(0.93 0.05 145); }
+.req-card h4 { font-size: 14px; font-weight: 600; margin: 0 0 3px; }
+.req-card p { font-size: 13px; color: var(--ink-mute); margin: 0; line-height: 1.4; }
+
+/* ============================================================
+   PANEL 1 — CÓMO SE CONSTRUYE (pasos visuales)
+   ============================================================ */
+.steps-intro {
+  background: var(--blue-soft);
+  border: 1px solid oklch(0.82 0.06 240);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-bottom: 40px;
+  font-size: 15px;
+  color: var(--ink-soft);
+}
+.steps-intro strong { color: var(--blue); }
+
+/* Timeline de pasos */
+.step-flow {
+  position: relative;
+  padding-left: 56px;
+  margin-bottom: 8px;
+}
+.step-flow::before {
+  content: "";
+  position: absolute;
+  left: 19px; top: 48px;
+  bottom: 0;
+  width: 2px;
+  background: var(--line);
+}
+.step-flow:last-child::before { display: none; }
+
+.step-item {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px 24px 22px 28px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  transition: border-color .18s, box-shadow .18s;
+}
+.step-item:hover { border-color: var(--line-strong); box-shadow: 0 2px 12px rgba(0,0,0,.06); }
+.step-item.open { border-color: var(--accent); }
+
+.step-num {
+  position: absolute;
+  left: -38px; top: 20px;
+  width: 34px; height: 34px;
+  border-radius: 50%;
+  background: var(--bg-deep);
+  border: 2px solid var(--line);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--ink-mute);
+  transition: background .18s, border-color .18s, color .18s;
+}
+.step-item.open .step-num {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  justify-content: space-between;
+}
+.step-title-group { display: flex; align-items: center; gap: 12px; }
+.step-emoji { font-size: 22px; line-height: 1; }
+.step-title { font-family: var(--sans); font-size: 16px; font-weight: 600; color: var(--ink); margin: 0; }
+.step-subtitle { font-size: 13px; color: var(--ink-mute); margin: 3px 0 0; }
+
+.step-chevron {
+  width: 20px; height: 20px;
+  border: 1.5px solid var(--line-strong);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  transition: transform .2s;
+  color: var(--ink-mute);
+}
+.step-item.open .step-chevron { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
+
+.step-body {
+  display: none;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.step-item.open .step-body { display: block; }
+
+.step-body p {
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  margin: 0 0 12px;
+  line-height: 1.55;
+}
+.step-body p:last-child { margin-bottom: 0; }
+
+/* Mini-ejemplo en pasos */
+.step-example {
+  background: var(--bg-deep);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-top: 12px;
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+.step-example .ex-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 6px;
+}
+.step-example strong { color: var(--ink); }
+
+.step-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 10px;
+}
+.chip {
+  display: inline-block;
+  padding: 4px 11px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+  color: var(--ink-soft);
+}
+.chip.accent { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-deep); }
+.chip.sage { background: var(--sage-soft); border-color: var(--sage); color: var(--sage); }
+.chip.blue { background: var(--blue-soft); border-color: var(--blue); color: var(--blue); }
+
+/* Pruebas block */
+.test-grid {
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+.test-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+.test-card .test-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: 6px;
+}
+.test-card.normal .test-badge { color: oklch(0.5 0.1 145); }
+.test-card.hard .test-badge { color: oklch(0.5 0.1 55); }
+.test-card.safe .test-badge { color: oklch(0.5 0.1 25); }
+.test-card p { font-size: 12.5px; color: var(--ink-soft); margin: 0; line-height: 1.4; font-style: italic; }
+
+/* Alerta sage */
+.sage-box {
+  background: var(--sage-soft);
+  border: 1px solid var(--sage);
+  border-radius: var(--radius-sm);
+  padding: 14px 18px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 16px 0 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.sage-box::before { content: "⚠"; font-size: 16px; flex-shrink: 0; margin-top: 1px; }
+
+/* ============================================================
+   PANEL 2 — FICHA DEL AGENTE (constructor interactivo)
+   ============================================================ */
+.ficha-container {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width: 900px) { .ficha-container { grid-template-columns: 1fr; } }
+
+.ficha-form { display: flex; flex-direction: column; gap: 18px; }
+.field-group {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 18px 20px;
+  transition: border-color .15s;
+}
+.field-group:focus-within { border-color: var(--accent); }
+.field-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 6px;
+}
+.field-label .fi { font-size: 16px; }
+.field-hint {
+  font-size: 12.5px;
+  color: var(--ink-mute);
+  margin-bottom: 9px;
+  line-height: 1.4;
+}
+.field-group input,
+.field-group textarea,
+.field-group select {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  font-family: var(--sans);
+  font-size: 14px;
+  color: var(--ink);
+  outline: none;
+  transition: border-color .15s;
+  resize: vertical;
+}
+.field-group input:focus,
+.field-group textarea:focus,
+.field-group select:focus {
+  border-color: var(--accent);
+}
+.field-group textarea { min-height: 80px; }
+
+/* Chips de opciones */
+.option-chips { display: flex; flex-wrap: wrap; gap: 7px; }
+.opt-chip {
+  padding: 6px 13px;
+  border-radius: 999px;
+  font-size: 13px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .15s;
+  user-select: none;
+}
+.opt-chip.selected {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+  color: var(--accent-deep);
+}
+.opt-chip:hover:not(.selected) { border-color: var(--line-strong); color: var(--ink); }
+
+/* Preview lateral */
+.preview-sticky {
+  position: sticky;
+  top: 80px;
+}
+.preview-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.preview-header {
+  background: var(--bg-deep);
+  border-bottom: 1px solid var(--line);
+  padding: 14px 18px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.preview-header span {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  color: var(--ink-mute);
+}
+.preview-body {
+  padding: 18px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  min-height: 320px;
+  font-family: var(--mono);
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+.copy-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  background: var(--ink);
+  color: var(--bg);
+  border: none;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background .15s;
+}
+.copy-btn:hover { background: var(--accent-deep); }
+.copy-btn.copied { background: var(--sage); }
+
+/* Frase-resumen validación */
+.frase-check {
+  background: var(--accent-tint);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  margin-top: 8px;
+}
+.frase-check p {
+  font-family: var(--serif);
+  font-size: 15px;
+  font-style: italic;
+  color: var(--ink-soft);
+  margin: 0 0 8px;
+}
+.frase-check .frase-generada {
+  font-family: var(--serif);
+  font-size: 17px;
+  color: var(--ink);
+  font-style: italic;
+  font-weight: 400;
+}
+.frase-check .frase-placeholder {
+  color: var(--ink-mute);
+  font-style: italic;
+  font-size: 15px;
+}
+
+/* ============================================================
+   PANEL 3 — CATÁLOGO DE IDEAS
+   ============================================================ */
+.cat-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.cat-filter {
+  padding: 7px 16px;
+  border-radius: 999px;
+  font-size: 13.5px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all .15s;
+}
+.cat-filter.active { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-deep); }
+.cat-filter:hover:not(.active) { border-color: var(--line-strong); color: var(--ink); }
+
+.ideas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 18px;
+}
+.idea-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 22px;
+  cursor: pointer;
+  transition: border-color .18s, box-shadow .18s, transform .18s;
+  position: relative;
+  overflow: hidden;
+}
+.idea-card:hover {
+  border-color: var(--accent);
+  box-shadow: 0 4px 18px rgba(0,0,0,.08);
+  transform: translateY(-2px);
+}
+.idea-card.hidden { display: none; }
+
+.idea-num {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: .1em;
+  color: var(--ink-mute);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+.idea-emoji { font-size: 28px; line-height: 1; margin-bottom: 10px; }
+.idea-title {
+  font-family: var(--sans);
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0 0 8px;
+}
+.idea-desc {
+  font-size: 13.5px;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+  line-height: 1.5;
+}
+.idea-io {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.idea-io-block {
+  background: var(--bg-deep);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+.idea-io-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-bottom: 4px;
+}
+.idea-io-block p {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.4;
+}
+.idea-tag {
+  display: inline-block;
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 11.5px;
+  font-weight: 500;
+  background: var(--accent-soft);
+  color: var(--accent-deep);
+  border: 1px solid var(--accent);
+  margin-right: 5px;
+  margin-bottom: 5px;
+}
+.idea-tag.sage-tag { background: var(--sage-soft); color: var(--sage); border-color: var(--sage); }
+.idea-tag.blue-tag { background: var(--blue-soft); color: var(--blue); border-color: var(--blue); }
+
+.use-idea-btn {
+  width: 100%;
+  padding: 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--accent-deep);
+  cursor: pointer;
+  margin-top: 4px;
+  transition: background .15s;
+}
+.use-idea-btn:hover { background: var(--accent); color: #fff; }
+
+/* ============================================================
+   PANEL 4 — CHECKLIST DE CALIDAD
+   ============================================================ */
+.check-intro {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 32px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+.check-intro-icon { font-size: 36px; flex-shrink: 0; }
+.check-intro h3 { font-family: var(--serif); font-size: 20px; font-weight: 400; margin: 0 0 6px; }
+.check-intro p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.5; }
+
+.checklist-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 32px;
+}
+@media (max-width: 700px) { .checklist-grid { grid-template-columns: 1fr; } }
+
+.check-section {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+.check-section h4 {
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  color: var(--ink-mute);
+  margin: 0 0 14px;
+}
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .12s;
+}
+.check-item:last-child { border-bottom: none; }
+.check-item:hover { background: var(--bg-deep); margin: 0 -8px; padding: 8px 8px; border-radius: var(--radius-sm); }
+.check-box {
+  width: 20px; height: 20px;
+  border-radius: 5px;
+  border: 1.5px solid var(--line-strong);
+  flex-shrink: 0;
+  margin-top: 2px;
+  display: flex; align-items: center; justify-content: center;
+  transition: all .15s;
+}
+.check-item.checked .check-box {
+  background: oklch(0.5 0.1 145);
+  border-color: oklch(0.5 0.1 145);
+  color: #fff;
+}
+.check-item.checked .check-text { text-decoration: line-through; color: var(--ink-mute); }
+.check-text { font-size: 14px; color: var(--ink-soft); line-height: 1.45; }
+
+.score-bar-wrap {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  text-align: center;
+}
+.score-bar-wrap h4 { font-family: var(--serif); font-size: 18px; font-weight: 400; margin: 0 0 14px; }
+.score-bar-bg {
+  height: 12px;
+  background: var(--bg-deep);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.score-bar-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: oklch(0.5 0.1 145);
+  transition: width .4s ease;
+}
+.score-label {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+.score-number {
+  font-family: var(--serif);
+  font-size: 38px;
+  font-weight: 400;
+  color: var(--ink);
+}
+
+/* Instrucciones modelo */
+.instrucciones-modelo {
+  background: var(--bg-deep);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-top: 32px;
+}
+.instrucciones-modelo h3 {
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  margin: 0 0 8px;
+}
+.instrucciones-modelo p {
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin: 0 0 16px;
+}
+.instrucciones-modelo pre {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 18px 20px;
+  font-family: var(--mono);
+  font-size: 12.5px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  overflow-x: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}
+
+/* ============================================================
+   RESPONSIVE NAV
+   ============================================================ */
+@media (max-width: 540px) {
+  .edumed-wordmark .w2 { display: none; }
+  .edumed-back { padding: 7px 10px; font-size: 12px; }
+  .vs-grid { grid-template-columns: 1fr; }
+  .vs-divider { display: none; }
+  .hero-band { padding: 24px 22px; }
+  .test-grid { grid-template-columns: 1fr; }
+}
+
+/* Utilidades */
+.mt-lg { margin-top: 48px; }
+.mt-md { margin-top: 28px; }
+.mt-sm { margin-top: 16px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 8px 0 0; }
+
+/* Frase de cierre */
+.cierre-card {
+  background: var(--ink);
+  color: var(--bg);
+  border-radius: var(--radius-lg);
+  padding: 40px 48px;
+  margin-top: 48px;
+  position: relative;
+  overflow: hidden;
+}
+.cierre-card::before {
+  content: "";
+  position: absolute;
+  bottom: -80px; right: -80px;
+  width: 260px; height: 260px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.05);
+}
+.cierre-card blockquote {
+  font-family: var(--serif);
+  font-size: clamp(18px, 2.5vw, 24px);
+  font-style: italic;
+  line-height: 1.45;
+  margin: 0 0 16px;
+  color: var(--bg);
+  max-width: 60ch;
+  position: relative;
+}
+.cierre-card p {
+  font-size: 13.5px;
+  color: oklch(0.7 0.01 75);
+  margin: 0;
+}
+
+/* Botón primario */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  background: var(--accent-deep);
+  color: #fff;
+  border: none;
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 14.5px;
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: none;
+  transition: background .15s, transform .15s;
+}
+.btn-primary:hover { background: var(--accent); color: #fff; transform: translateY(-1px); }
+.btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: transparent;
+  color: var(--ink);
+  border: 1.5px solid var(--line-strong);
+  border-radius: 999px;
+  font-family: var(--sans);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all .15s;
+}
+.btn-ghost:hover { background: var(--ink); color: var(--bg); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     BARRA EDUMED (literal del sistema)
+     ============================================================ -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/" aria-label="Inicio EduMed·UVa">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/" aria-label="Volver a IA en EduMed">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>
+      Volver a IA en EduMed
+    </a>
+  </div>
+</div>
+
+<!-- ============================================================
+     BARRA DE NAVEGACIÓN
+     ============================================================ -->
+<nav class="nav-bar" role="tablist" aria-label="Secciones">
+  <div class="nav-bar-inner">
+    <button class="nav-tab active" data-panel="0" role="tab">¿Qué es un agente?</button>
+    <button class="nav-tab" data-panel="1" role="tab">Cómo se construye</button>
+    <button class="nav-tab" data-panel="2" role="tab">12 ideas</button>
+    <button class="nav-tab" data-panel="3" role="tab">¿Está listo?</button>
+  </div>
+</nav>
+
+<!-- ============================================================
+     CONTENIDO
+     ============================================================ -->
+<div class="page-layout">
+
+  <!-- Área de contenido -->
+  <div class="content-area">
+
+<!-- ============================================================
+     PANEL 0 — ¿QUÉ ES UN AGENTE?
+     ============================================================ -->
+<div class="panel active" id="panel-0">
+<main class="shell">
+
+  <h1 class="section-title">Agentes docentes con IA:<br><em>de la conversación al trabajo real</em></h1>
+  <p class="section-lead">Ya sabes que puedes preguntarle cosas a la IA. Un agente va un paso más allá: es un asistente configurado para una tarea concreta, que siempre funciona igual, con tus reglas y tus materiales. Esta guía te enseña a construir el tuyo, sin escribir una sola línea de código.</p>
+
+  <!-- Hero con pregunta-gancho -->
+  <div class="hero-band">
+    <div class="hero-band-inner">
+      <h2>¿Hay tareas que haces una y otra vez, <em>siempre igual</em>, y que te quitan tiempo para lo que de verdad importa?</h2>
+      <p>Un agente no sustituye tu criterio ni tu relación con los estudiantes. Se encarga de la parte repetitiva — aplicar una rúbrica, generar un primer borrador de feedback, detectar lagunas en tus apuntes — para que tú puedas dedicarte a lo que solo tú puedes hacer.</p>
+    </div>
+  </div>
+
+  <!-- Asistente vs Agente — PRIMERO -->
+  <div class="mt-lg">
+    <p class="section-eyebrow">Conceptos clave</p>
+    <h2 class="section-title" style="font-size:clamp(20px,2.4vw,28px);">¿En qué se diferencia un <em>asistente</em> de un <em>agente</em>?</h2>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 24px;max-width:60ch;">Ambos son IA. Pero el asistente responde cuando le preguntas. El agente está preparado para una tarea concreta, con tus reglas y tus materiales.</p>
+
+    <div class="vs-grid">
+      <div class="vs-card">
+        <div class="vs-label">Asistente</div>
+        <h3>Conversación libre</h3>
+        <p>Le haces una pregunta y responde con lo que sabe en general. Cada vez puede responder diferente.</p>
+        <ul>
+          <li>Útil para tareas puntuales</li>
+          <li>No recuerda tus materiales</li>
+          <li>No tiene tus reglas</li>
+          <li>Resultado variable</li>
+        </ul>
+      </div>
+      <div class="vs-divider">→</div>
+      <div class="vs-card highlight">
+        <div class="vs-label">Agente</div>
+        <h3>Tarea definida</h3>
+        <p>Está configurado para hacer <strong>siempre lo mismo, bien</strong>. Conoce tus documentos y sigue tus criterios.</p>
+        <ul>
+          <li>Tarea específica y repetible</li>
+          <li>Usa tus materiales docentes</li>
+          <li>Respeta tus reglas y límites</li>
+          <li>Resultado consistente</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="key-phrase">
+      "Un asistente <strong>responde mejor</strong>. Un agente <strong>trabaja mejor</strong>."
+    </div>
+
+    <table class="diff-table">
+      <thead>
+        <tr>
+          <th>Aspecto</th>
+          <th>Asistente</th>
+          <th>Agente</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Uso típico</td>
+          <td>"Ayúdame a mejorar esta pregunta"</td>
+          <td class="highlight-cell">"Revisa preguntas siguiendo esta rúbrica y genera un informe"</td>
+        </tr>
+        <tr>
+          <td>Configuración</td>
+          <td>Ninguna o informal</td>
+          <td class="highlight-cell">Instrucciones estables + documentos</td>
+        </tr>
+        <tr>
+          <td>Materiales propios</td>
+          <td>No los tiene</td>
+          <td class="highlight-cell">Sí: tu rúbrica, tu guía, tus casos</td>
+        </tr>
+        <tr>
+          <td>Automatización</td>
+          <td>Baja</td>
+          <td class="highlight-cell">Puede conectar con herramientas externas</td>
+        </tr>
+        <tr>
+          <td>Ejemplo docente</td>
+          <td>Mejorar una pregunta suelta</td>
+          <td class="highlight-cell">Revisar 40 trabajos siguiendo criterios fijos</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Qué necesito para empezar — DESPUÉS -->
+  <div class="mt-lg">
+    <p class="section-eyebrow">Antes de empezar</p>
+    <h2 class="section-title" style="font-size:clamp(20px,2.4vw,28px);">¿Qué necesito para empezar?</h2>
+    <p style="font-family:var(--serif);font-size:15px;color:var(--ink-soft);margin:0 0 20px;max-width:60ch;">Los agentes se pueden crear en varias plataformas: Microsoft Copilot Studio, ChatGPT (GPTs), Gemini (Gems), Claude Projects… Cada una tiene sus particularidades, pero lo que necesitas es común a todas.</p>
+    <div class="req-grid">
+      <div class="req-card ok">
+        <div class="req-icon">🔑</div>
+        <div>
+          <h4>Acceso a una plataforma</h4>
+          <p>Copilot Studio, ChatGPT Plus, Gemini, Claude u otra que tengas disponible en tu institución</p>
+        </div>
+      </div>
+      <div class="req-card ok">
+        <div class="req-icon">📄</div>
+        <div>
+          <h4>Tus materiales docentes</h4>
+          <p>Guía docente, rúbricas, apuntes o preguntas que quieras que el agente consulte</p>
+        </div>
+      </div>
+      <div class="req-card ok">
+        <div class="req-icon">🎯</div>
+        <div>
+          <h4>Una tarea concreta</h4>
+          <p>No "que me ayude con todo", sino una tarea específica y repetible. Eso es lo que distingue un agente de una conversación</p>
+        </div>
+      </div>
+      <div class="req-card">
+        <div class="req-icon">⏱</div>
+        <div>
+          <h4>Unos 30–60 minutos</h4>
+          <p>Para el primer agente. Con la ficha de diseño del panel 3, la mitad del trabajo ya está hecho</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Frase de cierre del panel -->
+  <div class="cierre-card">
+    <blockquote>"Si no puedes explicar en una frase para qué sirve tu agente, todavía no tienes un agente: tienes una conversación abierta."</blockquote>
+    <p>El primer paso siempre es definir bien la tarea. Los siguientes paneles te guiarán.</p>
+  </div>
+
+</main>
+</div>
+
+
+<!-- ============================================================
+     PANEL 1 — CÓMO SE CONSTRUYE
+     ============================================================ -->
+<div class="panel" id="panel-1">
+<main class="shell">
+
+  <h1 class="section-title">Cómo se construye:<br><em>la IA te guía a ti</em></h1>
+  <p class="section-lead">No hace falta rellenar fichas ni seguir pasos técnicos. La forma más natural de construir un agente es pedirle al propio LLM que te ayude a diseñarlo. Él te hará las preguntas que necesita saber.</p>
+
+  <div class="hero-band">
+    <div class="hero-band-inner">
+      <h2>El mejor asistente para crear tu agente es <em>la propia IA</em>.</h2>
+      <p>Abre una conversación con ChatGPT, Claude, Copilot o el LLM que uses y cuéntale qué quieres conseguir. El modelo te irá preguntando lo que necesita saber — la tarea, los materiales, el usuario, los límites — y al final te dará las instrucciones listas para configurar el agente.</p>
+    </div>
+  </div>
+
+  <div class="mt-lg">
+    <p class="section-eyebrow">Para empezar</p>
+    <h2 class="section-title" style="font-size:clamp(20px,2.4vw,28px);">Un prompt de arranque que puedes copiar</h2>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 20px;max-width:60ch;">Pega esto en cualquier LLM. Él se encargará de guiarte desde ahí.</p>
+
+    <div class="preview-card">
+      <div class="preview-header">
+        <span>Prompt de arranque</span>
+        <button class="copy-btn" id="copy-btn-arranque" onclick="copyArranque()">
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="9" height="9" rx="2"/><path d="M3 12V3h9"/></svg>
+          Copiar
+        </button>
+      </div>
+      <div class="preview-body" style="min-height:auto;font-size:14px;line-height:1.7;">Quiero crear un agente docente para usar en [plataforma: Copilot Studio / ChatGPT / Claude / Gemini].
+
+Soy profesor/a de [asignatura] en [tipo de institución]. El agente debería ayudarme a [describe en una frase lo que quieres que haga].
+
+Por favor, hazme las preguntas que necesitas para ayudarme a definir bien: la tarea concreta, las fuentes que debe consultar, el formato en que debe responder y los límites que debe respetar. Al final, redacta las instrucciones listas para configurar el agente.</div>
+    </div>
+  </div>
+
+  <div class="mt-lg">
+    <p class="section-eyebrow">El proceso</p>
+    <h2 class="section-title" style="font-size:clamp(20px,2.4vw,28px);">Qué ocurre cuando envías ese prompt</h2>
+
+    <div class="step-flow">
+      <div class="step-item open" onclick="toggleStep(this)">
+        <div class="step-num">1</div>
+        <div class="step-header">
+          <div class="step-title-group">
+            <span class="step-emoji">&#x1F4AC;</span>
+            <div>
+              <p class="step-title">La IA te pregunta lo que necesita</p>
+              <p class="step-subtitle">Tú describes, ella estructura</p>
+            </div>
+          </div>
+          <div class="step-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="step-body">
+          <p>El LLM te hará preguntas concretas en lenguaje normal: ¿para qué curso? ¿qué materiales tiene disponibles? ¿qué no debe hacer nunca? ¿en qué formato quieres la respuesta? Tú contestas sin tecnicismos.</p>
+          <div class="step-example">
+            <div class="ex-label">Ejemplo de conversación</div>
+            <strong>IA:</strong> "¿Quieres que el agente solo use los documentos que tú le des, o también puede buscar información general?"<br><br>
+            <strong>Tú:</strong> "Solo mis documentos. No quiero que invente nada."<br><br>
+            <strong>IA:</strong> "¿Debe dar una nota numérica o solo comentarios cualitativos?"
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-flow">
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">2</div>
+        <div class="step-header">
+          <div class="step-title-group">
+            <span class="step-emoji">&#x1F4CB;</span>
+            <div>
+              <p class="step-title">La IA redacta las instrucciones</p>
+              <p class="step-subtitle">Listas para copiar y pegar</p>
+            </div>
+          </div>
+          <div class="step-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="step-body">
+          <p>Con tus respuestas, el LLM genera un bloque de instrucciones estructurado. Solo tienes que copiarlo y pegarlo en el campo de instrucciones de la plataforma que uses.</p>
+          <div class="sage-box">Si algo no te convence, díselo: "el tono es demasiado formal" o "añade que nunca debe inventar bibliografía". La IA ajusta al momento.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-flow">
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">3</div>
+        <div class="step-header">
+          <div class="step-title-group">
+            <span class="step-emoji">&#x1F4DA;</span>
+            <div>
+              <p class="step-title">Añadir fuentes de conocimiento</p>
+              <p class="step-subtitle">Con una limitación importante en Copilot institucional</p>
+            </div>
+          </div>
+          <div class="step-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="step-body">
+          <p>Puedes proporcionarle materiales al agente para que responda con criterio: rúbricas, guías docentes, apuntes, casos clínicos…</p>
+          <div class="step-chips">
+            <span class="chip sage">Guía docente</span>
+            <span class="chip sage">Rúbrica de evaluación</span>
+            <span class="chip sage">Apuntes de la asignatura</span>
+            <span class="chip sage">Casos clínicos docentes</span>
+            <span class="chip sage">Banco de preguntas</span>
+          </div>
+          <div class="step-example" style="margin-top:14px">
+            <div class="ex-label">&#x26A0; Limitación en Copilot institucional</div>
+            La licencia de Copilot Studio de muchas instituciones <strong>solo permite añadir URLs como fuente</strong> (hasta tres niveles de profundidad), pero <strong>no adjuntar archivos</strong> como PDFs o documentos Word.<br><br>
+            Otras plataformas como ChatGPT Plus, Claude o Gemini sí permiten subir archivos directamente. Si necesitas trabajar con tus propios documentos, son una alternativa a considerar.
+          </div>
+          <div class="sage-box">Menos fuentes, mejor seleccionadas. Demasiado contexto puede confundir al agente igual que a una persona.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-flow">
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">4</div>
+        <div class="step-header">
+          <div class="step-title-group">
+            <span class="step-emoji">&#x1F9EA;</span>
+            <div>
+              <p class="step-title">Pruebas antes de usar</p>
+              <p class="step-subtitle">Tres situaciones que tienes que comprobar</p>
+            </div>
+          </div>
+          <div class="step-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="step-body">
+          <p>Antes de compartir el agente con nadie, pruébalo tú primero:</p>
+          <div class="test-grid">
+            <div class="test-card normal">
+              <div class="test-badge">&#x2713; Caso normal</div>
+              <p>Una petición típica. ¿Responde bien y de forma útil?</p>
+            </div>
+            <div class="test-card hard">
+              <div class="test-badge">&#x26A1; Caso ambiguo</div>
+              <p>Una petición incompleta. ¿Pide más datos o inventa?</p>
+            </div>
+            <div class="test-card safe">
+              <div class="test-badge">&#x1F6E1; Caso límite</div>
+              <p>Algo que no debe hacer. ¿Lo rechaza o lo hace igual?</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-flow">
+      <div class="step-item" onclick="toggleStep(this)">
+        <div class="step-num">5</div>
+        <div class="step-header">
+          <div class="step-title-group">
+            <span class="step-emoji">&#x1F504;</span>
+            <div>
+              <p class="step-title">Mejorar el agente con la propia IA</p>
+              <p class="step-subtitle">La IA también puede revisar y optimizar instrucciones</p>
+            </div>
+          </div>
+          <div class="step-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="step-body">
+          <p>Si el agente no responde bien, vuelve al LLM, pégale las instrucciones actuales y dile qué falla. No hace falta reescribir desde cero.</p>
+          <div class="step-example">
+            <div class="ex-label">Ejemplos de mejora iterativa</div>
+            "Estas son las instrucciones de mi agente. El problema es que a veces inventa bibliografía. ¿Cómo lo corrijo?"<br><br>
+            "El agente responde demasiado largo. Quiero que sea más conciso. ¿Qué cambio?"<br><br>
+            "Quiero que haga una pregunta antes de responder en lugar de asumir lo que necesito."
+          </div>
+          <div class="sage-box">Existen incluso agentes específicos para mejorar prompts — cuya única función es analizar y optimizar las instrucciones de otros agentes.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div style="margin-top:40px;display:flex;gap:12px;flex-wrap:wrap;">
+    <button class="btn-primary" onclick="goToPanel(2)">
+      Ver ideas de agentes
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </button>
+    <button class="btn-ghost" onclick="goToPanel(2)">&#x2713; Comprobar si está listo</button>
+  </div>
+
+</main>
+</div>
+
+
+<!-- ============================================================
+     PANEL 3 — CATÁLOGO DE IDEAS
+     ============================================================ -->
+<div class="panel" id="panel-2">
+<main class="shell">
+
+  <p class="section-eyebrow">03 · Inspiración</p>
+  <h1 class="section-title">12 ideas de <em>agentes docentes</em></h1>
+  <p class="section-lead">Elige una idea, úsala tal cual o adáptala a tu asignatura. Cada tarjeta incluye qué le das y qué te devuelve.</p>
+
+  <div class="cat-filter-bar">
+    <button class="cat-filter active" onclick="filterIdeas('all',this)">Todas</button>
+    <button class="cat-filter" onclick="filterIdeas('evaluar',this)">Evaluar</button>
+    <button class="cat-filter" onclick="filterIdeas('crear',this)">Crear material</button>
+    <button class="cat-filter" onclick="filterIdeas('analizar',this)">Analizar</button>
+    <button class="cat-filter" onclick="filterIdeas('simular',this)">Simular</button>
+  </div>
+
+  <div class="ideas-grid" id="ideas-grid">
+
+    <!-- IDEA 1 -->
+    <div class="idea-card" data-cat="analizar">
+      <div class="idea-num">01 · Análisis</div>
+      <div class="idea-emoji">🔍</div>
+      <div class="idea-title">Detector de lagunas</div>
+      <div class="idea-desc">Detecta qué preguntas no podrían responder los estudiantes con tus apuntes actuales.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>PDF de apuntes o presentación</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Lista de lagunas por categoría</p>
+        </div>
+      </div>
+      <span class="idea-tag">Analizar</span>
+    </div>
+
+    <!-- IDEA 2 -->
+    <div class="idea-card" data-cat="analizar">
+      <div class="idea-num">02 · Análisis</div>
+      <div class="idea-emoji">🪜</div>
+      <div class="idea-title">Detector de saltos de experto</div>
+      <div class="idea-desc">Señala dónde el docente pasa de A a C sin explicar B — el razonamiento implícito del experto.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Diapositivas o apuntes</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Pasos implícitos que falta explicar</p>
+        </div>
+      </div>
+      <span class="idea-tag">Analizar</span>
+    </div>
+
+    <!-- IDEA 3 -->
+    <div class="idea-card" data-cat="evaluar">
+      <div class="idea-num">03 · Evaluación</div>
+      <div class="idea-emoji">✅</div>
+      <div class="idea-title">Crítico de preguntas tipo test</div>
+      <div class="idea-desc">Detecta distractores débiles, ambigüedades, más de una respuesta correcta y preguntas demasiado memorísticas.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Preguntas de examen o autoevaluación</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Informe de problemas y mejoras</p>
+        </div>
+      </div>
+      <span class="idea-tag">Evaluar</span>
+    </div>
+
+    <!-- IDEA 4 -->
+    <div class="idea-card" data-cat="evaluar">
+      <div class="idea-num">04 · Evaluación</div>
+      <div class="idea-emoji">⚖️</div>
+      <div class="idea-title">Calibrador de dificultad</div>
+      <div class="idea-desc">Analiza si tu examen evalúa solo memoria o también aplicación y razonamiento clínico.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Conjunto de preguntas del examen</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Distribución por nivel cognitivo</p>
+        </div>
+      </div>
+      <span class="idea-tag">Evaluar</span>
+    </div>
+
+    <!-- IDEA 5 -->
+    <div class="idea-card" data-cat="crear">
+      <div class="idea-num">05 · Crear material</div>
+      <div class="idea-emoji">📸</div>
+      <div class="idea-title">Pizarra → actividad de clase</div>
+      <div class="idea-desc">Convierte una foto de la pizarra al final de una explicación en una actividad reutilizable.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Foto de la pizarra</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Actividad estructurada lista para usar</p>
+        </div>
+      </div>
+      <span class="idea-tag blue-tag">Crear material</span>
+    </div>
+
+    <!-- IDEA 6 -->
+    <div class="idea-card" data-cat="analizar">
+      <div class="idea-num">06 · Análisis</div>
+      <div class="idea-emoji">📊</div>
+      <div class="idea-title">Analizador de respuestas libres</div>
+      <div class="idea-desc">Agrupa errores conceptuales frecuentes en respuestas de estudiantes para preparar una sesión de refuerzo.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Respuestas de los estudiantes</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Mapa de errores frecuentes y cómo abordarlos</p>
+        </div>
+      </div>
+      <span class="idea-tag">Analizar</span>
+      <span class="idea-tag sage-tag">⚠ Sin calificación individual</span>
+    </div>
+
+    <!-- IDEA 7 -->
+    <div class="idea-card" data-cat="crear">
+      <div class="idea-num">07 · Crear material</div>
+      <div class="idea-emoji">🔁</div>
+      <div class="idea-title">Caso clínico inverso</div>
+      <div class="idea-desc">Le das el aprendizaje que quieres trabajar y te construye el caso clínico diseñado para ese objetivo.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Concepto o error que quiero trabajar</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Caso clínico construido hacia ese objetivo</p>
+        </div>
+      </div>
+      <span class="idea-tag blue-tag">Crear material</span>
+    </div>
+
+    <!-- IDEA 8 -->
+    <div class="idea-card" data-cat="analizar">
+      <div class="idea-num">08 · Análisis</div>
+      <div class="idea-emoji">🌍</div>
+      <div class="idea-title">Detector de sesgos en casos</div>
+      <div class="idea-desc">Analiza si tus casos clínicos docentes reproducen estereotipos de género, edad o etnia sin querer.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Colección de casos clínicos</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Análisis de sesgos y recomendaciones</p>
+        </div>
+      </div>
+      <span class="idea-tag">Analizar</span>
+    </div>
+
+    <!-- IDEA 9 -->
+    <div class="idea-card" data-cat="simular">
+      <div class="idea-num">09 · Simulación</div>
+      <div class="idea-emoji">🎭</div>
+      <div class="idea-title">Simulador de preguntas incómodas</div>
+      <div class="idea-desc">Genera las preguntas difíciles que podrían hacerte los estudiantes en la próxima clase.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Tema de la próxima clase</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Lista de preguntas difíciles con sugerencia de respuesta</p>
+        </div>
+      </div>
+      <span class="idea-tag sage-tag">Simular</span>
+    </div>
+
+    <!-- IDEA 10 -->
+    <div class="idea-card" data-cat="analizar">
+      <div class="idea-num">10 · Análisis</div>
+      <div class="idea-emoji">⏱</div>
+      <div class="idea-title">Detector de clase imposible</div>
+      <div class="idea-desc">Analiza si los objetivos y contenidos de tu clase caben en el tiempo disponible.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Objetivos, contenidos y duración</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Análisis de viabilidad y priorización</p>
+        </div>
+      </div>
+      <span class="idea-tag">Analizar</span>
+    </div>
+
+    <!-- IDEA 11 -->
+    <div class="idea-card" data-cat="evaluar">
+      <div class="idea-num">11 · Evaluación</div>
+      <div class="idea-emoji">👨‍⚖️</div>
+      <div class="idea-title">Abogado del estudiante</div>
+      <div class="idea-desc">Lee tus instrucciones de tarea desde los ojos de un estudiante y detecta ambigüedades antes de publicarlas.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Instrucciones de tarea o práctica</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Lista de ambigüedades y posibles reclamaciones</p>
+        </div>
+      </div>
+      <span class="idea-tag">Evaluar</span>
+    </div>
+
+    <!-- IDEA 12 -->
+    <div class="idea-card" data-cat="crear">
+      <div class="idea-num">12 · Crear material</div>
+      <div class="idea-emoji">🏗</div>
+      <div class="idea-title">Constructor de rúbricas</div>
+      <div class="idea-desc">Crea una rúbrica de evaluación alineada con tus objetivos y el nivel del estudiante.</div>
+      <div class="idea-io">
+        <div class="idea-io-block">
+          <div class="idea-io-label">Le doy</div>
+          <p>Objetivos, tarea y nivel del curso</p>
+        </div>
+        <div class="idea-io-block">
+          <div class="idea-io-label">Me devuelve</div>
+          <p>Rúbrica completa con niveles de desempeño</p>
+        </div>
+      </div>
+      <span class="idea-tag blue-tag">Crear material</span>
+    </div>
+
+  </div>
+
+</main>
+</div>
+
+<!-- ============================================================
+     PANEL 4 — CHECKLIST DE CALIDAD
+     ============================================================ -->
+<div class="panel" id="panel-3">
+<main class="shell">
+
+  <p class="section-eyebrow">04 · Validación</p>
+  <h1 class="section-title">¿Está <em>listo</em> tu agente?</h1>
+  <p class="section-lead">Antes de compartirlo con colegas o estudiantes, confirma que pasa esta lista. Un agente que no la supera necesita más ajustes.</p>
+
+  <div class="check-intro">
+    <div class="check-intro-icon">🧑‍⚕️</div>
+    <div>
+      <h3>El agente como colega, no como jefe</h3>
+      <p>Un buen agente docente ahorra tiempo y reduce carga rutinaria. Pero el criterio docente sigue siendo tuyo: tú decides qué usar, cómo interpretarlo y cuándo no fiarte de él. Esta lista te ayuda a saber que el agente está listo para ser ese buen colega.</p>
+    </div>
+  </div>
+
+  <div class="checklist-grid">
+
+    <div class="check-section">
+      <h4>🎯 Tarea y propósito</h4>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Puedo explicar en una frase exactamente para qué sirve el agente</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">La tarea es concreta y no intenta hacerlo todo a la vez</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">El usuario del agente está claramente definido</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">La salida esperada es específica y reconocible</span>
+      </div>
+    </div>
+
+    <div class="check-section">
+      <h4>📄 Fuentes y conocimiento</h4>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Los documentos de referencia son los adecuados (ni demasiados ni de más)</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Las fuentes están actualizadas y son fiables</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">No hay documentos irrelevantes que puedan confundirlo</span>
+      </div>
+    </div>
+
+    <div class="check-section">
+      <h4>🛡 Límites y seguridad</h4>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Tiene instrucciones sobre qué no debe hacer</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">No pone calificaciones definitivas sin revisión humana</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">No usa datos personales de estudiantes innecesariamente</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Reconoce cuándo le falta información y lo comunica</span>
+      </div>
+    </div>
+
+    <div class="check-section">
+      <h4>🧪 Pruebas realizadas</h4>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Ha superado la prueba normal (caso típico)</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Ha superado la prueba difícil (petición ambigua)</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">Ha superado la prueba de límites (petición que no debe aceptar)</span>
+      </div>
+      <div class="check-item" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <span class="check-text">No inventa información cuando no tiene datos suficientes</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Marcador de progreso -->
+  <div class="score-bar-wrap">
+    <h4>Preparación del agente</h4>
+    <div class="score-bar-bg">
+      <div class="score-bar-fill" id="score-fill" style="width:0%"></div>
+    </div>
+    <div class="score-label">
+      <span class="score-number" id="score-num">0</span> de 15 criterios cumplidos
+    </div>
+    <p id="score-msg" style="font-size:14px;color:var(--ink-mute);margin:10px 0 0;">Marca los criterios de la lista para ver el progreso.</p>
+  </div>
+
+  <!-- Ejemplo de instrucciones modelo -->
+  <div class="instrucciones-modelo mt-lg">
+    <h3>Ejemplo de instrucciones bien escritas</h3>
+    <p>Este es un ejemplo real de instrucciones para un agente revisor de preguntas tipo test. Úsalo como referencia.</p>
+    <pre>Eres un agente especializado en evaluar la calidad de preguntas tipo test 
+para estudiantes de Medicina de tercer curso.
+
+Tu tarea principal es revisar cada pregunta que te comparta el profesor 
+y detectar problemas de calidad docente.
+
+Usa como referencia principal:
+- La rúbrica de calidad de preguntas adjunta
+- Los objetivos de la asignatura de Fisiopatología
+
+Para cada pregunta, analiza:
+- Si hay más de una respuesta posible
+- Si los distractores son plausibles o demasiado obvios
+- Si el enunciado es ambiguo o tiene pistas involuntarias
+- Si evalúa razonamiento o solo memoria literal
+- Si el nivel es adecuado para tercer curso
+
+Responde siempre en una tabla con columnas:
+Pregunta | Problema detectado | Mejora propuesta | Nivel cognitivo
+
+No debes:
+- Inventar bibliografía o guías clínicas
+- Poner puntuación o calificación
+- Aceptar preguntas con datos de pacientes reales
+- Sustituir el criterio del profesor en la decisión final
+
+Si la pregunta está bien formulada, indícalo con "Sin problemas detectados" 
+y señala qué tiene de bueno.
+
+Si te falta información sobre el nivel o tema, pregunta antes de analizar.</pre>
+  </div>
+
+</main>
+</div>
+
+  </div><!-- /content-area -->
+</div><!-- /page-layout -->
+
+<!-- ============================================================
+     JAVASCRIPT
+     ============================================================ -->
+<script>
+// ── Ajuste dinámico de la altura del header ──────────────────
+function fixHeaderOffset() {
+  const bar = document.querySelector('.edumed-bar');
+  const nav = document.querySelector('.nav-bar');
+  if (!bar) return;
+  const barH = bar.getBoundingClientRect().height;
+  // Posicionar la barra nav justo debajo del header
+  if (nav) nav.style.top = barH + 'px';
+  const navH = nav ? nav.getBoundingClientRect().height : 37;
+  // El body necesita el total de ambas barras fijas
+  document.body.style.paddingTop = (barH + navH) + 'px';
+  const preview = document.querySelector('.preview-sticky');
+  if (preview) preview.style.top = (barH + navH + 16) + 'px';
+}
+fixHeaderOffset();
+window.addEventListener('resize', fixHeaderOffset);
+
+
+function goToPanel(idx) {
+  document.querySelectorAll('.nav-tab').forEach((t,i) => {
+    t.classList.toggle('active', i === idx);
+  });
+  document.querySelectorAll('.panel').forEach((p,i) => {
+    p.classList.toggle('active', i === idx);
+  });
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+document.querySelectorAll('.nav-tab').forEach((tab, idx) => {
+  tab.addEventListener('click', () => goToPanel(idx));
+});
+
+// ── Pasos acordeón ──────────────────────────────────────────
+function toggleStep(el) {
+  el.classList.toggle('open');
+}
+
+// ── Chips de selección única ────────────────────────────────
+function selectChip(el, group) {
+  el.closest('.option-chips').querySelectorAll('.opt-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+  updatePreview();
+}
+
+// ── Chips de selección múltiple ─────────────────────────────
+function toggleChip(el, group) {
+  el.classList.toggle('selected');
+  updatePreview();
+}
+
+// ── Preview de instrucciones ─────────────────────────────────
+function getSelected(groupId) {
+  return [...document.querySelectorAll(`#chips-${groupId} .opt-chip.selected`)]
+    .map(c => c.textContent.trim());
+}
+
+function updatePreview() {
+  const nombre  = document.getElementById('f-nombre').value.trim();
+  const tarea   = document.getElementById('f-tarea').value.trim();
+  const usuario = getSelected('usuario')[0] || 'el usuario';
+  const fuentes = getSelected('fuentes');
+  const salida  = getSelected('salida')[0] || '';
+  const limites = getSelected('limites');
+  const fLimites= document.getElementById('f-limites').value.trim();
+  const falta   = getSelected('falta')[0] || 'pedir más detalles';
+
+  // Frase de validación
+  const fraseEl = document.getElementById('frase-resumen');
+  if (nombre && tarea) {
+    const fuenteStr = fuentes.length ? fuentes.join(', ') : 'los materiales disponibles';
+    const salidaStr = salida || 'un resultado útil';
+    fraseEl.innerHTML = `<em>"Mi agente <strong>${nombre}</strong> ayuda a ${usuario.toLowerCase()} a ${tarea.toLowerCase().substring(0,60)}${tarea.length>60?'…':''} usando ${fuenteStr} y devuelve ${salidaStr.toLowerCase()}."</em>`;
+  } else {
+    fraseEl.innerHTML = '<span class="frase-placeholder">Completa los campos para ver tu frase de validación...</span>';
+  }
+
+  // Generar instrucciones
+  if (!nombre && !tarea) {
+    document.getElementById('preview-text').textContent = 'Completa los campos de la izquierda para generar el borrador de instrucciones...';
+    return;
+  }
+
+  let txt = '';
+  txt += `Eres un agente docente llamado "${nombre || 'Agente'}",\n`;
+  txt += `diseñado para ayudar a ${usuario.toLowerCase()} de Medicina.\n\n`;
+
+  if (tarea) {
+    txt += `Tu tarea principal es:\n${tarea}\n\n`;
+  }
+
+  if (fuentes.length) {
+    txt += `Usa como referencia:\n`;
+    fuentes.forEach(f => txt += `- ${f}\n`);
+    txt += '\n';
+  }
+
+  if (salida) {
+    txt += `Devuelve siempre tu respuesta en formato: ${salida}.\n\n`;
+  }
+
+  const todosLimites = [...limites];
+  if (fLimites) todosLimites.push(fLimites);
+  if (todosLimites.length) {
+    txt += `No debes:\n`;
+    todosLimites.forEach(l => txt += `- ${l}\n`);
+    txt += '\n';
+  }
+
+  txt += `Si te falta información: ${falta}.\n\n`;
+  txt += `Antes de terminar, comprueba que tu respuesta es útil, clara y no contiene información inventada.`;
+
+  document.getElementById('preview-text').textContent = txt;
+}
+
+// ── Copiar prompt de arranque ────────────────────────────────
+function copyArranque() {
+  const body = document.querySelector('#copy-btn-arranque')?.closest('.preview-card')?.querySelector('.preview-body');
+  if (!body) return;
+  navigator.clipboard.writeText(body.textContent.trim()).then(() => {
+    const btn = document.getElementById('copy-btn-arranque');
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l4 4 6-8"/></svg> Copiado`;
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="9" height="9" rx="2"/><path d="M3 12V3h9"/></svg> Copiar`;
+    }, 2200);
+  });
+}
+
+
+
+// ── Filtro de ideas ──────────────────────────────────────────
+function filterIdeas(cat, btn) {
+  document.querySelectorAll('.cat-filter').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.idea-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+// ── Checklist ────────────────────────────────────────────────
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const total   = document.querySelectorAll('.check-item').length;
+  const checked = document.querySelectorAll('.check-item.checked').length;
+  const pct     = Math.round((checked / total) * 100);
+  document.getElementById('score-fill').style.width = pct + '%';
+  document.getElementById('score-num').textContent = checked;
+
+  const msgs = {
+    0:  'Marca los criterios de la lista para ver el progreso.',
+    25: 'Buen comienzo. Sigue revisando cada apartado.',
+    50: 'Vas bien. Ya tienes la mitad cubierta.',
+    75: 'Muy cerca. Revisa los últimos criterios.',
+    100: '¡Listo! Tu agente está preparado para compartir.'
+  };
+  const bracket = pct === 0 ? 0 : pct <= 25 ? 25 : pct <= 50 ? 50 : pct <= 75 ? 75 : 100;
+  document.getElementById('score-msg').textContent = msgs[bracket] || msgs[75];
+
+  const fill = document.getElementById('score-fill');
+  if (pct < 50)       fill.style.background = 'oklch(0.55 0.1 35)';
+  else if (pct < 100) fill.style.background = 'oklch(0.55 0.1 85)';
+  else                fill.style.background = 'oklch(0.5 0.1 145)';
+}
+</script>
+
+</body>
+</html>
