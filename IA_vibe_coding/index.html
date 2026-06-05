@@ -1,1 +1,1443 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Vibe Coding · EduMed·UVa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;1,400&family=DM+Sans:wght@400;500;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
 
+<style>
+:root {
+  --bg:          oklch(0.975 0.008 75);
+  --bg-deep:     oklch(0.95 0.012 75);
+  --surface:     oklch(0.995 0.004 80);
+  --ink:         oklch(0.22 0.018 55);
+  --ink-soft:    oklch(0.42 0.018 55);
+  --ink-mute:    oklch(0.58 0.015 55);
+  --line:        oklch(0.88 0.012 70);
+  --line-strong: oklch(0.78 0.015 65);
+  --accent:      oklch(0.55 0.13 35);
+  --accent-deep: oklch(0.42 0.13 35);
+  --accent-soft: oklch(0.94 0.04 40);
+  --accent-tint: oklch(0.97 0.018 40);
+  --sage:        oklch(0.5 0.05 155);
+  --sage-soft:   oklch(0.94 0.025 155);
+  --blue:        oklch(0.52 0.12 240);
+  --blue-soft:   oklch(0.94 0.03 240);
+  --serif: "Source Serif 4", Georgia, serif;
+  --sans:  "DM Sans", -apple-system, sans-serif;
+  --mono:  "JetBrains Mono", ui-monospace, monospace;
+  --radius: 14px; --radius-sm: 8px; --radius-lg: 22px;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--sans); font-size: 17px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  padding-top: 94px;
+}
+button { font: inherit; color: inherit; cursor: pointer; }
+a { color: var(--accent-deep); text-decoration: underline; text-underline-offset: 3px; }
+a:hover { color: var(--accent); }
+code { font-family: var(--mono); font-size: 13px; background: var(--bg-deep); padding: 1px 5px; border-radius: 4px; }
+
+/* ── Barra EduMed ── */
+.edumed-bar {
+  display: block;
+  background: #f5c518;
+  border-bottom: 1px solid #d9a800;
+  box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06);
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+}
+.edumed-bar-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; padding: 12px 20px;
+}
+.edumed-brand {
+  display: flex; align-items: center; gap: 14px; color: #1a1f2e;
+  text-decoration: none;
+}
+.edumed-brand:hover { opacity: .85; }
+.edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; font-family: var(--sans); }
+.edumed-wordmark .w1 { font-weight: 700; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
+.edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
+.edumed-wordmark .w2 { font-weight: 500; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
+.edumed-back {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--sans); font-size: 13px; font-weight: 600; color: #1a1f2e;
+  padding: 8px 14px; border-radius: 999px;
+  background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15);
+  text-decoration: none;
+  transition: background .15s, transform .15s; white-space: nowrap;
+}
+.edumed-back:hover { background: #fff; transform: translateX(-2px); color: #1a1f2e; }
+.edumed-back svg { width: 14px; height: 14px; }
+
+/* ── Nav tabs ── */
+.nav-bar {
+  position: fixed; top: 64px; left: 0; right: 0;
+  z-index: 80; background: var(--surface); border-bottom: 1px solid var(--line);
+}
+.nav-bar-inner {
+  max-width: 1180px; margin: 0 auto;
+  padding: 0 40px; display: flex;
+}
+.nav-tab {
+  padding: 10px 18px; font-family: var(--sans); font-size: 13px; font-weight: 500;
+  color: var(--ink-mute); background: none; border: none;
+  border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap;
+  transition: color .15s, border-color .15s; line-height: 1;
+}
+.nav-tab:hover { color: var(--ink-soft); }
+.nav-tab.active { color: var(--accent-deep); border-bottom-color: var(--accent-deep); font-weight: 600; }
+
+/* ── Layout ── */
+.page-layout { max-width: 1180px; margin: 0 auto; padding: 0 40px; }
+.panel { display: none; }
+.panel.active { display: block; }
+.shell { padding: 36px 0 80px; }
+
+/* ── Footer ── */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 40px;
+  max-width: 1180px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 16px; flex-wrap: wrap;
+}
+.footer-brand { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: .06em; }
+.footer-copy  { font-size: 12px; color: var(--ink-mute); }
+
+/* ── Tipografía ── */
+.section-eyebrow {
+  font-family: var(--mono); font-size: 11.5px; letter-spacing: .12em;
+  text-transform: uppercase; color: var(--ink-mute);
+  margin: 0 0 10px; display: flex; align-items: center; gap: 12px;
+}
+.section-eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--ink-mute); display: inline-block; }
+.section-title {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(26px, 3.2vw, 38px); line-height: 1.1;
+  letter-spacing: -.015em; margin: 0 0 14px; color: var(--ink); text-wrap: balance;
+}
+.section-title em { font-style: italic; color: var(--accent-deep); }
+.section-lead {
+  font-family: var(--serif); font-size: 18px; line-height: 1.6;
+  color: var(--ink-soft); max-width: 66ch; margin: 0 0 36px; text-wrap: pretty;
+}
+.h2 {
+  font-family: var(--serif); font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 28px); line-height: 1.15;
+  letter-spacing: -.01em; margin: 0 0 12px; color: var(--ink);
+}
+.h2 em { font-style: italic; color: var(--accent-deep); }
+
+/* ── Hero band ── */
+.hero-band {
+  background: var(--bg-deep); border: 1px solid var(--line);
+  border-radius: var(--radius-lg); padding: 36px 44px;
+  margin-bottom: 44px; position: relative; overflow: hidden;
+}
+.hero-band::before {
+  content: ""; position: absolute; top: -60px; right: -60px;
+  width: 220px; height: 220px; border-radius: 50%;
+  background: var(--accent-soft); opacity: .4;
+}
+.hero-band-inner { position: relative; z-index: 1; }
+.hero-band h2 {
+  font-family: var(--serif); font-size: clamp(19px, 2.4vw, 28px);
+  font-weight: 400; line-height: 1.25; margin: 0 0 12px; color: var(--ink);
+}
+.hero-band h2 em { font-style: italic; color: var(--accent-deep); }
+.hero-band p { font-family: var(--serif); font-size: 16px; color: var(--ink-soft); margin: 0; max-width: 58ch; }
+
+/* ── Key phrase ── */
+.key-phrase {
+  background: var(--accent-tint); border-left: 3px solid var(--accent);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 16px 22px; margin: 24px 0;
+  font-family: var(--serif); font-size: 18px; font-style: italic; color: var(--ink);
+}
+.key-phrase strong { font-style: normal; }
+
+/* ── Sage box ── */
+.sage-box {
+  background: var(--sage-soft); border: 1px solid var(--sage);
+  border-radius: var(--radius-sm); padding: 13px 17px;
+  font-size: 14px; color: var(--ink-soft); margin: 14px 0;
+  display: flex; align-items: flex-start; gap: 9px; line-height: 1.5;
+}
+.sage-box::before { content: "⚠"; font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+/* ── Comparativa no-code / vibe ── */
+.compare-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; margin: 20px 0 28px; }
+.compare-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+.compare-card.highlight { border-color: var(--accent); background: var(--accent-tint); }
+.compare-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 6px; }
+.compare-card.highlight .compare-tag { color: var(--accent-deep); }
+.compare-card h4 { font-size: 15px; font-weight: 700; margin: 0 0 6px; color: var(--ink); }
+.compare-card.highlight h4 { color: var(--accent-deep); }
+.compare-card p { font-size: 13.5px; color: var(--ink-soft); margin: 0; line-height: 1.45; }
+
+/* ── Por qué se llama "vibe" ── */
+.vibe-box {
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  display: flex; gap: 20px; align-items: flex-start;
+}
+.vibe-box-icon { font-size: 32px; flex-shrink: 0; }
+.vibe-box h4 { font-family: var(--sans); font-size: 15px; font-weight: 700; margin: 0 0 6px; color: var(--ink); }
+.vibe-box p { font-size: 14.5px; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+
+/* ── Acordeones de categoría ── */
+.cat-acordeon-list { display: flex; flex-direction: column; gap: 10px; margin: 0 0 36px; }
+.cat-acord { border: 1.5px solid var(--line); border-radius: var(--radius); overflow: hidden; }
+.cat-acord-header {
+  width: 100%; display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px; background: var(--surface);
+  border: none; cursor: pointer; text-align: left; transition: background .15s;
+}
+.cat-acord-header:hover { background: var(--bg-deep); }
+.cat-acord-header.open { background: var(--accent-soft); border-bottom: 1.5px solid var(--accent); }
+.cat-acord-header.open .cat-label { color: var(--accent-deep); }
+.cat-acord-header.open .cat-chevron { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
+.cat-emoji { font-size: 22px; line-height: 1; flex-shrink: 0; }
+.cat-titles { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 3px; }
+.cat-label { font-family: var(--sans); font-size: 15px; font-weight: 700; color: var(--ink); }
+.cat-sub { font-size: 12.5px; color: var(--ink-mute); }
+.cat-chevron {
+  width: 22px; height: 22px; border-radius: 50%;
+  border: 1.5px solid var(--line); display: flex; align-items: center;
+  justify-content: center; color: var(--ink-mute); flex-shrink: 0;
+  transition: transform .2s, border-color .15s, color .15s;
+}
+.cat-body { display: none; }
+.cat-body.open { display: block; }
+.grupo-desc-header {
+  font-family: var(--serif); font-size: 14.5px; color: var(--ink-soft);
+  line-height: 1.55; padding: 14px 20px 12px;
+  border-bottom: 1px solid var(--line); background: var(--bg-deep);
+}
+.rc-emoji { font-size: 22px; line-height: 1; flex-shrink: 0; margin-top: 2px; }
+.rc-title { font-size: 14.5px; font-weight: 600; color: var(--ink); margin-bottom: 3px; }
+.rc-ej { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); line-height: 1.4; }
+
+/* ── Tarjetas expandibles de recursos ── */
+.rc-expandible {
+  border-bottom: 1px solid var(--line);
+  cursor: pointer;
+  transition: background .12s;
+}
+.rc-expandible:last-child { border-bottom: none; }
+.rc-expandible:hover { background: var(--bg-deep); }
+.rc-expandible.open { background: var(--accent-tint); }
+
+.rc-exp-header {
+  display: flex; align-items: flex-start; gap: 14px;
+  padding: 16px 24px;
+}
+.rc-exp-titles { flex: 1; min-width: 0; }
+.rc-chevron {
+  width: 20px; height: 20px; border-radius: 50%;
+  border: 1.5px solid var(--line); display: flex;
+  align-items: center; justify-content: center;
+  color: var(--ink-mute); flex-shrink: 0; margin-top: 3px;
+  transition: transform .2s, border-color .15s;
+}
+.rc-expandible.open .rc-chevron { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
+
+.rc-exp-body {
+  display: none;
+  padding: 0 24px 20px 60px;
+  border-top: 1px solid var(--line);
+  padding-top: 16px;
+}
+.rc-expandible.open .rc-exp-body { display: block; }
+
+.rc-exp-problema {
+  font-family: var(--serif); font-size: 15px; color: var(--ink-soft);
+  line-height: 1.6; margin: 0 0 18px;
+  padding: 12px 16px; background: var(--surface);
+  border-left: 3px solid var(--accent); border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+}
+.rc-exp-cols {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+}
+.rc-exp-label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: .1em;
+  text-transform: uppercase; color: var(--ink-mute); margin-bottom: 8px;
+}
+.rc-exp-lista {
+  margin: 0; padding-left: 16px;
+  display: flex; flex-direction: column; gap: 5px;
+}
+.rc-exp-lista li { font-size: 13.5px; color: var(--ink-soft); line-height: 1.45; }
+.rc-exp-build {
+  font-size: 13.5px; color: var(--ink-soft); line-height: 1.55;
+  margin: 0; background: var(--bg-deep); padding: 12px 14px;
+  border-radius: var(--radius-sm);
+}
+
+@media (max-width: 640px) {
+  .rc-exp-cols { grid-template-columns: 1fr; gap: 14px; }
+  .rc-exp-body { padding-left: 20px; }
+  .rc-exp-header { padding: 14px 16px; }
+}
+
+/* ── Recursos grid (original) ── */
+.recursos-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(255px,1fr)); gap: 14px; margin: 20px 0; }
+.recurso-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 20px; transition: border-color .15s, box-shadow .15s; }
+.recurso-card:hover { border-color: var(--line-strong); box-shadow: 0 2px 10px rgba(0,0,0,.06); }
+.recurso-emoji { font-size: 24px; line-height: 1; margin-bottom: 7px; }
+.recurso-title { font-size: 14.5px; font-weight: 600; color: var(--ink); margin: 0 0 4px; }
+.recurso-desc { font-size: 13px; color: var(--ink-soft); margin: 0 0 8px; line-height: 1.45; }
+.recurso-ejemplo { font-family: var(--mono); font-size: 11px; color: var(--ink-mute); background: var(--bg-deep); border-radius: var(--radius-sm); padding: 5px 9px; line-height: 1.4; }
+
+/* ── Plataformas ── */
+.plataformas-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px,1fr)); gap: 10px; margin: 18px 0; }
+.plataforma-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px 16px; display: flex; align-items: flex-start; gap: 11px; }
+.plataforma-icon { width: 30px; height: 30px; border-radius: 7px; background: var(--accent-soft); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+.plataforma-icon.blue { background: var(--blue-soft); }
+.plataforma-card h5 { font-size: 13px; font-weight: 600; margin: 0 0 2px; color: var(--ink); }
+.plataforma-card p { font-size: 12px; color: var(--ink-mute); margin: 0; line-height: 1.4; }
+
+/* ── Fases acordeón ── */
+.fase-list { display: flex; flex-direction: column; gap: 12px; margin: 24px 0; }
+.fase-item { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: border-color .15s; }
+.fase-item:hover { border-color: var(--line-strong); }
+.fase-item.open { border-color: var(--accent); }
+.fase-header { display: flex; align-items: center; gap: 14px; padding: 16px 20px; justify-content: space-between; }
+.fase-left { display: flex; align-items: center; gap: 12px; }
+.fase-num { width: 30px; height: 30px; border-radius: 50%; background: var(--bg-deep); border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--ink-mute); flex-shrink: 0; transition: background .15s, border-color .15s, color .15s; }
+.fase-item.open .fase-num { background: var(--accent); border-color: var(--accent); color: #fff; }
+.fase-emoji { font-size: 18px; line-height: 1; }
+.fase-title { font-size: 15px; font-weight: 600; color: var(--ink); margin: 0; }
+.fase-sub { font-size: 12px; color: var(--ink-mute); margin: 2px 0 0; }
+.fase-chevron { width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink-mute); flex-shrink: 0; transition: transform .2s, border-color .15s; }
+.fase-item.open .fase-chevron { transform: rotate(180deg); border-color: var(--accent); color: var(--accent); }
+.fase-body { display: none; padding: 0 20px 18px 62px; border-top: 1px solid var(--line); padding-top: 14px; }
+.fase-item.open .fase-body { display: block; }
+.fase-body p { font-size: 14.5px; color: var(--ink-soft); margin: 0 0 12px; line-height: 1.55; }
+.fase-body p:last-child { margin-bottom: 0; }
+
+/* ── Chips ── */
+.chip-row { display: flex; flex-wrap: wrap; gap: 7px; margin: 10px 0; }
+.chip { display: inline-block; padding: 4px 12px; border-radius: 999px; font-size: 12.5px; background: var(--bg-deep); border: 1px solid var(--line); color: var(--ink-soft); }
+.chip.accent { background: var(--accent-soft); border-color: var(--accent); color: var(--accent-deep); }
+.chip.sage   { background: var(--sage-soft);   border-color: var(--sage);   color: var(--sage); }
+
+/* ── Diálogo iterativo ── */
+.dialogo { background: var(--bg-deep); border-radius: var(--radius-sm); padding: 16px 18px; margin: 12px 0; font-size: 13.5px; line-height: 1.6; }
+.dialogo-label { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 10px; }
+.dia-ia { color: var(--blue); font-weight: 600; }
+.dia-tu { color: var(--accent-deep); font-weight: 600; }
+.dia-line { margin-bottom: 8px; }
+.dia-line:last-child { margin-bottom: 0; }
+
+/* ── Prompt copiable ── */
+.prompt-box { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow: hidden; margin: 16px 0; }
+.prompt-header { background: var(--bg-deep); border-bottom: 1px solid var(--line); padding: 11px 18px; display: flex; align-items: center; justify-content: space-between; }
+.prompt-header span { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--ink-mute); }
+.prompt-body { padding: 16px 18px; font-family: var(--mono); font-size: 12.5px; line-height: 1.75; color: var(--ink-soft); white-space: pre-wrap; word-break: break-word; }
+.copy-btn { display: flex; align-items: center; gap: 7px; padding: 7px 14px; background: var(--ink); color: var(--bg); border: none; border-radius: 999px; font-size: 12.5px; font-weight: 500; cursor: pointer; transition: background .15s; }
+.copy-btn:hover { background: var(--accent-deep); }
+.copy-btn.copied { background: var(--sage); }
+
+/* ── Compartir ── */
+.share-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px,1fr)); gap: 14px; margin: 20px 0; }
+.share-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 20px 22px; }
+.share-tag { font-family: var(--mono); font-size: 9.5px; letter-spacing: .1em; text-transform: uppercase; margin-bottom: 6px; }
+.share-tag.easy   { color: var(--sage); }
+.share-tag.medium { color: var(--accent-deep); }
+.share-tag.adv    { color: var(--blue); }
+.share-card h4 { font-size: 15px; font-weight: 600; margin: 0 0 6px; color: var(--ink); }
+.share-card p  { font-size: 13px; color: var(--ink-soft); margin: 0; line-height: 1.45; }
+
+/* ── Cierre ── */
+.cierre-card {
+  background: var(--ink); color: var(--bg);
+  border-radius: var(--radius-lg); padding: 36px 44px; margin-top: 44px;
+  position: relative; overflow: hidden;
+}
+.cierre-card::before { content: ""; position: absolute; bottom: -80px; right: -80px; width: 240px; height: 240px; border-radius: 50%; background: rgba(255,255,255,.05); }
+.cierre-card blockquote { font-family: var(--serif); font-size: clamp(17px,2.2vw,22px); font-style: italic; line-height: 1.45; margin: 0 0 12px; color: var(--bg); max-width: 60ch; position: relative; }
+.cierre-card p { font-size: 13.5px; color: oklch(0.7 0.01 75); margin: 0; }
+
+.mt-lg { margin-top: 48px; }
+.mt-md { margin-top: 28px; }
+
+@media (max-width: 780px) {
+  .nav-bar-inner { padding: 0 16px; overflow-x: auto; scrollbar-width: none; }
+  .nav-bar-inner::-webkit-scrollbar { display: none; }
+  .nav-tab { padding: 10px 12px; font-size: 12.5px; }
+  .page-layout { padding: 0 20px; }
+  .shell { padding: 24px 0 60px; }
+  .compare-grid { grid-template-columns: 1fr; }
+  .hero-band { padding: 22px 20px; }
+  .fase-body { padding-left: 20px; }
+  .cierre-card { padding: 26px 22px; }
+  .site-footer { padding: 20px; }
+  .prec-tabs { overflow-x: auto; flex-wrap: nowrap; scrollbar-width: none; }
+  .prec-tabs::-webkit-scrollbar { display: none; }
+}
+@media (max-width: 540px) {
+  .edumed-wordmark .w2 { display: none; }
+  .edumed-back { padding: 7px 10px; font-size: 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- BARRA EDUMED -->
+<div class="edumed-bar">
+  <div class="edumed-bar-inner">
+    <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/" aria-label="Inicio EduMed·UVa">
+      <div class="edumed-wordmark">
+        <span class="w1">EduMed<span class="sep">·</span>UVa</span>
+        <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
+      </div>
+    </a>
+    <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/IA_EduMed/" aria-label="Volver a IA en EduMed">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 4l-4 4 4 4"/></svg>
+      Volver a IA en EduMed
+    </a>
+  </div>
+</div>
+
+<!-- NAVEGACIÓN -->
+<nav class="nav-bar" role="tablist">
+  <div class="nav-bar-inner">
+    <button class="nav-tab active" data-panel="0">¿Qué es el vibe coding?</button>
+    <button class="nav-tab" data-panel="1">Qué puedes crear</button>
+    <button class="nav-tab" data-panel="2">Cómo se hace</button>
+    <button class="nav-tab" data-panel="3">Antes de publicar</button>
+  </div>
+</nav>
+
+<div class="page-layout">
+
+<!-- ============================================================
+     PANEL 0 — QUÉ ES
+     ============================================================ -->
+<div class="panel active" id="panel-0">
+<main class="shell">
+
+  <h1 class="section-title">Vibe coding:<br><em>crear recursos digitales sin saber programar</em></h1>
+  <p class="section-lead">Tienes una idea para una actividad interactiva, un simulador o un juego de preguntas para tus estudiantes. Pero no sabes programar. El vibe coding es la forma de convertir esa idea en una web real, dialogando con la IA.</p>
+
+  <div class="hero-band">
+    <div class="hero-band-inner">
+      <h2>No se trata de aprender a programar.<br>Se trata de <em>saber explicar bien lo que quieres.</em></h2>
+      <p>El profesor diseña la idea docente, describe qué quiere conseguir y para quién. La IA genera el código. Ambos lo mejoran mediante conversación — exactamente igual que cuando le pides mejoras a un prompt. El resultado: una herramienta web funcional que puedes compartir con tus estudiantes.</p>
+    </div>
+  </div>
+
+  <!-- Por qué "vibe" -->
+  <div class="mt-md">
+    <p class="section-eyebrow">El nombre</p>
+    <h2 class="h2">¿Por qué se llama <em>vibe</em> coding?</h2>
+    <div class="vibe-box">
+      <div class="vibe-box-icon">🎵</div>
+      <div>
+        <h4>De la intuición al resultado</h4>
+        <p>El término lo acuñó en 2025 Andrej Karpathy, uno de los fundadores de OpenAI. <em>Vibe</em> en inglés significa "ambiente" o "sensación": la idea es que el programador ya no escribe instrucciones técnicas precisas, sino que describe el resultado que quiere conseguir — el ambiente, la sensación, la experiencia — y deja que la IA resuelva los detalles técnicos. Es programar guiándose por la intuición y el objetivo, no por el código.</p>
+        <p style="margin-top:10px">Para los profesores, es exactamente lo mismo: describes cómo quieres que sea la actividad, qué debe sentir el estudiante al usarla, qué debe aprender. La IA hace el resto.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- No-code / low-code / vibe coding -->
+  <div class="mt-md">
+    <p class="section-eyebrow">Contexto</p>
+    <h2 class="h2">¿En qué se diferencia del <em>no-code</em>?</h2>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 18px;max-width:60ch;">Hay tres formas de crear sin escribir código. El vibe coding es la más flexible — y la que mejor se adapta a necesidades docentes concretas.</p>
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-tag">No-code</div>
+        <h4>Arrastrar y soltar</h4>
+        <p>Plantillas y bloques predefinidos. Rápido, pero limitado a lo que la herramienta permite.</p>
+      </div>
+      <div class="compare-card">
+        <div class="compare-tag">Low-code</div>
+        <h4>Visual + algo de código</h4>
+        <p>Más flexible, pero requiere conocimientos técnicos mínimos para las partes personalizadas.</p>
+      </div>
+      <div class="compare-card highlight">
+        <div class="compare-tag">Vibe coding</div>
+        <h4>Conversación con la IA</h4>
+        <p>Describes lo que necesitas, la IA lo construye. Cualquier cosa ajustada a tu asignatura exacta.</p>
+      </div>
+    </div>
+    <div class="key-phrase">"El profesor diseña la idea. La IA genera el código. <strong>Ambos lo mejoran hablando.</strong>"</div>
+  </div>
+
+  <!-- Por qué es útil -->
+  <div class="mt-md">
+    <p class="section-eyebrow">La barrera que desaparece</p>
+    <h2 class="h2">¿Por qué ahora sí es posible?</h2>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 14px;max-width:64ch;">Muchos docentes tienen ideas muy claras sobre qué herramienta les sería útil — un simulador de decisiones, un caso clínico interactivo, un cuestionario con retroalimentación inmediata — pero hasta ahora convertirla en una web requería saber programar. Ya no.</p>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 14px;max-width:64ch;">Lo que sí sigue siendo tuyo, y lo más importante, es la <strong>idea docente</strong>: saber qué quieres que aprendan los estudiantes, cómo quieres que lo practiquen y qué debe ocurrir cuando se equivocan. Eso no lo genera la IA. Lo pones tú.</p>
+    <div class="sage-box">El vibe coding no convierte al profesor en programador. Lo convierte en <strong>diseñador de experiencias educativas digitales</strong>. La clave está en saber formular bien la necesidad, no en entender el código.</div>
+  </div>
+
+  <!-- Glosario técnico -->
+  <div class="mt-lg">
+    <p class="section-eyebrow">Referencia</p>
+    <h2 class="h2">Palabras técnicas que conviene conocer</h2>
+    <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 20px;max-width:62ch;">No hace falta saber programar, pero sí conviene reconocer estos términos cuando aparezcan — en el prompt, en la respuesta de la IA o en un tutorial.</p>
+
+    <div class="fase-list">
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">HTML</div>
+            <div><p class="fase-title">HTML</p><p class="fase-sub">El formato básico de las páginas web</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p>HTML es el lenguaje que describe la estructura de una página web: qué es un título, qué es un párrafo, dónde va un botón. No es un lenguaje de programación — es más parecido a un documento de Word con etiquetas invisibles que organizan el contenido.</p>
+          <p>Cuando la IA genera "un archivo HTML", está creando un documento que cualquier navegador (Chrome, Safari, Firefox) puede abrir y mostrar como una web.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">UX</div>
+            <div><p class="fase-title">Frontend, Backend, UX y UI</p><p class="fase-sub">Las cuatro caras de una aplicación web</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p><strong>Frontend</strong> es todo lo que el estudiante ve e interactúa: botones, textos, colores, pantallas. Es la "fachada" de la aplicación. El vibe coding trabaja casi siempre en el frontend.</p>
+          <p><strong>Backend</strong> es lo que ocurre detrás, en el servidor: guardar datos, gestionar usuarios, conectar servicios. Para un primer recurso docente, no hace falta backend.</p>
+          <p><strong>UX</strong> (User Experience, experiencia de usuario) se refiere a si la aplicación es fácil, clara y agradable de usar. Una buena UX significa que el estudiante entiende qué hacer sin instrucciones.</p>
+          <p><strong>UI</strong> (User Interface, interfaz de usuario) es la parte visual: colores, tipografía, tamaño de botones, organización de la pantalla. Una buena UI hace que la aplicación se vea bien y sea coherente.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">API</div>
+            <div><p class="fase-title">API</p><p class="fase-sub">La conexión entre aplicaciones</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p>Una API es el sistema que permite que dos aplicaciones se comuniquen. Cuando una web guarda resultados en Google Sheets, o cuando muestra un mapa de Google Maps, está usando una API: le pregunta a otro servicio y recibe una respuesta.</p>
+          <p>Para un primer recurso docente sencillo no necesitas APIs. Aparecen cuando el recurso necesita conectarse con servicios externos — guardar datos, enviar correos, mostrar información en tiempo real.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">🐛</div>
+            <div><p class="fase-title">Depuración (debugging)</p><p class="fase-sub">El proceso de encontrar y corregir errores</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p><strong>Depurar</strong> (en inglés, <em>debug</em>) significa encontrar y corregir errores en el código. Es inevitable: casi ningún recurso funciona perfectamente desde el primer intento.</p>
+          <p>En vibe coding, depurar es sencillo: describes el error a la IA en lenguaje normal y ella lo corrige. Por ejemplo: <em>"Al pulsar el botón 'siguiente', la pantalla se queda en blanco en lugar de avanzar al paso 2."</em> Cuanto más concreta sea la descripción del fallo, más rápido lo resuelve.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">🔑</div>
+            <div><p class="fase-title">Autenticación y HTTPS</p><p class="fase-sub">Seguridad y acceso a la aplicación</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p><strong>Autenticación</strong> es el sistema que verifica quién es el usuario: el clásico nombre de usuario y contraseña. Añadirla a un recurso lo complica mucho y abre problemas de privacidad y gestión. Para empezar, evítala.</p>
+          <p><strong>HTTPS</strong> es el protocolo de seguridad que protege la comunicación entre el navegador del estudiante y el servidor donde está alojada la web. Se identifica por el candado en la barra del navegador. Es importante si el recurso maneja cualquier tipo de datos personales — aunque para recursos educativos sencillos sin datos, no es crítico.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+</div>
+
+<!-- ============================================================
+     PANEL 1 — QUÉ PUEDES CREAR
+     ============================================================ -->
+<div class="panel" id="panel-1">
+<main class="shell">
+
+  <h1 class="section-title">Qué puedes crear:<br><em>recursos web para la docencia médica</em></h1>
+  <p class="section-lead">El formato más útil para empezar es siempre una web app — una página que se abre en el navegador, se puede compartir con un enlace e incrustar en Moodle. Sin instalación, sin cuentas.</p>
+
+  <p class="section-eyebrow">Elige tu punto de partida</p>
+  <h2 class="h2">¿Qué quieres conseguir con tus estudiantes?</h2>
+  <p style="font-family:var(--serif);font-size:16px;color:var(--ink-soft);margin:0 0 24px;max-width:60ch;">Pulsa una categoría para ver qué tipos de recursos encajan mejor con tu objetivo.</p>
+
+  <!-- Acordeones de categoría -->
+  <div class="cat-acordeon-list">
+
+    <!-- PRACTICAR Y DECIDIR -->
+    <div class="cat-acord" id="cat-practicar">
+      <button class="cat-acord-header open" onclick="toggleCat('practicar')">
+        <span class="cat-emoji">🩺</span>
+        <div class="cat-titles">
+          <span class="cat-label">Practicar y decidir</span>
+          <span class="cat-sub">El estudiante actúa, elige, se equivoca y aprende</span>
+        </div>
+        <div class="cat-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </button>
+      <div class="cat-body open" id="body-practicar">
+        <div class="grupo-desc-header">El estudiante no lee — actúa. Toma decisiones, recibe consecuencias y aprende del error en un entorno seguro, sin riesgo real para el paciente.</div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🏥</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Caso clínico ramificado</div>
+              <div class="rc-ej">El estudiante elige preguntas, pruebas y tratamientos — y el caso evoluciona según sus decisiones</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Muchos estudiantes aprenden a describir enfermedades pero no a razonar ante un paciente real. El caso ramificado obliga a pensar en secuencia, igual que en la clínica: con información incompleta, incertidumbre y consecuencias.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Diagnóstico diferencial de disnea aguda con tres vías posibles</li>
+                  <li>Manejo inicial del dolor torácico en urgencias</li>
+                  <li>Paciente con fiebre, soplo y hemocultivos positivos</li>
+                  <li>Anemia microcítica: ¿ferropénica, talasemia o inflamatoria?</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Un caso por pasos con botones de decisión, retroalimentación inmediata tras cada elección y una explicación del razonamiento experto al final. El estudiante puede repetirlo eligiendo otras opciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🎛️</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Simulador de "¿qué pasaría si…?"</div>
+              <div class="rc-ej">El estudiante modifica variables y observa cómo cambia un proceso fisiológico</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">La fisiología se suele enseñar como hechos fijos. Un simulador permite descubrir relaciones causales: ¿qué ocurre si baja la albúmina? ¿Y si cae el filtrado glomerular? El estudiante experimenta con el sistema en lugar de memorizar sus respuestas.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Cambios hemodinámicos en distintos tipos de shock</li>
+                  <li>Relación entre albúmina, presión oncótica y edema</li>
+                  <li>Efecto de la pérdida de nefronas sobre creatinina y filtrado</li>
+                  <li>Equilibrio ácido-base al modificar ventilación o bicarbonato</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una interfaz con deslizadores, gráficos simples y mensajes interpretativos que cambian en tiempo real. Por ejemplo: "al reducir la albúmina, disminuye la presión oncótica y aumenta la tendencia al edema".</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🎮</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Juego de preguntas</div>
+              <div class="rc-ej">Repaso gamificado con puntuación, límite de tiempo y explicación de cada opción</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">El repaso pasivo (releer apuntes) es poco eficaz. Un juego de preguntas obliga a recuperar activamente la información, detecta lagunas concretas y mantiene la motivación mediante la puntuación y el reto.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Preguntas tipo MIR con explicación de cada opción incorrecta</li>
+                  <li>Identificación de patrones analíticos: ¿qué diagnóstico corresponde?</li>
+                  <li>Clasificación de fármacos por mecanismo de acción</li>
+                  <li>Reconocimiento de signos clínicos por descripción</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una serie de preguntas con cuatro opciones, temporizador, puntuación acumulada, retroalimentación inmediata y resumen final con los errores cometidos y sus explicaciones.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- REPASAR Y MEMORIZAR -->
+    <div class="cat-acord" id="cat-repasar">
+      <button class="cat-acord-header" onclick="toggleCat('repasar')">
+        <span class="cat-emoji">🧠</span>
+        <div class="cat-titles">
+          <span class="cat-label">Repasar y memorizar</span>
+          <span class="cat-sub">Consolidar conceptos de forma activa y repetible</span>
+        </div>
+        <div class="cat-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </button>
+      <div class="cat-body" id="body-repasar">
+        <div class="grupo-desc-header">Recursos para consolidar conceptos de forma activa. El estudiante controla el ritmo, puede repetir cuantas veces necesite y detecta por sí mismo sus lagunas.</div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🃏</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Flashcards web</div>
+              <div class="rc-ej">Tarjetas de repaso interactivas con respuesta oculta y autoevaluación</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Las flashcards en papel exigen tiempo de preparación y no se pueden compartir fácilmente. Una versión web permite al profesor crear el mazo una vez y distribuirlo con un enlace; el estudiante las repasa en el móvil cuando quiere.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Signos clínicos de enfermedades autoinmunes por órgano</li>
+                  <li>Antibióticos: espectro, mecanismo y uso principal</li>
+                  <li>Autoanticuerpos y su enfermedad asociada</li>
+                  <li>Efectos adversos de fármacos de uso frecuente</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Tarjetas con pregunta en el anverso, respuesta en el reverso (que gira al pulsar), botones para marcarla como "dominada" o "repasar de nuevo" y un contador de progreso.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">📖</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Glosario interactivo</div>
+              <div class="rc-ej">Términos clave con definición, ejemplo clínico y búsqueda instantánea</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Los glosarios en PDF son difíciles de consultar sobre la marcha. Una versión web con búsqueda instantánea permite al estudiante encontrar un término en segundos, con su definición y un ejemplo clínico.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Glosario de términos de fisiopatología con ejemplo clínico</li>
+                  <li>Términos de farmacología: farmacocinética y farmacodinámica</li>
+                  <li>Glosario de IA en medicina para profesores</li>
+                  <li>Conceptos de epidemiología clínica y estadística básica</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una página con buscador en tiempo real, listado alfabético y tarjetas desplegables por término con definición clara, ejemplo en contexto clínico y términos relacionados.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🏆</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Página gamificada</div>
+              <div class="rc-ej">Apuntes convertidos en una experiencia progresiva con niveles, puntos y retos</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Leer apuntes linealmente no genera compromiso. La gamificación añade estructura, metas visibles y recompensas inmediatas que mantienen la motivación, especialmente útil antes de un examen.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Repaso de farmacología con niveles desbloqueables por tema</li>
+                  <li>Preparación para el examen MIR con puntuación acumulada</li>
+                  <li>Recorrido gamificado por los órganos del sistema inmune</li>
+                  <li>Misión diagnóstica: resolver casos para avanzar de nivel</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una secuencia de bloques temáticos que se desbloquean al superar mini-pruebas, con barra de progreso, puntuación, badges por tema completado y pantalla de resultados final.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VISUALIZAR Y COMPRENDER -->
+    <div class="cat-acord" id="cat-visualizar">
+      <button class="cat-acord-header" onclick="toggleCat('visualizar')">
+        <span class="cat-emoji">🔬</span>
+        <div class="cat-titles">
+          <span class="cat-label">Visualizar y comprender</span>
+          <span class="cat-sub">Hacer visible lo abstracto, complejo o invisible</span>
+        </div>
+        <div class="cat-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </button>
+      <div class="cat-body" id="body-visualizar">
+        <div class="grupo-desc-header">Hay contenidos médicos que se entienden mejor cuando dejan de ser una lista de conceptos y se convierten en una imagen manipulable. Para hacer visible lo que en una diapositiva estática queda oculto.</div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🗺️</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Mapa conceptual interactivo</div>
+              <div class="rc-ej">Una red de conceptos clicables que el estudiante explora por capas: visión general primero, mecanismos después</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">En temas complejos, el estudiante se pierde entre mediadores, órganos, manifestaciones clínicas y pruebas diagnósticas. Un mapa interactivo permite explorar por capas, evitando la sobrecarga de información.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Cascada inflamatoria en una enfermedad autoinmune</li>
+                  <li>Fisiopatología del shock séptico, cardiogénico o hipovolémico</li>
+                  <li>Relación entre obesidad, insulinorresistencia e inflamación</li>
+                  <li>Manifestaciones del lupus eritematoso sistémico por órganos</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Nodos conectados con colores por sistemas, ventanas emergentes con explicaciones breves al pulsar, y botones para mostrar niveles de complejidad: básico, intermedio y avanzado.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">⏳</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Línea temporal de enfermedad</div>
+              <div class="rc-ej">La enfermedad como película, no como fotografía: fase a fase, con síntomas, decisiones y puntos de no retorno</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Los estudiantes suelen estudiar las enfermedades como fotografías aisladas, cuando muchas se comprenden mejor como películas. Una línea temporal permite ver qué aparece primero, qué datos son tardíos y cuándo conviene intervenir.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Historia natural de la infección por VIH sin tratamiento</li>
+                  <li>Fases de la sepsis: infección local → respuesta sistémica → shock</li>
+                  <li>Evolución de la hepatitis B desde la infección aguda hasta la cronicidad</li>
+                  <li>Curso de una enfermedad autoinmune hasta daño irreversible</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una línea con fases clicables, tarjetas explicativas, marcadores de "punto de no retorno", alertas clínicas y preguntas del tipo: "¿Qué dato esperarías en esta fase?"</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🧮</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Calculadora docente paso a paso</div>
+              <div class="rc-ej">No solo da el resultado: muestra cómo se calcula, qué significa y qué decisión clínica implica</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Los estudiantes suelen memorizar fórmulas sin entenderlas. Una calculadora docente muestra el cálculo desglosado, la categoría de riesgo y cómo pequeños cambios en una variable modifican la decisión final.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Filtrado glomerular estimado con interpretación por estadio</li>
+                  <li>Escala CURB-65 en neumonía: riesgo y decisión de ingreso</li>
+                  <li>CHA₂DS₂-VASc y HAS-BLED en fibrilación auricular</li>
+                  <li>Interpretación docente de gasometría arterial básica</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Un formulario con los datos clínicos necesarios, cálculo desglosado paso a paso, interpretación final con categoría de riesgo y un aviso: "esta herramienta sirve para aprender el razonamiento, no para sustituir la valoración clínica".</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🧩</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Comparador visual de diagnósticos</div>
+              <div class="rc-ej">Selecciona dos o tres enfermedades y compara síntomas, pruebas clave y errores frecuentes lado a lado</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">El diagnóstico diferencial es una de las competencias más difíciles de enseñar. Un comparador visual obliga al estudiante a mirar las enfermedades como alternativas que compiten, igual que ante un paciente real.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Artritis reumatoide, lupus y espondiloartritis</li>
+                  <li>Disnea: insuficiencia cardiaca, EPOC, neumonía o TEP</li>
+                  <li>Meningitis bacteriana, vírica y encefalitis</li>
+                  <li>Síndrome nefrótico frente a síndrome nefrítico</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una tabla interactiva donde el estudiante selecciona dos o tres diagnósticos y ve sus diferencias en columnas paralelas, con colores para los datos discriminativos y una sección de "pistas clave".</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🧬</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Atlas interactivo de mecanismos</div>
+              <div class="rc-ej">Capas activables de células, mediadores, órganos y fármacos para entender sistemas complejos</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Hay contenidos con muchos elementos simultáneos — inmunología, coagulación, farmacología — que resultan casi imposibles de explicar solo con texto. Un atlas interactivo permite activar y desactivar capas para entender cómo se conectan los componentes.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Activación del complemento por vías clásica y alternativa</li>
+                  <li>Sinapsis inmunológica y activación linfocitaria</li>
+                  <li>Mecanismo de acción de fármacos biológicos</li>
+                  <li>Coagulación e inflamación en la sepsis</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una imagen central con capas activables mediante botones: mostrar células, añadir mediadores, revelar órganos diana, marcar puntos de acción farmacológica. Cada capa incluye una explicación breve.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- PRESENTAR Y COMUNICAR -->
+    <div class="cat-acord" id="cat-presentar">
+      <button class="cat-acord-header" onclick="toggleCat('presentar')">
+        <span class="cat-emoji">📢</span>
+        <div class="cat-titles">
+          <span class="cat-label">Presentar y comunicar</span>
+          <span class="cat-sub">Compartir conocimiento de forma visual y atractiva</span>
+        </div>
+        <div class="cat-chevron"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </button>
+      <div class="cat-body" id="body-presentar">
+        <div class="grupo-desc-header">Transformar contenido denso — un artículo, unos datos, una clase compleja — en algo visualmente accesible, navegable y fácil de compartir con estudiantes o colegas.</div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">📄</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Landing page de artículo científico</div>
+              <div class="rc-ej">Una guía clínica o artículo transformado en infografía navegable con conclusiones e implicaciones docentes</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Los artículos científicos son densos y difíciles de leer para estudiantes de grado. Una landing page convierte el contenido esencial en algo visual, accesible y con contexto docente: qué importa de este artículo y qué implica para la práctica.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Guía clínica de insuficiencia cardiaca resumida visualmente</li>
+                  <li>Estudio clave de farmacología con resultados principales</li>
+                  <li>Protocolo de actuación en urgencias en formato visual interactivo</li>
+                  <li>Meta-análisis con gráfico de forest plot explicado</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una página con resumen visual, secciones desplegables (método, resultados, limitaciones), mensajes clave destacados y una sección "¿Qué cambia en mi práctica?" para anclar el aprendizaje.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">📊</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Dashboard de resultados de prácticas</div>
+              <div class="rc-ej">Datos de una encuesta o práctica convertidos en gráficos interactivos que los estudiantes pueden explorar</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Mostrar datos de prácticas en una tabla de Excel no genera reflexión. Un dashboard interactivo permite a los estudiantes explorar los resultados, comparar grupos y sacar sus propias conclusiones antes de la discusión en clase.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Resultados de una encuesta de percepción del riesgo cardiovascular</li>
+                  <li>Comparativa de respuestas antes y después de una intervención</li>
+                  <li>Datos epidemiológicos de una práctica de campo</li>
+                  <li>Resultados de autoevaluación diagnóstica de los estudiantes</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una página con gráficos de barras o tartas, filtros por variable, cifras clave destacadas y preguntas de reflexión que guían la interpretación de los datos.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="rc-expandible" onclick="toggleRc(this)">
+          <div class="rc-exp-header">
+            <span class="rc-emoji">🎤</span>
+            <div class="rc-exp-titles">
+              <div class="rc-title">Guion interactivo para exposiciones</div>
+              <div class="rc-ej">Apoyo visual para presentaciones orales con notas del ponente, temporizador y transiciones controladas</div>
+            </div>
+            <div class="rc-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+          </div>
+          <div class="rc-exp-body">
+            <p class="rc-exp-problema">Las presentaciones en PowerPoint no siempre se adaptan bien a defensas de TFG o comunicaciones en jornadas. Un guion interactivo web permite al ponente ver sus notas en el móvil mientras la audiencia ve la presentación en pantalla.</p>
+            <div class="rc-exp-cols">
+              <div>
+                <div class="rc-exp-label">Ejemplos médicos</div>
+                <ul class="rc-exp-lista">
+                  <li>Guion para la defensa del TFG con puntos clave por sección</li>
+                  <li>Presentación de un caso clínico con notas del ponente</li>
+                  <li>Comunicación en jornada con temporizador y alertas de tiempo</li>
+                  <li>Exposición de seminario con preguntas anticipadas</li>
+                </ul>
+              </div>
+              <div>
+                <div class="rc-exp-label">Qué construiría el profesor</div>
+                <p class="rc-exp-build">Una página con diapositivas navegables, notas del ponente en panel lateral, temporizador por sección, avance con teclas o botones y modo presentación a pantalla completa.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- Dónde hacerlo -->
+  <div class="mt-lg">
+    <p class="section-eyebrow">Herramientas</p>
+    <h2 class="h2">¿Con qué LLM se puede hacer?</h2>
+    <p style="font-family:var(--serif);font-size:15.5px;color:var(--ink-soft);margin:0 0 18px;max-width:62ch;">Para empezar, las herramientas generalistas son más que suficientes. Todas permiten ver el resultado en tiempo real y pedir cambios en lenguaje normal.</p>
+    <div class="plataformas-grid">
+      <div class="plataforma-card">
+        <div class="plataforma-icon">✦</div>
+        <div><h5>Claude Artifacts</h5><p>Muy bueno para recursos web interactivos. Previsualiza en la misma pantalla.</p></div>
+      </div>
+      <div class="plataforma-card">
+        <div class="plataforma-icon">⬡</div>
+        <div><h5>ChatGPT Canvas</h5><p>Útil para generar y editar código HTML y prototipos paso a paso.</p></div>
+      </div>
+      <div class="plataforma-card">
+        <div class="plataforma-icon blue">◈</div>
+        <div><h5>Gemini / AI Studio</h5><p>Buena opción si ya usas el ecosistema Google.</p></div>
+      </div>
+      <div class="plataforma-card">
+        <div class="plataforma-icon blue">⬢</div>
+        <div><h5>Copilot</h5><p>Integrado en Microsoft 365. Útil si tu entorno institucional es Microsoft.</p></div>
+      </div>
+    </div>
+    <div class="sage-box">Para una segunda fase, plataformas como Replit, Lovable o v0 permiten crear aplicaciones más complejas — pero no son el punto de partida recomendado.</div>
+  </div>
+
+</main>
+</div>
+
+<!-- ============================================================
+     PANEL 2 — CÓMO SE HACE
+     ============================================================ -->
+<div class="panel" id="panel-2">
+<main class="shell">
+
+  <h1 class="section-title">Cómo se hace:<br><em>cuatro fases y una conversación</em></h1>
+  <p class="section-lead">El proceso no empieza abriendo la IA. Empieza pensando bien la necesidad docente. Cuanto más clara tengas la idea, mejor será el primer resultado — y menos vueltas habrá que dar.</p>
+
+  <div class="fase-list">
+
+    <div class="fase-item open" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num">1</div>
+          <span class="fase-emoji">🧠</span>
+          <div>
+            <p class="fase-title">Pensar la idea antes de abrir la IA</p>
+            <p class="fase-sub">El único paso que hace el profesor solo</p>
+          </div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>Una mala idea docente no mejora por tener una web bonita. Antes de escribir nada, responde estas preguntas:</p>
+        <div class="chip-row">
+          <span class="chip">¿Qué problema docente quiero resolver?</span>
+          <span class="chip">¿A qué estudiantes va dirigido?</span>
+          <span class="chip">¿Qué harán los estudiantes con esto?</span>
+          <span class="chip">¿Qué aprenderán al usarlo?</span>
+          <span class="chip">¿Es para clase, Moodle o estudio autónomo?</span>
+          <span class="chip">¿Necesita guardar datos?</span>
+        </div>
+        <p style="margin-top:14px">También conviene imaginar cómo será: pantalla inicial, botones, secciones, mensajes de error. Incluso un boceto en papel o una diapositiva que puedas subir a la IA como referencia visual.</p>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num">2</div>
+          <span class="fase-emoji">✍️</span>
+          <div>
+            <p class="fase-title">Describir la funcionalidad con un buen prompt</p>
+            <p class="fase-sub">Cuanto más concreta la descripción, mejor el primer resultado</p>
+          </div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>No basta con decir <em>"hazme una web sobre lupus"</em>. La IA necesita saber para quién es, qué debe hacer el estudiante, qué debe ocurrir en cada paso y qué restricciones tiene. Esta plantilla cubre todo eso:</p>
+        <div class="prompt-box">
+          <div class="prompt-header">
+            <span>Plantilla de prompt — copia y adapta</span>
+            <button class="copy-btn" id="copy-plantilla" onclick="copyPlantilla()">
+              <svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="9" height="9" rx="2"/><path d="M3 12V3h9"/></svg>
+              Copiar
+            </button>
+          </div>
+          <div class="prompt-body" id="plantilla-text">Quiero desarrollar una web app educativa sobre [tema].
+
+Objetivo:
+[Qué problema docente resuelve y qué debe aprender el estudiante.]
+
+Público objetivo:
+[Curso, titulación, nivel de conocimientos, contexto de uso.]
+
+Tipo de recurso:
+[Simulador / caso clínico / juego / glosario / calculadora / otro.]
+
+Plataforma:
+Quiero una web app en HTML, responsive (que se adapte al móvil), que pueda abrirse en navegador y compartirse con estudiantes.
+
+Contenido:
+Usa exclusivamente el siguiente contenido:
+[Pegar aquí el contenido validado por el profesor.]
+
+Funciones principales:
+1. [Función 1]
+2. [Función 2]
+3. [Función 3]
+
+Interfaz:
+- Pantalla inicial con título, objetivo y botón de inicio.
+- Secciones claras y botones grandes.
+- Diseño legible en móvil y en ordenador.
+
+Diseño visual:
+- Estilo [sobrio / clínico / universitario / gamificado / minimalista].
+- Tipografía clara y buen contraste de colores.
+
+Datos:
+- No debe guardar datos personales.
+- Si necesita puntuación, que sea local y no se envíe a ningún servidor.
+
+Solicito:
+Genera una primera versión funcional en un único archivo HTML con CSS y JavaScript integrados.
+Después explícame brevemente cómo puedo probarla y qué partes puedo modificar.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num">3</div>
+          <span class="fase-emoji">🔁</span>
+          <div>
+            <p class="fase-title">Probar, detectar errores y pedir mejoras</p>
+            <p class="fase-sub">El primer resultado es siempre un punto de partida</p>
+          </div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>Prueba la primera versión como si fueras estudiante. Hazte estas preguntas:</p>
+        <div class="chip-row">
+          <span class="chip accent">¿Se entiende qué hay que hacer?</span>
+          <span class="chip accent">¿Funciona en móvil?</span>
+          <span class="chip accent">¿Los botones hacen lo esperado?</span>
+          <span class="chip accent">¿Hay errores conceptuales?</span>
+          <span class="chip accent">¿La IA ha inventado contenido?</span>
+          <span class="chip accent">¿La actividad ayuda realmente a aprender?</span>
+        </div>
+        <p style="margin-top:14px">Después pide cambios concretos. El diálogo iterativo con la IA es la esencia del vibe coding:</p>
+        <div class="dialogo">
+          <div class="dialogo-label">Ejemplo de conversación de mejora</div>
+          <div class="dia-line"><span class="dia-tu">Tú:</span> "El texto de la primera pantalla es demasiado largo. Resúmelo en tres frases."</div>
+          <div class="dia-line"><span class="dia-ia">IA:</span> [genera la versión resumida]</div>
+          <div class="dia-line"><span class="dia-tu">Tú:</span> "Bien. Ahora el botón de 'siguiente' no funciona en móvil. Corrígelo."</div>
+          <div class="dia-line"><span class="dia-ia">IA:</span> [corrige el código]</div>
+          <div class="dia-line"><span class="dia-tu">Tú:</span> "No añadas contenido nuevo. Solo corrige lo que te indico y conserva todo lo demás."</div>
+        </div>
+        <div class="sage-box">Si la IA empieza a cambiar cosas que no le has pedido, díselo explícitamente: <em>"Conserva todo tal como está y modifica solo lo que te señalo."</em></div>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num">4</div>
+          <span class="fase-emoji">✅</span>
+          <div>
+            <p class="fase-title">Validar antes de usar con estudiantes</p>
+            <p class="fase-sub">Formativo primero, certificativo después — si acaso</p>
+          </div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>Antes de compartirlo con grupos grandes, pruébalo con una o dos personas de confianza. Valora:</p>
+        <div class="chip-row">
+          <span class="chip sage">¿Es claro para alguien que no lo ha visto antes?</span>
+          <span class="chip sage">¿El tiempo que requiere es razonable?</span>
+          <span class="chip sage">¿El contenido es correcto y verificado?</span>
+          <span class="chip sage">¿El nivel es adecuado para el curso?</span>
+        </div>
+        <p style="margin-top:14px">Para empezar, úsalo como <strong>actividad formativa</strong> — práctica, autoevaluación, repaso — no como evaluación certificativa. Cuando el recurso ya funcione bien en ese rol, podrás plantearte darle más peso.</p>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+</div>
+
+<!-- ============================================================
+     PANEL 3 — ANTES DE PUBLICAR
+     ============================================================ -->
+<div class="panel" id="panel-3">
+<main class="shell">
+
+  <h1 class="section-title">Antes de publicar:<br><em>precauciones y formas de compartir</em></h1>
+  <p class="section-lead">El recurso funciona bien en tu pantalla. Antes de compartirlo, conviene revisar estos cinco puntos — especialmente si trabajas en un entorno de salud donde los datos sensibles son una responsabilidad real.</p>
+
+  <!-- Acordeón de precauciones -->
+  <p class="section-eyebrow">Precauciones</p>
+  <h2 class="h2">Cinco cosas que revisar siempre</h2>
+
+  <div class="fase-list" style="margin-top:20px">
+
+    <div class="fase-item open" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num" style="font-size:16px;background:none;border:none;width:auto;height:auto;">🔒</div>
+          <div><p class="fase-title">Sin datos sensibles</p></div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>No incluyas datos identificativos de estudiantes, historiales clínicos reales ni calificaciones oficiales — ni en el recurso que creas, ni en el prompt que le das a la IA para generarlo.</p>
+        <p>Si el recurso necesita que el estudiante introduzca su nombre, usa un alias o simplemente no lo pidas. En el contexto sanitario y educativo, la protección de datos no es opcional.</p>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num" style="font-size:16px;background:none;border:none;width:auto;height:auto;">🔎</div>
+          <div><p class="fase-title">Revisa siempre el contenido</p></div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>La IA puede inventar datos, simplificar en exceso o cometer errores clínicos con total apariencia de precisión. Todo el contenido médico debe ser revisado por el profesor antes de publicar el recurso.</p>
+        <p>Esto no es una precaución menor. Un error en una dosis, un diagnóstico incorrecto o una referencia inventada puede llegar a cientos de estudiantes en minutos.</p>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num" style="font-size:16px;background:none;border:none;width:auto;height:auto;">🗄️</div>
+          <div><p class="fase-title">Empieza sin bases de datos</p></div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>Una <strong>base de datos</strong> es el sistema que guarda información de forma permanente en un servidor: respuestas de estudiantes, puntuaciones, registros de uso. Añadirla a un recurso web implica diseñar cómo se almacena, gestionar quién puede acceder y asumir responsabilidades legales sobre esos datos.</p>
+        <p>Para un primer recurso, prescinde de ello. Si necesitas puntuación, que sea local — visible para el estudiante en pantalla pero sin guardarse en ningún servidor.</p>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num" style="font-size:16px;background:none;border:none;width:auto;height:auto;">📱</div>
+          <div><p class="fase-title">Pide siempre diseño responsive</p></div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p><strong>Responsive</strong> significa que la web se adapta automáticamente al tamaño de la pantalla: se ve bien tanto en un ordenador de sobremesa como en una tableta o un móvil. No es un ajuste estético — es funcional. Una web no responsive en un móvil puede tener texto diminuto, botones imposibles de pulsar o contenido que se sale de la pantalla.</p>
+        <p>Los estudiantes usarán el recurso mayoritariamente desde el móvil. Inclúyelo siempre en el prompt: <em>"diseño responsive, legible en móvil"</em>.</p>
+      </div>
+    </div>
+
+    <div class="fase-item" onclick="toggleFase(this)">
+      <div class="fase-header">
+        <div class="fase-left">
+          <div class="fase-num" style="font-size:16px;background:none;border:none;width:auto;height:auto;">♿</div>
+          <div><p class="fase-title">Cuida la accesibilidad</p></div>
+        </div>
+        <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+      </div>
+      <div class="fase-body">
+        <p>Un recurso accesible es utilizable por el mayor número de personas posible, incluyendo quienes tienen dificultades visuales, motoras o cognitivas. No requiere grandes esfuerzos si se pide desde el principio.</p>
+        <p>Incluye en el prompt: buen contraste entre texto y fondo, texto legible (tamaño suficiente, fuente clara), botones grandes, y que la información nunca dependa únicamente del color para transmitirse.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Cómo compartir -->
+  <div class="mt-lg">
+    <p class="section-eyebrow">Distribución</p>
+    <h2 class="h2">Formas de compartir el recurso</h2>
+    <div class="share-grid">
+      <div class="share-card">
+        <div class="share-tag easy">Más fácil</div>
+        <h4>Enlace desde la plataforma</h4>
+        <p>La opción más rápida. Claude, ChatGPT y Gemini permiten compartir el artifact con un enlace. Sin descargas ni instalaciones.</p>
+      </div>
+      <div class="share-card">
+        <div class="share-tag easy">Fácil</div>
+        <h4>Descargar el HTML</h4>
+        <p>Copia el código, pégalo en el Bloc de notas, guárdalo como <code>index.html</code> y ábrelo con el navegador. Se puede compartir como archivo adjunto.</p>
+      </div>
+      <div class="share-card">
+        <div class="share-tag medium">Medio</div>
+        <h4>Incrustar en Moodle</h4>
+        <p>Sube el archivo HTML como recurso o incrusta el enlace externo. La configuración institucional de Moodle puede limitar algunos elementos.</p>
+      </div>
+      <div class="share-card">
+        <div class="share-tag adv">Un paso más</div>
+        <h4>Publicar en GitHub Pages</h4>
+        <p>Gratuito, con URL estable y sin dependencia de plataformas externas. Requiere aprender unos pasos iniciales, pero permite una colección permanente de recursos.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cierre -->
+  <div class="cierre-card">
+    <blockquote>"El vibe coding no convierte al profesor en programador. Lo convierte en diseñador de experiencias educativas digitales."</blockquote>
+    <p>La clave no es entender el código. Es saber formular bien la necesidad, probar con criterio docente, detectar errores de contenido y decidir cuándo una herramienta aporta valor real al aprendizaje.</p>
+  </div>
+
+</main>
+</div>
+
+</div><!-- /page-layout -->
+
+<!-- FOOTER -->
+<footer style="border-top:1px solid var(--line);margin-top:0;padding:22px 40px;max-width:1180px;margin-left:auto;margin-right:auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;">
+  <span style="font-family:var(--mono);font-size:11px;color:var(--ink-mute);letter-spacing:.06em;">EduMed·UVa — Unidad de Educación Médica · Facultad de Medicina</span>
+  <span style="font-size:12px;color:var(--ink-mute);">© 2026</span>
+</footer>
+
+<script>
+// ── Offset dinámico del header ──────────────────────────────
+function fixHeaderOffset() {
+  const bar = document.querySelector('.edumed-bar');
+  const nav = document.querySelector('.nav-bar');
+  if (!bar) return;
+  const barH = bar.getBoundingClientRect().height;
+  if (nav) nav.style.top = barH + 'px';
+  const navH = nav ? nav.getBoundingClientRect().height : 37;
+  document.body.style.paddingTop = (barH + navH) + 'px';
+}
+fixHeaderOffset();
+window.addEventListener('resize', fixHeaderOffset);
+
+// ── Navegación por paneles ──────────────────────────────────
+function goToPanel(idx) {
+  document.querySelectorAll('.nav-tab').forEach((t,i) => t.classList.toggle('active', i === idx));
+  document.querySelectorAll('.panel').forEach((p,i) => p.classList.toggle('active', i === idx));
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+document.querySelectorAll('.nav-tab').forEach((tab, idx) => {
+  tab.addEventListener('click', () => goToPanel(idx));
+});
+
+// ── Acordeones de categoría ─────────────────────────────────
+function toggleCat(id) {
+  const header = document.querySelector('#cat-' + id + ' .cat-acord-header');
+  const body   = document.getElementById('body-' + id);
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open', !isOpen);
+  body.classList.toggle('open', !isOpen);
+}
+
+// ── Acordeón de recursos expandibles ───────────────────────
+function toggleRc(el) { el.classList.toggle('open'); }
+
+// ── Acordeón de fases ───────────────────────────────────────
+function toggleFase(el) { el.classList.toggle('open'); }
+
+// ── Copiar plantilla ────────────────────────────────────────
+function copyPlantilla() {
+  const txt = document.getElementById('plantilla-text').textContent;
+  navigator.clipboard.writeText(txt).then(() => {
+    const btn = document.getElementById('copy-plantilla');
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M3 8l4 4 6-8"/></svg> Copiado`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="9" height="9" rx="2"/><path d="M3 12V3h9"/></svg> Copiar`;
+    }, 2200);
+  });
+}
+</script>
+
+</body>
+</html>
