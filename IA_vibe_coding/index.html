@@ -510,6 +510,36 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-deep); pa
       <div class="fase-item" onclick="toggleFase(this)">
         <div class="fase-header">
           <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">📱</div>
+            <div><p class="fase-title">Web app frente a app nativa</p><p class="fase-sub">¿Qué diferencia hay y cuál elegir?</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p>Una <strong>web app</strong> es una página o aplicación que se abre desde el navegador del móvil u ordenador. Se puede compartir con un enlace, incrustar en Moodle y no requiere instalación. Es el formato ideal para recursos docentes.</p>
+          <p>Una <strong>app nativa</strong> es una aplicación que se instala desde la App Store o Google Play. Tiene acceso a la cámara, sensores y notificaciones del dispositivo, pero es mucho más compleja de crear, validar y publicar. Para un primer recurso educativo, no tiene sentido.</p>
+          <p>Con vibe coding se trabaja casi siempre con web apps. Son inmediatas, portables y funcionan en cualquier dispositivo sin instalación.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">↔</div>
+            <div><p class="fase-title">Responsive</p><p class="fase-sub">Que se adapta a cualquier tamaño de pantalla</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p><strong>Responsive</strong> significa que la web se adapta automáticamente al tamaño de la pantalla: se reorganiza para verse bien tanto en un ordenador de sobremesa como en una tableta o un móvil. No es un ajuste estético — es funcional.</p>
+          <p>Una web no responsive en un móvil puede tener texto diminuto, botones imposibles de pulsar o contenido que se sale de los márgenes. Como los estudiantes usarán el recurso mayoritariamente desde el móvil, pedir diseño responsive al generar el recurso no es opcional — es la norma.</p>
+          <p>Basta con incluirlo en el prompt: <em>"diseño responsive, legible en móvil y en ordenador"</em>.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
             <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">UX</div>
             <div><p class="fase-title">Frontend, Backend, UX y UI</p><p class="fase-sub">Las cuatro caras de una aplicación web</p></div>
           </div>
@@ -540,6 +570,20 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-deep); pa
       <div class="fase-item" onclick="toggleFase(this)">
         <div class="fase-header">
           <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">🗄️</div>
+            <div><p class="fase-title">Base de datos</p><p class="fase-sub">Dónde se guardan los datos de forma permanente</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p>Una <strong>base de datos</strong> es el sistema que almacena información de forma permanente en un servidor: respuestas de estudiantes, puntuaciones, registros de actividad. A diferencia de la memoria del navegador (que desaparece al cerrar la pestaña), una base de datos guarda los datos aunque el usuario cierre la sesión.</p>
+          <p>Añadir una base de datos a un recurso web implica diseñar cómo se estructura la información, gestionar quién puede acceder y asumir responsabilidades legales sobre los datos almacenados. Para un primer recurso docente, lo más sencillo es prescindir de ella: si el recurso necesita puntuación, que sea local y visible solo en pantalla, sin guardarse en ningún servidor.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
             <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">🐛</div>
             <div><p class="fase-title">Depuración (debugging)</p><p class="fase-sub">El proceso de encontrar y corregir errores</p></div>
           </div>
@@ -562,6 +606,21 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-deep); pa
         <div class="fase-body">
           <p><strong>Autenticación</strong> es el sistema que verifica quién es el usuario: el clásico nombre de usuario y contraseña. Añadirla a un recurso lo complica mucho y abre problemas de privacidad y gestión. Para empezar, evítala.</p>
           <p><strong>HTTPS</strong> es el protocolo de seguridad que protege la comunicación entre el navegador del estudiante y el servidor donde está alojada la web. Se identifica por el candado en la barra del navegador. Es importante si el recurso maneja cualquier tipo de datos personales — aunque para recursos educativos sencillos sin datos, no es crítico.</p>
+        </div>
+      </div>
+
+      <div class="fase-item" onclick="toggleFase(this)">
+        <div class="fase-header">
+          <div class="fase-left">
+            <div class="fase-num" style="font-size:13px;font-family:var(--mono);width:36px;height:36px;">📦</div>
+            <div><p class="fase-title">Framework y librería</p><p class="fase-sub">Herramientas que facilitan construir la web</p></div>
+          </div>
+          <div class="fase-chevron"><svg width="12" height="12" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
+        </div>
+        <div class="fase-body">
+          <p>Una <strong>librería</strong> es un conjunto de funciones ya escritas que la IA puede usar para que el recurso haga cosas concretas sin programarlas desde cero: mostrar gráficos, animar elementos, procesar datos. La IA las incorpora automáticamente al generar el código cuando son necesarias.</p>
+          <p>Un <strong>framework</strong> es una estructura más completa que define cómo se organiza toda la aplicación. React, Vue o Svelte son ejemplos de frameworks. Para recursos docentes sencillos, la IA usará HTML, CSS y JavaScript directamente, sin necesidad de frameworks complejos.</p>
+          <p>No hace falta conocer estos términos en detalle. Basta con saber que si la IA menciona que va a "usar React" o "incluir Chart.js", simplemente está eligiendo las herramientas adecuadas para lo que le has pedido.</p>
         </div>
       </div>
 
@@ -1078,7 +1137,11 @@ code { font-family: var(--mono); font-size: 13px; background: var(--bg-deep); pa
       </div>
       <div class="plataforma-card">
         <div class="plataforma-icon blue">⬢</div>
-        <div><h5>Copilot</h5><p>Integrado en Microsoft 365. Útil si tu entorno institucional es Microsoft.</p></div>
+        <div><h5>Copilot Pages</h5><p>La función de vibe coding dentro de Microsoft 365. Integrado en el entorno institucional.</p></div>
+      </div>
+      <div class="plataforma-card">
+        <div class="plataforma-icon">☯</div>
+        <div><h5>Qwen</h5><p>Excelente para generar recursos web interactivos. Funciona muy bien para vibe coding docente.</p></div>
       </div>
     </div>
     <div class="sage-box">Para una segunda fase, plataformas como Replit, Lovable o v0 permiten crear aplicaciones más complejas — pero no son el punto de partida recomendado.</div>
