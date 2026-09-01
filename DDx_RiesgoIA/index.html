@@ -353,10 +353,10 @@
           </button>
           <div class="acc-body">
             <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede fabricar síntomas, hallazgos, referencias bibliográficas o recomendaciones clínicas enteras sin que exista ninguna base real. Lo peligroso no es solo la falsedad, sino su presentación en un tono seguro y gramaticalmente impecable.</div>
+              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede fabricar síntomas, hallazgos, referencias bibliográficas o recomendaciones clínicas enteras sin que exista ninguna base real. Lo peligroso no es solo la falsedad, sino su presentación en un tono seguro y gramaticalmente impecable. El problema es el <em>contenido</em> — lo que dice es falso — no la forma en que lo dice.</div>
               <div class="detail-row"><strong>Por qué importa en clínica.</strong> En diagnóstico diferencial, una alucinación puede introducir un dato inexistente que desplace todo el razonamiento posterior. La lista puede parecer coherente y estar construida sobre una premisa falsa.</div>
               <div class="detail-row"><strong>Cómo detectarla.</strong> Debe hacer sospechar cualquier cifra excesivamente precisa sin justificación, cualquier artículo con autores reales pero título dudoso, o cualquier detalle del paciente que no proceda de la viñeta original. Pregúntate: <em>"¿de dónde ha salido este dato?"</em></div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Nunca uses la IA como fuente primaria de verdad. Las afirmaciones de alto impacto han de contrastarse con fuentes estables. La verificación cruzada no es un lujo académico: es una medida básica de seguridad.</div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> No aceptar ninguna afirmación relevante sin contrastarla con los datos reales del caso y, cuando sea necesario, con fuentes fiables actualizadas. La verificación cruzada no es un lujo académico: es una medida básica de seguridad.</div>
             </div>
           </div>
         </div>
@@ -372,10 +372,10 @@
           </button>
           <div class="acc-body">
             <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede reproducir medicina basada en estereotipos, infradiagnosticar a determinados grupos o alterar su diferencial por cambios demográficos no justificados.</div>
+              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede reproducir medicina basada en estereotipos, infradiagnosticar a determinados grupos o alterar su diferencial por cambios demográficos no justificados. La evidencia muestra que el modelo puede rendir peor o sugerir itinerarios diagnósticos distintos según variables de raza, sexo o nivel socioeconómico del paciente.</div>
               <div class="detail-row"><strong>Por qué importa en clínica.</strong> El sesgo no siempre se expresa como un error grosero. A menudo aparece como una ligera desviación: una patología considerada menos probable en mujeres, o sobreestimada en un grupo racial concreto.</div>
               <div class="detail-row"><strong>Cómo detectarlo.</strong> Revisa si el diferencial cambia de forma llamativa cuando se modifica el sexo, la etnia o el nivel socioeconómico sin alterar el núcleo fisiopatológico. Si una patología evidente desaparece al cambiar solo un atributo demográfico, sospecha sesgo de representación.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a él.</strong> Introduce una auditoría consciente. La pregunta útil no es <em>"¿qué dice la IA?"</em>, sino <em>"¿a quién puede estar dejando fuera esta respuesta?"</em></div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Revisar críticamente si la propuesta sería la misma en otro perfil de paciente. Evitar asumir neutralidad en respuestas aparentemente objetivas. No usar raza o sexo como variables causales salvo justificación clínica explícita, y documentar el razonamiento seguido.</div>
             </div>
           </div>
         </div>
@@ -394,7 +394,7 @@
               <div class="detail-row"><strong>Qué significa.</strong> Un modelo puede responder con soltura sobre un tratamiento o una guía sin incorporar cambios recientes. La apariencia de actualidad no garantiza que el contenido lo sea.</div>
               <div class="detail-row"><strong>Por qué importa en clínica.</strong> En decisiones terapéuticas puede ser crítico. Aplicar criterios superados o ignorar actualizaciones regulatorias puede traducirse en recomendaciones clínicamente inseguras.</div>
               <div class="detail-row"><strong>Cómo detectarla.</strong> Ante tratamientos de última línea, ensayos recientes o guías actualizadas, el modelo tiende a ofrecer respuestas genéricas o a dudar sin reconocer con claridad su límite temporal.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> En todo lo que afecte a tratamiento, seguridad o guías de práctica clínica, prioriza sistemas conectados a literatura actual o plataformas con recuperación de documentos auditables.</div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Verificar siempre la información sensible al tiempo. Si es posible, usar sistemas conectados a fuentes actualizadas o herramientas de recuperación con RAG — aunque sin asumir que esto garantiza la corrección: el sistema sigue siendo interpretativo y puede priorizar mal la evidencia si las fuentes son incompletas o sesgadas.</div>
             </div>
           </div>
         </div>
@@ -403,17 +403,17 @@
           <button class="acc-trigger" onclick="toggleAcc(this)">
             <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">4</div>
             <div class="acc-label-wrap">
-              <span class="acc-label">Inflexibilidad cognitiva y apariencia de razonamiento</span>
-              <span class="acc-sublabel">Reconoce patrones frecuentes pero falla cuando hay que romperlos</span>
+              <span class="acc-label">Exceso de confianza, inflexibilidad y apariencia de razonamiento</span>
+              <span class="acc-sublabel">El modelo puede acertar en el contenido pero expresar una certeza no proporcional a su fiabilidad real</span>
             </div>
             <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
           </button>
           <div class="acc-body">
             <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> En lugar de razonar causalmente, el modelo tiende a completar guiones conocidos. Ante datos raros o excluyentes, puede seguir aferrado al patrón frecuente y generar una explicación solo aparentemente lógica.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Muchos errores diagnósticos ocurren por incapacidad para abandonar una hipótesis cómoda cuando aparece un dato que la invalida. El modelo puede caer en ese mismo fallo con argumentación verbal brillante.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Hay que sospecharla cuando la IA insiste en una hipótesis clásica pese a que el caso contiene un dato bloqueador. Si el modelo no puede responder qué dato invalida su conclusión, su razonamiento es frágil.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Busca de forma deliberada los hallazgos negativos que desarman la hipótesis principal. Pregunta: <em>"¿qué dato de este caso hace imposible tu conclusión?"</em></div>
+              <div class="detail-row"><strong>Dos riesgos distintos.</strong> El <strong>exceso de confianza</strong> ocurre cuando el modelo acierta en el contenido pero comunica una certeza no proporcional a la fiabilidad real de su respuesta — por ejemplo, al estimar una probabilidad diagnóstica con una precisión injustificada. La <strong>inflexibilidad</strong> ocurre cuando, ante datos raros o excluyentes, el modelo sigue aferrado al patrón frecuente y genera una explicación solo aparentemente lógica.</div>
+              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Muchos errores diagnósticos ocurren por incapacidad para abandonar una hipótesis cómoda cuando aparece un dato que la invalida. El modelo puede caer en ese mismo fallo con argumentación verbal brillante. No interpretar el tono de seguridad como indicador de veracidad.</div>
+              <div class="detail-row"><strong>Cómo detectarlos.</strong> Hay que sospecharlos cuando la IA insiste en una hipótesis clásica pese a que el caso contiene un dato bloqueador, o cuando expresa probabilidades con una precisión que el contexto no justifica. Si el modelo no puede responder qué dato invalida su conclusión, su razonamiento es frágil.</div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Valorar por separado la plausibilidad, la evidencia aportada y el grado de incertidumbre real del caso. Preguntar de forma explícita: <em>"¿qué dato adicional es más necesario antes de priorizar este diagnóstico?"</em> y <em>"¿qué hallazgo podría cambiar más tu conclusión?"</em></div>
             </div>
           </div>
         </div>
@@ -432,7 +432,7 @@
               <div class="detail-row"><strong>Qué significa.</strong> El rendimiento del modelo es muy sensible a cómo se presenta la información. No solo influye qué datos recibe, sino en qué secuencia, con qué palabras y bajo qué formato.</div>
               <div class="detail-row"><strong>Por qué importa en clínica.</strong> Introduce inestabilidad. Dos clínicos pueden consultar el mismo caso con formulaciones ligeramente distintas y obtener diferenciales diferentes, sin que eso refleje nueva evidencia.</div>
               <div class="detail-row"><strong>Cómo detectarla.</strong> Si el mismo paciente recibe respuestas muy distintas tras pequeños cambios en el prompt, la salida debe interpretarse con cautela. La variación no siempre indica riqueza analítica; a veces indica volatilidad.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Conviene usar estructuras de consulta consistentes y estandarizadas para reducir la variabilidad arbitraria.</div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Usar instrucciones estructuradas y reproducibles. Cuando la salida condicione decisiones importantes, repetir la consulta con reformulaciones prudentes para verificar la estabilidad de la respuesta.</div>
             </div>
           </div>
         </div>
@@ -483,7 +483,7 @@
 
       <div class="callout callout-teal" style="margin-top:8px;">
         <div class="callout-title">🔎 Filtro operativo de las 7 limitaciones</div>
-        Cuando una respuesta parece muy útil, revisa siempre: <strong>¿ha inventado algo? · ¿está reproduciendo un sesgo? · ¿puede estar desactualizada? · ¿está ignorando un dato excluyente? · ¿cambiaría si el caso estuviera formulado de otra manera? · ¿has incluido datos que identifican al paciente? · ¿puedes auditar de verdad el razonamiento que presenta?</strong>
+        Cuando una respuesta parece muy útil, revisa siempre: <strong>¿ha inventado algo? · ¿está reproduciendo un sesgo demográfico? · ¿puede estar desactualizada? · ¿está ignorando un dato excluyente o expresando exceso de confianza? · ¿cambiaría si el caso estuviera formulado de otra manera? · ¿has incluido datos que identifican al paciente? · ¿puedes auditar de verdad el razonamiento que presenta?</strong> La pregunta más importante no es "¿qué dice la IA?" sino "¿qué dato de este caso contradice su conclusión?"
       </div>
 
     </div>
@@ -530,10 +530,10 @@
           </button>
           <div class="acc-body">
             <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> El anclaje consiste en aferrarse a la primera idea diagnóstica. La aquiescencia aparece cuando el modelo, diseñado para ser cooperativo, confirma esa primera idea en vez de tensionarla.</div>
-              <div class="detail-row"><strong>Por qué importa.</strong> Esta combinación une un sesgo humano clásico con un sesgo de interacción propio del sistema. El resultado no es un corrector del error clínico, sino un amplificador muy convincente del mismo.</div>
+              <div class="detail-row"><strong>Qué significa.</strong> El anclaje consiste en aferrarse a la primera idea diagnóstica. La aquiescencia aparece cuando el modelo, diseñado para ser cooperativo, confirma esa primera idea en vez de tensionarla. El LLM tiende a confirmar la hipótesis inicial del médico y devuelve un diferencial que reproduce sus sesgos previos en lugar de cuestionarlos.</div>
+              <div class="detail-row"><strong>Por qué importa.</strong> Esta combinación une un sesgo humano clásico con un sesgo de interacción propio del sistema. La evidencia lo cuantifica: el 48% de las respuestas del LLM en flujo no estructurado coincidieron por completo con el listado de los tres principales diagnósticos del médico, devolviendo sus propios sesgos amplificados.</div>
               <div class="detail-row"><strong>Cómo detectarlo.</strong> Debe sospecharse cuando el modelo nunca contradice la hipótesis inicial o cuando transforma una intuición preliminar en una conclusión aparentemente sólida sin revisar alternativas importantes.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a él.</strong> La respuesta del modelo debe leerse buscando oposición, no confirmación. En la práctica, esto significa pedirle que explore lagunas, inconsistencias y diagnósticos rivales graves.</div>
+              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Pedir al modelo que actúe como revisor crítico, que genere diagnósticos alternativos y que señale qué hallazgos van en contra de la hipótesis principal. Evitar preguntas genéricas del tipo "¿qué piensas de mi diferencial?" y preferir: "identifica lagunas y señala diagnósticos plausibles que falten".</div>
             </div>
           </div>
         </div>
