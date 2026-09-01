@@ -505,68 +505,66 @@
     <div class="container">
       <div class="section-eyebrow">Criterio de selección</div>
       <h2 class="section-title">8. Cómo elegir el tipo de prompt</h2>
-      <p class="section-lead">No se trata de usar siempre el prompt más complejo, sino el más adecuado para la incertidumbre del caso y para el objetivo docente del momento.</p>
+      <p class="section-lead">El criterio no es la complejidad del prompt sino el grado de incertidumbre diagnóstica del caso. A mayor incertidumbre, mayor debe ser la estructura de la instrucción y la supervisión humana sobre la salida.</p>
 
-      <div class="ethics-list">
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-green);">1</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos simples o consultas breves → instrucción directa (zero-shot)</div>
-            <div class="ethics-desc">Cuando la pregunta es factual, el riesgo es bajo y el tiempo disponible es escaso. No requiere estructura especial.</div>
+      <!-- Escenario 1 -->
+      <div class="scenario-card" style="border-left:4px solid var(--e-green);background:var(--e-green-l,#f0fdf4);border-radius:var(--r-lg);padding:24px 28px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <span style="font-size:1.4rem;">🟢</span>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--e-green);">Escenario 1</div>
+            <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#166534;">Baja incertidumbre diagnóstica · Consulta puntual</div>
           </div>
         </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-teal);">2</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos largos o desordenados → instrucción en dos pasos (two-step)</div>
-            <div class="ethics-desc">Cuando la viñeta clínica es extensa o los datos están dispersos. Obliga al modelo a sintetizar antes de diagnosticar.</div>
-          </div>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin-bottom:12px;">El clínico dispone de una hipótesis sólida y el caso plantea escasa incertidumbre. El papel del LLM debe ser <strong>limitado y de apoyo informativo</strong>: recordar una dosis, revisar una contraindicación, comprobar una interacción farmacológica o localizar un criterio diagnóstico. No se debe usar para reconstruir el diferencial.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #bbf7d0;border-radius:4px;padding:4px 10px;color:#166534;">Flujo recomendado: Human-first</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #bbf7d0;border-radius:4px;padding:4px 10px;color:#166534;">Prompt: instrucción directa</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #bbf7d0;border-radius:4px;padding:4px 10px;color:#166534;">RAG si hay duda factual</span>
         </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-indigo);">3</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Casos complejos o atípicos → cadena de pensamiento (CoT)</div>
-            <div class="ethics-desc">Cuando el caso requiere razonamiento explícito y auditable paso a paso, especialmente en presentaciones poco habituales.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-amber);">4</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Cuando falta base teórica → generación de conocimiento previo</div>
-            <div class="ethics-desc">Cuando el estudiante no domina bien el síndrome o la categoría diagnóstica. El modelo aporta el marco teórico antes de aplicarlo al caso.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-violet);">5</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Antes de cerrar un caso → autorreflexión (self-reflection)</div>
-            <div class="ethics-desc">Como revisión final antes de aceptar un diferencial. El modelo actúa como revisor crítico de su propia salida o de la hipótesis del estudiante.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--e-red);">6</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Para entrenar juicio crítico → tutor socrático o equipo rojo</div>
-            <div class="ethics-desc">Cuando el objetivo es pedagógico, no diagnóstico. El modelo tensiona, cuestiona y obliga al estudiante a justificar su razonamiento.</div>
-          </div>
-        </div>
-
-        <div class="ethics-item">
-          <div class="ethics-num" style="color:var(--uva-blue);">7</div>
-          <div class="ethics-content">
-            <div class="ethics-title">Para revisar mecanismos → experto en fisiopatología</div>
-            <div class="ethics-desc">Cuando se quiere comprobar si la hipótesis es biológicamente coherente. El modelo no da el diagnóstico, sino que exige al estudiante explicar los mecanismos.</div>
-            <span class="ethics-tag">⚠️ Largo no significa mejor — la calidad depende de si la instrucción mantiene el esfuerzo cognitivo del estudiante</span>
-          </div>
-        </div>
-
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:#fff;border:1px solid #bbf7d0;border-radius:6px;padding:10px 14px;color:var(--ink);line-height:1.6;">¿Cuál es la dosis de vancomicina en un paciente con insuficiencia renal moderada (FG 35 ml/min)?</div>
       </div>
+
+      <!-- Escenario 2 -->
+      <div class="scenario-card" style="border-left:4px solid var(--e-amber);background:#fffbeb;border-radius:var(--r-lg);padding:24px 28px;margin-bottom:16px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <span style="font-size:1.4rem;">🟡</span>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--e-amber);">Escenario 2</div>
+            <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#92400e;">Incertidumbre intermedia · Médico primero, LLM después</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin-bottom:12px;">Existe una hipótesis principal razonable, pero se teme un cierre prematuro del diferencial. El clínico <strong>formula su impresión diagnóstica antes de consultar</strong> al modelo. El LLM actúa después como revisor crítico para ampliar el diferencial, detectar datos discordantes y reconsiderar alternativas. Conviene evitar preguntas genéricas del tipo «¿qué piensas de mi DD?» y preferir instrucciones que pidan explícitamente señalar lagunas y diagnósticos ausentes.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #fcd34d;border-radius:4px;padding:4px 10px;color:#92400e;">Flujo: sándwich (Human-first)</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #fcd34d;border-radius:4px;padding:4px 10px;color:#92400e;">Prompt: two-step o CoT</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #fcd34d;border-radius:4px;padding:4px 10px;color:#92400e;">Revisión: autorreflexión</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:#fff;border:1px solid #fcd34d;border-radius:6px;padding:10px 14px;color:var(--ink);line-height:1.6;">Mi diagnóstico principal es neumonía adquirida en la comunidad. Identifica lagunas en mi razonamiento y señala diagnósticos plausibles que podría estar ignorando, especialmente los que contradicen algún dato del caso.</div>
+      </div>
+
+      <!-- Escenario 3 -->
+      <div class="scenario-card" style="border-left:4px solid var(--e-indigo);background:var(--e-indigo-l);border-radius:var(--r-lg);padding:24px 28px;margin-bottom:20px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+          <span style="font-size:1.4rem;">🔴</span>
+          <div>
+            <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--e-indigo);">Escenario 3</div>
+            <div style="font-family:'Fraunces',serif;font-size:1.1rem;font-weight:700;color:#3730a3;">Alta incertidumbre diagnóstica · Colaboración intensiva con filtrado clínico explícito</div>
+          </div>
+        </div>
+        <p style="font-size:13px;color:var(--ink-soft);line-height:1.65;margin-bottom:12px;">Presentaciones atípicas, cuadros multisistémicos, enfermedades infrecuentes o situaciones en las que el clínico reconoce que su diferencial es inestable o incompleto. El LLM puede desempeñar un papel más activo, <strong>generando un diferencial en paralelo</strong> al del clínico para detectar hipótesis no consideradas. Es precisamente aquí donde la capacidad crítica del clínico para detectar errores del modelo es más limitada — lo que exige mayor cautela, no menor. No se deben postergar las consultas con especialistas.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px;">
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #c4b5fd;border-radius:4px;padding:4px 10px;color:#3730a3;">Flujo: paralelo (clínico + LLM)</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #c4b5fd;border-radius:4px;padding:4px 10px;color:#3730a3;">Prompt: CoT + roles dialógicos</span>
+          <span style="font-size:12px;font-weight:600;background:#fff;border:1px solid #c4b5fd;border-radius:4px;padding:4px 10px;color:#3730a3;">Filtrado clínico explícito</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:0.8rem;background:#fff;border:1px solid #c4b5fd;border-radius:6px;padding:10px 14px;color:var(--ink);line-height:1.6;">Genera un diagnóstico diferencial independiente para este caso sin orientarte hacia ninguna hipótesis previa. Después, para cada diagnóstico propuesto, indica qué dato del caso lo apoya y cuál lo debilita. Señala cuál sería el dato adicional que más cambiaría tu conclusión.</div>
+      </div>
+
+      <div class="callout-info" style="background:var(--uva-blue);border-radius:var(--r-lg);padding:18px 24px;">
+        <p style="font-size:13px;color:rgba(255,255,255,.9);line-height:1.65;margin:0;"><strong style="color:#fff;">A mayor incertidumbre, mayor supervisión.</strong> El riesgo no es consultar pronto al modelo, sino hacerlo de forma pasiva. El 48% de las respuestas del LLM en flujo no estructurado coincidieron por completo con el listado del médico, devolviendo sus propios sesgos amplificados — el «problema de la aquiescencia» descrito en la evidencia.</p>
+      </div>
+
     </div>
   </section>
 
