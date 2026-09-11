@@ -293,6 +293,137 @@ a{color:var(--accent-deep);text-underline-offset:3px}
 /* ── UTILITY ─────────────────────────────────────── */
 .info-note{font-size:13px;color:var(--ink-mute);line-height:1.65;margin-top:12px}
 .info-note strong{color:var(--ink-soft)}
+
+/* ══════════════════════════════════════════════════
+   PÁGINA 2 — ¿ENTIENDE LO QUE DICE?
+══════════════════════════════════════════════════ */
+
+/* Tres preguntas */
+.q3-item{margin-bottom:16px}
+.q3-head{cursor:pointer;user-select:none}
+.q3-head:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.q3-verdict{font-size:12px;font-weight:700;color:var(--accent);background:var(--accent-light);
+  padding:5px 12px;border-radius:999px;white-space:nowrap;flex-shrink:0}
+.q3-chev{width:15px;height:15px;color:var(--ink-mute);flex-shrink:0;transition:transform .2s}
+.q3-item.open .q3-chev{transform:rotate(90deg)}
+.q3-body{display:none}
+.q3-item.open .q3-body{display:block}
+.q3-body > p{color:var(--ink-soft);line-height:1.7;margin-bottom:16px}
+@media(max-width:560px){.q3-verdict{display:none}}
+
+.q3-pair{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:18px}
+@media(max-width:680px){.q3-pair{grid-template-columns:1fr}}
+.q3-pair .prompt-example{margin-bottom:0;display:flex;flex-direction:column}
+.q3-mark{background:var(--accent);color:#fff;padding:1px 7px;border-radius:6px;font-weight:600}
+.q3-copy{align-self:flex-start;margin-top:14px;padding:6px 14px;border-radius:999px;
+  border:1.5px solid var(--line-strong);background:transparent;color:var(--ink-soft);
+  font-size:12.5px;font-weight:600;transition:all .15s}
+.q3-copy:hover{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.q3-trap{display:none;background:var(--sage-light);border-left:3px solid var(--sage);
+  padding:16px 20px;border-radius:0 10px 10px 0;margin-top:16px}
+.q3-trap.open{display:block}
+.q3-trap strong{color:var(--sage);display:block;margin-bottom:6px;font-size:14px}
+.q3-trap p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:10px}
+.q3-trap p:last-child{margin-bottom:0}
+.q3-link{background:none;border:none;padding:0;color:var(--accent);font-weight:600;
+  text-decoration:underline;text-underline-offset:3px;font-size:inherit}
+
+/* Transformers */
+.trf-paper{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;padding:22px 26px;margin-bottom:24px}
+.trf-year{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:8px}
+.trf-paper h3{font-family:var(--serif);font-style:italic;font-weight:400;font-size:24px;
+  color:var(--ink);margin-bottom:8px;line-height:1.2}
+.trf-authors{font-size:13.5px;color:var(--ink-mute);line-height:1.6;margin-bottom:12px}
+.trf-paper a{font-family:var(--mono);font-size:13px}
+
+.trf-modes{display:flex;gap:10px;margin-bottom:18px;flex-wrap:wrap}
+.trf-sentence{font-family:var(--serif);font-size:clamp(19px,2.4vw,26px);line-height:2;
+  margin-bottom:20px;display:flex;flex-wrap:wrap;gap:0 3px}
+.trf-w{padding:2px 7px;border-radius:6px;transition:background .25s,color .25s,opacity .25s}
+.trf-w.dim{opacity:.28}
+.trf-w.on{background:var(--ink);color:var(--bg);font-weight:600}
+.trf-w.a1{background:var(--accent-light)}
+.trf-w.a2{background:#e8cfc2}
+.trf-w.a3{background:var(--accent);color:#fff}
+.trf-w.trf-cur{background:var(--sage-light);box-shadow:inset 0 -2px 0 var(--sage)}
+
+.trf-read{background:var(--bg-deep);border-radius:10px;padding:16px 20px;min-height:92px}
+.trf-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:8px}
+.trf-read p{font-size:14.5px;color:var(--ink-soft);line-height:1.7}
+.trf-read strong{color:var(--accent)}
+.trf-step{display:flex;align-items:center;gap:14px;margin-top:14px}
+.trf-count{font-family:var(--mono);font-size:12px;color:var(--ink-mute)}
+
+.trf-claim{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);line-height:1.45;
+  color:var(--ink);max-width:56ch;margin:28px 0 0;padding-left:20px;border-left:2px solid var(--accent)}
+
+.trf-sum{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:12px;align-items:stretch}
+@media(max-width:760px){.trf-sum{grid-template-columns:1fr;gap:8px}.trf-plus{justify-content:flex-start;padding-left:6px}}
+.trf-ing{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:18px 20px}
+.trf-ing h4{font-size:14px;font-weight:700;color:var(--ink);margin-bottom:6px}
+.trf-ing p{font-size:13px;color:var(--ink-soft);line-height:1.6}
+.trf-plus{display:flex;align-items:center;justify-content:center;font-family:var(--serif);
+  font-size:24px;color:var(--ink-mute)}
+.trf-result{background:var(--accent-light);border-left:3px solid var(--accent);
+  border-radius:0 10px 10px 0;padding:18px 22px;margin-top:16px}
+.trf-result p{font-family:var(--serif);font-size:16.5px;color:var(--ink);line-height:1.65}
+
+/* ── ENLACE AL EMBEDDING PROJECTOR ───────────────── */
+.proj-box{margin-top:18px;background:var(--surface);border:1px solid var(--line);
+  border-left:3px solid var(--sage);border-radius:0 var(--radius) var(--radius) 0;padding:20px 24px}
+.proj-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--sage);margin-bottom:8px}
+.proj-box h4{font-family:var(--serif);font-weight:400;font-size:20px;color:var(--ink);
+  margin-bottom:10px;line-height:1.25}
+.proj-box > p{font-size:14.5px;color:var(--ink-soft);line-height:1.7;margin-bottom:14px}
+.proj-steps{list-style:none;padding:0;margin:0 0 16px}
+.proj-steps li{display:flex;gap:12px;align-items:flex-start;font-size:14px;color:var(--ink-soft);
+  line-height:1.6;margin-bottom:10px}
+.proj-steps li:last-child{margin-bottom:0}
+.proj-n{width:22px;height:22px;border-radius:50%;background:var(--sage-light);color:var(--sage);
+  font-family:var(--mono);font-size:11px;font-weight:700;display:flex;align-items:center;
+  justify-content:center;flex-shrink:0;margin-top:1px}
+a.btn-run{display:inline-block;text-decoration:none;color:#fff}
+a.btn-run:hover{color:#fff}
+.proj-warn{background:var(--accent-light);border-radius:10px;padding:14px 18px;margin-top:16px;
+  font-size:14px;color:var(--ink-soft);line-height:1.65}
+.proj-warn strong{color:var(--accent);display:block;margin-bottom:5px}
+
+/* ── ESCALA DE FRECUENCIA (pregunta 3) ───────────── */
+.fq-wrap{margin:20px 0 18px}
+.fq-track{height:8px;border-radius:999px;margin-bottom:6px;
+  background:linear-gradient(90deg,#3d6b52 0%,#8aa34a 25%,#d9a800 50%,#c07050 75%,#8B4A2A 100%)}
+.fq-ends{display:flex;justify-content:space-between;font-family:var(--mono);font-size:10px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:14px}
+.fq-btns{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin-bottom:16px}
+@media(max-width:760px){.fq-btns{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:420px){.fq-btns{grid-template-columns:1fr}}
+.fq-btn{display:flex;flex-direction:column;align-items:flex-start;gap:6px;text-align:left;
+  padding:11px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);
+  font-size:12px;font-weight:600;color:var(--ink-soft);line-height:1.35;transition:all .15s}
+.fq-btn:hover{border-color:var(--line-strong);transform:translateY(-2px)}
+.fq-btn.active{border-color:var(--ink);background:var(--bg-deep);color:var(--ink)}
+.fq-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0}
+.fq-read{background:var(--bg-deep);border-radius:10px;padding:18px 20px;border-left:3px solid var(--line-strong);transition:border-color .25s}
+.fq-q{font-family:var(--serif);font-size:17px;color:var(--ink);line-height:1.5;margin-bottom:12px}
+.fq-risk{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:#fff;padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.fq-read p{font-size:14.5px;color:var(--ink-soft);line-height:1.7}
+.fq-note{background:var(--sage-light);border-left:3px solid var(--sage);border-radius:0 10px 10px 0;
+  padding:16px 20px;margin-top:16px}
+.fq-note strong{color:var(--sage);display:block;margin-bottom:8px;font-size:14px}
+.fq-note ul{margin:0;padding-left:18px}
+.fq-note li{font-size:14px;color:var(--ink-soft);line-height:1.65;margin-bottom:7px}
+.fq-note li:last-child{margin-bottom:0}
+
+/* NAV con tres pestañas en móvil */
+@media(max-width:700px){
+  .nav-tab{flex-direction:column;gap:4px;padding:10px 5px;font-size:11px;max-width:none;line-height:1.25;text-align:center}
+  .nav-tab .num{font-size:9.5px;padding:1px 7px}
+}
 </style>
 </head>
 <body>
@@ -319,8 +450,11 @@ a{color:var(--accent-deep);text-underline-offset:3px}
     <button class="nav-tab active" id="tab-piensa" onclick="switchPage('piensa')">
       <span class="num">01</span>🧠 Cómo piensa un LLM
     </button>
+    <button class="nav-tab" id="tab-entiende" onclick="switchPage('entiende')">
+      <span class="num">02</span>🔍 ¿Entiende lo que dice?
+    </button>
     <button class="nav-tab" id="tab-riesgos" onclick="switchPage('riesgos')">
-      <span class="num">02</span>⚠️ Riesgos y limitaciones de los LLM
+      <span class="num">03</span>⚠️ Riesgos y limitaciones
     </button>
   </div>
 </nav>
@@ -472,6 +606,23 @@ a{color:var(--accent-deep);text-underline-offset:3px}
           <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:16px">Cada token se transforma en un <strong>vector</strong>: una lista de números que representa su significado. Los términos usados en contextos similares aparecen <em>cerca</em> en este espacio matemático. El mapa muestra esto en 2D (en realidad son 768–4096 dimensiones).</p>
           <canvas id="vecCanvas"></canvas>
           <p class="info-note" style="text-align:center;margin-top:10px">Pasa el cursor sobre los puntos para explorar los clusters semánticos.</p>
+
+          <div class="proj-box">
+            <div class="proj-eyebrow">Recurso externo · para ver el mapa de verdad</div>
+            <h4>Embedding Projector</h4>
+            <p>Este canvas es una simplificación didáctica. Si quieres ver un espacio de significado real, con miles de palabras y en tres dimensiones, Google mantiene una herramienta abierta que lo permite explorar en directo.</p>
+            <ul class="proj-steps">
+              <li><span class="proj-n">1</span><span>Busca una palabra en el campo de la derecha. El conjunto por defecto está en inglés: prueba con <em>doctor</em>, <em>patient</em> o <em>fever</em>.</span></li>
+              <li><span class="proj-n">2</span><span>Pulsa el punto y mira la lista de vecinos más próximos. Esa vecindad es, literalmente, lo que el modelo entiende por «significado parecido».</span></li>
+              <li><span class="proj-n">3</span><span>Cambia de PCA a t-SNE abajo a la izquierda y observa cómo se reorganizan los grupos. La misma información, proyectada de otra forma.</span></li>
+            </ul>
+            <a class="btn-run" href="https://projector.tensorflow.org/" target="_blank" rel="noopener">Abrir Embedding Projector ↗</a>
+            <div class="proj-warn">
+              <strong>Un matiz importante al enseñarlo</strong>
+              El conjunto que carga por defecto es de una generación anterior a los transformers: cada palabra tiene <em>un</em> punto fijo. En un LLM el vector se recalcula en cada frase según el contexto, que es justo lo que verás en el paso siguiente. Sirve para ver el mapa, no para ver el foco.
+            </div>
+          </div>
+
         </div>
       </div>
     </div>
@@ -555,12 +706,208 @@ a{color:var(--accent-deep);text-underline-offset:3px}
 
 
 <!-- ═══════════════════════════════════════════════
+     PÁGINA 2 — ¿ENTIENDE LO QUE DICE?
+     ═══════════════════════════════════════════════ -->
+<div class="page" id="page-entiende">
+
+  <div class="hero">
+    <p class="eyebrow">02 · Qué hay detrás de la fluidez</p>
+    <h1 class="hero-title">¿Entiende, razona, <em>sabe lo que dice?</em></h1>
+    <p class="hero-lead">Ya has visto el mecanismo. Ahora las tres preguntas incómodas que ese mecanismo plantea, y el artículo de 2017 que explica por qué, aun así, acierta tanto.</p>
+  </div>
+
+  <div class="shell">
+
+    <div class="section-header">
+      <h2>Tres preguntas antes de fiarse</h2>
+      <p>Pulsa cada pregunta para desplegarla. La primera se puede comprobar en clase en dos minutos.</p>
+    </div>
+
+    <!-- PREGUNTA 1 -->
+    <div class="viz-box q3-item open" id="q3-1">
+      <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-1')" onkeydown="q3Key(event,'q3-1')">
+        <div class="viz-num">1</div>
+        <div style="flex:1">
+          <div class="viz-title">¿Entienden el lenguaje?</div>
+          <div class="viz-sub">La fluidez no garantiza comprensión</div>
+        </div>
+        <span class="q3-verdict">Predicen, no comprenden</span>
+        <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+      <div class="viz-body q3-body">
+        <p>Al operar de forma estadística, el modelo no entiende realmente el lenguaje: calcula qué palabra correspondería a continuación. El resultado es casi siempre correcto, pero <strong>no es lo mismo que haber comprendido la frase</strong>. Para comprobarlo basta con darle dos frases aparentemente similares que en realidad no lo son.</p>
+
+        <div class="q3-pair">
+          <div class="prompt-example">
+            <div class="prompt-example-label">Frase 1 · coherente</div>
+            <div class="prompt-example-text" id="q3-p1">Mi médico me ha dicho que debo reducir el consumo de sal porque tengo <span class="q3-mark">tensión alta</span>. ¿Qué desayuno me recomiendas?</div>
+            <button class="q3-copy" onclick="q3Copy('q3-p1',this)">Copiar</button>
+          </div>
+          <div class="prompt-example">
+            <div class="prompt-example-label">Frase 2 · contradictoria</div>
+            <div class="prompt-example-text" id="q3-p2">Mi médico me ha dicho que debo reducir el consumo de sal porque tengo <span class="q3-mark">tensión baja</span>. ¿Qué desayuno me recomiendas?</div>
+            <button class="q3-copy" onclick="q3Copy('q3-p2',this)">Copiar</button>
+          </div>
+        </div>
+
+        <button class="btn-run" onclick="q3Trap()">Ver qué suele pasar ▶</button>
+
+        <div class="q3-trap" id="q3-trap">
+          <strong>Lo que ocurre</strong>
+          <p>Es muy posible que las dos respuestas sean prácticamente iguales: un desayuno bajo en sal, bien redactado y aparentemente razonable.</p>
+          <p>Pero en la segunda frase hay una contradicción clara: a nadie se le indica reducir la sal <em>porque</em> tiene la tensión baja. Un clínico se detiene ahí y pregunta. El modelo no, porque las dos frases son casi idénticas para él y el patrón «sal → dieta hiposódica» pesa mucho más que la incoherencia.</p>
+          <p>Copia las dos frases y pruébalas con el modelo que uses habitualmente. Es la demostración más rápida de que fluidez y comprensión no son lo mismo.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 2 -->
+    <div class="viz-box q3-item" id="q3-2">
+      <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-2')" onkeydown="q3Key(event,'q3-2')">
+        <div class="viz-num">2</div>
+        <div style="flex:1">
+          <div class="viz-title">¿Razonan?</div>
+          <div class="viz-sub">Recuperan patrones con formato de razonamiento</div>
+        </div>
+        <span class="q3-verdict">Reproducen la forma</span>
+        <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+      <div class="viz-body q3-body">
+        <p>Lo que recuperan son <strong>patrones con formato de razonamiento</strong>. Han leído millones de textos que razonan paso a paso y reproducen esa estructura: premisa, desarrollo, conclusión. Se lee como un razonamiento y muchas veces llega al sitio correcto.</p>
+        <p>El límite aparece cuando la tarea exige salirse del patrón. Le costará <strong>añadir subjetividad o improvisación</strong>: sostener una postura propia, decidir ante un caso atípico o aportar el matiz que da la experiencia. Ahí tiende a volver a la respuesta típica.</p>
+        <div class="attn-note">
+          <strong>Para probarlo en clase</strong>
+          Pide la misma explicación dos veces: una «como aparecería en un manual» y otra «como se la contarías a un residente que ya ha visto tres casos raros». Compara cuánto cambia realmente el fondo, y no solo el tono.
+        </div>
+      </div>
+    </div>
+
+    <!-- PREGUNTA 3 -->
+    <div class="viz-box q3-item" id="q3-3">
+      <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-3')" onkeydown="q3Key(event,'q3-3')">
+        <div class="viz-num">3</div>
+        <div style="flex:1">
+          <div class="viz-title">¿Saben lo que dicen?</div>
+          <div class="viz-sub">El sistema está obligado a responder</div>
+        </div>
+        <span class="q3-verdict">Rellenan huecos</span>
+        <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+      </div>
+      <div class="viz-body q3-body">
+        <p>Como siempre deben contestar, a veces <strong>rellenarán huecos en vez de contestar</strong>. No hay un mecanismo natural para decir «no lo sé»: cuando falta información, el modelo completa con lo que estadísticamente encajaría en ese lugar.</p>
+        <p>Por eso una referencia bibliográfica inventada tiene el aspecto exacto de una real, con autores, revista y año plausibles. No está mintiendo: está terminando un patrón.</p>
+        <p>El riesgo no es igual en todas las preguntas. Depende de <strong>la calidad de los datos de entrenamiento y de la frecuencia con que aparece la respuesta que buscas</strong>. Recorre la escala:</p>
+
+        <div class="fq-wrap">
+          <div class="fq-track"></div>
+          <div class="fq-ends"><span>Muy frecuente en el entrenamiento</span><span>Casi ausente</span></div>
+          <div class="fq-btns" id="fqBtns"></div>
+          <div class="fq-read" id="fqRead">
+            <div class="fq-risk" id="fqRisk"></div>
+            <div class="fq-q" id="fqQ"></div>
+            <p id="fqTxt"></p>
+          </div>
+        </div>
+
+        <div class="fq-note">
+          <strong>Tres matices antes de convertir esto en una regla</strong>
+          <ul>
+            <li><strong>Frecuente no es lo mismo que correcto.</strong> Si lo repetido en el entrenamiento es una guía desfasada o un mito clínico extendido, el modelo lo reproducirá con la misma seguridad que «París».</li>
+            <li><strong>Lo más peligroso es el formato frecuente con contenido raro.</strong> Una referencia, una dosis o un código CIE tienen una estructura que el modelo ha visto millones de veces; si el contenido concreto es infrecuente, rellena la plantilla con algo verosímil.</li>
+            <li><strong>Aportar tú la fuente cambia la pregunta.</strong> Subir el documento o activar el buscador convierte «qué recuerda» en «qué lee», y eso sí se puede verificar.</li>
+          </ul>
+        </div>
+
+        <div class="attn-note">
+          <strong>De aquí salen las alucinaciones</strong>
+          Es el mismo mecanismo que explica el primero de los riesgos que se tratan en <button class="q3-link" onclick="switchPage('riesgos')">Riesgos y limitaciones</button>.
+        </div>
+      </div>
+    </div>
+
+    <hr class="sep"/>
+
+    <!-- TRANSFORMERS -->
+    <div class="section-header">
+      <h2>Los transformers: leer la frase entera antes de decidir</h2>
+      <p>Si no comprende, ¿por qué acierta tanto? La respuesta está en un cambio de arquitectura publicado en 2017.</p>
+    </div>
+
+    <div class="trf-paper">
+      <div class="trf-year">2017 · Artículo fundacional</div>
+      <h3>Attention Is All You Need</h3>
+      <p class="trf-authors">Ashish Vaswani, Noam Shazeer, Niki Parmar, Jakob Uszkoreit, Llion Jones, Aidan N. Gomez, Łukasz Kaiser, Illia Polosukhin</p>
+      <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">arxiv.org/abs/1706.03762</a>
+    </div>
+
+    <div class="viz-box">
+      <div class="viz-header">
+        <div class="viz-num">⚡</div>
+        <div><div class="viz-title">El banco y los peces</div><div class="viz-sub">Compara cómo procesa la misma frase un modelo antiguo y un transformer</div></div>
+      </div>
+      <div class="viz-body">
+        <p style="color:var(--ink-soft);line-height:1.7;margin-bottom:18px">Con los modelos antiguos, la frase <em>«Fui al banco y estaba lleno de peces»</em> habría vuelto loco al modelo por el significado habitual de <strong>banco</strong>. El transformer cambia la forma de actuar de los modelos que intentan procesar el lenguaje al centrar la atención.</p>
+
+        <div class="trf-modes">
+          <button class="attn-btn active" id="trf-m-old" onclick="trfMode('old')">Modelo antiguo · palabra a palabra</button>
+          <button class="attn-btn" id="trf-m-new" onclick="trfMode('new')">Transformer · la frase entera</button>
+        </div>
+
+        <div class="trf-sentence" id="trfSentence"></div>
+
+        <div class="trf-read">
+          <div class="trf-label" id="trfLabel"></div>
+          <p id="trfText"></p>
+        </div>
+
+        <div class="trf-step" id="trfStep">
+          <button class="btn-run" id="trfNext" onclick="trfNext()">Siguiente palabra ▶</button>
+          <span class="trf-count" id="trfCount"></span>
+        </div>
+
+        <p class="trf-claim">El transformer no sigue un hilo: traza un mapa donde va situando cada palabra y sus relaciones. Lee todo a la vez y después decide dónde pone el foco de atención.</p>
+      </div>
+    </div>
+
+    <!-- 2022 -->
+    <div class="section-header" style="margin-top:48px">
+      <h2>2022: cuando tres cosas coincidieron</h2>
+      <p>La arquitectura existía desde 2017. Hicieron falta dos factores más para que apareciera ChatGPT y, tras él, el resto de los LLM.</p>
+    </div>
+
+    <div class="trf-sum">
+      <div class="trf-ing">
+        <h4>Arquitectura transformer</h4>
+        <p>Un modelo capaz de leer la secuencia completa y ponderar qué es relevante en cada momento.</p>
+      </div>
+      <div class="trf-plus">+</div>
+      <div class="trf-ing">
+        <h4>Acceso masivo a los datos</h4>
+        <p>Volúmenes de texto a una escala que antes no estaba disponible para entrenar.</p>
+      </div>
+      <div class="trf-plus">+</div>
+      <div class="trf-ing">
+        <h4>Programar con lenguaje natural</h4>
+        <p>Poder pedirle cosas escribiendo, sin saber programar. La barrera de entrada desaparece.</p>
+      </div>
+    </div>
+
+    <div class="trf-result">
+      <p>El resultado no fue solo un modelo mejor, sino una herramienta que cualquier profesional podía usar el primer día. Con ella llegan también sus riesgos, que es lo que viene a continuación.</p>
+    </div>
+
+  </div><!-- /shell -->
+</div><!-- /page-entiende -->
+
+
+
+<!-- ═══════════════════════════════════════════════
      PÁGINA 2 — RIESGOS
      ═══════════════════════════════════════════════ -->
 <div class="page" id="page-riesgos">
 
   <div class="hero">
-    <p class="eyebrow">02 · Uso Responsable</p>
+    <p class="eyebrow">03 · Uso Responsable</p>
     <h1 class="hero-title">Riesgos y limitaciones de los LLM</h1>
     <p class="hero-lead">Lo que todo clínico debe saber antes de integrar un LLM en su práctica. Pulsa cada riesgo para explorar el detalle.</p>
   </div>
@@ -1163,6 +1510,171 @@ document.addEventListener('DOMContentLoaded', ()=>{
   renderRisks();
   buildChecklist();
 });
+
+/* ══════════════════════════════════════════════════
+   PÁGINA 2 — TRES PREGUNTAS
+══════════════════════════════════════════════════ */
+function q3Toggle(id){
+  document.getElementById(id).classList.toggle('open');
+}
+function q3Key(e,id){
+  if(e.key==='Enter'||e.key===' '){e.preventDefault();q3Toggle(id);}
+}
+function q3Trap(){
+  document.getElementById('q3-trap').classList.add('open');
+}
+function q3Copy(id,btn){
+  var t=document.getElementById(id).innerText.trim();
+  var ok=function(){var o=btn.textContent;btn.textContent='Copiado ✓';setTimeout(function(){btn.textContent=o;},1500);};
+  if(navigator.clipboard&&window.isSecureContext){
+    navigator.clipboard.writeText(t).then(ok).catch(function(){q3Fallback(t,ok);});
+  } else { q3Fallback(t,ok); }
+}
+function q3Fallback(t,cb){
+  var ta=document.createElement('textarea');
+  ta.value=t;ta.style.position='fixed';ta.style.opacity='0';
+  document.body.appendChild(ta);ta.select();
+  try{document.execCommand('copy');cb();}catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ══════════════════════════════════════════════════
+   PÁGINA 2 — DEMO TRANSFORMER
+══════════════════════════════════════════════════ */
+const TRF_WORDS = ["Fui","al","banco","y","estaba","lleno","de","peces"];
+const TRF_ATT   = {0:1,1:0,2:0,3:0,4:1,5:2,6:0,7:3};
+const TRF_OLD = [
+  "Empieza a leer. Todavía no hay ambigüedad.",
+  "Avanza palabra a palabra, sin ver lo que viene después.",
+  "<strong>Banco.</strong> Solo puede apoyarse en lo que ya ha leído, y lo más frecuente en su entrenamiento es el banco donde se guarda el dinero. Fija ese significado y sigue.",
+  "Arrastra la interpretación financiera.",
+  "La sigue arrastrando.",
+  "«Lleno» encaja perfectamente con una sucursal concurrida. Nada le hace sospechar.",
+  "Aquí empieza el problema.",
+  "<strong>Peces.</strong> La frase deja de tener sentido, pero el significado de «banco» se cerró seis palabras antes y no puede volver atrás."
+];
+let trfMode_ = 'old', trfIdx = 0;
+
+function trfBuild(){
+  const s = document.getElementById('trfSentence');
+  if(!s) return;
+  s.innerHTML = '';
+  TRF_WORDS.forEach((w,i)=>{
+    const el = document.createElement('span');
+    el.className = 'trf-w';
+    el.textContent = w;
+    el.dataset.i = i;
+    s.appendChild(el);
+  });
+  const dot = document.createElement('span');
+  dot.className = 'trf-w';
+  dot.style.padding = '2px 0';
+  dot.textContent = '.';
+  s.appendChild(dot);
+}
+
+function trfRender(){
+  const spans = document.querySelectorAll('#trfSentence .trf-w');
+  spans.forEach(sp => sp.className = 'trf-w');
+  const lab = document.getElementById('trfLabel');
+  const txt = document.getElementById('trfText');
+  const bar = document.getElementById('trfStep');
+
+  if(trfMode_ === 'old'){
+    spans.forEach(sp=>{
+      const i = parseInt(sp.dataset.i,10);
+      if(isNaN(i)) return;
+      if(i > trfIdx) sp.classList.add('dim');
+      else if(i === trfIdx) sp.classList.add('trf-cur');
+      if(i === 2 && trfIdx >= 2) sp.classList.add('on');
+    });
+    lab.textContent = 'Lectura secuencial · lo que ha visto hasta ahora';
+    txt.innerHTML = TRF_OLD[trfIdx];
+    bar.style.display = 'flex';
+    document.getElementById('trfCount').textContent = (trfIdx+1) + ' / ' + TRF_WORDS.length;
+    document.getElementById('trfNext').textContent = (trfIdx >= TRF_WORDS.length-1) ? '↺ Empezar de nuevo' : 'Siguiente palabra ▶';
+  } else {
+    spans.forEach(sp=>{
+      const i = parseInt(sp.dataset.i,10);
+      if(isNaN(i)) return;
+      if(i === 2){ sp.classList.add('on'); return; }
+      const a = TRF_ATT[i] || 0;
+      if(a > 0) sp.classList.add('a'+a);
+    });
+    lab.textContent = 'Mapa de atención sobre «banco»';
+    txt.innerHTML = 'El transformer ha leído toda la frase a la vez antes de asignar significado. Al situar <strong>banco</strong> en el mapa mide su relación con todas las demás palabras simultáneamente: <strong>peces</strong> pesa mucho, <strong>lleno</strong> algo menos, el resto casi nada. Con ese peso, «banco» deja de ser una sucursal y pasa a ser un banco de peces. La ambigüedad se resuelve sola.';
+    bar.style.display = 'none';
+  }
+}
+
+function trfMode(m){
+  trfMode_ = m; trfIdx = 0;
+  document.getElementById('trf-m-old').classList.toggle('active', m === 'old');
+  document.getElementById('trf-m-new').classList.toggle('active', m === 'new');
+  trfRender();
+}
+
+function trfNext(){
+  trfIdx = (trfIdx >= TRF_WORDS.length-1) ? 0 : trfIdx + 1;
+  trfRender();
+}
+
+trfBuild();
+trfRender();
+
+/* ══════════════════════════════════════════════════
+   PÁGINA 2 — ESCALA DE FRECUENCIA Y ALUCINACIÓN
+══════════════════════════════════════════════════ */
+const FQ = [
+  { label:"Capital de Francia", color:"#3d6b52", risk:"Riesgo mínimo",
+    q:"¿Cuál es la capital de Francia?",
+    txt:"En el entrenamiento hay millones de textos que asocian Francia, capital y París. La respuesta está tan sobrerrepresentada que prácticamente nunca habrá alucinación: el modelo no necesita rellenar nada, solo recuperar la asociación dominante." },
+  { label:"Mecanismo del ibuprofeno", color:"#8aa34a", risk:"Riesgo bajo",
+    q:"¿Cuál es el mecanismo de acción del ibuprofeno?",
+    txt:"Contenido de manual, repetido en miles de fuentes con una formulación muy estable. El modelo se mueve todavía en terreno denso. Puede simplificar o redondear matices, pero la estructura de la respuesta está bien sostenida por los datos." },
+  { label:"Presentación atípica", color:"#d9a800", risk:"Riesgo intermedio",
+    q:"¿Cómo se maneja una presentación atípica de una enfermedad frecuente?",
+    txt:"La enfermedad es frecuente, pero la variante no. El modelo tiene mucho material sobre el cuadro típico y muy poco sobre la excepción, así que tiende a responder con el patrón habitual y a pasar por alto justo lo que hacía distinto al caso." },
+  { label:"Enfermedad rara o dato anómalo", color:"#c07050", risk:"Riesgo alto",
+    q:"¿Qué hallazgos analíticos caracterizan a esta enfermedad rara?",
+    txt:"Aquí hay muy poca información previa que asocie el dato infrecuente con la respuesta. Sin suficiente base para sostenerla, el modelo la construye a partir de lo que se le parece: enfermedades vecinas, patrones generales de esa familia de cuadros. Suena bien y puede ser falso." },
+  { label:"Referencias bibliográficas", color:"#8B4A2A", risk:"Riesgo máximo",
+    q:"Dame tres referencias que respalden esta afirmación concreta.",
+    txt:"El peor escenario: formato muy frecuente, contenido muy raro. La estructura de una cita (autores, revista, año, volumen) se ha visto millones de veces, pero la cita concreta apenas aparece. El modelo rellena la plantilla y produce referencias con aspecto impecable que no existen." }
+];
+let fqActive = 0;
+
+function fqBuild(){
+  const c = document.getElementById('fqBtns');
+  if(!c) return;
+  c.innerHTML = '';
+  FQ.forEach((f,i)=>{
+    const b = document.createElement('button');
+    b.className = 'fq-btn' + (i===0?' active':'');
+    b.id = 'fq-b-' + i;
+    b.innerHTML = '<span class="fq-dot" style="background:'+f.color+'"></span>' + f.label;
+    b.addEventListener('click', ()=>fqSet(i));
+    c.appendChild(b);
+  });
+}
+
+function fqSet(i){
+  fqActive = i;
+  const f = FQ[i];
+  FQ.forEach((_,k)=>{
+    const b = document.getElementById('fq-b-'+k);
+    if(b) b.classList.toggle('active', k===i);
+  });
+  const risk = document.getElementById('fqRisk');
+  risk.textContent = f.risk;
+  risk.style.background = f.color;
+  document.getElementById('fqQ').textContent = '«' + f.q + '»';
+  document.getElementById('fqTxt').textContent = f.txt;
+  document.getElementById('fqRead').style.borderLeftColor = f.color;
+}
+
+fqBuild();
+fqSet(0);
 </script>
 </body>
 </html>
