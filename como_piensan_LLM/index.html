@@ -418,6 +418,19 @@ a.btn-run:hover{color:#fff}
   padding-top:16px;border-top:1px solid var(--line)}
 .caso-fuentes a{font-size:12px}
 
+/* ── BLOQUE 02 · tesis y ejercicio de perturbación ─ */
+.ej-tesis{background:var(--accent-light);border-left:4px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;padding:24px 28px;margin-bottom:40px}
+.ej-tesis-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:10px}
+.ej-tesis p{font-family:var(--serif);font-size:clamp(19px,2.4vw,24px);line-height:1.45;color:var(--ink);margin:0}
+.ej-obs{background:var(--bg-deep);border-radius:10px;padding:16px 20px}
+.ej-obs-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--ink-mute);margin-bottom:10px}
+.ej-obs ul{padding-left:18px;margin:0}
+.ej-obs li{font-size:14.5px;color:var(--ink-soft);line-height:1.65;margin-bottom:7px}
+.ej-obs li:last-child{margin-bottom:0}
+
 /* ── ESCALA DE FRECUENCIA (pregunta 3) ───────────── */
 .fq-wrap{margin:20px 0 18px}
 .fq-track{height:8px;border-radius:999px;margin-bottom:6px;
@@ -477,7 +490,7 @@ a.btn-run:hover{color:#fff}
       <span class="num">01</span>🧠 Cómo piensa un LLM
     </button>
     <button class="nav-tab" id="tab-entiende" onclick="switchPage('entiende')">
-      <span class="num">02</span>🔍 ¿Entiende lo que dice?
+      <span class="num">02</span>🔍 ¿Acertar es entender?
     </button>
     <button class="nav-tab" id="tab-riesgos" onclick="switchPage('riesgos')">
       <span class="num">03</span>⚠️ Riesgos y limitaciones
@@ -738,15 +751,20 @@ a.btn-run:hover{color:#fff}
 
   <div class="hero">
     <p class="eyebrow">02 · Qué hay detrás de la fluidez</p>
-    <h1 class="hero-title">¿Entiende, razona, <em>sabe lo que dice?</em></h1>
-    <p class="hero-lead">Ya has visto el mecanismo. Ahora las tres preguntas incómodas que ese mecanismo plantea, y el artículo de 2017 que explica por qué, aun así, acierta tanto.</p>
+    <h1 class="hero-title">Acertar no es lo mismo que <em>haber entendido</em></h1>
+    <p class="hero-lead">Esto no dice que el modelo se equivoque, ni que no razone. Dice que la calidad del texto no informa de la calidad de lo que hay detrás. Acertará casi siempre, y ese «casi» es todo el problema.</p>
   </div>
 
   <div class="shell">
 
+    <div class="ej-tesis">
+      <div class="ej-tesis-label">La idea de esta pestaña</div>
+      <p>Una respuesta lingüísticamente coherente no demuestra por sí sola que el modelo haya construido una representación correcta de la situación.</p>
+    </div>
+
     <div class="section-header">
       <h2>Tres preguntas antes de fiarse</h2>
-      <p>Pulsa cada pregunta para desplegarla. La primera se puede comprobar en clase en dos minutos.</p>
+      <p>Formuladas desde el lado del docente: no afirman nada sobre lo que ocurre dentro del modelo, solo sobre lo que puedes deducir de lo que escribe.</p>
     </div>
 
     <!-- PREGUNTA 1 -->
@@ -754,36 +772,15 @@ a.btn-run:hover{color:#fff}
       <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-1')" onkeydown="q3Key(event,'q3-1')">
         <div class="viz-num">1</div>
         <div style="flex:1">
-          <div class="viz-title">¿Entienden el lenguaje?</div>
-          <div class="viz-sub">La fluidez no garantiza comprensión</div>
+          <div class="viz-title">¿Cómo sé si ha entendido el caso?</div>
+          <div class="viz-sub">La seguridad del texto no es información</div>
         </div>
-        <span class="q3-verdict">Predicen, no comprenden</span>
+        <span class="q3-verdict">No por cómo suena</span>
         <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
       </div>
       <div class="viz-body q3-body">
-        <p>Al operar de forma estadística, el modelo no entiende realmente el lenguaje: calcula qué palabra correspondería a continuación. El resultado es casi siempre correcto, pero <strong>no es lo mismo que haber comprendido la frase</strong>. Para comprobarlo basta con darle dos frases aparentemente similares que en realidad no lo son.</p>
-
-        <div class="q3-pair">
-          <div class="prompt-example">
-            <div class="prompt-example-label">Frase 1 · coherente</div>
-            <div class="prompt-example-text" id="q3-p1">Mi médico me ha dicho que debo reducir el consumo de sal porque tengo <span class="q3-mark">tensión alta</span>. ¿Qué desayuno me recomiendas?</div>
-            <button class="q3-copy" onclick="q3Copy('q3-p1',this)">Copiar</button>
-          </div>
-          <div class="prompt-example">
-            <div class="prompt-example-label">Frase 2 · contradictoria</div>
-            <div class="prompt-example-text" id="q3-p2">Mi médico me ha dicho que debo reducir el consumo de sal porque tengo <span class="q3-mark">tensión baja</span>. ¿Qué desayuno me recomiendas?</div>
-            <button class="q3-copy" onclick="q3Copy('q3-p2',this)">Copiar</button>
-          </div>
-        </div>
-
-        <button class="btn-run" onclick="q3Trap()">Ver qué suele pasar ▶</button>
-
-        <div class="q3-trap" id="q3-trap">
-          <strong>Lo que ocurre</strong>
-          <p>Es muy posible que las dos respuestas sean prácticamente iguales: un desayuno bajo en sal, bien redactado y aparentemente razonable.</p>
-          <p>Pero en la segunda frase hay una contradicción clara: a nadie se le indica reducir la sal <em>porque</em> tiene la tensión baja. Un clínico se detiene ahí y pregunta. El modelo no, porque las dos frases son casi idénticas para él y el patrón «sal → dieta hiposódica» pesa mucho más que la incoherencia.</p>
-          <p>Copia las dos frases y pruébalas con el modelo que uses habitualmente. Es la demostración más rápida de que fluidez y comprensión no son lo mismo.</p>
-        </div>
+        <p>Forma y contenido se generan a la vez, con el mismo mecanismo. Un texto bien estructurado, con la terminología exacta y sin una sola duda puede contener un error de fondo, y uno correcto suena exactamente igual. <strong>La seguridad del texto no es información sobre su corrección.</strong></p>
+        <p>Con un alumno, la forma de explicarse suele delatar cuánto ha entendido. Con un modelo esa pista no existe: la fluidez es constante, acierte o no.</p>
       </div>
     </div>
 
@@ -792,18 +789,18 @@ a.btn-run:hover{color:#fff}
       <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-2')" onkeydown="q3Key(event,'q3-2')">
         <div class="viz-num">2</div>
         <div style="flex:1">
-          <div class="viz-title">¿Razonan?</div>
-          <div class="viz-sub">Recuperan patrones con formato de razonamiento</div>
+          <div class="viz-title">Cuando explica su razonamiento, ¿es eso lo que ha hecho?</div>
+          <div class="viz-sub">Razonar no es lo mismo que narrar un razonamiento</div>
         </div>
-        <span class="q3-verdict">Reproducen la forma</span>
+        <span class="q3-verdict">No necesariamente</span>
         <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
       </div>
       <div class="viz-body q3-body">
-        <p>Lo que recuperan son <strong>patrones con formato de razonamiento</strong>. Han leído millones de textos que razonan paso a paso y reproducen esa estructura: premisa, desarrollo, conclusión. Se lee como un razonamiento y muchas veces llega al sitio correcto.</p>
-        <p>El límite aparece cuando la tarea exige salirse del patrón. Le costará <strong>añadir subjetividad o improvisación</strong>: sostener una postura propia, decidir ante un caso atípico o aportar el matiz que da la experiencia. Ahí tiende a volver a la respuesta típica.</p>
+        <p>El «paso a paso» que escribe el modelo puede ser una <strong>reconstrucción posterior</strong>: un texto con forma de razonamiento que acompaña a la conclusión, no necesariamente el camino que llevó hasta ella. Hay trabajos de investigación que muestran que esa explicación no siempre refleja lo que el modelo ha hecho realmente.</p>
+        <p>En docencia usamos la explicación del alumno para evaluar si ha razonado bien. <strong>Aquí no se puede hacer esa inferencia.</strong> Un razonamiento impecable sobre la página no garantiza que haya ocurrido.</p>
         <div class="attn-note">
-          <strong>Para probarlo en clase</strong>
-          Pide la misma explicación dos veces: una «como aparecería en un manual» y otra «como se la contarías a un residente que ya ha visto tres casos raros». Compara cuánto cambia realmente el fondo, y no solo el tono.
+          <strong>Para comprobarlo</strong>
+          El ejercicio que hay debajo de las tres preguntas está pensado exactamente para esto: cambiar un solo dato y ver si la explicación lo sigue.
         </div>
       </div>
     </div>
@@ -813,15 +810,15 @@ a.btn-run:hover{color:#fff}
       <div class="viz-header q3-head" role="button" tabindex="0" onclick="q3Toggle('q3-3')" onkeydown="q3Key(event,'q3-3')">
         <div class="viz-num">3</div>
         <div style="flex:1">
-          <div class="viz-title">¿Saben lo que dicen?</div>
-          <div class="viz-sub">El sistema está obligado a responder</div>
+          <div class="viz-title">¿Sabe cuándo no sabe?</div>
+          <div class="viz-sub">Lo sólido y lo inventado suenan igual</div>
         </div>
-        <span class="q3-verdict">Rellenan huecos</span>
+        <span class="q3-verdict">Mal</span>
         <svg class="q3-chev" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
       </div>
       <div class="viz-body q3-body">
-        <p>Como siempre deben contestar, a veces <strong>rellenarán huecos en vez de contestar</strong>. No hay un mecanismo natural para decir «no lo sé»: cuando falta información, el modelo completa con lo que estadísticamente encajaría en ese lugar.</p>
-        <p>Por eso una referencia bibliográfica inventada tiene el aspecto exacto de una real, con autores, revista y año plausibles. No está mintiendo: está terminando un patrón.</p>
+        <p>Lo sólido y lo inventado llegan con el mismo tono. No hay un mecanismo fiable para decir «no lo sé»: cuando falta información, el modelo completa con lo que estadísticamente encajaría en ese lugar. Por eso una referencia bibliográfica inventada tiene el aspecto exacto de una real.</p>
+        <p>Y pedirle su grado de certeza no lo resuelve: <strong>produce otro texto plausible, no una medida fiable</strong>. «Estoy bastante seguro» es una frase más, generada igual que las anteriores.</p>
         <p>El riesgo no es igual en todas las preguntas. Depende de <strong>la calidad de los datos de entrenamiento y de la frecuencia con que aparece la respuesta que buscas</strong>. Recorre la escala:</p>
 
         <div class="fq-wrap">
@@ -851,12 +848,58 @@ a.btn-run:hover{color:#fff}
       </div>
     </div>
 
+    <!-- EJERCICIO DE PERTURBACIÓN -->
+    <div class="section-header" style="margin-top:40px">
+      <h2>Pruébalo tú: cambiar un solo dato</h2>
+      <p>Funciona igual si el modelo acierta. De hecho, está pensado para cuando acierta.</p>
+    </div>
+
+    <div class="viz-box">
+      <div class="viz-header">
+        <div class="viz-num">✎</div>
+        <div><div class="viz-title">Dos casos idénticos salvo la tensión arterial</div><div class="viz-sub">Lanza cada uno en una conversación nueva e independiente</div></div>
+      </div>
+      <div class="viz-body">
+        <div class="q3-pair">
+          <div class="prompt-example">
+            <div class="prompt-example-label">Caso A</div>
+            <div class="prompt-example-text" id="q3-p1">Varón de 68 años con dolor torácico opresivo de 40 minutos de evolución, irradiado a mandíbula, y sudoración. ECG: elevación del ST en cara inferior. TA <span class="q3-mark">138/82 mmHg</span>. Auscultación pulmonar normal. ¿Cuál es tu diagnóstico, qué tratamiento indicarías y cuál es tu razonamiento paso a paso?</div>
+            <button class="q3-copy" onclick="q3Copy('q3-p1',this)">Copiar caso A</button>
+          </div>
+          <div class="prompt-example">
+            <div class="prompt-example-label">Caso B</div>
+            <div class="prompt-example-text" id="q3-p2">Varón de 68 años con dolor torácico opresivo de 40 minutos de evolución, irradiado a mandíbula, y sudoración. ECG: elevación del ST en cara inferior. TA <span class="q3-mark">78/45 mmHg</span>. Auscultación pulmonar normal. ¿Cuál es tu diagnóstico, qué tratamiento indicarías y cuál es tu razonamiento paso a paso?</div>
+            <button class="q3-copy" onclick="q3Copy('q3-p2',this)">Copiar caso B</button>
+          </div>
+        </div>
+
+        <div class="ej-obs">
+          <div class="ej-obs-label">Qué observar en el caso B</div>
+          <ul>
+            <li>Si aparece la sospecha de extensión al ventrículo derecho, las derivaciones precordiales derechas y el replanteamiento de los nitratos.</li>
+            <li>Si el razonamiento se reorganiza en torno a ese dato o solo añade una frase a un texto que sigue siendo el del caso A.</li>
+            <li>Si el tono es igual de seguro en los dos casos.</li>
+          </ul>
+        </div>
+
+        <div class="q3-trap open">
+          <strong>Si el modelo resuelve bien los dos casos, el ejercicio no ha fallado</strong>
+          <p>Ha respondido con el mismo aplomo en ambos, y del texto no puedes deducir si ha reorganizado su razonamiento en torno a la hipotensión o ha acertado por el patrón. Esa es precisamente la conclusión: que lo haga bien no te dice cómo lo ha hecho.</p>
+        </div>
+
+        <div class="attn-note" style="margin-top:16px">
+          <strong>Dos variantes</strong>
+          Lanza el mismo caso cuatro veces en sesiones nuevas y compara: la fluidez será constante, el contenido no siempre. O pide la referencia bibliográfica de una afirmación concreta y búscala; es la variante con más probabilidades de producir un fallo visible, y corresponde al último escalón de la escala de frecuencia de la pregunta 3.
+        </div>
+      </div>
+    </div>
+
     <hr class="sep"/>
 
     <!-- TRANSFORMERS -->
     <div class="section-header">
       <h2>Los transformers: leer la frase entera antes de decidir</h2>
-      <p>Si no comprende, ¿por qué acierta tanto? La respuesta está en un cambio de arquitectura publicado en 2017.</p>
+      <p>Si acierta casi siempre, ¿de dónde sale esa capacidad? Buena parte de la respuesta está en un cambio de arquitectura publicado en 2017.</p>
     </div>
 
     <div class="trf-paper">
