@@ -23,7 +23,10 @@ a{color:inherit}a:hover{color:inherit}
 .btn:hover{transform:translateY(-1px);opacity:.92}
 .thumb{flex-shrink:0;display:block;width:88px;aspect-ratio:3/4;border-radius:10px;overflow:hidden;border:1px solid #E7E5DE;background:#F3F1EA;box-shadow:0 4px 12px rgba(21,23,28,.10)}
 .thumb img{display:block;width:100%;height:100%;object-fit:cover;object-position:top}
+.upd::before{content:"·";margin-right:8px}
 @media (max-width:560px){
+  .upd{flex-basis:100%;padding-left:16px}
+  .upd::before{content:none}
   .thumb{width:64px;border-radius:8px;align-self:flex-start}
   #sec-cuadernos .res{padding:18px !important;gap:14px !important}
   #sec-cuadernos .arr{display:none !important}
@@ -56,9 +59,9 @@ a{color:inherit}a:hover{color:inherit}
   <!-- HERO -->
   <section id="inicio" style="max-width: 1200px; margin: 0 auto; padding: 72px 24px 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 56px">
     <div style="flex: 1 1 480px; min-width: 0; display: flex; flex-direction: column; gap: 24px">
-      <span style="display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5F6470">
+      <span style="display: inline-flex; align-items: center; gap: 8px; align-self: flex-start; flex-wrap: wrap; font-size: 13px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #5F6470">
         <span style="width: 8px; height: 8px; border-radius: 50%; background: var(--accent)"></span>
-        Unidad de Educación Médica<span style="font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #7A7F8A">· Actualizado en octubre de 2026</span>
+        Unidad de Educación Médica<span class="upd" style="font-weight: 600; letter-spacing: 0.02em; text-transform: none; color: #7A7F8A">Actualizado en octubre de 2026</span>
       </span>
       <h1 style="margin: 0; font-size: clamp(40px, 5.4vw, 68px); line-height: 1.02; font-weight: 800; letter-spacing: -1.6px">
         Enseñar medicina,<br><span style="background: linear-gradient(transparent 62%, var(--accent) 62%); padding: 0 4px">mejor y juntos.</span>
@@ -331,7 +334,7 @@ a{color:inherit}a:hover{color:inherit}
   <footer style="border-top: 1px solid #E7E5DE; background: #FFFFFF">
     <div style="max-width: 1200px; margin: 0 auto; padding: 28px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 14px; color: #5F6470">
       <span><strong style="color: #15171C">EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</span>
-      <span>Actualizado en octubre de 2026 · <a href="mailto:luis.corral@uva.es" style="color: #15171C; font-weight: 600">luis.corral@uva.es</a></span>
+      <span><a href="mailto:luis.corral@uva.es" style="color: #15171C; font-weight: 600">luis.corral@uva.es</a></span>
     </div>
   </footer>
 
