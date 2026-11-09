@@ -1,890 +1,1183 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Limitaciones y verificación · LLM en diagnóstico diferencial · EduMed UVa</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..800&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <style>
-    /* ── Variables ── */
-    :root {
-      --uva-blue:      #003973;
-      --uva-blue-soft: #1d4f8a;
-      --uva-red:       #c60046;
-      --ink:           #1a1f2e;
-      --ink-soft:      #3d4554;
-      --muted:         #6b7486;
-      --muted-2:       #9099aa;
-      --cream:         #faf7f2;
-      --cream-2:       #f3ede3;
-      --paper:         #ffffff;
-      --line:          #e8e1d4;
-      --line-strong:   #d9cfbb;
-      --e-red:         #9d174d;   --e-red-l:    #fce7f3;
-      --e-orange:      #b45309;   --e-orange-l: #fef3c7;
-      --e-teal:        #0d6e6e;   --e-teal-l:   #e0f2f1;
-      --e-indigo:      #3730a3;   --e-indigo-l: #ede9fe;
-      --e-green:       #166534;   --e-green-l:  #dcfce7;
-      --e-violet:      #6d28d9;   --e-violet-l: #f5f3ff;
-      --e-amber:       #92400e;   --e-amber-l:  #fffbeb;
-      --shadow-sm: 0 1px 2px rgba(26,31,46,.04), 0 2px 8px rgba(26,31,46,.04);
-      --shadow-md: 0 2px 6px rgba(26,31,46,.05), 0 12px 32px rgba(26,31,46,.08);
-      --shadow-lg: 0 8px 28px rgba(0,57,115,.12), 0 30px 80px rgba(26,31,46,.12);
-      --r-sm: 10px; --r-md: 16px; --r-lg: 22px; --r-xl: 28px;
-      --max: 960px;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-    body { font-family: "Inter", -apple-system, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.6; font-size: 16px; -webkit-font-smoothing: antialiased; }
-    .container { width: min(100% - 32px, var(--max)); margin: 0 auto; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Limitaciones y verificación en el uso de LLM · DDx_IA · EduMed.UVa</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ── EduMed.UVa · estilo base (guía de noviembre de 2026) ── */
+:root{
+  --crema:#FAFAF7; --blanco:#FFFFFF; --tinta:#15171C;
+  --acento:#F5C518; --acento-palido:#FFF4C2; --acento-palido-borde:#F1E3A0;
+  --dorado:#7A5C00; --dorado-num:#8A6A00;
+  --linea:#E7E5DE; --linea-disc:#D3D0C6;
+  --gris-texto:#5F6470; --gris-cuerpo:#4A4F5A; --gris-menu:#3A3F49; --gris-fecha:#7A7F8A;
+  --topo:#4A463F; --topo-tarjeta:#57524A; --topo-borde:#6B655B; --crema-oscuro:#E4DED2;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--crema);color:var(--tinta);font-family:'Figtree',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+p{margin:0}
+h1,h2,h3{margin:0}
+button{font-family:inherit;color:inherit}
 
-    /* ── Barra EduMed ── */
-    .edumed-bar { position: sticky; top: 0; z-index: 100; background: #f5c518; border-bottom: 1px solid #d9a800; box-shadow: 0 1px 0 rgba(0,0,0,.04), 0 4px 14px rgba(0,0,0,.06); }
-    .edumed-bar-inner { max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 12px 20px; }
-    .edumed-brand { display: flex; align-items: center; gap: 14px; color: #1a1f2e; text-decoration: none; }
-    .edumed-wordmark { display: flex; flex-direction: column; line-height: 1.1; }
-    .edumed-wordmark .w1 { font-weight: 800; font-size: 18px; letter-spacing: -.01em; color: #1a1f2e; }
-    .edumed-wordmark .w1 .sep { opacity: .45; margin: 0 4px; font-weight: 500; }
-    .edumed-wordmark .w2 { font-weight: 600; font-size: 10.5px; letter-spacing: .08em; color: #1a1f2e; opacity: .8; margin-top: 3px; }
-    .edumed-back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: #1a1f2e; text-decoration: none; padding: 8px 14px; border-radius: 999px; background: rgba(255,255,255,.55); border: 1px solid rgba(26,31,46,.15); transition: background .15s, transform .15s; white-space: nowrap; }
-    .edumed-back:hover { background: #fff; transform: translateX(-1px); }
-    .edumed-back svg { width: 14px; height: 14px; }
+.contenedor{max-width:1200px;margin:0 auto;padding:0 24px}
+.seccion{border-top:1px solid var(--linea);scroll-margin-top:0}
+.seccion > .contenedor{padding-top:72px;padding-bottom:72px;display:flex;flex-wrap:wrap;gap:40px;align-items:flex-start}
+.seccion-cab{flex:1 1 280px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.seccion-cuerpo{flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:12px}
+.rejilla{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px}
+.rejilla-2{grid-template-columns:repeat(2,minmax(0,1fr))}
 
-    /* ── Nav de índice ── */
-    .nav-sticky { background: var(--cream); border-bottom: 1px solid var(--line); }
-    .nav-pills { display: flex; flex-wrap: wrap; gap: 8px; padding: 14px 0; }
-    .nav-pill { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; color: var(--ink-soft); background: var(--paper); border: 1px solid var(--line); transition: all .18s; cursor: pointer; font-family: "Inter", sans-serif; appearance: none; }
-    .nav-pill:hover, .nav-pill.active { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-1px); box-shadow: var(--shadow-sm); }
+.titular{font-size:clamp(40px,5.4vw,68px);line-height:1.02;font-weight:800;letter-spacing:-1.6px}
+.subrayado{background:linear-gradient(transparent 62%,var(--acento) 62%);padding:0 4px}
+.seccion-num{font-size:14px;font-weight:800;color:var(--dorado-num)}
+.seccion-titulo{font-size:36px;line-height:1.1;font-weight:800;letter-spacing:-.8px}
+.seccion-frase{font-size:19px;line-height:1.4;font-weight:700;color:var(--gris-menu)}
+.seccion-desc{font-size:16px;line-height:1.6;color:var(--gris-texto)}
+.antetitulo{display:inline-flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--gris-texto)}
+.antetitulo::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--acento)}
+.upd{font-weight:600;letter-spacing:.02em;text-transform:none;color:var(--gris-fecha)}
+.upd::before{content:"·";margin-right:8px}
+.etiqueta{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--dorado)}
 
-    /* ── Hero ── */
-    .hero { background: var(--cream); border-bottom: 1px solid var(--line); padding: 52px 0 44px; position: relative; overflow: hidden; }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--cream-2); border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 14px; margin-bottom: 24px; }
-    .hero-tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--uva-red); }
-    .hero-tag span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-    .hero-title { font-family: "Fraunces", serif; font-size: clamp(2rem, 5vw, 3rem); font-weight: 700; letter-spacing: -.03em; line-height: 1.1; color: var(--ink); margin-bottom: 14px; }
-    .hero-title em { font-style: italic; color: var(--uva-blue); }
-    .hero-subtitle { font-size: clamp(1rem, 2.5vw, 1.1rem); color: var(--ink-soft); max-width: 680px; margin-bottom: 32px; line-height: 1.55; }
-    .hero-meta { display: flex; flex-wrap: wrap; gap: 12px; }
-    .hero-badge { display: flex; align-items: center; gap: 10px; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 16px; box-shadow: var(--shadow-sm); }
-    .hero-badge-icon { font-size: 20px; }
-    .hero-badge-text { display: flex; flex-direction: column; }
-    .hero-badge-text span:first-child { font-size: 11px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
-    .hero-badge-text span:last-child { font-size: 13px; font-weight: 600; color: var(--ink); }
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:48px;padding:0 24px;border-radius:999px;font-size:16px;font-weight:700;text-decoration:none;border:1.5px solid var(--tinta);cursor:pointer;transition:transform .15s,opacity .15s,background .15s,color .15s}
+.btn:hover{transform:translateY(-1px);opacity:.92}
+.btn-principal{background:var(--tinta);color:#fff}
+.btn-secundario{background:transparent;color:var(--tinta)}
+.btn-peq{min-height:40px;padding:0 16px;font-size:14px}
 
-    /* ── Secciones ── */
-    .section { padding: 52px 0; }
-    .section + .section { border-top: 1px solid var(--line); }
-    .section-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 12px; }
-    .section-eyebrow::before { content: ""; width: 20px; height: 2px; background: var(--uva-red); border-radius: 1px; }
-    .section-title { font-family: "Fraunces", serif; font-size: clamp(1.6rem, 3.5vw, 2.2rem); font-weight: 600; letter-spacing: -.025em; line-height: 1.15; color: var(--ink); margin-bottom: 14px; }
-    .section-lead { font-size: 15px; color: var(--ink-soft); max-width: 720px; line-height: 1.65; margin-bottom: 28px; }
+.tarjeta{display:flex;gap:20px;align-items:center;padding:22px 24px;background:var(--blanco);border:1px solid var(--linea);border-radius:18px;text-decoration:none;transition:border-color .15s,box-shadow .15s,transform .15s}
+a.tarjeta:hover{border-color:var(--tinta);box-shadow:0 6px 20px rgba(21,23,28,.08);transform:translateY(-1px)}
+.tarjeta-texto{flex:1;min-width:0;display:flex;flex-direction:column;gap:6px}
+.tarjeta-titulo{font-size:19px;font-weight:700;line-height:1.3}
+.tarjeta-desc{font-size:15px;line-height:1.55;color:var(--gris-texto)}
+.destacado-palido{background:var(--acento-palido);border:1px solid var(--acento-palido-borde);border-radius:22px;padding:26px 28px}
+.destacado{background:var(--acento);border:0;border-radius:22px;padding:28px;color:var(--tinta)}
+.destacado .etiqueta{color:var(--tinta)}
+.destacado-titulo{font-size:22px;font-weight:800;line-height:1.25;margin:6px 0 12px}
 
-    /* ── About cards (grid de intro) ── */
-    .about-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px; }
-    .about-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s; cursor: pointer; }
-    .about-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
-    .about-card-icon { width: 44px; height: 44px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 10px; }
-    .about-card-title { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
-    .about-card-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.5; }
+/* ── Cabecera ── */
+.cabecera{background:var(--crema);border-bottom:1px solid var(--linea)}
+.cabecera > .contenedor{padding-top:16px;padding-bottom:16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+.marca{display:flex;align-items:center;gap:12px;text-decoration:none}
+.marca img{width:44px;height:44px;border-radius:50%;object-fit:contain;background:#fff;border:1px solid var(--linea);padding:3px}
+.marca-texto{display:flex;flex-direction:column;gap:2px}
+.marca-nombre{font-size:18px;font-weight:800;letter-spacing:-.2px}
+.marca-nombre i{font-style:normal;color:var(--dorado-num)}
+.marca-sub{font-size:12px;font-weight:500;color:var(--gris-texto)}
+.menu{display:flex;flex-wrap:wrap;gap:6px 20px;font-size:15px;font-weight:600;color:var(--gris-menu)}
+.menu a{text-decoration:none}
+.menu a:hover{text-decoration:underline;text-underline-offset:4px}
 
-    /* ── Two col ── */
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px; }
+/* ── Portada ── */
+.portada{max-width:1200px;margin:0 auto;padding:72px 24px 64px;display:flex;flex-wrap:wrap;align-items:center;gap:56px}
+.portada-texto{flex:1 1 480px;min-width:0;display:flex;flex-direction:column;gap:24px}
+.portada-p{font-size:19px;line-height:1.6;color:var(--gris-cuerpo);max-width:600px}
+.portada-cuadro{flex:1 1 340px;min-width:0;max-width:440px;aspect-ratio:1;background:var(--acento);border-radius:40px;position:relative;overflow:hidden;padding:36px;display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.portada-cuadro::before,.portada-cuadro::after{content:"";position:absolute;border-radius:50%;background:rgba(255,255,255,.28)}
+.portada-cuadro::before{width:180px;height:180px;top:-60px;right:-50px}
+.portada-cuadro::after{width:120px;height:120px;bottom:-40px;left:-30px}
+.hero-tile{position:relative;z-index:1;background:#fff;border-radius:18px;padding:16px;display:flex;flex-direction:column;justify-content:space-between;text-decoration:none;border:1px solid transparent;transition:border-color .15s,transform .15s;min-width:0}
+.hero-tile:hover{border-color:var(--tinta);transform:translateY(-1px)}
+.hero-tile b{font-size:40px;font-weight:800;line-height:1;letter-spacing:-1px}
+.hero-tile span{font-size:16px;font-weight:700;line-height:1.25}
+.hero-tile small{font-size:13px;color:var(--gris-texto);font-weight:600}
+.objetivos{max-width:1200px;margin:0 auto;padding:0 24px 72px;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px}
+.objetivo{border-top:3px solid var(--tinta);padding-top:16px;display:flex;flex-direction:column;gap:6px}
+.objetivo h3{font-size:19px;font-weight:700;line-height:1.3}
+.objetivo p{font-size:15px;line-height:1.55;color:var(--gris-texto)}
 
-    /* ── Info card ── */
-    .info-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 22px; box-shadow: var(--shadow-sm); }
-    .info-card-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--uva-red); margin-bottom: 8px; }
-    .info-card-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
-    .info-card-body { font-size: 14px; color: var(--ink-soft); line-height: 1.65; }
-    .info-card-body p + p { margin-top: 8px; }
-    .info-card.accent-blue { border-left: 3px solid var(--uva-blue); }
-    .info-card.accent-red  { border-left: 3px solid var(--uva-red); }
+/* ── Marco ── */
+.cita{font-size:24px;line-height:1.35;font-weight:700;letter-spacing:-.3px;padding:4px 0 8px}
+.pregunta{background:var(--blanco);border:1px solid var(--linea);border-radius:18px;padding:22px 24px;display:flex;flex-direction:column;gap:10px}
+.pregunta p{font-size:16px;line-height:1.6;color:var(--gris-cuerpo)}
+.pregunta-t{font-size:19px !important;font-weight:700;color:var(--tinta) !important;line-height:1.35 !important}
+.tarjeta-v{flex-direction:column;align-items:flex-start;gap:6px}
+.letra{width:44px;height:44px;border-radius:50%;background:var(--acento-palido);display:flex;align-items:center;justify-content:center;font-size:19px;font-weight:800;margin-bottom:6px}
+.ver{margin-top:auto;padding-top:8px;display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:700}
+.destacado-palido p{font-size:16px;line-height:1.6;color:var(--gris-cuerpo)}
+.destacado-palido p + p{margin-top:10px}
+.capas{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 4px}
+.capa{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border-radius:999px;background:#fff;border:1px solid var(--acento-palido-borde);font-size:14px;font-weight:700}
+.capa-sep{color:var(--dorado-num);font-weight:800;align-self:center}
 
-    /* ── Accordeón (sistema diseño) ── */
-    .acc-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
-    .acc-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); overflow: hidden; transition: box-shadow .2s; }
-    .acc-item.open { box-shadow: var(--shadow-md); }
-    .acc-trigger { width: 100%; border: 0; background: none; cursor: pointer; display: flex; align-items: center; gap: 14px; padding: 16px 20px; text-align: left; transition: background .15s; font-family: "Inter", sans-serif; }
-    .acc-trigger:hover { background: var(--cream); }
-    .acc-num { width: 32px; height: 32px; border-radius: 8px; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: "Fraunces", serif; font-weight: 700; font-size: 1rem; font-style: italic; }
-    .acc-label-wrap { flex: 1; text-align: left; }
-    .acc-label { font-family: "Fraunces", serif; font-size: 1rem; font-weight: 600; color: var(--ink); display: block; }
-    .acc-sublabel { font-size: 12px; color: var(--muted); font-family: "Inter", sans-serif; font-weight: 400; display: block; margin-top: 2px; font-style: normal; }
-    .acc-chevron { width: 28px; height: 28px; border-radius: 50%; border: 1px solid var(--line); background: var(--cream); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s, background .2s; }
-    .acc-chevron svg { width: 13px; height: 13px; color: var(--muted); }
-    .acc-item.open .acc-chevron { transform: rotate(180deg); background: var(--uva-blue); border-color: var(--uva-blue); }
-    .acc-item.open .acc-chevron svg { color: #fff; }
-    .acc-body { display: none; padding: 0 20px 20px 66px; }
-    .acc-item.open .acc-body { display: block; }
+/* ── Acordeón de errores ── */
+.acc-grupo{display:flex;flex-direction:column;gap:12px}
+.acc{background:var(--blanco);border:1px solid var(--linea);border-radius:18px;transition:border-color .15s,box-shadow .15s;scroll-margin-top:24px}
+.acc:hover{border-color:var(--tinta);box-shadow:0 6px 20px rgba(21,23,28,.08)}
+.acc.abierto{border-color:var(--tinta)}
+.acc-cab{all:unset;box-sizing:border-box;width:100%;display:flex;gap:20px;align-items:center;padding:22px 24px;cursor:pointer;border-radius:18px}
+.acc-cab:focus-visible{outline:2px solid var(--tinta);outline-offset:3px}
+.acc-cod{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--acento-palido);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800}
+.acc-etis{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.sello{font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;background:var(--acento-palido);border:1px solid var(--acento-palido-borde);color:var(--dorado);padding:3px 10px;border-radius:999px}
+.acc-chev{flex-shrink:0;width:36px;height:36px;border-radius:50%;border:1px solid var(--linea);display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.acc.abierto .acc-chev{transform:rotate(180deg)}
+.acc-cuerpo{display:none;padding:0 24px 24px 88px;flex-direction:column;gap:14px}
+.acc.abierto .acc-cuerpo{display:flex}
+.fila{display:flex;flex-direction:column;gap:4px;border-top:1px solid var(--linea);padding-top:14px}
+.fila p{font-size:15px;line-height:1.6;color:var(--gris-cuerpo)}
+.fila-hacer{border-top:0;background:var(--acento-palido);border:1px solid var(--acento-palido-borde);border-radius:14px;padding:14px 16px}
+.fila-hacer p{color:var(--tinta);font-weight:600}
+.indice{margin:8px 0 0;padding:0;list-style:none;counter-reset:i;display:flex;flex-direction:column;gap:2px;border-top:1px solid var(--linea);padding-top:12px}
+.indice li{counter-increment:i}
+.indice a{display:flex;gap:10px;padding:5px 0;font-size:14px;font-weight:600;color:var(--gris-menu);text-decoration:none}
+.indice a::before{content:counter(i);min-width:18px;color:var(--dorado-num);font-weight:800}
+.indice a:hover{color:var(--tinta);text-decoration:underline;text-underline-offset:3px}
+@media (min-width:900px){ .fija{position:sticky;top:24px} }
+@media (max-width:899px){ .indice{display:none} }
 
-    /* ── Detail rows dentro del acordeón ── */
-    .detail-rows { display: flex; flex-direction: column; gap: 8px; }
-    .detail-row { background: var(--cream); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 12px 14px; font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-    .detail-row strong { color: var(--ink); }
+.filtro{margin-top:12px}
+.filtro-lista{margin:0 0 14px;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.filtro-lista li{background:rgba(255,255,255,.55);border-radius:12px;padding:12px 14px;font-size:15px;line-height:1.5}
+.filtro p{font-size:16px;line-height:1.55;font-weight:600}
+.refs{background:var(--blanco);border:1px solid var(--linea);border-radius:18px;padding:18px 24px}
+.refs summary{cursor:pointer;font-size:15px;font-weight:700}
+.refs ol{margin:14px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:8px}
+.refs li{font-size:13px;line-height:1.5;color:var(--gris-texto);overflow-wrap:anywhere}
+.refs a{color:var(--dorado)}
 
-    /* ── Alert / Pullquote ── */
-    .alert-warning { background: var(--e-amber-l); border: 1px solid #fcd34d; border-radius: var(--r-md); padding: 16px 20px; display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
-    .alert-icon { font-size: 22px; flex-shrink: 0; }
-    .alert-title { font-size: 13px; font-weight: 700; color: #92400e; margin-bottom: 4px; }
-    .alert-desc { font-size: 13px; color: #78350f; line-height: 1.55; }
+/* ── Verificación ── */
+.pestanas{display:flex;flex-wrap:wrap;gap:8px}
+.pestana[aria-selected="true"]{background:var(--tinta);color:#fff}
+.panel{display:none;background:var(--blanco);border:1px solid var(--linea);border-radius:22px;padding:28px;flex-direction:column;gap:10px}
+.panel.activo{display:flex}
+.panel-titulo{font-size:22px;font-weight:800;line-height:1.25}
+.panel-def{font-size:16px;line-height:1.6;color:var(--gris-cuerpo)}
+.subcats{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px;margin-top:8px}
+.subcat{background:var(--crema);border:1px solid var(--linea);border-radius:14px;padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+.subcat b{font-size:16px;line-height:1.3}
+.subcat span{font-size:14px;line-height:1.55;color:var(--gris-texto)}
 
-    .pullquote { background: var(--paper); border-left: 4px solid var(--uva-blue); border-radius: 0 var(--r-md) var(--r-md) 0; padding: 18px 22px; box-shadow: var(--shadow-sm); margin-bottom: 20px; }
-    .pullquote p { font-family: "Fraunces", serif; font-size: 1.05rem; font-style: italic; color: var(--ink); line-height: 1.5; }
+/* ── Sección oscura ── */
+.seccion-oscura{background:var(--topo);color:#fff;border-top:0}
+.seccion-oscura > .contenedor{padding-top:80px;padding-bottom:80px}
+.seccion-oscura .seccion-num,.seccion-oscura .etiqueta{color:var(--acento)}
+.seccion-oscura .seccion-desc,.seccion-oscura .tarjeta-desc{color:var(--crema-oscuro)}
+.seccion-oscura .seccion-frase{color:#fff}
+.seccion-oscura .tarjeta{background:var(--topo-tarjeta);border-color:var(--topo-borde);flex-direction:column;align-items:flex-start;gap:8px}
+.seccion-oscura .tarjeta p{font-size:15px;line-height:1.6;color:var(--crema-oscuro)}
+.seccion-oscura .destacado .etiqueta{color:var(--tinta)}
+.regla{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:8px}
+.regla li{background:rgba(255,255,255,.55);border-radius:12px;padding:12px 14px;font-size:16px;font-weight:700;line-height:1.4}
+.llevarse{font-size:22px;line-height:1.4;font-weight:700;letter-spacing:-.2px;color:#fff;border-top:3px solid var(--acento);padding-top:16px;margin-top:8px}
 
-    /* ── Callout box (resumen/verde) ── */
-    .callout { border-radius: var(--r-md); padding: 16px 20px; font-size: 13px; line-height: 1.65; margin-top: 16px; }
-    .callout-teal { background: var(--e-teal-l); border: 1px solid #99d6d4; color: var(--e-teal); }
-    .callout-red  { background: var(--e-red-l);  border: 1px solid #fbcfe8; color: var(--e-red); }
-    .callout-title { font-weight: 700; margin-bottom: 5px; font-size: 13px; }
+/* ── Repaso ── */
+.flash-barra{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:8px;font-size:14px;color:var(--gris-texto)}
+.flash-barra b{color:var(--tinta)}
+.flash{display:none}
+.flash.visible{display:block}
+.flash-cara{all:unset;box-sizing:border-box;width:100%;min-height:300px;cursor:pointer;border-radius:22px;padding:28px;display:flex;flex-direction:column;gap:14px;transition:border-color .15s,box-shadow .15s}
+.flash-cara:focus-visible{outline:2px solid var(--tinta);outline-offset:3px}
+.flash-anverso{background:var(--blanco);border:1px solid var(--linea)}
+.flash-anverso:hover{border-color:var(--tinta);box-shadow:0 6px 20px rgba(21,23,28,.08)}
+.flash-reverso{display:none;background:var(--acento-palido);border:1px solid var(--acento-palido-borde)}
+.flash.girada .flash-anverso{display:none}
+.flash.girada .flash-reverso{display:flex}
+.flash-cab{display:flex;justify-content:space-between;align-items:center}
+.flash-n{font-size:14px;font-weight:800;color:var(--dorado-num)}
+.flash-q{font-size:21px;line-height:1.45;font-weight:600}
+.flash-r{font-size:22px;line-height:1.3;font-weight:800}
+.flash-exp{font-size:16px;line-height:1.6;color:var(--gris-cuerpo)}
+.flash-pista{margin-top:auto;font-size:13px;font-weight:600;color:var(--gris-fecha)}
+.flash-ctrl{display:flex;flex-wrap:wrap;gap:8px}
 
-    /* ── Ethics list (verificación) ── */
-    .ethics-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-    .ethics-item { display: flex; gap: 18px; align-items: flex-start; background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-lg); padding: 20px; box-shadow: var(--shadow-sm); transition: box-shadow .2s, transform .2s; }
-    .ethics-item:hover { box-shadow: var(--shadow-md); transform: translateX(3px); }
-    .ethics-num { font-family: "Fraunces", serif; font-size: 2.5rem; font-weight: 700; font-style: italic; line-height: 1; flex-shrink: 0; width: 52px; text-align: center; }
-    .ethics-content { flex: 1; }
-    .ethics-title { font-family: "Fraunces", serif; font-size: 1.05rem; font-weight: 600; color: var(--ink); margin-bottom: 5px; }
-    .ethics-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.6; }
-    .ethics-tag { display: inline-flex; align-items: center; gap: 4px; background: var(--cream-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px 10px; font-size: 11px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); margin-top: 8px; }
+/* ── Pie ── */
+.pie{border-top:1px solid var(--linea);background:var(--blanco);font-size:14px;color:var(--gris-texto)}
+.pie > .contenedor{padding-top:28px;padding-bottom:28px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
+.pie strong{color:var(--tinta)}
+.pie a{color:var(--tinta);font-weight:600}
 
-    /* ── Checklist ── */
-    .check-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin: 12px 0; }
-    .check-list li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--ink-soft); line-height: 1.5; background: var(--cream); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 11px 14px; }
-    .check-list li::before { content: "✓"; color: var(--e-teal); font-weight: 800; flex-shrink: 0; margin-top: 1px; }
-
-    /* ── Dark card ── */
-    .dark-card { background: var(--uva-blue); color: #fff; border-radius: var(--r-lg); padding: 24px; }
-    .dark-card-title { font-family: "Fraunces", serif; font-size: 1.1rem; font-weight: 600; color: #f5c518; margin-bottom: 10px; }
-    .dark-card-body { font-size: 14px; color: rgba(255,255,255,.85); line-height: 1.65; }
-
-    /* ── Flashcards (nueva versión) ── */
-    .choice-intro { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 16px; flex-wrap: wrap; }
-    .choice-progress { font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
-    .choice-stack { position: relative; height: 360px; max-width: 520px; margin: 0 auto; perspective: 1400px; }
-    .choice-card { position: absolute; inset: 0; appearance: none; border: 0; background: transparent; padding: 0; border-radius: var(--r-xl); cursor: pointer; transform-style: preserve-3d; display: none; }
-    .choice-card.visible { display: block; }
-    .choice-inner { position: absolute; inset: 0; border-radius: var(--r-xl); transform-style: preserve-3d; transition: transform .65s cubic-bezier(.2,.8,.2,1); }
-    .choice-card.flipped .choice-inner { transform: rotateY(180deg); }
-    .choice-face { position: absolute; inset: 0; border-radius: var(--r-xl); padding: 26px 24px; display: flex; flex-direction: column; justify-content: space-between; backface-visibility: hidden; -webkit-backface-visibility: hidden; box-shadow: var(--shadow-md); overflow: hidden; }
-    .choice-front { background: var(--paper); border: 1px solid var(--line); }
-    .choice-back  { background: var(--card-tint, #e8f0f8); transform: rotateY(180deg); }
-    .choice-eyebrow { font: 700 11px "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--uva-red); }
-    .choice-num { font-family: "Fraunces", serif; font-size: 52px; font-weight: 400; line-height: 1; font-style: italic; color: var(--card-ink, var(--uva-blue)); opacity: .18; }
-    .choice-q { font-family: "Fraunces", serif; font-size: clamp(1rem, 3vw, 1.25rem); font-weight: 600; letter-spacing: -.015em; line-height: 1.3; color: var(--ink); margin: 8px 0 0; text-align: left; }
-    .choice-hint { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--muted); font-weight: 500; margin-top: 10px; }
-    .choice-back-label { font: 700 11px "Inter", sans-serif; letter-spacing: .12em; text-transform: uppercase; color: var(--card-ink, var(--uva-blue)); display: block; margin-bottom: 8px; }
-    .choice-back-text { font-size: 14px; font-weight: 700; color: var(--card-ink, var(--uva-blue)); margin-bottom: 8px; }
-    .choice-back-explain { font-size: 13px; color: var(--ink); line-height: 1.6; }
-    .choice-controls { display: flex; justify-content: center; gap: 12px; margin-top: 20px; }
-    .choice-ctrl { appearance: none; background: var(--paper); border: 1px solid var(--line); width: 44px; height: 44px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; cursor: pointer; color: var(--ink); transition: all .18s; box-shadow: var(--shadow-sm); }
-    .choice-ctrl:hover { background: var(--uva-blue); color: #fff; border-color: var(--uva-blue); transform: translateY(-2px); }
-    .choice-ctrl svg { width: 16px; height: 16px; }
-    .choice-ctrl.flip { width: auto; padding: 0 18px; border-radius: 999px; font: 600 13px "Inter", sans-serif; gap: 6px; }
-
-    /* ── Ideas clave grid ── */
-    .key-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 10px; margin-top: 16px; }
-    .key-item { background: var(--paper); border: 1px solid var(--line); border-radius: var(--r-md); padding: 16px; }
-    .key-icon { font-size: 1.5rem; margin-bottom: 6px; }
-    .key-title { font-weight: 700; font-size: 0.875rem; color: var(--ink); margin-bottom: 4px; }
-    .key-desc  { font-size: 12px; color: var(--ink-soft); line-height: 1.5; }
-    .key-item.red  { background: var(--e-red-l); border-color: #fbcfe8; }
-    .key-item.blue { background: #dbeafe; border-color: #bfdbfe; }
-
-    /* ── Pestañas (design system) ── */
-    .tabs-nav { display: flex; gap: 4px; flex-wrap: wrap; }
-    .tab-btn {
-      appearance: none; cursor: pointer;
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 18px;
-      font-family: "Inter", sans-serif; font-size: 13px; font-weight: 700;
-      color: var(--muted); background: var(--cream-2);
-      border: 1px solid var(--line); border-bottom: none;
-      border-radius: var(--r-md) var(--r-md) 0 0;
-      transition: color .18s, background .18s;
-      position: relative; bottom: -1px;
-    }
-    .tab-btn:hover { color: var(--ink); background: var(--paper); }
-    .tabs-body {
-      border: 1px solid var(--line);
-      border-radius: 0 var(--r-lg) var(--r-lg) var(--r-lg);
-      box-shadow: var(--shadow-sm); overflow: hidden;
-      margin-bottom: 20px;
-    }
-    .tab-pane { display: none; padding: 28px; }
-    .tab-pane.active { display: block; }
-    .tab-pane-tag {
-      display: inline-block; font-size: 11px; font-weight: 700;
-      letter-spacing: .1em; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 999px; margin-bottom: 10px;
-    }
-    .tab-pane-title {
-      font-family: "Fraunces", serif; font-size: 1.35rem;
-      font-weight: 600; color: var(--ink); margin-bottom: 8px;
-    }
-    .tab-pane-def { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 16px; }
-    .tab-subcats { display: flex; flex-direction: column; gap: 10px; padding-top: 4px; }
-    .tab-subcat { background: rgba(255,255,255,.7); border: 1px solid rgba(0,0,0,.07); border-radius: var(--r-md); padding: 14px 16px; }
-    .tab-subcat-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
-    .tab-subcat-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.55; }
-
-    /* ── Pestañas verificación — colores activos ── */
-    .tab-btn.active[data-tab="v1"] { background: var(--e-teal-l); border-color: #99d6d4; color: var(--e-teal); z-index: 1; }
-    .tab-btn.active[data-tab="v2"] { background: #dbeafe; border-color: #93c5fd; color: var(--uva-blue); z-index: 1; }
-    .tab-btn.active[data-tab="v3"] { background: var(--e-green-l); border-color: #86efac; color: var(--e-green); z-index: 1; }
-
-    /* ── Footer ── */
-    .footer { margin-top: 40px; padding: 28px 0 40px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
-    .footer-row { display: flex; flex-wrap: wrap; gap: 14px 24px; align-items: center; justify-content: space-between; }
-
-    /* ── Animaciones ── */
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-    .anim-fade-up { animation: fadeUp .4s ease both; }
-
-    /* ── Responsive ── */
-    @media (max-width: 640px) {
-      .edumed-bar-inner { padding: 10px 14px; }
-      .edumed-wordmark .w1 { font-size: 15px; }
-      .edumed-wordmark .w2 { font-size: 9px; }
-      .edumed-back { padding: 7px 10px; font-size: 12px; }
-      .nav-sticky { position: static; }
-      .hero { padding: 36px 0 28px; }
-      .hero-meta { flex-direction: column; }
-      .section { padding: 36px 0; }
-      .about-grid { grid-template-columns: 1fr; }
-      .two-col { grid-template-columns: 1fr; }
-      .acc-body { padding-left: 20px; }
-      .ethics-item { flex-direction: column; gap: 6px; }
-      .ethics-num  { width: auto; font-size: 2rem; }
-      .choice-stack { height: 420px; max-width: 100%; }
-      .key-grid { grid-template-columns: 1fr 1fr; }
-    }
-    @media (max-width: 420px) { .key-grid { grid-template-columns: 1fr; } }
-    :focus-visible { outline: 2px solid var(--uva-blue); outline-offset: 3px; border-radius: 6px; }
-    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
-  </style>
+@media (max-width:560px){
+  .tarjeta,.acc-cab{padding:18px;gap:14px}
+  .acc-cod{width:36px;height:36px;font-size:13px}
+  .acc-chev{display:none}
+  .acc-cuerpo{padding:0 18px 18px}
+  .upd{flex-basis:100%;padding-left:16px}
+  .upd::before{content:none}
+  .seccion-titulo{font-size:30px}
+  .portada-cuadro{padding:22px;gap:10px;border-radius:32px}
+  .hero-tile b{font-size:30px}
+  .hero-tile span{font-size:14px}
+  .panel,.destacado,.destacado-palido,.flash-cara{padding:22px}
+  .flash-q{font-size:18px}
+  .cita{font-size:20px}
+  .rejilla-2{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important;scroll-behavior:auto !important}}
+</style>
 </head>
 <body>
 
-  <!-- ── BARRA EDUMED ── -->
-  <div class="edumed-bar">
-    <div class="edumed-bar-inner">
-      <a class="edumed-brand" href="https://tutorcyllo.github.io/EduMed.UVa/">
-        <div class="edumed-wordmark">
-          <span class="w1">EduMed<span class="sep">·</span>UVa</span>
-          <span class="w2">Unidad de Educación Médica · Facultad de Medicina</span>
-        </div>
-      </a>
-      <a class="edumed-back" href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">
-        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M10 4l-4 4 4 4"/></svg>
-        Volver a DDx_IA
-      </a>
+<header class="cabecera">
+  <div class="contenedor">
+    <a class="marca" href="https://tutorcyllo.github.io/EduMed.UVa/">
+      <img src="https://raw.githubusercontent.com/Tutorcyllo/EduMed.UVa/main/img/logo_facultad.png" alt="Logo de la Facultad de Medicina de la UVa">
+      <span class="marca-texto">
+        <span class="marca-nombre">EduMed<i>·</i>UVa</span>
+        <span class="marca-sub">Facultad de Medicina · Universidad de Valladolid</span>
+      </span>
+    </a>
+    <nav class="menu" aria-label="Secciones">
+      <a href="#marco">Marco</a>
+      <a href="#maquina">Máquina</a>
+      <a href="#interaccion">Interacción</a>
+      <a href="#usuario">Usuario</a>
+      <a href="#sistema">Sistema</a>
+      <a href="#verificacion">Verificación</a>
+      <a href="#repaso">Repaso</a>
+      <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">← DDx_IA</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="portada" id="inicio">
+    <div class="portada-texto">
+      <span class="antetitulo">Curso IA y razonamiento clínico<span class="upd">Actualizado en noviembre de 2026</span></span>
+      <h1 class="titular">Limitaciones y verificación <span class="subrayado">en el uso de LLM</span></h1>
+      <p class="portada-p">Un modelo de lenguaje puede ampliar el diagnóstico diferencial, pero también puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Este material ordena 32 errores en cuatro capas —la máquina, la interacción, el usuario y el sistema— y propone un protocolo práctico de verificación.</p>
+      <div class="flash-ctrl">
+        <a class="btn btn-principal" href="#marco">Empezar por el marco</a>
+        <a class="btn btn-secundario" href="#repaso">Ir al repaso</a>
+      </div>
     </div>
+    <div class="portada-cuadro" aria-label="Los cuatro grupos de errores"><a class="hero-tile" href="#maquina"><b>A</b><span>De la máquina</span><small>10 errores</small></a><a class="hero-tile" href="#interaccion"><b>B</b><span>De la interacción</span><small>8 errores</small></a><a class="hero-tile" href="#usuario"><b>C</b><span>Del usuario</span><small>8 errores</small></a><a class="hero-tile" href="#sistema"><b>D</b><span>Del sistema</span><small>6 errores</small></a></div>
+  </section>
+
+  <div class="objetivos">
+    <div class="objetivo"><span class="etiqueta">Objetivo 1</span><h3>Reconocer los errores típicos</h3><p>Identificar cómo falla un LLM al apoyar un diagnóstico diferencial, también cuando la respuesta parece impecable.</p></div>
+    <div class="objetivo"><span class="etiqueta">Objetivo 2</span><h3>Situar cada error en su capa</h3><p>Distinguir si nace de la máquina, de la conversación, de quien la usa o del sistema en que se trabaja.</p></div>
+    <div class="objetivo"><span class="etiqueta">Objetivo 3</span><h3>Verificar de forma breve y segura</h3><p>Aplicar una pausa crítica antes de actuar a partir de lo que propone el modelo.</p></div>
   </div>
 
-  <!-- ── NAV ÍNDICE ── -->
-  <div class="nav-sticky">
-    <div class="container">
-      <div class="nav-pills">
-        <button class="nav-pill" onclick="scrollToSection('marco')">⚖️ Marco</button>
-        <button class="nav-pill" onclick="scrollToSection('intrinsecas')">🤖 Limitaciones IA</button>
-        <button class="nav-pill" onclick="scrollToSection('interaccion')">🧠 Humano‑IA</button>
-        <button class="nav-pill" onclick="scrollToSection('verificacion')">✅ Verificación</button>
-        <button class="nav-pill" onclick="scrollToSection('cierre')">💡 Ideas clave</button>
-        <button class="nav-pill" onclick="scrollToSection('repaso')">🃏 Repaso</button>
+  <!-- 01 · MARCO -->
+  <section class="seccion" id="marco">
+    <div class="contenedor">
+      <div class="seccion-cab">
+        <span class="seccion-num">01</span>
+        <h2 class="seccion-titulo">Marco general</h2>
+        <p class="seccion-frase">¿Dónde nace el error?</p>
+        <p class="seccion-desc">Para usar bien un LLM en medicina no basta con saber hacer una buena pregunta. También hay que interpretar la respuesta y reconocer dónde puede haberse producido el error.</p>
+      </div>
+      <div class="seccion-cuerpo">
+        <p class="cita">El riesgo principal no es que la IA se equivoque. Es que lo haga de una manera verosímil, cómoda y cognitivamente atractiva para quien la consulta.</p>
+        <div class="pregunta">
+          <span class="etiqueta">Pregunta de partida</span>
+          <p class="pregunta-t">Cuando la IA y tú llegáis a un diagnóstico equivocado, ¿de quién es el error?</p>
+          <p>No todos los errores son del mismo tipo. Unos están dentro del modelo y aparecen aunque lo hagas todo bien; otros solo existen porque hay una conversación; otros son tuyos; y otros dependen de la organización, el mercado y la forma de evaluar las herramientas.</p>
+        </div>
+        <div class="rejilla rejilla-2">
+          <a class="tarjeta tarjeta-v" href="#maquina">
+            <span class="letra">A</span>
+            <span class="etiqueta">10 errores</span>
+            <span class="tarjeta-titulo">De la máquina</span>
+            <span class="tarjeta-desc">Intrínsecos al modelo: cómo se entrenó, qué sabe y cómo genera el texto.</span>
+            <span class="ver">Ver errores <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg></span>
+          </a>
+          <a class="tarjeta tarjeta-v" href="#interaccion">
+            <span class="letra">B</span>
+            <span class="etiqueta">8 errores</span>
+            <span class="tarjeta-titulo">De la interacción</span>
+            <span class="tarjeta-desc">Nacen del diálogo: el modelo responde a cómo le preguntas, no solo a qué.</span>
+            <span class="ver">Ver errores <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg></span>
+          </a>
+          <a class="tarjeta tarjeta-v" href="#usuario">
+            <span class="letra">C</span>
+            <span class="etiqueta">8 errores</span>
+            <span class="tarjeta-titulo">Del usuario</span>
+            <span class="tarjeta-desc">Sesgos cognitivos y conductas del clínico ante una respuesta fluida.</span>
+            <span class="ver">Ver errores <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg></span>
+          </a>
+          <a class="tarjeta tarjeta-v" href="#sistema">
+            <span class="letra">D</span>
+            <span class="etiqueta">6 errores</span>
+            <span class="tarjeta-titulo">Del sistema</span>
+            <span class="tarjeta-desc">Organización, regulación, mercado y modo de evaluar las herramientas.</span>
+            <span class="ver">Ver errores <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14"/><path d="M6 13l6 6 6-6"/></svg></span>
+          </a>
+        </div>
+        <div class="destacado-palido">
+          <span class="etiqueta">El modelo del queso suizo</span>
+          <div class="capas"><span class="capa">A · Máquina</span><span class="capa-sep">→</span><span class="capa">B · Interacción</span><span class="capa-sep">→</span><span class="capa">C · Usuario</span><span class="capa-sep">→</span><span class="capa">D · Sistema</span></div>
+          <p>Los errores se encadenan. Una alucinación (máquina) solo llega al paciente si la pregunta la propicia (interacción), nadie la comprueba (usuario) y la herramienta no estaba pensada para ese uso (sistema).</p>
+          <p><b>Cada capa es una oportunidad de pararla.</b> Ningún tipo de error se elimina; todos se interceptan.</p>
+        </div>
       </div>
     </div>
+  </section>
+
+  <section class="seccion" id="maquina">
+    <div class="contenedor">
+      <div class="seccion-cab fija">
+        <span class="seccion-num">02 · Grupo A</span>
+        <h2 class="seccion-titulo">Errores de la máquina</h2>
+        <p class="seccion-frase">Lo que el modelo hace mal aunque preguntes bien.</p>
+        <p class="seccion-desc">Proceden de cómo funciona un LLM: predice la continuación más probable de un texto a partir de lo que aprendió. No consulta, no comprueba y no sabe cuándo no sabe, salvo que se le conecte a fuentes y se le obligue a usarlas. Aparecen aunque lo hagas todo bien.</p>
+        <ol class="indice"><li><a href="#err-a1">Alucinación</a></li><li><a href="#err-a2">Fluidez no es exactitud</a></li><li><a href="#err-a3">Sesgo de entrenamiento</a></li><li><a href="#err-a4">Sesgo demográfico y de equidad</a></li><li><a href="#err-a5">Conocimiento congelado</a></li><li><a href="#err-a6">Explicación no fiel</a></li><li><a href="#err-a7">Inestabilidad y sensibilidad al formato</a></li><li><a href="#err-a8">Cierre prematuro en un solo paso</a></li><li><a href="#err-a9">Error de especificidad</a></li><li><a href="#err-a10">Error de recuperación</a></li></ol>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="acc-grupo">
+          <div class="acc abierto" id="err-a1">
+            <button class="acc-cab" type="button" aria-expanded="true">
+              <span class="acc-cod">A1</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Alucinación</span>
+                <span class="tarjeta-desc">Inventa con fluidez una referencia, una dosis, un criterio o un ensayo.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>El modelo puede fabricar síntomas, hallazgos, referencias bibliográficas o recomendaciones enteras sin ninguna base real, con un tono seguro y una gramática impecable. Una cita con autores, revista, páginas y DOI no demuestra que exista. En un diagnóstico diferencial, un dato inventado puede desplazar todo el razonamiento posterior: la lista parece coherente y está construida sobre una premisa falsa.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Sospecha de cualquier cifra muy precisa sin justificación, de un artículo con autores reales y título dudoso o de un detalle del paciente que no estaba en tu caso. Pregúntate: «¿de dónde ha salido este dato?».</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Toda afirmación concreta sobre la que vayas a actuar se comprueba en la fuente original. Las referencias están inventadas hasta que se demuestre lo contrario.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a2">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A2</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Fluidez no es exactitud</span>
+                <span class="tarjeta-desc">El tono es igual de seguro con datos sólidos que con conjeturas.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>La seguridad del texto no está calibrada con su fiabilidad. Estructura impecable, tono académico y ausencia de vacilación se mantienen tanto si la respuesta está bien fundada como si no. Si le exiges certeza, la fabrica: es el «78 % de respuestas» del caso VEXAS. Lo peligroso es que la buena redacción rebaja el escepticismo de quien lee.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Probabilidades o porcentajes con una precisión que el contexto no justifica. Un texto que no expresa dudas, no reconoce límites, no plantea alternativas y no dice qué dato cambiaría su conclusión.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Separa forma y fondo. Pregunta de qué estudio sale cada cifra, con cuántos pacientes y con qué diseño.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a3">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A3</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Sesgo de entrenamiento</span>
+                <span class="tarjeta-desc">Aprendió sobre todo de literatura norteamericana.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>El modelo refleja la epidemiología y la práctica de los textos con los que se entrenó. Ante fiebre, exantema y una garrapata en un paciente de Salamanca puede proponer antes la fiebre manchada de las Montañas Rocosas que la fiebre botonosa mediterránea.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Diferenciales ordenados según prevalencias ajenas a tu entorno, fármacos que no se comercializan en España o circuitos asistenciales de otro sistema sanitario.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Dale el contexto: «ordena el diferencial según la epidemiología de Castilla y León».</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a4">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A4</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Sesgo demográfico y de equidad</span>
+                <span class="tarjeta-desc">Al cambiar el sexo o el origen del paciente, cambia el diferencial.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Reproduce los estereotipos de sus datos: puede infradiagnosticar a determinados grupos o modificar su diferencial por cambios demográficos que no lo justifican. En la embolia pulmonar sitúa la ansiedad más arriba en mujeres (Zack, 2024). Rara vez es un error grosero; suele ser una ligera desviación.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>El diferencial cambia de forma llamativa al modificar sexo, origen o nivel socioeconómico sin tocar el núcleo fisiopatológico del caso.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pregunta si el diferencial cambiaría en una mujer, un anciano o alguien de otro origen. No uses sexo u origen como variables causales sin una justificación clínica explícita.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a5">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A5</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Conocimiento congelado</span>
+                <span class="tarjeta-desc">Responde con lo que aprendió hasta su fecha de corte.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Habla con soltura de tratamientos y guías sin incorporar los cambios posteriores a su entrenamiento. Tras la retirada del avacopan en 2026, la mayoría de los modelos lo seguían proponiendo (seminario 2). La apariencia de actualidad no garantiza que el contenido lo sea.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Ante fármacos nuevos, ensayos recientes o guías actualizadas, respuestas genéricas o que no reconocen con claridad su límite temporal.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Para fármacos y tratamientos, usa fuentes actualizadas y verifica la vigencia. Conectar el modelo a fuentes ayuda, pero no lo garantiza (véase «error de recuperación»).</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a6">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A6</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Explicación no fiel</span>
+                <span class="tarjeta-desc">El razonamiento «paso a paso» puede ser una reconstrucción posterior.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>La cadena de razonamiento que muestra no es necesariamente el camino que produjo la respuesta: puede ser una racionalización a posteriori (seminario 2). Preguntarle «¿por qué llegas a esa conclusión?» devuelve una explicación plausible, no necesariamente verdadera.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La explicación suena coherente, pero no puedes rastrear en los datos del caso el motivo concreto de cada afirmación.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Juzga la explicación por si encaja con los datos del caso, no por si suena convincente. El último auditor eres tú.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a7">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A7</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Inestabilidad y sensibilidad al formato</span>
+                <span class="tarjeta-desc">El mismo caso, con otro orden o con datos irrelevantes, puede dar otro diferencial.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>El rendimiento depende de qué datos recibe, en qué orden, con qué palabras y en qué formato. Los modelos se distraen con información superflua (Hager, 2024; Vishwanath, 2025). Dos personas que consultan el mismo caso pueden obtener diferenciales distintos sin que haya ninguna evidencia nueva.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Respuestas muy distintas tras pequeños cambios en el prompt o al repetir la misma consulta.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Repite o reformula la consulta: si las respuestas discrepan, la incertidumbre es real. Usa instrucciones estructuradas y reproducibles.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a8">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A8</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Cierre prematuro en un solo paso</span>
+                <span class="tarjeta-desc">Con el caso entero en un prompt responde de golpe y casi nunca pregunta lo que falta.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>En la práctica el diagnóstico es secuencial: se pregunta, se piden pruebas y se actualiza la hipótesis. Con la viñeta completa, el modelo se compromete con un diagnóstico sin preguntar nada. Las evaluaciones con viñetas completas ocultan este fallo (Nori, 2026).</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La respuesta llega con un diagnóstico cerrado y no señala qué datos faltan ni qué habría preguntado.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pídele expresamente qué datos faltan y qué preguntaría antes de diagnosticar. Mejor aún: revélale el caso por fases.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a9">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A9</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Error de especificidad</span>
+                <span class="tarjeta-desc">Cuando falla, suele proponer un diagnóstico vecino con el nivel de detalle equivocado.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Más que una enfermedad sin relación con el caso, el modelo suele acertar la familia y equivocarse en el subtipo o la variante (Nori, 2026). Es un error difícil de ver porque la respuesta parece «casi» correcta.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La categoría encaja, pero no el subtipo, la variante o la forma clínica que cambiaría el tratamiento.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pregunta por el subtipo y por la prueba que distinguiría entre las variantes.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-a10">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">A10</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Error de recuperación</span>
+                <span class="tarjeta-desc">En herramientas con fuentes, la cita existe pero no dice lo que afirma el texto.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>En herramientas que buscan en documentos antes de responder (RAG), la referencia es real pero no respalda la afirmación, o el documento recuperado no es pertinente y empeora la respuesta (Vishwanath, 2026). Tener fuentes no equivale a estar bien fundamentado.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Citas que no contienen la frase o el dato que se les atribuye, o estudios hechos en poblaciones muy distintas a la de tu paciente.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Abre la cita, busca la frase concreta y comprueba que la población se parece a tu paciente.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion" id="interaccion">
+    <div class="contenedor">
+      <div class="seccion-cab fija">
+        <span class="seccion-num">03 · Grupo B</span>
+        <h2 class="seccion-titulo">Errores de la interacción</h2>
+        <p class="seccion-frase">Lo que nace de cómo le hablas.</p>
+        <p class="seccion-desc">El modelo está entrenado para ser útil y agradable a quien le habla. Por eso su respuesta depende tanto del caso como de la forma de la pregunta, de lo que le adelantas y de la presión que ejerces. Estos errores solo existen porque hay una conversación.</p>
+        <ol class="indice"><li><a href="#err-b1">Complacencia</a></li><li><a href="#err-b2">Anclaje inducido por la pregunta</a></li><li><a href="#err-b3">Presión por la certeza</a></li><li><a href="#err-b4">Basura que entra, basura que sale</a></li><li><a href="#err-b5">Pedir respuestas en vez de razonamiento</a></li><li><a href="#err-b6">Deriva en conversaciones largas</a></li><li><a href="#err-b7">Cámara de eco</a></li><li><a href="#err-b8">Antropomorfización</a></li></ol>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="acc-grupo">
+          <div class="acc abierto" id="err-b1">
+            <button class="acc-cab" type="button" aria-expanded="true">
+              <span class="acc-cod">B1</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Complacencia</span>
+                <span class="tarjeta-desc">Cede cuando le llevas la contraria, aunque no aportes datos nuevos.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Es la aquiescencia: el modelo, diseñado para ser cooperativo, se alinea con quien le habla en vez de tensionar su idea. En el escenario de la tercera opinión pasa de tromboembolia pulmonar a «crisis de ansiedad» porque la paciente es joven y está nerviosa. En un flujo no estructurado, el 48 % de las respuestas coincidieron por completo con los tres primeros diagnósticos del médico.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>El modelo nunca contradice tu hipótesis, o cambia de diagnóstico sin que haya cambiado ningún dato del caso.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>No le adelantes tu hipótesis. Pídele que la ataque: «¿qué datos van contra la ansiedad?».</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b2">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B2</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Anclaje inducido por la pregunta</span>
+                <span class="tarjeta-desc">Una pregunta cerrada convierte tu hipótesis en el punto de partida del modelo.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>«¿Es una gastroenteritis?», o un caso redactado con expresiones como «todo sugiere que» o «cuadro compatible con», dirigen el razonamiento antes de que empiece. Lo mismo ocurre si resaltas solo los datos típicos de tu sospecha y omites los que no encajan.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La respuesta gira en torno al diagnóstico que mencionaste y apenas explora alternativas.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Dale el caso, no el diagnóstico, y formula preguntas abiertas.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b3">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B3</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Presión por la certeza</span>
+                <span class="tarjeta-desc">Si exiges una cifra o una única respuesta, la conversación premia la seguridad.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Cuando insistes en una respuesta única, el modelo abandona la prudencia: la duda inicial desaparece sin que cambie la evidencia. Es la versión conversacional de «fluidez no es exactitud».</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>El modelo pasa de varias opciones con matices a una sola respuesta tras tu insistencia, sin ningún dato nuevo.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pide que separe lo establecido de lo incierto y que diga qué datos faltan.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b4">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B4</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Basura que entra, basura que sale</span>
+                <span class="tarjeta-desc">El modelo solo sabe lo que le das.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Una anamnesis incompleta, una cronología desordenada o hallazgos sin calificar producen diferenciales pobres. Faltan con frecuencia constantes, antecedentes, medicación, exploración básica y el contexto asistencial: el mismo caso no se razona igual en urgencias que en una consulta rural.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Un diferencial genérico, de libro, que no utiliza los detalles de tu paciente.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Ordena el caso como una historia clínica y empieza por la representación del problema.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b5">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B5</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Pedir respuestas en vez de razonamiento</span>
+                <span class="tarjeta-desc">Se piden diagnósticos, no argumentos.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>En el seminario, los prompts pidieron diagnósticos, no argumentos a favor y en contra, integración de la clínica ni la pregunta que resuelve cada prueba. Una lista sin argumentos no se puede auditar.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Obtienes una lista de nombres sin hallazgos que los apoyen o los contradigan.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>«Para cada diagnóstico, ¿qué hallazgos lo apoyan y cuáles lo contradicen?».</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b6">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B6</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Deriva en conversaciones largas</span>
+                <span class="tarjeta-desc">En chats extensos se pierden datos y se arrastran supuestos descartados.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>A medida que la conversación crece, el modelo pierde datos del principio, mezcla casos y vuelve a hipótesis que ya se habían descartado.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Olvida un dato que diste al inicio, confunde a dos pacientes o recupera un diagnóstico ya excluido.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Un caso por conversación. Cuando el cuadro cambie, resume y empieza de nuevo.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b7">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B7</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Cámara de eco</span>
+                <span class="tarjeta-desc">Usar la IA para confirmar lo que ya pensabas.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Preguntas con sesgo, el modelo asiente y sales más convencido. Es justo lo contrario de lo que necesitas de él: fricción cognitiva. A diferencia de la complacencia, aquí quien busca la confirmación eres tú.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Sales de la consulta más seguro de lo que entraste sin haber leído un solo argumento en contra.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pregúntale «¿qué me falta?» y pídele que argumente contra tu hipótesis favorita.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-b8">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">B8</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Antropomorfización</span>
+                <span class="tarjeta-desc">Su tono empático genera la confianza que darías a un colega.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>El tono conversacional y empático invita a tratarlo como a un colega experto que conoce al paciente. No lo conoce, no lo ha explorado y no responde de lo que recomienda.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Le preguntas «¿tú qué harías?» o das por buena su opinión porque «parece entender el caso».</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Trátalo como una fuente, no como un compañero: lo que dice se verifica.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion" id="usuario">
+    <div class="contenedor">
+      <div class="seccion-cab fija">
+        <span class="seccion-num">04 · Grupo C</span>
+        <h2 class="seccion-titulo">Errores del usuario</h2>
+        <p class="seccion-frase">Lo que pones tú.</p>
+        <p class="seccion-desc">Son los sesgos cognitivos de siempre, acelerados por una herramienta que responde al instante y con buena prosa. La formación previa en IA no protege por sí sola: en el ensayo de Qazi (2025), médicos con 20 horas de formación expuestos a recomendaciones erróneas en tres de seis casos perdieron 11,6 puntos de precisión (73,3 % frente a 84,9 %), y los más experimentados cayeron más.</p>
+        <ol class="indice"><li><a href="#err-c1">Sesgo de automatización</a></li><li><a href="#err-c2">Anclaje en la primera respuesta</a></li><li><a href="#err-c3">Aversión al algoritmo</a></li><li><a href="#err-c4">Descarga y deuda cognitiva</a></li><li><a href="#err-c5">Privacidad</a></li><li><a href="#err-c6">Verificación sesgada</a></li><li><a href="#err-c7">Delegar la responsabilidad</a></li><li><a href="#err-c8">Herramienta equivocada</a></li></ol>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="acc-grupo">
+          <div class="acc abierto" id="err-c1">
+            <button class="acc-cab" type="button" aria-expanded="true">
+              <span class="acc-cod">C1</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Sesgo de automatización</span>
+                <span class="tarjeta-desc">Aceptar una respuesta plausible con menos escrutinio del que darías a un compañero.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Se acepta la propuesta porque está bien presentada, llega rápido o parece más ordenada que el propio razonamiento. Recibe menos escrutinio que si viniera de un compañero de primer año. El cansancio y la inexperiencia lo agravan: es el escenario de las cuatro de la mañana.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>No puedes explicar, con fisiopatología y datos del caso, por qué aceptaste el diagnóstico sugerido. O sientes alivio por haber «resuelto» el caso demasiado deprisa.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Escribe tu diferencial antes de preguntar. Si la IA no explica uno de tus hallazgos, manda el hallazgo.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c2">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C2</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Anclaje en la primera respuesta</span>
+                <span class="tarjeta-desc">Si consultas antes de pensar, su lista se convierte en tu marco.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>La primera lista que lees fija el marco del caso, y cuesta salir de él aunque los datos posteriores no encajen.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Tu diferencial final se parece demasiado a la primera respuesta de la IA, y los datos nuevos se acomodan a ella en lugar de cuestionarla.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Primero tu razonamiento; después el suyo, y compáralos.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c3">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C3</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Aversión al algoritmo</span>
+                <span class="tarjeta-desc">Descartar una aportación correcta porque contradice tu idea.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Es el sesgo opuesto al de automatización. En Goh (2024), el modelo actuando solo obtuvo un 92 %, y los médicos con el modelo, un 76 %: tener la herramienta no basta si se ignoran sus aportaciones cuando no coinciden con la propia idea.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Descartas una propuesta de la IA sin revisar el dato en que se apoya, solo porque no era tu hipótesis.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Cuando discrepe, pide el dato que sostiene su propuesta y compruébalo en lugar de ignorarlo.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c4">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C4</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Descarga y deuda cognitiva</span>
+                <span class="tarjeta-desc">Delegar el razonamiento ahorra esfuerzo hoy y erosiona la competencia mañana.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Lo que no se practica se pierde. En colonoscopia, la detección de adenomas sin IA empeoró tras habituarse a ella (Budzyń, 2025). En formación, el riesgo es mayor: no se pierde una competencia, se deja de adquirir.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Ya no empiezas un caso sin consultar a la IA, o te cuesta construir un diferencial cuando no la tienes delante.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Practica sin IA y úsala después para contrastar, no para empezar.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c5">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C5</span>
+              <span class="tarjeta-texto">
+                <span class="acc-etis"><span class="sello">Escenario del seminario</span></span>
+                <span class="tarjeta-titulo">Privacidad</span>
+                <span class="tarjeta-desc">Quitar el nombre no es anonimizar.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Los LLM de uso general son servicios externos que pueden registrar el texto que reciben. Fecha de nacimiento, fecha de ingreso, un pueblo de 312 habitantes y un cargo identifican al paciente aunque no aparezca su nombre: es el escenario del informe sin nombre. Introducir datos identificativos en una herramienta no autorizada puede vulnerar el RGPD y la confidencialidad del paciente.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>El caso contiene una combinación de datos poco frecuentes, una localización o unas fechas que permitirían reconocer al paciente.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Elimina también los identificadores indirectos y usa solo herramientas autorizadas por tu institución. Para razonar basta con edad aproximada, sexo y datos clínicos relevantes.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c6">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C6</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Verificación sesgada</span>
+                <span class="tarjeta-desc">Comprobar lo fácil y no lo importante.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Se verifica lo que es cómodo de verificar, o se busca solo el dato que confirma la respuesta y no el que la refuta.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Has comprobado varios datos secundarios, pero no la dosis, el criterio o la contraindicación que van a guiar tu conducta.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Verifica primero lo que cambiaría tu conducta: dosis, criterio, contraindicación.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c7">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C7</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Delegar la responsabilidad</span>
+                <span class="tarjeta-desc">«Lo dijo la IA» no es un argumento clínico ni legal.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>La herramienta propone; la decisión y la firma son tuyas. Atribuirle una conducta no la justifica ante el paciente, el equipo ni la ley.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>En tu razonamiento o en la historia clínica aparece la IA como argumento en lugar de los datos del paciente.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Documenta tu razonamiento, no el de la herramienta.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-c8">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">C8</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Herramienta equivocada</span>
+                <span class="tarjeta-desc">Cada trabajo pide su herramienta.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Un chatbot generalista para consultar una dosis, un buscador de evidencia para abrir un diferencial o una aplicación de consumo para datos reales de pacientes.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La herramienta que usas no fue pensada para la tarea, o no puedes saber de dónde saca la información.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Elige según el trabajo que necesitas: razonar un diferencial, consultar una dosis o buscar evidencia no piden la misma herramienta.</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="seccion" id="sistema">
+    <div class="contenedor">
+      <div class="seccion-cab fija">
+        <span class="seccion-num">05 · Grupo D</span>
+        <h2 class="seccion-titulo">Errores del sistema</h2>
+        <p class="seccion-frase">Lo que depende del entorno.</p>
+        <p class="seccion-desc">Ningún clínico los causa en el momento de la consulta, pero condicionan qué herramienta tiene delante, cuánto se puede fiar de ella y quién responde si falla. Dependen de la organización, la regulación, el mercado y la forma de evaluar las herramientas.</p>
+        <ol class="indice"><li><a href="#err-d1">Evaluación desalineada</a></li><li><a href="#err-d2">Opacidad y conflictos de interés</a></li><li><a href="#err-d3">Regulación y responsabilidad</a></li><li><a href="#err-d4">IA en la sombra</a></li><li><a href="#err-d5">Evidencia que caduca</a></li><li><a href="#err-d6">Acceso desigual</a></li></ol>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="acc-grupo">
+          <div class="acc abierto" id="err-d1">
+            <button class="acc-cab" type="button" aria-expanded="true">
+              <span class="acc-cod">D1</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Evaluación desalineada</span>
+                <span class="tarjeta-desc">Se evalúan con exámenes y viñetas; se usan para otra cosa.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Los modelos se evalúan con exámenes y viñetas completas de diagnóstico. En la práctica los clínicos los usan sobre todo para tratamiento y fármacos (Patel, 2026), y el diagnóstico real es secuencial (Nori, 2026). Un buen resultado en un examen no dice cómo rinde en tu tarea.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La evidencia que se cita a favor de la herramienta procede de exámenes tipo MIR o USMLE, no de la tarea para la que la vas a usar.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Pregunta cómo se validó la herramienta para la tarea concreta que vas a hacer.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-d2">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">D2</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Opacidad y conflictos de interés</span>
+                <span class="tarjeta-desc">Arquitecturas, fuentes y pruebas que no son públicas.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Muchas herramientas no publican su arquitectura ni sus fuentes, se prueban con evaluaciones diseñadas por la propia empresa y se estudian en trabajos firmados por sus empleados.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>No encuentras evaluaciones independientes, o los autores de los estudios trabajan para la compañía evaluada.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Busca evaluaciones independientes y lee la declaración de conflictos.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-d3">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">D3</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Regulación y responsabilidad</span>
+                <span class="tarjeta-desc">Los chatbots generalistas no están certificados para diagnosticar.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Un software destinado a apoyar el diagnóstico es producto sanitario (Reglamento (UE) 2017/745) y sistema de IA de alto riesgo (Reglamento (UE) 2024/1689). Los chatbots generalistas no están certificados para ese fin.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Usas una herramienta generalista para una decisión diagnóstica o terapéutica sin que tu centro haya definido cómo y para qué.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Úsalos como apoyo al razonamiento, nunca como decisión. Conoce las normas de tu centro.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-d4">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">D4</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">IA en la sombra</span>
+                <span class="tarjeta-desc">Aplicaciones de consumo al margen de las herramientas institucionales.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Usar aplicaciones de consumo fuera de las herramientas institucionales (en SACYL, Microsoft Copilot corporativo) deja la consulta sin trazabilidad ni garantías de confidencialidad.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>Consultas casos reales desde tu cuenta personal o desde el móvil con una aplicación no autorizada.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Usa las herramientas autorizadas y pide a tu institución las que falten.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-d5">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">D5</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Evidencia que caduca</span>
+                <span class="tarjeta-desc">Cada estudio es una foto fija de unas versiones concretas.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>Los modelos cambian cada pocos meses. Un resultado obtenido con una versión no tiene por qué mantenerse en la siguiente, ni trasladarse a otro modelo (Vishwanath, 2026).</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>El estudio que se cita evaluó un modelo que ya no está disponible o que no es el que usas.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Lee siempre la fecha y la versión del modelo antes de extrapolar un resultado.</p></div>
+            </div>
+          </div>
+          <div class="acc" id="err-d6">
+            <button class="acc-cab" type="button" aria-expanded="false">
+              <span class="acc-cod">D6</span>
+              <span class="tarjeta-texto">
+                
+                <span class="tarjeta-titulo">Acceso desigual</span>
+                <span class="tarjeta-desc">La misma pregunta no recibe la misma ayuda en todos los centros.</span>
+              </span>
+              <span class="acc-chev"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></span>
+            </button>
+            <div class="acc-cuerpo">
+              <div class="fila"><span class="etiqueta">Qué es</span><p>La disponibilidad por países, el coste de la suscripción, el idioma y la conectividad hacen que no todos los clínicos tengan las mismas herramientas.</p></div>
+              <div class="fila"><span class="etiqueta">Cómo reconocerlo</span><p>La herramienta de un estudio o de un compañero no está disponible en tu centro, o solo en una versión limitada.</p></div>
+              <div class="fila fila-hacer"><span class="etiqueta">Qué hacer</span><p>Conoce qué herramientas tienes a tu alcance y cuáles son sus límites.</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="destacado filtro">
+          <span class="etiqueta">Filtro operativo · una pregunta por capa</span>
+          <h3 class="destacado-titulo">Antes de dar por buena una respuesta</h3>
+          <ol class="filtro-lista">
+            <li><b>A · Máquina.</b> ¿Qué ha podido inventar, no saber o no estar actualizado?</li>
+            <li><b>B · Interacción.</b> ¿Cómo ha influido mi forma de preguntar en lo que me ha dicho?</li>
+            <li><b>C · Usuario.</b> ¿Lo he comprobado como lo haría con la propuesta de un compañero?</li>
+            <li><b>D · Sistema.</b> ¿Es la herramienta adecuada, validada y autorizada para esta tarea?</li>
+          </ol>
+          <p>La pregunta más importante no es «¿qué dice la IA?», sino «¿qué dato de este caso contradice su conclusión?».</p>
+        </div>
+        <details class="refs">
+          <summary>Referencias de los cuatro grupos</summary>
+          <ol><li>Budzyń K, Romańczyk M, Kitala D, et al. Endoscopist deskilling risk after exposure to artificial intelligence in colonoscopy: a multicentre, observational study. Lancet Gastroenterol Hepatol. 2025;10(10):896–903. <a href="https://doi.org/10.1016/S2468-1253(25)00133-5" target="_blank" rel="noopener">https://doi.org/10.1016/S2468-1253(25)00133-5</a></li><li>Goh E, Gallo R, Hom J, et al. Large language model influence on diagnostic reasoning: a randomized clinical trial. JAMA Netw Open. 2024;7(10):e2440969. <a href="https://doi.org/10.1001/jamanetworkopen.2024.40969" target="_blank" rel="noopener">https://doi.org/10.1001/jamanetworkopen.2024.40969</a></li><li>Hager P, Jungmann F, Holland R, et al. Evaluation and mitigation of the limitations of large language models in clinical decision-making. Nat Med. 2024;30:2613–22. <a href="https://doi.org/10.1038/s41591-024-03097-1" target="_blank" rel="noopener">https://doi.org/10.1038/s41591-024-03097-1</a></li><li>Nori H, Daswani M, Kelly C, et al. Sequential diagnosis with language models. Science. 2026;394(6822):423–8. <a href="https://doi.org/10.1126/science.aeh7930" target="_blank" rel="noopener">https://doi.org/10.1126/science.aeh7930</a></li><li>Patel VR, Finlayson SG, Liu-Hass M, et al. Clinician use of an artificial intelligence–enabled clinical information platform. JAMA. Publicado en línea el 15 de octubre de 2026. <a href="https://doi.org/10.1001/jama.2026.21868" target="_blank" rel="noopener">https://doi.org/10.1001/jama.2026.21868</a></li><li>Qazi IA, Ali A, Khawaja AU, et al. Automation bias in large language model assisted diagnostic reasoning among AI-trained physicians: a randomized clinical trial. medRxiv. 2025. <a href="https://doi.org/10.1101/2025.08.23.25334280" target="_blank" rel="noopener">https://doi.org/10.1101/2025.08.23.25334280</a></li><li>Vishwanath K, et al. Medical large language models are easily distracted. arXiv. 2025. <a href="https://doi.org/10.48550/arXiv.2504.01201" target="_blank" rel="noopener">https://doi.org/10.48550/arXiv.2504.01201</a></li><li>Vishwanath K, Alyakin A, Ghosh M, et al. General-purpose large language models outperform specialized clinical AI tools on medical benchmarks. Nat Med. 2026;32:2405–9. <a href="https://doi.org/10.1038/s41591-026-04431-5" target="_blank" rel="noopener">https://doi.org/10.1038/s41591-026-04431-5</a></li><li>Zack T, Lehman E, Suzgun M, et al. Assessing the potential of GPT-4 to perpetuate racial and gender biases in health care: a model evaluation study. Lancet Digit Health. 2024;6(1):e12–22. <a href="https://doi.org/10.1016/S2589-7500(23)00225-X" target="_blank" rel="noopener">https://doi.org/10.1016/S2589-7500(23)00225-X</a></li><li>Reglamento (UE) 2017/745 sobre los productos sanitarios.</li><li>Reglamento (UE) 2024/1689 del Parlamento Europeo y del Consejo, de 13 de junio de 2024, de inteligencia artificial.</li></ol>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 · VERIFICACIÓN -->
+  <section class="seccion" id="verificacion">
+    <div class="contenedor">
+      <div class="seccion-cab">
+        <span class="seccion-num">06</span>
+        <h2 class="seccion-titulo">Protocolo de verificación</h2>
+        <p class="seccion-frase">Auditoría en tres niveles.</p>
+        <p class="seccion-desc">La verificación se reparte en tres momentos: la calidad del caso que introduces, la calidad del razonamiento que devuelve el sistema, y la validez científica y la seguridad de la respuesta. La auditoría empieza antes de leer la conclusión del LLM.</p>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="pestanas" role="tablist">
+          <button class="btn btn-secundario btn-peq pestana" role="tab" aria-selected="true" aria-controls="panel-v1" id="tab-v1">1 · Calidad del input</button>
+          <button class="btn btn-secundario btn-peq pestana" role="tab" aria-selected="false" aria-controls="panel-v2" id="tab-v2">2 · Estructura del razonamiento</button>
+          <button class="btn btn-secundario btn-peq pestana" role="tab" aria-selected="false" aria-controls="panel-v3" id="tab-v3">3 · Validez científica y seguridad</button>
+        </div>
+
+        <div class="panel activo" id="panel-v1" role="tabpanel" aria-labelledby="tab-v1">
+          <span class="etiqueta">Antes de consultar</span>
+          <h3 class="panel-titulo">Calidad del input</h3>
+          <p class="panel-def">La base del razonamiento está en la calidad y neutralidad del caso clínico que recibe la IA. Un caso mal definido puede generar una respuesta aparentemente correcta pero clínicamente débil.</p>
+          <div class="subcats">
+            <div class="subcat"><b>Suficiencia de datos</b><span>Comprueba si has incluido constantes vitales, antecedentes relevantes, cronología de síntomas, exploración física básica, medicación, alergias y, si procede, primeras pruebas complementarias.</span></div>
+            <div class="subcat"><b>Ausencia de sesgo de anclaje</b><span>Revisa si la descripción es objetiva o si induce a la IA a confirmar una sospecha previa. Expresiones como «todo sugiere que» o «cuadro compatible con» pueden contaminar el razonamiento antes de que empiece.</span></div>
+            <div class="subcat"><b>Contexto asistencial</b><span>Especifica el entorno clínico y los recursos disponibles: urgencias, atención primaria, planta, consulta rural, disponibilidad o no de imagen avanzada. El mismo caso no se razona igual en todos los contextos.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-v2" role="tabpanel" aria-labelledby="tab-v2">
+          <span class="etiqueta">Durante la lectura</span>
+          <h3 class="panel-titulo">Estructura del razonamiento</h3>
+          <p class="panel-def">No basta con una conclusión. El LLM debe ofrecer una lógica clínica mínimamente auditable.</p>
+          <div class="subcats">
+            <div class="subcat"><b>Representación del problema</b><span>Valora si la IA resume el caso en una declaración clara. Si no sintetiza bien el núcleo del caso, su diferencial será desordenado o superficial.</span></div>
+            <div class="subcat"><b>DDx jerárquico</b><span>Revisa si está ordenado de lo más probable a lo más grave o urgente. Comprueba si incluye al menos un diagnóstico que no se puede pasar por alto (<i>must-not-miss</i>).</span></div>
+            <div class="subcat"><b>Justificación de prioridades</b><span>El modelo debe explicar por qué prioriza unas hipótesis y relega otras basándose en los datos disponibles.</span></div>
+            <div class="subcat"><b>Chequeo fisiopatológico</b><span>Regla de oro: si la IA afirma que A causa B, pregúntate si el mecanismo es biológicamente plausible. Protege frente a explicaciones verbalmente elegantes pero causalmente falsas.</span></div>
+            <div class="subcat"><b>Consistencia lógica del plan</b><span>Valora si el plan diagnóstico o terapéutico propuesto es coherente con el diagnóstico de sospecha.</span></div>
+          </div>
+        </div>
+
+        <div class="panel" id="panel-v3" role="tabpanel" aria-labelledby="tab-v3">
+          <span class="etiqueta">Antes de actuar</span>
+          <h3 class="panel-titulo">Validez científica y seguridad</h3>
+          <p class="panel-def">La respuesta final debe ser científicamente defendible y clínicamente segura.</p>
+          <div class="subcats">
+            <div class="subcat"><b>Evidencia</b><span>Comprueba si la respuesta se alinea con guías de práctica clínica actualizadas o consensos relevantes. La ausencia de trazabilidad aumenta la necesidad de comprobación externa, sobre todo ante pruebas invasivas o criterios de gravedad.</span></div>
+            <div class="subcat"><b>Alucinaciones operativas</b><span>Revisa si los fármacos, dosis, pruebas, síndromes o escalas mencionados existen realmente y se usan así en la práctica clínica. Una respuesta bien redactada puede contener errores básicos de prescripción.</span></div>
+            <div class="subcat"><b>Signos de alarma</b><span>Comprueba si el modelo identifica correctamente los signos que requieren derivación inmediata, ingreso o actuación urgente. Una respuesta solo aparentemente razonable puede ser insegura si banaliza un criterio de gravedad.</span></div>
+          </div>
+        </div>
+
+        <div class="destacado-palido">
+          <span class="etiqueta">Cómo usar este protocolo en la práctica</span>
+          <p style="margin-top:8px">El protocolo no pretende convertir la consulta en una auditoría interminable. Introduce una <b>pausa crítica breve</b>: revisar si el caso está bien planteado, comprobar si la lógica es fisiopatológicamente defendible y confirmar que la recomendación es científicamente válida y clínicamente segura.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 · IDEAS CLAVE (sección oscura) -->
+  <section class="seccion seccion-oscura" id="cierre">
+    <div class="contenedor">
+      <div class="seccion-cab">
+        <span class="seccion-num">07</span>
+        <h2 class="seccion-titulo">Ideas clave</h2>
+        <p class="seccion-frase">Lo esencial que debes llevarte.</p>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="tarjeta">
+          <span class="etiqueta">Idea central</span>
+          <span class="tarjeta-titulo">El problema más peligroso es que falle de forma convincente</span>
+          <p>El principal riesgo no es solo que la IA falle, sino que lo haga de una manera convincente y que el clínico rebaje su vigilancia por la calidad formal del texto. La seguridad no depende solo del modelo: depende también del modo de uso.</p>
+        </div>
+        <div class="destacado">
+          <span class="etiqueta">Regla práctica final</span>
+          <h3 class="destacado-titulo">Nunca aceptes una salida del LLM si no puedes responder a estas tres preguntas</h3>
+          <ol class="regla">
+            <li>¿Se basa de verdad en los datos del caso?</li>
+            <li>¿Su lógica es fisiopatológicamente plausible?</li>
+            <li>¿Sería segura si actuara ahora mismo guiado por esta respuesta?</li>
+          </ol>
+        </div>
+        <p class="llevarse">El error rara vez es solo de la máquina: entra por los huecos que dejamos al preguntar y al verificar.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 · REPASO -->
+  <section class="seccion" id="repaso">
+    <div class="contenedor">
+      <div class="seccion-cab">
+        <span class="seccion-num">08</span>
+        <h2 class="seccion-titulo">Repaso interactivo</h2>
+        <p class="seccion-frase">¿Qué error es y en qué capa nace?</p>
+        <p class="seccion-desc">En el anverso aparece un caso breve; en el reverso, el error principal con la letra de su grupo y una explicación. Pulsa la tarjeta para girarla.</p>
+      </div>
+      <div class="seccion-cuerpo">
+        <div class="flash-barra"><span>Tarjeta <b id="flash-cur">1</b> de <b>8</b></span><span>Usa también las flechas del teclado</span></div>
+        <div id="flash-pila">
+        <div class="flash visible" data-i="0">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">01</span></span>
+            <span class="flash-q">El clínico describe el caso haciendo hincapié en datos muy típicos de vasculitis, pero omite mencionar ANA positivos e hipocomplementemia.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">01</span></span>
+            <span class="flash-r">B · Anclaje inducido por la pregunta</span>
+            <span class="flash-exp">El problema empieza en cómo se construye el input. El clínico dirige al modelo hacia una vasculitis y limita el diferencial antes de que el razonamiento comience.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="1">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">02</span></span>
+            <span class="flash-q">La IA recomienda iniciar un fármaco con una dosis muy precisa y cita una guía aparentemente reciente que no existe al verificarla.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">02</span></span>
+            <span class="flash-r">A · Alucinación</span>
+            <span class="flash-exp">El modelo ha fabricado contenido falso con apariencia de precisión y autoridad. No basta con que una recomendación suene técnica: debe poder verificarse en la fuente original.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="2">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">03</span></span>
+            <span class="flash-q">Son las cuatro de la mañana. La respuesta está muy bien escrita y ordenada; como todo parece claro y académico, el residente deja de revisar si encaja con los datos del caso.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">03</span></span>
+            <span class="flash-r">A · Fluidez no es exactitud + C · Sesgo de automatización</span>
+            <span class="flash-exp">La calidad formal del texto se confunde con calidad científica (máquina), y el cansancio hace que el usuario baje la guardia (usuario). Dos capas que fallan a la vez.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="3">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">04</span></span>
+            <span class="flash-q">El mismo caso, con idénticos datos, formulado de dos formas ligeramente distintas, produce en una versión insuficiencia cardiaca y en otra síndrome nefrótico.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">04</span></span>
+            <span class="flash-r">A · Inestabilidad y sensibilidad al formato</span>
+            <span class="flash-exp">Pequeños cambios en el fraseo o en el orden modifican mucho la salida. Si al repetir o reformular las respuestas discrepan, la incertidumbre es real.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="4">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">05</span></span>
+            <span class="flash-q">Paciente de Salamanca con fiebre, exantema y escara tras una picadura de garrapata. La IA sitúa en primer lugar la fiebre manchada de las Montañas Rocosas.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">05</span></span>
+            <span class="flash-r">A · Sesgo de entrenamiento</span>
+            <span class="flash-exp">El modelo aprendió sobre todo de literatura norteamericana. Hay que darle el contexto: «ordena el diferencial según la epidemiología de Castilla y León».</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="5">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">06</span></span>
+            <span class="flash-q">La IA propone tromboembolia pulmonar. El usuario responde que la paciente es joven y está muy nerviosa, y el modelo pasa a «crisis de ansiedad» sin ningún dato nuevo.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">06</span></span>
+            <span class="flash-r">B · Complacencia</span>
+            <span class="flash-exp">El modelo cede ante la presión de quien le habla. En lugar de adelantarle tu hipótesis, pídele que la ataque: «¿qué datos van contra la ansiedad?».</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="6">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">07</span></span>
+            <span class="flash-q">Para pedir ayuda con un informe se borra el nombre del paciente, pero se mantienen la fecha de ingreso, su cargo y el pueblo de 312 habitantes donde vive.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">07</span></span>
+            <span class="flash-r">C · Privacidad</span>
+            <span class="flash-exp">Quitar el nombre no es anonimizar: los identificadores indirectos permiten reconocer al paciente. Elimínalos y usa solo herramientas autorizadas por tu institución.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        <div class="flash" data-i="7">
+          <button class="flash-cara flash-anverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">¿Qué error es?</span><span class="flash-n">08</span></span>
+            <span class="flash-q">Un residente consulta casos reales de la planta desde la aplicación gratuita de un chatbot en su móvil personal, aunque el hospital ofrece una herramienta corporativa.</span>
+            <span class="flash-pista">Pulsa para ver la respuesta</span>
+          </button>
+          <button class="flash-cara flash-reverso" type="button">
+            <span class="flash-cab"><span class="etiqueta">Respuesta</span><span class="flash-n">08</span></span>
+            <span class="flash-r">D · IA en la sombra</span>
+            <span class="flash-exp">El uso de aplicaciones de consumo al margen de las herramientas institucionales deja la consulta sin trazabilidad ni garantías de confidencialidad.</span>
+            <span class="flash-pista">Pulsa para volver</span>
+          </button>
+        </div>
+        </div>
+        <div class="flash-ctrl">
+          <button class="btn btn-secundario btn-peq" type="button" id="flash-prev">← Anterior</button>
+          <button class="btn btn-principal btn-peq" type="button" id="flash-girar">Girar</button>
+          <button class="btn btn-secundario btn-peq" type="button" id="flash-next">Siguiente →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pie">
+  <div class="contenedor">
+    <span><strong>EduMed.UVa</strong> · Unidad de Educación Médica · Facultad de Medicina · Universidad de Valladolid</span>
+    <span><a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/">← Volver a DDx_IA</a> · <a href="mailto:luis.corral@uva.es">luis.corral@uva.es</a></span>
   </div>
+</footer>
 
-  <!-- ── HERO ── -->
-  <div class="hero">
-    <div class="container hero-inner">
-      <div class="hero-tag">
-        <div class="hero-tag-dot"></div>
-        <span>Curso IA y razonamiento clínico · EduMed UVa</span>
-      </div>
-      <h1 class="hero-title">Limitaciones y verificación<br><em>en el uso de LLM</em></h1>
-      <p class="hero-subtitle">Un modelo de lenguaje puede ampliar el diagnóstico diferencial, pero también puede inventar datos, amplificar sesgos y sonar convincente cuando se equivoca. Este material resume los fallos que debes reconocer y propone un protocolo práctico de verificación.</p>
-      <div class="hero-meta">
-        <div class="hero-badge"><div class="hero-badge-icon">🎯</div><div class="hero-badge-text"><span>Objetivo 1</span><span>Reconocer fallos típicos de la IA</span></div></div>
-        <div class="hero-badge"><div class="hero-badge-icon">🔍</div><div class="hero-badge-text"><span>Objetivo 2</span><span>Detectar problemas del modelo o la interacción</span></div></div>
-        <div class="hero-badge"><div class="hero-badge-icon">✅</div><div class="hero-badge-text"><span>Objetivo 3</span><span>Aplicar una verificación breve y segura</span></div></div>
-      </div>
-    </div>
-  </div>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 1 · MARCO GENERAL
-  ══════════════════════════════════ -->
-  <section class="section" id="marco">
-    <div class="container">
-      <div class="section-eyebrow">Punto de partida</div>
-      <h2 class="section-title">1. Marco general</h2>
-      <p class="section-lead">Para utilizar bien un LLM en medicina no basta con saber hacer una pregunta correcta. También hay que saber interpretar la respuesta y detectar cuándo el sistema produce una salida engañosa.</p>
-
-      <div class="pullquote">
-        <p>El riesgo principal no es que la IA se equivoque. Es que lo haga de una manera verosímil, cómoda y cognitivamente atractiva para quien la consulta.</p>
-      </div>
-
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 2 · LIMITACIONES DE LA IA
-  ══════════════════════════════════ -->
-  <section class="section" id="intrinsecas">
-    <div class="container">
-      <div class="section-eyebrow">Fallos del modelo</div>
-      <h2 class="section-title">2. Limitaciones de la propia IA</h2>
-      <p class="section-lead">Estas limitaciones aparecen incluso cuando el usuario pregunta de forma razonable. Son fallos que derivan de cómo el modelo ha sido entrenado, de su conocimiento congelado, de su forma probabilística de generar texto y de los riesgos estructurales de usarlo en entornos clínicos.</p>
-
-      <div class="acc-group">
-
-        <div class="acc-item open">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-indigo-l);color:var(--e-indigo);">1</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Alucinaciones y errores plausibles</span>
-              <span class="acc-sublabel">La IA predice palabras, no razona — puede inventar hechos con total convicción</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede fabricar síntomas, hallazgos, referencias bibliográficas o recomendaciones clínicas enteras sin que exista ninguna base real. Lo peligroso no es solo la falsedad, sino su presentación en un tono seguro y gramaticalmente impecable. El problema es el <em>contenido</em> — lo que dice es falso — no la forma en que lo dice.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> En diagnóstico diferencial, una alucinación puede introducir un dato inexistente que desplace todo el razonamiento posterior. La lista puede parecer coherente y estar construida sobre una premisa falsa.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Debe hacer sospechar cualquier cifra excesivamente precisa sin justificación, cualquier artículo con autores reales pero título dudoso, o cualquier detalle del paciente que no proceda de la viñeta original. Pregúntate: <em>"¿de dónde ha salido este dato?"</em></div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> No aceptar ninguna afirmación relevante sin contrastarla con los datos reales del caso y, cuando sea necesario, con fuentes fiables actualizadas. La verificación cruzada no es un lujo académico: es una medida básica de seguridad.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-orange-l);color:var(--e-orange);">2</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Sesgos algorítmicos y de representación</span>
-              <span class="acc-sublabel">Los modelos aprenden de textos que ya contienen desigualdades estructurales</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un LLM puede reproducir medicina basada en estereotipos, infradiagnosticar a determinados grupos o alterar su diferencial por cambios demográficos no justificados. La evidencia muestra que el modelo puede rendir peor o sugerir itinerarios diagnósticos distintos según variables de raza, sexo o nivel socioeconómico del paciente.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> El sesgo no siempre se expresa como un error grosero. A menudo aparece como una ligera desviación: una patología considerada menos probable en mujeres, o sobreestimada en un grupo racial concreto.</div>
-              <div class="detail-row"><strong>Cómo detectarlo.</strong> Revisa si el diferencial cambia de forma llamativa cuando se modifica el sexo, la etnia o el nivel socioeconómico sin alterar el núcleo fisiopatológico. Si una patología evidente desaparece al cambiar solo un atributo demográfico, sospecha sesgo de representación.</div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Revisar críticamente si la propuesta sería la misma en otro perfil de paciente. Evitar asumir neutralidad en respuestas aparentemente objetivas. No usar raza o sexo como variables causales salvo justificación clínica explícita, y documentar el razonamiento seguido.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-amber-l);color:var(--e-amber);">3</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Obsolescencia del conocimiento</span>
-              <span class="acc-sublabel">El conocimiento queda congelado en la fecha de corte del entrenamiento</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un modelo puede responder con soltura sobre un tratamiento o una guía sin incorporar cambios recientes. La apariencia de actualidad no garantiza que el contenido lo sea.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> En decisiones terapéuticas puede ser crítico. Aplicar criterios superados o ignorar actualizaciones regulatorias puede traducirse en recomendaciones clínicamente inseguras.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Ante tratamientos de última línea, ensayos recientes o guías actualizadas, el modelo tiende a ofrecer respuestas genéricas o a dudar sin reconocer con claridad su límite temporal.</div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Verificar siempre la información sensible al tiempo. Si es posible, usar sistemas conectados a fuentes actualizadas o herramientas de recuperación con RAG — aunque sin asumir que esto garantiza la corrección: el sistema sigue siendo interpretativo y puede priorizar mal la evidencia si las fuentes son incompletas o sesgadas.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">4</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Exceso de confianza, inflexibilidad y apariencia de razonamiento</span>
-              <span class="acc-sublabel">El modelo puede acertar en el contenido pero expresar una certeza no proporcional a su fiabilidad real</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Dos riesgos distintos.</strong> El <strong>exceso de confianza</strong> ocurre cuando el modelo acierta en el contenido pero comunica una certeza no proporcional a la fiabilidad real de su respuesta — por ejemplo, al estimar una probabilidad diagnóstica con una precisión injustificada. La <strong>inflexibilidad</strong> ocurre cuando, ante datos raros o excluyentes, el modelo sigue aferrado al patrón frecuente y genera una explicación solo aparentemente lógica.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Muchos errores diagnósticos ocurren por incapacidad para abandonar una hipótesis cómoda cuando aparece un dato que la invalida. El modelo puede caer en ese mismo fallo con argumentación verbal brillante. No interpretar el tono de seguridad como indicador de veracidad.</div>
-              <div class="detail-row"><strong>Cómo detectarlos.</strong> Hay que sospecharlos cuando la IA insiste en una hipótesis clásica pese a que el caso contiene un dato bloqueador, o cuando expresa probabilidades con una precisión que el contexto no justifica. Si el modelo no puede responder qué dato invalida su conclusión, su razonamiento es frágil.</div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Valorar por separado la plausibilidad, la evidencia aportada y el grado de incertidumbre real del caso. Preguntar de forma explícita: <em>"¿qué dato adicional es más necesario antes de priorizar este diagnóstico?"</em> y <em>"¿qué hallazgo podría cambiar más tu conclusión?"</em></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-teal-l);color:var(--e-teal);">5</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Variación de la respuesta según el encuadre</span>
-              <span class="acc-sublabel">Pequeños cambios en el fraseo pueden modificar mucho la salida</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> El rendimiento del modelo es muy sensible a cómo se presenta la información. No solo influye qué datos recibe, sino en qué secuencia, con qué palabras y bajo qué formato.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Introduce inestabilidad. Dos clínicos pueden consultar el mismo caso con formulaciones ligeramente distintas y obtener diferenciales diferentes, sin que eso refleje nueva evidencia.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Si el mismo paciente recibe respuestas muy distintas tras pequeños cambios en el prompt, la salida debe interpretarse con cautela. La variación no siempre indica riqueza analítica; a veces indica volatilidad.</div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Usar instrucciones estructuradas y reproducibles. Cuando la salida condicione decisiones importantes, repetir la consulta con reformulaciones prudentes para verificar la estabilidad de la respuesta.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">6</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Riesgo para la seguridad y privacidad de los datos</span>
-              <span class="acc-sublabel">Lo que introduces en el prompt puede ser registrado por el sistema</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Los LLM de uso general son servicios externos que procesan y pueden registrar o usar para entrenamiento el texto que reciben. Cualquier dato identificativo del paciente que se incluya en el prompt queda potencialmente expuesto a infraestructuras fuera del control del clínico.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> Introducir nombre, fecha de nacimiento, número de historia, dirección o cualquier otro dato identificativo en un LLM no certificado puede vulnerar el RGPD y comprometer la confidencialidad del paciente. La ley no distingue entre un error intencionado y uno por desconocimiento.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Si un caso que vas a consultar contiene información que identificaría al paciente incluso sin su nombre explícito (combinación de datos poco frecuentes, localización, fecha de ingreso…), el riesgo está presente aunque no sea obvio.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Usa siempre datos anonimizados: sexo, grupo de edad y datos clínicos pertinentes son suficientes para construir un prompt útil. Si el caso es sensible o se trata de información institucional, usa únicamente herramientas validadas por tu organización o LLM de empresa con contrato de confidencialidad (HIPAA/GDPR-compliant).</div>
-            </div>
-            <div class="callout callout-red" style="margin-top:14px;">
-              <div class="callout-title">Nunca incluyas datos identificativos en un prompt</div>
-              Nombre, fecha de nacimiento, número de historia clínica, dirección o teléfono no deben aparecer jamás. Para razonar con un LLM basta con edad aproximada, sexo y datos clínicos relevantes.
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-violet-l);color:var(--e-violet);">7</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Opacidad causal: no sabemos cómo llega a su respuesta</span>
-              <span class="acc-sublabel">El razonamiento interno del modelo no es auditable</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> Un LLM no razona causalmente como un médico: genera texto prediciendo qué palabras son estadísticamente probables en ese contexto. El proceso interno que lleva a una respuesta no es transparente ni auditable, incluso cuando el modelo escribe una cadena de razonamiento visible.</div>
-              <div class="detail-row"><strong>Por qué importa en clínica.</strong> La explicación que ofrece el modelo no es necesariamente el proceso real que produjo esa salida: puede ser una racionalización post hoc. Esto limita la capacidad de detectar errores de razonamiento desde dentro de la respuesta y obliga a evaluarla desde fuera, con criterio clínico propio.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Si la respuesta suena coherente pero no puedes rastrear en los datos del caso el motivo concreto de cada afirmación, estás ante un comportamiento de caja negra. Preguntar al modelo "¿por qué llegas a esa conclusión?" no garantiza una explicación real: el modelo producirá una respuesta plausible, no necesariamente verdadera.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> Trata cada salida como una hipótesis externa que debe contrastarse con tu propio razonamiento y con los datos objetivos del caso. La opacidad del modelo refuerza la necesidad del <em>human-in-the-loop</em>: el clínico como último auditor.</div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="callout callout-teal" style="margin-top:8px;">
-        <div class="callout-title">🔎 Filtro operativo de las 7 limitaciones</div>
-        Cuando una respuesta parece muy útil, revisa siempre: <strong>¿ha inventado algo? · ¿está reproduciendo un sesgo demográfico? · ¿puede estar desactualizada? · ¿está ignorando un dato excluyente o expresando exceso de confianza? · ¿cambiaría si el caso estuviera formulado de otra manera? · ¿has incluido datos que identifican al paciente? · ¿puedes auditar de verdad el razonamiento que presenta?</strong> La pregunta más importante no es "¿qué dice la IA?" sino "¿qué dato de este caso contradice su conclusión?"
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 3 · LIMITACIONES HUMANO-IA
-  ══════════════════════════════════ -->
-  <section class="section" id="interaccion">
-    <div class="container">
-      <div class="section-eyebrow">Fallos de la interacción</div>
-      <h2 class="section-title">3. Limitaciones humano‑IA</h2>
-      <p class="section-lead">En este bloque el problema no está solo en el sistema. También influye cómo se consulta, en qué momento se usa y qué hace el clínico con la respuesta una vez la recibe.</p>
-
-      <div class="acc-group">
-
-        <div class="acc-item open">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">6</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Sesgo de automatización</span>
-              <span class="acc-sublabel">La persona usuaria apaga demasiado pronto su juicio clínico y delega en la máquina</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> El clínico acepta la propuesta del sistema porque está bien presentada, llega rápido o parece más ordenada que su propio razonamiento inicial. La máquina se convierte en una salida cognitiva cómoda, no en una ayuda crítica.</div>
-              <div class="detail-row"><strong>Por qué importa.</strong> La automatización puede empeorar la precisión diagnóstica incluso en profesionales experimentados. El problema no es consultar una IA, sino usarla para evitar el esfuerzo inicial de formular y revisar hipótesis propias.</div>
-              <div class="detail-row"><strong>Cómo detectarlo.</strong> Una señal de alarma clara es no poder explicar, con fisiopatología y con datos del caso, por qué se ha aceptado un diagnóstico sugerido por la IA. Otra es una falsa sensación de alivio por haber "resuelto" el caso demasiado deprisa.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a él.</strong> La estrategia más segura es <em>pensar primero y consultar después</em>. Escribir un diferencial inicial, aunque sea incompleto, protege el trabajo cognitivo propio.</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">7</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Sesgo de anclaje y aquiescencia</span>
-              <span class="acc-sublabel">Si el clínico introduce una hipótesis errónea, la IA puede devolverla reforzada</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> El anclaje consiste en aferrarse a la primera idea diagnóstica. La aquiescencia aparece cuando el modelo, diseñado para ser cooperativo, confirma esa primera idea en vez de tensionarla. El LLM tiende a confirmar la hipótesis inicial del médico y devuelve un diferencial que reproduce sus sesgos previos en lugar de cuestionarlos.</div>
-              <div class="detail-row"><strong>Por qué importa.</strong> Esta combinación une un sesgo humano clásico con un sesgo de interacción propio del sistema. La evidencia lo cuantifica: el 48% de las respuestas del LLM en flujo no estructurado coincidieron por completo con el listado de los tres principales diagnósticos del médico, devolviendo sus propios sesgos amplificados.</div>
-              <div class="detail-row"><strong>Cómo detectarlo.</strong> Debe sospecharse cuando el modelo nunca contradice la hipótesis inicial o cuando transforma una intuición preliminar en una conclusión aparentemente sólida sin revisar alternativas importantes.</div>
-              <div class="detail-row"><strong>Qué debe hacer el clínico.</strong> Pedir al modelo que actúe como revisor crítico, que genere diagnósticos alternativos y que señale qué hallazgos van en contra de la hipótesis principal. Evitar preguntas genéricas del tipo "¿qué piensas de mi diferencial?" y preferir: "identifica lagunas y señala diagnósticos plausibles que falten".</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="acc-item">
-          <button class="acc-trigger" onclick="toggleAcc(this)">
-            <div class="acc-num" style="background:var(--e-red-l);color:var(--e-red);">8</div>
-            <div class="acc-label-wrap">
-              <span class="acc-label">Ilusión de fluidez y mala calibración</span>
-              <span class="acc-sublabel">Se confunde la calidad formal del texto con la calidad científica del razonamiento</span>
-            </div>
-            <div class="acc-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M4 6l4 4 4-4"/></svg></div>
-          </button>
-          <div class="acc-body">
-            <div class="detail-rows">
-              <div class="detail-row"><strong>Qué significa.</strong> El modelo puede mostrar una confianza muy superior a su precisión real. La estructura impecable, el tono académico y la ausencia de vacilación generan la impresión de que la respuesta está bien fundada, aunque no sea así.</div>
-              <div class="detail-row"><strong>Por qué importa.</strong> La buena redacción puede anestesiar el escepticismo del usuario. Un error diagnóstico grave puede quedar escondido dentro de una respuesta formalmente excelente.</div>
-              <div class="detail-row"><strong>Cómo detectarla.</strong> Hay que sospecharla cuando el texto no expresa dudas, no reconoce límites, no plantea alternativas y no identifica qué información adicional cambiaría la conclusión.</div>
-              <div class="detail-row"><strong>Cómo enfrentarse a ella.</strong> El clínico debe separar mentalmente forma y fondo. La evaluación debe centrarse en la coherencia lógica y el uso correcto de los datos, no en el tono de autoridad de la salida.</div>
-            </div>
-            <div class="alert-warning">
-              <div class="alert-icon">⚠️</div>
-              <div>
-                <div class="alert-title">Error típico del estudiante inexperto en IA</div>
-                <div class="alert-desc">Pensar que una respuesta muy bien escrita es probablemente correcta. Los LLM pueden sonar como un clínico excelente mientras reproducen un sesgo, ignoran un dato clave o recomiendan una conducta equivocada. La buena escritura disminuye la sensación de riesgo y por eso exige <strong>más vigilancia, no menos</strong>.</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 4 · PROTOCOLO DE VERIFICACIÓN
-  ══════════════════════════════════ -->
-  <section class="section" id="verificacion">
-    <div class="container">
-      <div class="section-eyebrow">Auditoría en 3 niveles</div>
-      <h2 class="section-title">4. Protocolo de verificación</h2>
-      <p class="section-lead">Esta propuesta desplaza la verificación hacia tres niveles: la calidad del caso que introduces, la calidad del razonamiento que devuelve el sistema, y la validez científica y seguridad de la respuesta. La auditoría empieza antes de leer la conclusión del LLM.</p>
-
-      <div class="tabs-nav" id="verTabsNav">
-        <button class="tab-btn active" data-tab="v1" onclick="switchTab(this,'pane-v1')">🧾 Calidad del input</button>
-        <button class="tab-btn" data-tab="v2" onclick="switchTab(this,'pane-v2')">🔬 Estructura del razonamiento</button>
-        <button class="tab-btn" data-tab="v3" onclick="switchTab(this,'pane-v3')">🛡️ Validez científica y seguridad</button>
-      </div>
-      <div class="tabs-body" id="verTabsBody">
-
-        <div class="tab-pane active" id="pane-v1" style="background:var(--e-teal-l);">
-          <div class="tab-pane-tag" style="background:rgba(13,110,110,.15);color:var(--e-teal);">Antes de consultar</div>
-          <div class="tab-pane-title" style="color:var(--e-teal);">Calidad del input</div>
-          <p class="tab-pane-def">La base del razonamiento está en la calidad y neutralidad del caso clínico que recibe la IA. Un caso mal definido puede generar una respuesta aparentemente correcta pero clínicamente débil.</p>
-          <div class="tab-subcats">
-            <div class="tab-subcat"><div class="tab-subcat-title">Suficiencia de datos</div><div class="tab-subcat-desc">Comprueba si has incluido constantes vitales, antecedentes relevantes, cronología de síntomas, exploración física básica, medicación, alergias y, si procede, primeras pruebas complementarias.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Ausencia de sesgo de anclaje</div><div class="tab-subcat-desc">Revisa si la descripción es objetiva o si induce a la IA a confirmar una sospecha previa. Expresiones como <em>"todo sugiere que"</em> o <em>"cuadro compatible con"</em> pueden contaminar el razonamiento antes de que empiece.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Contexto asistencial</div><div class="tab-subcat-desc">Especifica el entorno clínico y los recursos disponibles: urgencias, atención primaria, planta, consulta rural, disponibilidad o no de imagen avanzada. El mismo caso no se razona igual en todos los contextos.</div></div>
-          </div>
-        </div>
-
-        <div class="tab-pane" id="pane-v2" style="background:#dbeafe;">
-          <div class="tab-pane-tag" style="background:rgba(0,57,115,.12);color:var(--uva-blue);">Durante la lectura</div>
-          <div class="tab-pane-title" style="color:var(--uva-blue);">Estructura del razonamiento</div>
-          <p class="tab-pane-def">No basta con una conclusión. El LLM debe ofrecer una lógica clínica mínimamente auditable.</p>
-          <div class="tab-subcats">
-            <div class="tab-subcat"><div class="tab-subcat-title">Representación del problema</div><div class="tab-subcat-desc">Valora si la IA resume el caso en una declaración clara. Si no sintetiza bien el núcleo del caso, su diferencial será desordenado o superficial.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">DDx jerárquico</div><div class="tab-subcat-desc">Revisa si está ordenado de lo más probable a lo más grave o urgente. Comprueba si incluye al menos un diagnóstico <em>must-not-miss</em>.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Justificación de prioridades</div><div class="tab-subcat-desc">El modelo debe explicar por qué prioriza unas hipótesis y relega otras basándose en los datos disponibles.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Chequeo fisiopatológico</div><div class="tab-subcat-desc">Regla de oro: si la IA afirma que A causa B, pregúntate si el mecanismo es biológicamente plausible. Protege frente a explicaciones verbalmente elegantes pero causalmente falsas.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Consistencia lógica del plan</div><div class="tab-subcat-desc">Valora si el plan diagnóstico o terapéutico propuesto es coherente con el diagnóstico de sospecha.</div></div>
-          </div>
-        </div>
-
-        <div class="tab-pane" id="pane-v3" style="background:var(--e-green-l);">
-          <div class="tab-pane-tag" style="background:rgba(22,101,52,.12);color:var(--e-green);">Antes de actuar</div>
-          <div class="tab-pane-title" style="color:var(--e-green);">Validez científica y seguridad</div>
-          <p class="tab-pane-def">La respuesta final debe ser científicamente defendible y clínicamente segura.</p>
-          <div class="tab-subcats">
-            <div class="tab-subcat"><div class="tab-subcat-title">Evidencia</div><div class="tab-subcat-desc">Comprueba si la respuesta se alinea con guías de práctica clínica actualizadas o consensos relevantes. La ausencia de trazabilidad aumenta la necesidad de comprobación externa, sobre todo ante pruebas invasivas o criterios de gravedad.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Alucinaciones operativas</div><div class="tab-subcat-desc">Revisa si los fármacos, dosis, pruebas, síndromes o escalas mencionadas existen realmente y se usan así en la práctica clínica. Una respuesta bien redactada puede contener errores básicos de prescripción.</div></div>
-            <div class="tab-subcat"><div class="tab-subcat-title">Criterios de red flag</div><div class="tab-subcat-desc">Comprueba si el modelo identifica correctamente signos de alarma que requieren derivación inmediata, ingreso o actuación urgente. Una respuesta solo aparentemente razonable puede ser insegura si banaliza un criterio de gravedad.</div></div>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="callout callout-teal">
-        <div class="callout-title">✅ Cómo usar este protocolo en la práctica</div>
-        El protocolo no pretende convertir la consulta en una auditoría interminable. Introduce una <strong>pausa crítica breve</strong>: revisar si el caso está bien planteado → comprobar si la lógica es fisiopatológicamente defendible → confirmar que la recomendación es científicamente válida y clínicamente segura.
-      </div>
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 5 · IDEAS CLAVE
-  ══════════════════════════════════ -->
-  <section class="section" id="cierre">
-    <div class="container">
-      <div class="section-eyebrow">Síntesis</div>
-      <h2 class="section-title">5. Ideas clave</h2>
-      <p class="section-lead">Lo esencial que debes llevarte de este material.</p>
-
-      <div class="two-col" style="margin-bottom:24px;">
-        <div class="info-card accent-blue">
-          <div class="info-card-eyebrow">Idea central</div>
-          <div class="info-card-title">El problema más peligroso es que falle de forma convincente</div>
-          <div class="info-card-body">
-            <p>El principal riesgo no es solo que la IA falle. El problema más peligroso es que falle de una manera convincente y que el clínico rebaje su nivel de vigilancia por la calidad formal del texto.</p>
-            <p>La seguridad no depende solo del modelo: depende también del <strong>modo de uso</strong>.</p>
-          </div>
-        </div>
-        <div class="dark-card">
-          <div class="dark-card-title">📐 Regla práctica final</div>
-          <div class="dark-card-body">
-            <p style="margin-bottom:16px">Nunca aceptes una salida del LLM si no puedes responder las tres preguntas:</p>
-            <div style="display:flex; flex-direction:column; gap:10px;">
-              <div style="background:rgba(245,197,24,.12); border:1px solid rgba(245,197,24,.25); border-radius:10px; padding:12px 14px; color:#f5c518; font-weight:700; font-size:14px; line-height:1.4;">¿Se basa de verdad en los datos del caso?</div>
-              <div style="background:rgba(245,197,24,.12); border:1px solid rgba(245,197,24,.25); border-radius:10px; padding:12px 14px; color:#f5c518; font-weight:700; font-size:14px; line-height:1.4;">¿Su lógica es fisiopatológicamente plausible?</div>
-              <div style="background:rgba(245,197,24,.12); border:1px solid rgba(245,197,24,.25); border-radius:10px; padding:12px 14px; color:#f5c518; font-weight:700; font-size:14px; line-height:1.4;">¿Sería segura si yo actuara ahora mismo guiado por esta respuesta?</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
-  <!-- ══════════════════════════════════
-       SECCIÓN 6 · REPASO INTERACTIVO
-  ══════════════════════════════════ -->
-  <section class="section" id="repaso">
-    <div class="container">
-      <div class="section-eyebrow">Autoevaluación</div>
-      <h2 class="section-title">6. Repaso interactivo</h2>
-      <p class="section-lead">Pulsa cada tarjeta o usa los controles. En el anverso aparece un caso breve; en el reverso, la limitación principal y su explicación.</p>
-
-      <div class="choice-intro">
-        <span class="choice-progress">Tarjeta <span id="cur">1</span> de <span id="tot">5</span></span>
-        <span style="font-size:13px;color:var(--muted);">Pulsa para girar · usa las flechas para navegar</span>
-      </div>
-
-      <div class="choice-stack" id="cardStack">
-
-        <button class="choice-card" data-idx="0" style="--card-tint:var(--e-indigo-l);--card-ink:var(--e-indigo);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué limitación es?</span>
-                  <span class="choice-num">1</span>
-                </div>
-                <p class="choice-q">El clínico describe el caso haciendo hincapié en datos muy típicos de vasculitis, pero omite mencionar ANA positivos e hipocomplementemia.</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver la respuesta →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Respuesta</span>
-                <p class="choice-back-text">Sesgo de anclaje en el input</p>
-                <p class="choice-back-explain">El problema empieza en cómo se construye el input. El clínico induce al LLM a dirigirse hacia una vasculitis y limita el diferencial antes de que el razonamiento comience.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="1" style="--card-tint:var(--e-red-l);--card-ink:var(--e-red);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué limitación es?</span>
-                  <span class="choice-num">2</span>
-                </div>
-                <p class="choice-q">La IA recomienda iniciar un fármaco con una dosis muy precisa y cita una guía aparentemente reciente que no existe al verificarla.</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver la respuesta →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Respuesta</span>
-                <p class="choice-back-text">Alucinación</p>
-                <p class="choice-back-explain">El modelo ha fabricado contenido falso con apariencia de precisión y autoridad. No basta con que una recomendación suene técnica: debe poder verificarse.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="2" style="--card-tint:var(--e-orange-l);--card-ink:var(--e-orange);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué limitación es?</span>
-                  <span class="choice-num">3</span>
-                </div>
-                <p class="choice-q">El estudiante recibe una respuesta muy bien escrita y ordenada. Como todo parece claro y académico, deja de revisar si el razonamiento encaja realmente con los datos del caso.</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver la respuesta →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Respuesta</span>
-                <p class="choice-back-text">Ilusión de fluidez + sesgo de automatización</p>
-                <p class="choice-back-explain">La calidad formal del texto se confunde con calidad científica. El usuario baja su nivel de vigilancia porque la respuesta está muy bien presentada.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="3" style="--card-tint:var(--e-teal-l);--card-ink:var(--e-teal);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué limitación es?</span>
-                  <span class="choice-num">4</span>
-                </div>
-                <p class="choice-q">El mismo caso, con idénticos datos, formulado de dos formas ligeramente distintas produce en una versión insuficiencia cardiaca y en otra síndrome nefrótico.</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver la respuesta →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Respuesta</span>
-                <p class="choice-back-text">Sensibilidad al encuadre</p>
-                <p class="choice-back-explain">Pequeños cambios en el fraseo o en el orden de presentación pueden modificar mucho la salida del modelo. Por eso conviene estructurar las consultas de forma consistente.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-        <button class="choice-card" data-idx="4" style="--card-tint:var(--e-violet-l);--card-ink:var(--e-violet);">
-          <div class="choice-inner">
-            <div class="choice-face choice-front">
-              <div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start;">
-                  <span class="choice-eyebrow">¿Qué limitación es?</span>
-                  <span class="choice-num">5</span>
-                </div>
-                <p class="choice-q">La IA propone como primera opción una enfermedad frecuente con una argumentación extensa, pero ignora un dato del caso que prácticamente la hace imposible.</p>
-              </div>
-              <span class="choice-hint">Pulsa para ver la respuesta →</span>
-            </div>
-            <div class="choice-face choice-back">
-              <div>
-                <span class="choice-back-label">Respuesta</span>
-                <p class="choice-back-text">Inflexibilidad cognitiva + cierre prematuro</p>
-                <p class="choice-back-explain">El modelo sigue un patrón frecuente y no abandona la hipótesis principal pese a un dato excluyente. El usuario, además, cierra el caso antes de auditar esa contradicción.</p>
-              </div>
-              <span class="choice-hint">← Pulsa para volver</span>
-            </div>
-          </div>
-        </button>
-
-      </div>
-
-      <div class="choice-controls">
-        <button class="choice-ctrl" id="prevBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-        </button>
-        <button class="choice-ctrl flip" id="flipBtn">↺ Girar</button>
-        <button class="choice-ctrl" id="nextBtn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-        </button>
-      </div>
-    </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-row">
-        <span>Material docente · <strong style="color:var(--uva-blue);">Unidad de Educación Médica · Universidad de Valladolid</strong> · EduMed UVa 2026</span>
-        <a href="https://tutorcyllo.github.io/EduMed.UVa/DDx_IA/" style="color:var(--uva-blue);font-weight:600;text-decoration:none;font-size:13px;">← Volver a DDx_IA</a>
-      </div>
-    </div>
-  </footer>
-
-  <script>
-    // ── Pestañas verificación ──
-    function switchTab(btn, paneId) {
-      const nav  = document.getElementById('verTabsNav');
-      const body = document.getElementById('verTabsBody');
-      nav.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-      body.querySelectorAll('.tab-pane').forEach(p => p.classList.remove('active'));
-      btn.classList.add('active');
-      document.getElementById(paneId).classList.add('active');
-      const btns = Array.from(nav.querySelectorAll('.tab-btn'));
-      const idx  = btns.indexOf(btn);
-      const last = btns.length - 1;
-      body.style.borderRadius =
-        idx === 0    ? '0 var(--r-lg) var(--r-lg) var(--r-lg)' :
-        idx === last ? 'var(--r-lg) 0 var(--r-lg) var(--r-lg)' :
-                       'var(--r-lg)';
+<script>
+// Acordeón: uno abierto por grupo
+document.querySelectorAll('.acc-cab').forEach(function (btn) {
+  btn.addEventListener('click', function () {
+    var item = btn.closest('.acc');
+    var abierto = item.classList.contains('abierto');
+    item.closest('.acc-grupo').querySelectorAll('.acc').forEach(function (i) {
+      i.classList.remove('abierto');
+      i.querySelector('.acc-cab').setAttribute('aria-expanded', 'false');
+    });
+    if (!abierto) {
+      item.classList.add('abierto');
+      btn.setAttribute('aria-expanded', 'true');
+      var r = item.getBoundingClientRect();
+      if (r.top < 0 || r.top > window.innerHeight * 0.6) item.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
+  });
+});
 
-    // ── Scroll a sección ──
-    function scrollToSection(id) {
-      document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+// Índice lateral: abre el error al que se salta
+document.querySelectorAll('.indice a').forEach(function (a) {
+  a.addEventListener('click', function () {
+    var item = document.querySelector(a.getAttribute('href'));
+    if (item && !item.classList.contains('abierto')) item.querySelector('.acc-cab').click();
+  });
+});
 
-    // ── Nav activa por scroll ──
-    const sections = document.querySelectorAll('section[id]');
-    const navBtns  = document.querySelectorAll('.nav-pill');
-    sections.forEach(s => new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          navBtns.forEach(b => {
-            const oc = b.getAttribute('onclick') || '';
-            b.classList.toggle('active', oc.includes("'" + e.target.id + "'"));
-          });
-        }
-      });
-    }, { rootMargin: '-30% 0px -60% 0px' }).observe(s));
+// Pestañas de verificación
+document.querySelectorAll('.pestana').forEach(function (tab) {
+  tab.addEventListener('click', function () {
+    document.querySelectorAll('.pestana').forEach(function (t) { t.setAttribute('aria-selected', 'false'); });
+    document.querySelectorAll('.panel').forEach(function (p) { p.classList.remove('activo'); });
+    tab.setAttribute('aria-selected', 'true');
+    document.getElementById(tab.getAttribute('aria-controls')).classList.add('activo');
+  });
+});
 
-    // ── Acordeón (uno a la vez, scroll al abrir) ──
-    function toggleAcc(btn) {
-      const item = btn.closest('.acc-item');
-      const wasOpen = item.classList.contains('open');
-      document.querySelectorAll('.acc-item').forEach(i => i.classList.remove('open'));
-      if (!wasOpen) {
-        item.classList.add('open');
-        setTimeout(() => {
-          const top = item.getBoundingClientRect().top + window.scrollY - 90;
-          window.scrollTo({ top, behavior: 'smooth' });
-        }, 50);
-      }
-    }
-
-    // ── Flashcards ──
-    (function() {
-      const stack = document.getElementById('cardStack');
-      const cards = Array.from(stack.querySelectorAll('.choice-card'));
-      let cur = 0;
-      function update() {
-        cards.forEach(c => c.classList.remove('visible', 'flipped'));
-        cards[cur].classList.add('visible');
-        document.getElementById('cur').textContent = cur + 1;
-        document.getElementById('tot').textContent = cards.length;
-      }
-      cards.forEach(c => c.addEventListener('click', () => c.classList.toggle('flipped')));
-      document.getElementById('prevBtn').addEventListener('click', () => { cur = (cur - 1 + cards.length) % cards.length; update(); });
-      document.getElementById('nextBtn').addEventListener('click', () => { cur = (cur + 1) % cards.length; update(); });
-      document.getElementById('flipBtn').addEventListener('click', () => cards[cur].classList.toggle('flipped'));
-      update();
-    })();
-  </script>
+// Tarjetas de repaso
+(function () {
+  var cartas = Array.prototype.slice.call(document.querySelectorAll('.flash'));
+  var cur = 0;
+  function mostrar() {
+    cartas.forEach(function (c, i) { c.classList.toggle('visible', i === cur); c.classList.remove('girada'); });
+    document.getElementById('flash-cur').textContent = cur + 1;
+  }
+  function girar() { cartas[cur].classList.toggle('girada'); }
+  cartas.forEach(function (c) { c.querySelectorAll('.flash-cara').forEach(function (b) { b.addEventListener('click', girar); }); });
+  document.getElementById('flash-girar').addEventListener('click', girar);
+  document.getElementById('flash-prev').addEventListener('click', function () { cur = (cur - 1 + cartas.length) % cartas.length; mostrar(); });
+  document.getElementById('flash-next').addEventListener('click', function () { cur = (cur + 1) % cartas.length; mostrar(); });
+  document.addEventListener('keydown', function (e) {
+    var r = document.getElementById('repaso').getBoundingClientRect();
+    if (r.top > window.innerHeight || r.bottom < 0) return;
+    if (e.key === 'ArrowLeft') document.getElementById('flash-prev').click();
+    if (e.key === 'ArrowRight') document.getElementById('flash-next').click();
+  });
+})();
+</script>
 </body>
 </html>
